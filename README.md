@@ -1,3 +1,6 @@
+<div align="center">
+ [![codecov](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector/graph/badge.svg?token=nEPpXWGssM)](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector)
+</div>
 
 # GDPR Data Noncompliance Detector
 
