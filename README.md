@@ -1,50 +1,50 @@
-COS301 Capstone AprilFour
+
 # GDPR Data Noncompliance Detector
 
-This project is a GDPR Data Noncompliance Detector, developed as part of the COS 301 Capstone course in April 2024.
+This project is a GDPR Data Noncompliance Detector, developed as part of the COS 301 Capstone Project.
 
 ## Description
 
 The GDPR Data Noncompliance Detector is a software tool designed to identify instances of noncompliance with the General Data Protection Regulation (GDPR). It analyzes data sets and identifies potential violations of GDPR principles, such as unauthorized data processing, inadequate security measures, or lack of consent.
 
-## Features
+## Demos
 
-- Data analysis and scanning for GDPR noncompliance
-- Identification of potential violations
-- Reporting and visualization of noncompliant instances
-- User-friendly interface for easy interaction
+### Demo 1
+[Countdown to Demo 1](https://www.timeanddate.com/countdown/generic?iso=20220605T00&p0=%3A&msg=Countdown+to+Demo+1&font=cursive)
+### Demo 2
 
-## Installation
+### Demo 3
 
-To install and run the GDPR Data Noncompliance Detector, follow these steps:
+### Demo 4
 
-1. Clone the repository: `git clone https://github.com/your-username/GDPR-data-noncompliance-detector.git`
-2. Navigate to the project directory: `cd GDPR-data-noncompliance-detector`
-3. Install the required dependencies: `npm install`
-4. Start the application: `npm start`
+### DProject Day
 
-## Usage
 
-1. Launch the GDPR Data Noncompliance Detector application.
-2. Import the data set you want to analyze.
-3. Click on the "Scan" button to start the analysis process.
-4. View the generated report to identify instances of noncompliance.
-5. Take appropriate actions to address the identified noncompliant instances.
+## Team
 
-## Contributing
+### Dhinaz Rangasammy  
+[GitHub](https://github.com/u21598012) | [LinkedIn](https://www.linkedin.com/in/dhinaz-rangasamy-2b9636305)
 
-Contributions to the GDPR Data Noncompliance Detector project are welcome. If you would like to contribute, please follow these guidelines:
+### Nevin Thomas 
+[GitHub](https://github.com/Nevin-Thomas) | [LinkedIn](https://www.linkedin.com/in/nevin-thomas-a625462b3)
 
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`
-3. Make your changes and commit them: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/your-feature-name`
-5. Submit a pull request.
+### Yeshlen Moodley
+[GitHub](https://github.com/Yeshlen) | [LinkedIn](https://www.linkedin.com/in/yeshlen-moodley-a4349b300/)
 
-## License
+### Yudi Govender
+[GitHub](https://github.com/Yudi-G) | [LinkedIn](https://www.linkedin.com/in/yudi-govender-6b81b3302/)
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+### Paul Nhlapo
+[GitHub](https://github.com/paul-nhlapo) | [LinkedIn](https://www.linkedin.com/in/paul-nhlapo-b9b59219a/s)
 
-## Contact
+## Team Contact
 
-For any questions or inquiries, please contact the project team at [email protected]
+Emain: aprilfour301@gmail.com
+
+## Tech Stack
+
+### Frontend
+![C# .NET](https://raw.githubusercontent.com/github/explore/main/topics/dotnet/dotnet.png) C# .NET
+
+### Backend
+![Python](https://raw.githubusercontent.com/github/explore/main/topics/python/python.png) Python
