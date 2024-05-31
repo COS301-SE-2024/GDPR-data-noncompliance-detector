@@ -82,7 +82,7 @@ Emain: aprilfour301@gmail.com
 ## Tech Stack
 
 ### Frontend
-C# .NET
+C# .NET MAUI
 
 ### Backend
 Python
