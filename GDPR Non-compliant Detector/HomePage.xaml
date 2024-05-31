@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GDPR_Non_compliant_Detector.HomePage"
+             Title="Deloitte.">
+    
+        <Grid>
+         <!--Navigation Bar--> 
+        <Grid RowDefinitions="Auto,*">
+            <Grid 
+                  RowSpacing="20"
+       
+                  Padding="10, 10, 10, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Text="Files" 
+                        Grid.Column="0" 
+                        Clicked="OnFilesButtonClicked" />
+
+                <Button Text="User-manual" 
+                        Grid.Column="1" 
+                        Clicked="OnUserManualButtonClicked" />
+
+                <Button Text="Settings" 
+                        Grid.Column="2" 
+                        Clicked="OnSettingsButtonClicked" />
+
+                <Button Text="Help" 
+                        Grid.Column="3" 
+                        Clicked="OnHelpButtonClicked" />
+            </Grid>
+
+            <!-- Main Content Area -->
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Padding="10">
+                    <!-- Add your main content here -->
+                    <!--<Label Text="Welcome to the Home Page!"
+                           FontSize="24"
+                           HorizontalOptions="Center"
+                           VerticalOptions="CenterAndExpand" />-->
+
+                    <Button Text="Details"
+                            Clicked="OnDetailsClicked"
+                            HorizontalOptions="Start" />
+
+                    <Button Text="Scan"
+                            Clicked="OnScanClicked"
+                            HorizontalOptions="Center" />
+
+                    <Label BackgroundColor="Grey"
+                           Text="Display of results here"
+                           LineBreakMode="WordWrap"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalOptions="FillAndExpand"
+                           Margin="10"/>
+                    
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+
+</ContentPage>

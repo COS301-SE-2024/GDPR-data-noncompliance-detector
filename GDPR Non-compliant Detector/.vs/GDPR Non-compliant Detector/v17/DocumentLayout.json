@@ -1,0 +1,135 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|c:\\users\\user\\documents\\academics\\2024\\cos 301 software engineering\\capstone\\gdpr non-compliant detector\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|solutionrelative:loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|c:\\users\\user\\documents\\academics\\2024\\cos 301 software engineering\\capstone\\gdpr non-compliant detector\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|solutionrelative:mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|c:\\users\\user\\documents\\academics\\2024\\cos 301 software engineering\\capstone\\gdpr non-compliant detector\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|solutionrelative:mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|c:\\users\\user\\documents\\academics\\2024\\cos 301 software engineering\\capstone\\gdpr non-compliant detector\\loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|solutionrelative:loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|c:\\users\\user\\documents\\academics\\2024\\cos 301 software engineering\\capstone\\gdpr non-compliant detector\\homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|solutionrelative:homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|c:\\users\\user\\documents\\academics\\2024\\cos 301 software engineering\\capstone\\gdpr non-compliant detector\\homepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|solutionrelative:homepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|c:\\users\\user\\documents\\academics\\2024\\cos 301 software engineering\\capstone\\gdpr non-compliant detector\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{42462CC7-CC95-4833-A563-2DBEAF24F031}|GDPR Non-compliant Detector.csproj|solutionrelative:appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "HomePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\HomePage.xaml.cs",
+              "RelativeDocumentMoniker": "HomePage.xaml.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\HomePage.xaml.cs",
+              "RelativeToolTip": "HomePage.xaml.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAA5wCEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T02:55:18.414Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "loginPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\loginPage.xaml.cs",
+              "RelativeDocumentMoniker": "loginPage.xaml.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\loginPage.xaml.cs",
+              "RelativeToolTip": "loginPage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T02:48:48.931Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HomePage.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\HomePage.xaml",
+              "RelativeDocumentMoniker": "HomePage.xaml",
+              "ToolTip": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\HomePage.xaml",
+              "RelativeToolTip": "HomePage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-31T02:48:16.654Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "loginPage.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\loginPage.xaml",
+              "RelativeDocumentMoniker": "loginPage.xaml",
+              "ToolTip": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\loginPage.xaml",
+              "RelativeToolTip": "loginPage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-31T02:33:49.632Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "MainPage.xaml.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\MainPage.xaml.cs",
+              "RelativeToolTip": "MainPage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T02:08:50.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\MainPage.xaml",
+              "RelativeDocumentMoniker": "MainPage.xaml",
+              "ToolTip": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\MainPage.xaml",
+              "RelativeToolTip": "MainPage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-31T02:08:45.898Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\AppShell.xaml",
+              "RelativeDocumentMoniker": "AppShell.xaml",
+              "ToolTip": "C:\\Users\\User\\Documents\\Academics\\2024\\COS 301 SOFTWARE ENGINEERING\\CapStone\\GDPR Non-compliant Detector\\AppShell.xaml",
+              "RelativeToolTip": "AppShell.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-31T02:05:04.401Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
