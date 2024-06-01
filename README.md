@@ -108,7 +108,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
 <table style="width: 100%;">
   <tr>
     <td style="width: 150px; vertical-align: top;">
-      <!-- Add image here if available -->
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/Yudi-G">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github">
