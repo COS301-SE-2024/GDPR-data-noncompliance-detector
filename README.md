@@ -36,7 +36,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
 
 ### Dhinaz Rangasamy
 <br/>
-<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width=200px height=150px>
+<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg">
 
 ### Description
 Dhinaz is currently pursuing Computer Science, Statistics and Data Science. He has worked with multiple technologies relating to all fields, and is especially interested in AI, ML and regression applications. He has completed multiple design and research projects related to data analysis and software modelling, two of which are linked above. He is also self-taught in Tableau and is currently working as a teaching assistant for COS 221 (Introduction to databases) at the University of Pretoria.
