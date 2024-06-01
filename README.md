@@ -70,7 +70,6 @@ I am a final year Computer Science student at the University of Pretoria. My deg
 ### Paul Nhlapo
 <br/>
 <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg"  width=300px height=300px>
-### Description
 I am a final year BSc Information and Knowledge Systems (Software development) student. I major in Computer Science in my degree, and I have explored all sides of software engineering processes from first year till now. I have learnt a lot from this degree, and it has exposed me to systems analysis and in-depth web development, problem solving using data structures in (Java and C++) and systems development. I have experience with .NET technologies and have worked with C#. Currently I work with ionic and Angular for my final year modules.
 
 [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white "Github")](https://github.com/paul-nhlapo) 
