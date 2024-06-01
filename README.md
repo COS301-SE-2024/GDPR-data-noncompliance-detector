@@ -42,8 +42,6 @@ Dhinaz is currently pursuing Computer Science, Statistics and Data Science. He h
 [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white "Github")](https://github.com/u21598012) 
  [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white "Linkedin")](https://www.linkedin.com/in/dhinaz-rangasamy-2b9636305)
 
-
-
 ### Nevin Thomas 
 
 ### Description
@@ -70,7 +68,8 @@ I am a final year Computer Science student at the University of Pretoria. My deg
  [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white "Linkedin")](https://www.linkedin.com/in/yudi-govender-6b81b3302)
 
 ### Paul Nhlapo
-
+<br/>
+<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg"
 ### Description
 I am a final year BSc Information and Knowledge Systems (Software development) student. I major in Computer Science in my degree, and I have explored all sides of software engineering processes from first year till now. I have learnt a lot from this degree, and it has exposed me to systems analysis and in-depth web development, problem solving using data structures in (Java and C++) and systems development. I have experience with .NET technologies and have worked with C#. Currently I work with ionic and Angular for my final year modules.
 
@@ -79,7 +78,7 @@ I am a final year BSc Information and Knowledge Systems (Software development) s
 
 ## Team Contact
 
-Emain: aprilfour301@gmail.com
+Email: aprilfour301@gmail.com
 
 ## Tech Stack
 
