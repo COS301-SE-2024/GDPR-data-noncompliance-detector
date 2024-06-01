@@ -4,40 +4,43 @@ from pdfminer.high_level import extract_text
 from docx import Document
 from datetime import datetime
 
-def extract_text_from_pdf(file_path):
-    return extract_text(file_path)
+class FileProcessor:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        now = datetime.now()
+        self.timestamp_str = now.strftime("%Y%m%d_%H%M%S")
+        self.filename = f'{self.timestamp_str}_o.txt'
 
-def extract_text_from_docx(file_path):
-    doc = Document(file_path)
-    return ' '.join([paragraph.text for paragraph in doc.paragraphs])
+    def extract_text_from_pdf(self):
+        return extract_text(self.file_path)
 
-def extract_data_from_excel(file_path):
-    df = pd.read_excel(file_path)
-    return df.to_string(index=False)
+    def extract_text_from_docx(self):
+        doc = Document(self.file_path)
+        return ' '.join([paragraph.text for paragraph in doc.paragraphs])
 
-def file_processor():
-    now = datetime.now()
-    timestamp_str = now.strftime("%Y%m%d_%H%M%S")
-    filename = f'{timestamp_str}_o.txt'
-    file_path = input("File Name: ")
-    if file_path.lower().endswith('.pdf'):
-        text = extract_text_from_pdf(file_path)
-    elif file_path.lower().endswith('.docx'):
-        text = extract_text_from_docx(file_path)
-    elif file_path.lower().endswith(('.xlsx', '.xls')):
-        text = extract_data_from_excel(file_path)
-    else:
-        print("Unsupported file type")
-        sys.exit(1)
+    def extract_data_from_excel(self):
+        df = pd.read_excel(self.file_path)
+        return df.to_string(index=False)
 
-    with open(filename, 'w') as f:
-        f.write(text)
+    def process_file(self):
+        try:
+            if self.file_path.lower().endswith('.pdf'):
+                text = self.extract_text_from_pdf()
+            elif self.file_path.lower().endswith('.docx'):
+                text = self.extract_text_from_docx()
+            elif self.file_path.lower().endswith(('.xlsx', '.xls')):
+                text = self.extract_data_from_excel()
+            else:
+                print("Unsupported file type")
+                sys.exit(1)
+
+            with open(self.filename, 'w') as f:
+                f.write(text)
+        except FileNotFoundError:
+            print(f"File not found: {self.file_path}")
+            sys.exit(1)
 
 if __name__ == "__main__":
-    file_processor()
-    
-
-#pip install document
-#pip install PdfFileReader
-#pip install PyPDF2
-#pip install python-docx
+    file_path = input("File Name: ")
+    processor = FileProcessor(file_path)
+    processor.process_file()
