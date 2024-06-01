@@ -83,7 +83,7 @@
                 <!-- Right Panel -->
                 <StackLayout Grid.Column="1" Spacing="10" HorizontalOptions="Center">
                     <Button Text="Scan"
-                            BackgroundColor="LightBlue"
+                            BackgroundColor="Blue"
                             Clicked="OnScanClicked"
                             HorizontalOptions="Start" />
 
