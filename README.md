@@ -37,7 +37,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
 <table style="width: 100%;">
   <tr>
     <td style="width: 150px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="150px" height="150px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/u21598012">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github">
@@ -129,7 +129,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
 <table style="width: 100%;">
   <tr>
     <td style="width: 150px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="150px" height="150px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/paul-nhlapo">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github">
