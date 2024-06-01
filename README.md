@@ -36,7 +36,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
 
 ### Dhinaz Rangasamy
 <br/>
-<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg width=300px height=300px">
+<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width=300px height=300px>
 Dhinaz is currently pursuing Computer Science, Statistics and Data Science. He has worked with multiple technologies relating to all fields, and is especially interested in AI, ML and regression applications. He has completed multiple design and research projects related to data analysis and software modelling, two of which are linked above. He is also self-taught in Tableau and is currently working as a teaching assistant for COS 221 (Introduction to databases) at the University of Pretoria.
 
 [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white "Github")](https://github.com/u21598012) 
@@ -69,7 +69,7 @@ I am a final year Computer Science student at the University of Pretoria. My deg
 
 ### Paul Nhlapo
 <br/>
-<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg width=300px height=300px"
+<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg"  width=300px height=300px>
 ### Description
 I am a final year BSc Information and Knowledge Systems (Software development) student. I major in Computer Science in my degree, and I have explored all sides of software engineering processes from first year till now. I have learnt a lot from this degree, and it has exposed me to systems analysis and in-depth web development, problem solving using data structures in (Java and C++) and systems development. I have experience with .NET technologies and have worked with C#. Currently I work with ionic and Angular for my final year modules.
 
