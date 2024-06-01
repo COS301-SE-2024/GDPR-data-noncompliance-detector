@@ -51,8 +51,8 @@ I'm a third-year BSc Information and Knowledge Systems student, adept at merging
  [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white "Linkedin")](https://www.linkedin.com/in/nevin-thomas-a625462b3)
 
 ### Yeshlen Moodley
-
-### Description
+<br/>
+<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width=300px height=300px>
 I am a final year BSc Information and Knowledge Systems student. This degree has allowed me to gain invaluable experience in not only the fields of computer science but statistics and data analytics as well. I have a vested interest in the field of data science and using the insights that can be gained from analysing a system, to optimise it as much as possible. I have experience in building comprehensive web and desktop applications and have worked on the frontend side of development for multiple projects.
 
 
