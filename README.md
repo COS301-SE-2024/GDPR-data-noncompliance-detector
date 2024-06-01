@@ -35,24 +35,12 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
 ## Team
 
 ### Dhinaz Rangasamy
-<table style="width: 100%;">
-  <tr>
-    <td style="width: 150px;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" alt="Dhinaz Rangasamy" style="width: 100%; height: auto;"/>
-    </td>
-    <td>
-      <p>Dhinaz is currently pursuing Computer Science, Statistics and Data Science. He has worked with multiple technologies relating to all fields, and is especially interested in AI, ML and regression applications. He has completed multiple design and research projects related to data analysis and software modelling, two of which are linked above. He is also self-taught in Tableau and is currently working as a teaching assistant for COS 221 (Introduction to databases) at the University of Pretoria.</p>
-      <p>
-        <a href="https://github.com/u21598012">
-          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github">
-        </a>
-        <a href="https://www.linkedin.com/in/dhinaz-rangasamy-2b9636305">
-          <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Linkedin">
-        </a>
-      </p>
-    </td>
-  </tr>
-</table>
+<br/>
+<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg">
+Dhinaz is currently pursuing Computer Science, Statistics and Data Science. He has worked with multiple technologies relating to all fields, and is especially interested in AI, ML and regression applications. He has completed multiple design and research projects related to data analysis and software modelling, two of which are linked above. He is also self-taught in Tableau and is currently working as a teaching assistant for COS 221 (Introduction to databases) at the University of Pretoria.
+
+[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white "Github")](https://github.com/u21598012) 
+ [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white "Linkedin")](https://www.linkedin.com/in/dhinaz-rangasamy-2b9636305)
 
 
 
