@@ -36,4 +36,19 @@ public partial class HomePage : ContentPage
     {
         await DisplayAlert("Scan", "Scan button clicked.", "Ok");
     }
+
+    private async void OnExcelClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Excel", "Excel button clicked.", "Ok");
+    }
+
+    private async void OnPDFClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Pdf", "Pdf button clicked.", "Ok");
+    }
+
+    private async void OnWordClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Word", "Word button clicked.", "Ok");
+    }
 }

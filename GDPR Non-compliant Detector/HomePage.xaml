@@ -3,14 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GDPR_Non_compliant_Detector.HomePage"
              Title="Deloitte.">
-    
+
+    <Grid>
+        <!-- Header -->
         <Grid>
-         <!--Navigation Bar--> 
-        <Grid RowDefinitions="Auto,*">
-            <Grid 
-                  RowSpacing="20"
-       
-                  Padding="10, 10, 10, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+        </Grid>
+
+        <!-- Navigation Bar -->
+        <Grid RowDefinitions="Auto,*" VerticalOptions="Start" Margin="0,0,0,0">
+            <Grid BackgroundColor="Black" Padding="20" ColumnSpacing="30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -19,49 +25,89 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Text="Files" 
+                        BackgroundColor="Green"
+                        TextColor="White"
                         Grid.Column="0" 
-                        Clicked="OnFilesButtonClicked" />
+                        Clicked="OnUserManualButtonClicked" />
 
                 <Button Text="User-manual" 
+                        BackgroundColor="Green"
+                        TextColor="White"
                         Grid.Column="1" 
                         Clicked="OnUserManualButtonClicked" />
 
                 <Button Text="Settings" 
+                        BackgroundColor="Green"
+                        TextColor="White"
                         Grid.Column="2" 
                         Clicked="OnSettingsButtonClicked" />
 
                 <Button Text="Help" 
+                        BackgroundColor="Green"
+                        TextColor="White"
                         Grid.Column="3" 
                         Clicked="OnHelpButtonClicked" />
             </Grid>
 
             <!-- Main Content Area -->
-            <ScrollView Grid.Row="1">
-                <VerticalStackLayout Padding="10">
-                    <!-- Add your main content here -->
-                    <!--<Label Text="Welcome to the Home Page!"
-                           FontSize="24"
-                           HorizontalOptions="Center"
-                           VerticalOptions="CenterAndExpand" />-->
+            <Grid Grid.Row="1" Padding="50" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
+                <!-- Left Panel -->
+                <StackLayout Grid.Column="0" Spacing="5">
                     <Button Text="Details"
+                            BackgroundColor="LightGreen"
                             Clicked="OnDetailsClicked"
-                            HorizontalOptions="Start" />
+                            Grid.Row="0"
+                            HorizontalOptions="StartAndExpand"
+                            />
 
-                    <Button Text="Scan"
-                            Clicked="OnScanClicked"
-                            HorizontalOptions="Center" />
-
-                    <Label BackgroundColor="Grey"
-                           Text="Display of results here"
-                           LineBreakMode="WordWrap"
+                    <Frame BackgroundColor="Gray" 
+                           BorderColor="Gray" 
+                           HasShadow="True" 
                            VerticalOptions="FillAndExpand"
                            HorizontalOptions="FillAndExpand"
-                           Margin="10"/>
-                    
-                </VerticalStackLayout>
-            </ScrollView>
+                           Padding="0">
+                        <Label Text="(Display of results here)"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               Margin="10"/>
+                    </Frame>
+                </StackLayout>
+
+                <!-- Right Panel -->
+                <StackLayout Grid.Column="1" Spacing="10" HorizontalOptions="Center">
+                    <Button Text="Scan"
+                            BackgroundColor="LightBlue"
+                            Clicked="OnScanClicked"
+                            HorizontalOptions="Start" />
+
+                    <Button Text="Excel"
+                            BackgroundColor="LightGreen"
+                            Clicked="OnExcelClicked"
+                            HorizontalOptions="Start" />
+
+                    <Button Text="Word"
+                            BackgroundColor="LightGreen"
+                            Clicked="OnWordClicked"
+                            HorizontalOptions="Start" />
+
+                    <Button Text="PDF"
+                            BackgroundColor="LightGreen"
+                            Clicked="OnPDFClicked"
+                            HorizontalOptions="Start" />
+
+                </StackLayout>
+            </Grid>
         </Grid>
+
+        <!-- Footer -->
+        <Label Text="by AprilFour" FontSize="12" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,10,10"/>
     </Grid>
 
 </ContentPage>
