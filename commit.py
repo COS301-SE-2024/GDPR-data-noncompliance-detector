@@ -1,4 +1,3 @@
 
 def outputSomething():
     return "Something"
-
