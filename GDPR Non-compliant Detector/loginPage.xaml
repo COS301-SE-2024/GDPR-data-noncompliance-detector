@@ -22,7 +22,8 @@
             </Style>
             <Style x:Key="LoginLabelStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="Black" />
-                <Setter Property="FontSize" Value="32" />
+                <Setter Property="FontSize" Value="18" />
+                <!-- Adjust the font size here -->
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
         </ResourceDictionary>
@@ -49,7 +50,6 @@
 
                 <Entry x:Name="UsernameEntry" Placeholder="Username" Keyboard="Text" WidthRequest="200" TextColor="Black"/>
                 <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Keyboard="Text" WidthRequest="200" TextColor="Black"/>
-
 
                 <Button Text="Sign-in" Clicked="OnSignInButtonClicked" Style="{StaticResource ButtonStyle}"/>
             </VerticalStackLayout>

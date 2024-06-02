@@ -46,7 +46,7 @@ public partial class HomePage : ContentPage
 
     private async void OnHelpButtonClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Help", "help button clicked.", "Ok");
+        await DisplayAlert("Help", "Help button clicked.", "Ok");
     }
 
     private async void OnDetailsClicked(object sender, EventArgs e)
@@ -67,11 +67,26 @@ public partial class HomePage : ContentPage
 
     private async void OnPDFClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Pdf", "Pdf button clicked.", "Ok");
+        await DisplayAlert("PDF", "PDF button clicked.", "Ok");
     }
 
     private async void OnWordClicked(object sender, EventArgs e)
     {
         await DisplayAlert("Word", "Word button clicked.", "Ok");
+    }
+
+    private async void OnExcelDownloadClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("ExcelDownload", "Excel download button clicked.", "Ok");
+    }
+
+    private async void OnPDFDownloadClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("WordDownload", "PDF download button clicked.", "Ok");
+    }
+
+    private async void OnWordDownloadClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("PDFDownload", "Word download button clicked.", "Ok");
     }
 }
