@@ -17,7 +17,7 @@ public partial class HomePage : ContentPage
             var result = await FilePicker.Default.PickAsync(new PickOptions
             {
                 PickerTitle = "Please select a file",
-                FileTypes = FilePickerFileType.Pdf// You can specify other file types as needed
+                FileTypes = FilePickerFileType.Pdf
             });
 
             if (result != null)
@@ -26,6 +26,7 @@ public partial class HomePage : ContentPage
                 // Process the file path or file content as needed
                 await DisplayAlert("File Selected", $"File path: {filePath}", "OK");
             }
+
         }
         catch (Exception ex)
         {
