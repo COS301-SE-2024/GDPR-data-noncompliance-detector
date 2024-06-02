@@ -8,3 +8,6 @@ def test_hello_false():
 
 def test_one():
     assert example.one() > 0
+
+def test_one_2():
+    assert example.one() < 2
