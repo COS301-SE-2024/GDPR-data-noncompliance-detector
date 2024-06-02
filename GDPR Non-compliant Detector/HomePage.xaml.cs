@@ -1,3 +1,5 @@
+using Microsoft.Maui.Storage;
+
 namespace GDPR_Non_compliant_Detector;
 
 public partial class HomePage : ContentPage
@@ -9,7 +11,27 @@ public partial class HomePage : ContentPage
 
 	private async void OnFilesButtonClicked(object sender, EventArgs e)
     {
-		await DisplayAlert("Files", "Files button clicked.", "Ok");
+        //await DisplayAlert("Files", "Files button clicked.", "Ok");
+        try
+        {
+            var result = await FilePicker.Default.PickAsync(new PickOptions
+            {
+                PickerTitle = "Please select a file",
+                FileTypes = FilePickerFileType.Pdf// You can specify other file types as needed
+            });
+
+            if (result != null)
+            {
+                string filePath = result.FullPath;
+                // Process the file path or file content as needed
+                await DisplayAlert("File Selected", $"File path: {filePath}", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle any exceptions that occur
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 
     private async void OnUserManualButtonClicked(object sender, EventArgs e)
@@ -35,6 +57,7 @@ public partial class HomePage : ContentPage
     private async void OnScanClicked(object sender, EventArgs e)
     {
         await DisplayAlert("Scan", "Scan button clicked.", "Ok");
+     
     }
 
     private async void OnExcelClicked(object sender, EventArgs e)

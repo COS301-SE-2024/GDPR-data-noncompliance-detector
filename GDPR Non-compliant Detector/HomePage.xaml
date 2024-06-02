@@ -24,11 +24,11 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Text="Files" 
+                <Button Text="Upload Document" 
                         BackgroundColor="Green"
                         TextColor="White"
                         Grid.Column="0" 
-                        Clicked="OnUserManualButtonClicked" />
+                        Clicked="OnFilesButtonClicked" />
 
                 <Button Text="User-manual" 
                         BackgroundColor="Green"
@@ -61,7 +61,6 @@
                     <Button Text="Details"
                             BackgroundColor="LightGreen"
                             Clicked="OnDetailsClicked"
-                            Grid.Row="0"
                             HorizontalOptions="StartAndExpand"
                             />
 
@@ -82,8 +81,8 @@
 
                 <!-- Right Panel -->
                 <StackLayout Grid.Column="1" Spacing="10" HorizontalOptions="Center">
-                    <Button Text="Scan"
-                            BackgroundColor="Red"
+                    <Button Text="Scan Document"
+                            BackgroundColor="LightBlue"
                             Clicked="OnScanClicked"
                             HorizontalOptions="Start" />
 
