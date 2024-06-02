@@ -1,28 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GDPR_Non_compliant_Detector.MainPage">
+             x:Class="GDPR_Non_compliant_Detector.MainPage"
+             BackgroundColor="White">
+    <!-- Set the background color to white -->
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="300,0"
-            Spacing="150">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="Headline" TargetType="Label">
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#86BC25" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="HoverButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#7B9F35" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-            <Label
-                Text="Welcome to the GDPR"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <!-- Height of the footer -->
+        </Grid.RowDefinitions>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Sign in" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnNavigateButtonClicked"
-                HorizontalOptions="Center" />
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
+                Padding="450,0"
+                Spacing="20">
 
-           
-        </VerticalStackLayout>
-        
-    </ScrollView>
-     
+                <Image
+                    Source="https://raw.githubusercontent.com/COS301-SE-2024/GDPR-data-noncompliance-detector/develop/documentation/headshots/GND.png"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" 
+                    Margin="0,40,0,0" />
+
+
+                <Label
+                    Text="Welcome to the GDPR"
+                    Style="{StaticResource Headline}"
+                    SemanticProperties.HeadingLevel="Level1" />
+
+                <Button
+                    x:Name="CounterBtn"
+                    Text="Sign in" 
+                    Style="{StaticResource ButtonStyle}"
+                    SemanticProperties.Hint="Counts the number of times you click"
+                    Clicked="OnNavigateButtonClicked"
+                    HorizontalOptions="Center" 
+                    Margin="0,40,0,0">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="Style" Value="{StaticResource HoverButtonStyle}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
+                <!-- Margin above the button -->
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="1" BackgroundColor="Black">
+            <Label Text="By AprilFour" 
+                   TextColor="White" 
+                   VerticalOptions="End" 
+                   HorizontalOptions="End" 
+                   Margin="0,0,10,10"
+                   VerticalTextAlignment="End"
+                   HorizontalTextAlignment="End"/>
+            <!-- Margin to adjust position -->
+        </Grid>
+    </Grid>
 </ContentPage>
