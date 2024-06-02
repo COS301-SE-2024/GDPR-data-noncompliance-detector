@@ -1,7 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GDPR_Non_compliant_Detector.loginPage"  
-             Title="Deloitte."
+             Title="GDN"
              BackgroundColor="White">
     <!-- Set the background color to white -->
 

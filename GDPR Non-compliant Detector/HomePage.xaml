@@ -1,7 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GDPR_Non_compliant_Detector.HomePage"
-             Title="Deloitte."
+             Title="GDN"
              BackgroundColor="White">
     <!-- Set the background color to white -->
 
@@ -113,10 +113,10 @@
                 <Frame Grid.Column="2" BackgroundColor="LightGrey" BorderColor="LightGrey" Padding="20" Margin="0,0,10,0" HorizontalOptions="End" VerticalOptions="Start">
                     <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
                         <Label Text="Do you want to download your results?" 
-            HorizontalOptions="Center" 
-            TextColor="Black"
-            FontSize="16"                         
-            Margin="0,0,0,20"/>
+                                HorizontalOptions="Center" 
+                                TextColor="Black"
+                                FontSize="16"                         
+                                Margin="0,0,0,20"/> 
 
                         <Grid HorizontalOptions="Center" VerticalOptions="Center">
                             <Grid.ColumnDefinitions>
@@ -126,36 +126,36 @@
 
                             <StackLayout Spacing="10" Grid.Column="0" HorizontalOptions="Center">
                                 <Button Text="Excel"
-                    BackgroundColor="#86BC25"
-                    Clicked="OnExcelClicked"
-                    HorizontalOptions="Center" />
+                                    BackgroundColor="#86BC25"
+                                    Clicked="OnExcelClicked"
+                                    HorizontalOptions="Center" />
 
                                 <Button Text="Word"
-                    BackgroundColor="#86BC25"
-                    Clicked="OnWordClicked"
-                    HorizontalOptions="Center" />
+                                    BackgroundColor="#86BC25"
+                                    Clicked="OnWordClicked"
+                                    HorizontalOptions="Center" />
 
                                 <Button Text="PDF"
-                    BackgroundColor="#86BC25"
-                    Clicked="OnPDFClicked"
-                    HorizontalOptions="Center" />
+                                    BackgroundColor="#86BC25"
+                                    Clicked="OnPDFClicked"
+                                    HorizontalOptions="Center" />
                             </StackLayout>
 
                             <StackLayout Spacing="10" Grid.Column="1" Margin="20,0,0,0" HorizontalOptions="Center">
                                 <Button Text="Download"
-                    BackgroundColor="#0076A8"
-                    Clicked="OnPDFClicked"
-                    HorizontalOptions="Center" />
+                                    BackgroundColor="#0076A8"
+                                    Clicked="OnExcelDownloadClicked"
+                                    HorizontalOptions="Center" />
 
                                 <Button Text="Download"
-                    BackgroundColor="#0076A8"
-                    Clicked="OnPDFClicked"
-                    HorizontalOptions="Center" />
+                                    BackgroundColor="#0076A8"
+                                    Clicked="OnWordDownloadClicked"
+                                    HorizontalOptions="Center" />
 
                                 <Button Text="Download"
-                    BackgroundColor="#0076A8"
-                    Clicked="OnPDFClicked"
-                    HorizontalOptions="Center" />
+                                    BackgroundColor="#0076A8"
+                                    Clicked="OnPDFDownloadClicked"
+                                    HorizontalOptions="Center" />   
                             </StackLayout>
                         </Grid>
                     </StackLayout>

@@ -73,20 +73,24 @@ public partial class HomePage : ContentPage
     private async void OnWordClicked(object sender, EventArgs e)
     {
         await DisplayAlert("Word", "Word button clicked.", "Ok");
+
     }
 
     private async void OnExcelDownloadClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("ExcelDownload", "Excel download button clicked.", "Ok");
+        // Implement your logic here for the Excel button click
+        await DisplayAlert("Excel Download Button Clicked", "Excel download button clicked.", "OK");
     }
 
     private async void OnPDFDownloadClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("WordDownload", "PDF download button clicked.", "Ok");
+        // Implement your logic here for the PDF button click
+        await DisplayAlert("PDF Download Button Clicked", "PDF download button clicked.", "OK");
     }
 
     private async void OnWordDownloadClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("PDFDownload", "Word download button clicked.", "Ok");
+        // Implement your logic here for the Word button click
+        await DisplayAlert("Word Download Button Clicked", "Word download button clicked.", "OK");
     }
 }
