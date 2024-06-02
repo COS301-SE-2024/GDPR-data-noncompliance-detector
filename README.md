@@ -45,7 +45,7 @@ Dhinaz is currently pursuing Computer Science, Statistics and Data Science. He h
 ### Nevin Thomas 
 
 ### Description
-I'm a third-year BSc Information and Knowledge Systems student, adept at merging technology and business insights to create captivating social media web apps. Proficient in MongoDB, Angular, and React, I implement innovative solutions efficiently. My passion for music and design enhances user experiences, especially in projects like Echo. A natural team player, I excel in collaborative environments, leading and contributing with determination and an open mind. I am continuously refining my skills and I am ready to make a significant impact in technology and enterprise.
+As a third-year BSc Information and Knowledge Systems student, I specialize in merging technology and business insights to craft captivating social media web apps. Proficient in front-end development technologies like React, Ionic, Angular, and couple of more languages and frameworks, I implement innovative solutions efficiently. My passion for design enhances user experiences, reflecting in my projects where I prioritize intuitive interfaces and engaging interactions. A natural team player, I excel in collaborative environments, leading and contributing with determination and an open mind. Continuously refining my skills in front-end development, I am poised to make a significant impact in technology and enterprise.
 
 [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white "Github")](https://github.com/Nevin-Thomas) 
  [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white "Linkedin")](https://www.linkedin.com/in/nevin-thomas-a625462b3)
