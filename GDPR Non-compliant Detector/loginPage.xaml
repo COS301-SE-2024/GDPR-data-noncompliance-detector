@@ -47,8 +47,9 @@
 
                 <Label Text="Please enter your details to sign-in. This is a single sign-in." Style="{StaticResource LoginLabelStyle}" />
 
-                <Entry x:Name="UsernameEntry" Placeholder="Username" Keyboard="Text" WidthRequest="200"/>
-                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Keyboard="Text" WidthRequest="200"/>
+                <Entry x:Name="UsernameEntry" Placeholder="Username" Keyboard="Text" WidthRequest="200" TextColor="Black"/>
+                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Keyboard="Text" WidthRequest="200" TextColor="Black"/>
+
 
                 <Button Text="Sign-in" Clicked="OnSignInButtonClicked" Style="{StaticResource ButtonStyle}"/>
             </VerticalStackLayout>
