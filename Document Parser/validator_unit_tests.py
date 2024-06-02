@@ -24,7 +24,7 @@ class TestValidator(unittest.TestCase):
 
     def test_process_file_unsupported_type(self):
         with self.assertRaises(ValueError) as context:
-            self.validator.process_file('20240602_150552_o.txt')
+            self.validator.process_file('copy.txt')
         self.assertEqual(str(context.exception), "Unsupported file type")
 
     def test_process_file_not_found(self):

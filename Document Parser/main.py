@@ -5,7 +5,9 @@ def main():
 
     path = input("File Name: ")
     parser = document_parser(path)
-    parser.process()
+    path = parser.process()
+    print(path)
+    
 
 if __name__ == "__main__":
     try:

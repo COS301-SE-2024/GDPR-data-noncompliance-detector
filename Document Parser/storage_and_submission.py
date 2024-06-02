@@ -9,3 +9,4 @@ class storage_and_submission:
     def submit(self, text):
         with open(self.filename, 'w') as f:
             f.write(text)
+        return self.filename
