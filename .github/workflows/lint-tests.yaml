@@ -40,6 +40,7 @@ jobs:
           VALIDATE_NATURAL_LANGUAGE: false
           VALIDATE_PYTHON_FLAKE8: false
 
+  # doing this to use the config
   run-flake8-lint:
     name: Run flake8 lint
     runs-on: ubuntu-latest
