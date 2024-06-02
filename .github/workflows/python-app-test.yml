@@ -26,7 +26,7 @@ jobs:
       - name: Check for test files
         id: check
         run: |
-          if find . -type f -name "*.test.py" | grep -q .; then
+          if find . -type f -name "*_test.py" | grep -q .; then
             echo "::set-output name=tests_exist::true"
           else
             echo "::set-output name=tests_exist::false"
