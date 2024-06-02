@@ -12,9 +12,31 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  check-tests:
+    runs-on: ubuntu-latest
+    outputs:
+      tests_exist: ${{ steps.check.outputs.tests_exist }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check for test files
+        id: check
+        run: |
+          if find . -type f -name "*.test.py" | grep -q .; then
+            echo "::set-output name=tests_exist::true"
+          else
+            echo "::set-output name=tests_exist::false"
+          fi
+      
+
+
+  run-tests:
 
     runs-on: ubuntu-latest
+    needs: check-tests
+    if: needs.check-tests.outputs.tests_exist == 'true'
 
     steps:
     - uses: actions/checkout@v4
