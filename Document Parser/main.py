@@ -1,4 +1,5 @@
 from document_parser import document_parser
+import sys
 
 def main():
 
@@ -7,4 +8,8 @@ def main():
     parser.process()
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit as e:
+        print("An error occurred: ", e)
+        sys.exit(1)

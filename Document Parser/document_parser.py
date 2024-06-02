@@ -1,4 +1,5 @@
 import os
+import sys
 from validator import validator
 from text_extractor import text_extractor
 from storage_and_submission import storage_and_submission
@@ -11,6 +12,10 @@ class document_parser:
         self.storage_and_submission = storage_and_submission()
 
     def process(self):
-        extension = self.validator.process_file(self.file_path)
-        text = self.text_extractor.extract_text(self.file_path, extension)
-        self.storage_and_submission.submit(text)
+        try:
+            extension = self.validator.process_file(self.file_path)
+            text = self.text_extractor.extract_text(self.file_path, extension)
+            self.storage_and_submission.submit(text)
+        except SystemExit as e:
+            print("An error occurred: ", e)
+            sys.exit(1)

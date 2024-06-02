@@ -1,9 +1,11 @@
-import sys
 import os
 
 class validator:
     def process_file(self, file_path):
         try:
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"File not found: {file_path}")
+
             extension = os.path.splitext(file_path)[1].lower()
             if extension == '.pdf':
                 proceed = True
@@ -12,14 +14,9 @@ class validator:
             elif extension in ['.xlsx', '.xls']:
                 proceed = True
             else:
-                print("Unsupported file type")
-                sys.exit(1)
+                raise ValueError("Unsupported file type")
 
         except FileNotFoundError:
-            print(f"File not found: {file_path}")
-            sys.exit(1)
-
-        if not proceed:
-            extension = ''
+            raise FileNotFoundError(f"File not found: {file_path}")
 
         return extension
