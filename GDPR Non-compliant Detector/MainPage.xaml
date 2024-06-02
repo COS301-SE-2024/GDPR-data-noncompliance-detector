@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GDPR_Non_compliant_Detector.MainPage"
-             BackgroundColor="White">
-    <!-- Set the background color to white -->
+             BackgroundColor="White"> <!-- Set the background color to white -->
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -30,26 +29,26 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <!-- Height of the footer -->
         </Grid.RowDefinitions>
 
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout
-                Padding="450,0"
-                Spacing="20">
+            <VerticalStackLayout Spacing="20">
 
                 <Image
                     Source="https://raw.githubusercontent.com/COS301-SE-2024/GDPR-data-noncompliance-detector/develop/documentation/headshots/GND.png"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" 
-                    Margin="0,40,0,0" />
-
+                    Margin="0,40,0,0"
+                    HeightRequest="300" />
+                <!-- Adjust image height -->
 
                 <Label
                     Text="Welcome to the GDPR"
                     Style="{StaticResource Headline}"
-                    SemanticProperties.HeadingLevel="Level1" />
+                    SemanticProperties.HeadingLevel="Level1"
+                    HorizontalOptions="CenterAndExpand" />
 
                 <Button
                     x:Name="CounterBtn"
@@ -57,32 +56,17 @@
                     Style="{StaticResource ButtonStyle}"
                     SemanticProperties.Hint="Counts the number of times you click"
                     Clicked="OnNavigateButtonClicked"
-                    HorizontalOptions="Center" 
-                    Margin="0,40,0,0">
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="Style" Value="{StaticResource HoverButtonStyle}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </VisualStateManager.VisualStateGroups>
-                </Button>
+                    HorizontalOptions="Center" />
                 <!-- Margin above the button -->
 
             </VerticalStackLayout>
         </ScrollView>
 
-        <Grid Grid.Row="1" BackgroundColor="Black">
+        <Grid Grid.Row="1" BackgroundColor="Black" Padding="10">
             <Label Text="By AprilFour" 
                    TextColor="White" 
                    VerticalOptions="End" 
-                   HorizontalOptions="End" 
-                   Margin="0,0,10,10"
+                   HorizontalOptions="End"
                    VerticalTextAlignment="End"
                    HorizontalTextAlignment="End"/>
             <!-- Margin to adjust position -->

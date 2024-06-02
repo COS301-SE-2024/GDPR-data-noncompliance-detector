@@ -1,32 +1,61 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GDPR_Non_compliant_Detector.loginPage"
-             Title="Deloitte.">
-    <VerticalStackLayout
-        Padding="30"
-        Spacing="25"
-        VerticalOptions="Center">
+             x:Class="GDPR_Non_compliant_Detector.loginPage"  
+             Title="Deloitte."
+             BackgroundColor="White">
+    <!-- Set the background color to white -->
 
-        <Label Text="Login"
-               FontSize="32"
-               HorizontalOptions="Center"
-               VerticalOptions="CenterAndExpand"/>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="FooterLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="Margin" Value="0,0,10,10" />
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#86BC25" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="LoginLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="32" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-        <Entry x:Name="UsernameEntry"
-               Placeholder="Username"
-               Keyboard="Text"
-               VerticalOptions="CenterAndExpand"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <Entry x:Name="PasswordEntry"
-                Placeholder="Password"
-                IsPassword="True"
-                Keyboard="Text"
-                VerticalOptions="CenterAndExpand"/>
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
 
-        <Button Text="Sign-in"
-                Clicked="OnSignInButtonClicked"
-                VerticalOptions="CenterAndExpand"/>
+                <Image
+                    Source="https://raw.githubusercontent.com/COS301-SE-2024/GDPR-data-noncompliance-detector/develop/documentation/headshots/GND.png"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" 
+                    Margin="0,40,0,0"
+                    HeightRequest="200" />
+                <!-- Adjust image height -->
 
-    </VerticalStackLayout>
+                <Label Text="Please enter your details to sign-in. This is a single sign-in." Style="{StaticResource LoginLabelStyle}" />
+
+                <Entry x:Name="UsernameEntry" Placeholder="Username" Keyboard="Text" WidthRequest="200"/>
+                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Keyboard="Text" WidthRequest="200"/>
+
+                <Button Text="Sign-in" Clicked="OnSignInButtonClicked" Style="{StaticResource ButtonStyle}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="1" BackgroundColor="Black" Padding="10">
+            <Label Text="By AprilFour" Style="{StaticResource FooterLabelStyle}" />
+        </Grid>
+    </Grid>
 </ContentPage>
