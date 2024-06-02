@@ -15,9 +15,13 @@ class text_extractor:
 
     def extract_data_from_excel(self, file_path):
         df = pd.read_excel(file_path)
-        return df.to_string(index=False)
+        if df.empty:
+            column_name = df.columns[0]
+            return column_name
+        else:
+            return df.to_string(index=False)
 
-    def extract_text(self, file_path, extension):
+    def extract_text_multi(self, file_path, extension):
         if extension == '.pdf':
             text = self.extract_text_from_pdf(file_path)
         elif extension == '.docx':
