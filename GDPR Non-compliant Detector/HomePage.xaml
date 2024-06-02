@@ -60,7 +60,7 @@
                         Grid.Column="3" 
                         Clicked="OnHelpButtonClicked" />
             </Grid>
-
+                
             <!-- Main Content Area -->
             <Grid Grid.Row="1" Padding="50" ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
@@ -107,8 +107,7 @@
                                HeightRequest="350"/>
                     </Frame>
                 </StackLayout>
-
-                <!-- Right Panel -->
+              
                 <!-- Right Panel -->
                 <Frame Grid.Column="2" BackgroundColor="LightGrey" BorderColor="LightGrey" Padding="20" Margin="0,0,10,0" HorizontalOptions="End" VerticalOptions="Start">
                     <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
@@ -125,20 +124,26 @@
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Spacing="10" Grid.Column="0" HorizontalOptions="Center">
-                                <Button Text="Excel"
+                                <Button x:Name="ExcelButton"
+                                    Text="Excel"
                                     BackgroundColor="#86BC25"
                                     Clicked="OnExcelClicked"
-                                    HorizontalOptions="Center" />
+                                    HorizontalOptions="FillAndExpand"
+                                    Margin="0,0,10,0"/>
 
-                                <Button Text="Word"
+                                <Button x:Name="WordButton"
+                                    Text="Word"
                                     BackgroundColor="#86BC25"
                                     Clicked="OnWordClicked"
-                                    HorizontalOptions="Center" />
+                                    HorizontalOptions="FillAndExpand"
+                                    Margin="0,0,10,0"/>
 
-                                <Button Text="PDF"
+                                <Button x:Name="PDFButton"
+                                    Text="PDF"
                                     BackgroundColor="#86BC25"
                                     Clicked="OnPDFClicked"
-                                    HorizontalOptions="Center" />
+                                    HorizontalOptions="FillAndExpand"
+                                    Margin="0,0,10,0"/>
                             </StackLayout>
 
                             <StackLayout Spacing="10" Grid.Column="1" Margin="20,0,0,0" HorizontalOptions="Center">
@@ -157,10 +162,10 @@
                                     Clicked="OnPDFDownloadClicked"
                                     HorizontalOptions="Center" />   
                             </StackLayout>
+                            
                         </Grid>
                     </StackLayout>
                 </Frame>
-
             </Grid>
         </Grid>
 
