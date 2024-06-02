@@ -1,7 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GDPR_Non_compliant_Detector.loginPage"  
-             Title="GDN"
+             Title="GND"
              BackgroundColor="White">
     <!-- Set the background color to white -->
 
@@ -46,7 +46,7 @@
                     HeightRequest="200" />
                 <!-- Adjust image height -->
 
-                <Label Text="Please enter your details to sign-in. This is a single sign-in." Style="{StaticResource LoginLabelStyle}" />
+                <Label Text="Please enter your details to sign-in" Style="{StaticResource LoginLabelStyle}" />
 
                 <Entry x:Name="UsernameEntry" Placeholder="Username" Keyboard="Text" WidthRequest="200" TextColor="Black"/>
                 <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Keyboard="Text" WidthRequest="200" TextColor="Black"/>
