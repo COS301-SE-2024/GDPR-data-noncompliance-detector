@@ -1,5 +1,6 @@
 import os
 
+
 class validator:
     def process_file(self, file_path):
         try:
@@ -9,10 +10,14 @@ class validator:
             extension = os.path.splitext(file_path)[1].lower()
             if extension == '.pdf':
                 proceed = True
+                print(proceed)
             elif extension == '.docx':
                 proceed = True
+                print(proceed)
+
             elif extension in ['.xlsx', '.xls']:
                 proceed = True
+                print(proceed)
             else:
                 raise ValueError("Unsupported file type")
 

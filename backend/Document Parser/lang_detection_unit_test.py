@@ -1,6 +1,7 @@
 import unittest
 from lang_detection import location_finder
 
+
 class TestLocationFinder(unittest.TestCase):
 
     def setUp(self):
@@ -25,6 +26,7 @@ class TestLocationFinder(unittest.TestCase):
     def test_detect_country_invalid_file(self):
         result = self.finder.detect_country('dummy.txt')
         self.assertIsNone(result)
+
 
 if __name__ == '__main__':
     unittest.main()

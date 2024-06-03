@@ -2,6 +2,7 @@ import pandas as pd
 from pdfminer.high_level import extract_text
 from docx import Document
 
+
 class text_extractor:
     def __init__(self):
         self.ext = ''

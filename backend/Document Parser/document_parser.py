@@ -1,8 +1,9 @@
-import os
+# import os
 import sys
 from validator import validator
 from text_extractor import text_extractor
 from storage_and_submission import storage_and_submission
+
 
 class document_parser:
     def __init__(self, file_path):

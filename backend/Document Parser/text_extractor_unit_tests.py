@@ -5,7 +5,8 @@ import os
 from openpyxl import Workbook
 from docx import Document
 from reportlab.pdfgen import canvas
-import pandas as pd
+# import pandas as pd
+
 
 class TestTextExtractor(unittest.TestCase):
     def setUp(self):
@@ -57,6 +58,7 @@ class TestTextExtractor(unittest.TestCase):
             self.assertEqual(result, expected_result)
 
         os.remove(temp.name)
+
 
 if __name__ == '__main__':
     unittest.main()

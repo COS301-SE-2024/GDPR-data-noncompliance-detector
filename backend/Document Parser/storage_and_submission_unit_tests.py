@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from storage_and_submission import storage_and_submission
 
+
 class TestStorageAndSubmission(unittest.TestCase):
     def setUp(self):
         self.storage = storage_and_submission()
@@ -21,6 +22,7 @@ class TestStorageAndSubmission(unittest.TestCase):
             file_text = f.read()
         self.assertEqual(file_text, text)
         os.remove(self.storage.filename)
+
 
 if __name__ == '__main__':
     unittest.main()

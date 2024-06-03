@@ -1,7 +1,7 @@
 import unittest
 import os
-import sys
 from validator import validator
+
 
 class TestValidator(unittest.TestCase):
     def setUp(self):
@@ -40,6 +40,7 @@ class TestValidator(unittest.TestCase):
             self.assertEqual(extension, '.pdf')
         finally:
             os.path.exists = original_exists
+
 
 if __name__ == '__main__':
     unittest.main()
