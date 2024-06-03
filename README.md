@@ -50,7 +50,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
       </p>
     </td>
     <td style="width: 150px; vertical-align: top;">
-      <p><strong>Role:</strong> AI/ML Specialist</p>
+      <p><strong>Role:</strong> Team Leader/Backend Developer</p>
     </td>
     <td style="vertical-align: top;">
       <p>Dhinaz is currently pursuing Computer Science, Statistics and Data Science. He has worked with multiple technologies relating to all fields, and is especially interested in AI, ML and regression applications. He has completed multiple design and research projects related to data analysis and software modelling, two of which are linked above. He is also self-taught in Tableau and is currently working as a teaching assistant for COS 221 (Introduction to databases) at the University of Pretoria.</p>
@@ -73,7 +73,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
       </p>
     </td>
     <td style="width: 150px; vertical-align: top;">
-      <p><strong>Role:</strong> Web Developer</p>
+      <p><strong>Role:</strong> Designer/Frontend Developer</p>
     </td>
     <td style="vertical-align: top;">
       <p>I'm a third-year BSc Information and Knowledge Systems student, adept at merging technology and business insights to create captivating social media web apps. Proficient in MongoDB, Angular, and React, I implement innovative solutions efficiently. My passion for music and design enhances user experiences, especially in projects like Echo. A natural team player, I excel in collaborative environments, leading and contributing with determination and an open mind. I am continuously refining my skills and I am ready to make a significant impact in technology and enterprise.</p>
@@ -96,7 +96,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
       </p>
     </td>
     <td style="width: 150px; vertical-align: top;">
-      <p><strong>Role:</strong> Data Analyst</p>
+      <p><strong>Role:</strong> Backend Engineer/DevOps</p>
     </td>
     <td style="vertical-align: top;">
       <p>I am a final year BSc Information and Knowledge Systems student. This degree has allowed me to gain invaluable experience in not only the fields of computer science but statistics and data analytics as well. I have a vested interest in the field of data science and using the insights that can be gained from analysing a system, to optimise it as much as possible. I have experience in building comprehensive web and desktop applications and have worked on the frontend side of development for multiple projects.</p>
