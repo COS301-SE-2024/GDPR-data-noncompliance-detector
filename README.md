@@ -81,6 +81,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
   </tr>
 </table>
 
+
 ### Yeshlen Moodley
 <table style="width: 100%;">
   <tr>
@@ -158,7 +159,7 @@ Email: aprilfour301@gmail.com
 ## Tech Stack
 
 ### Frontend
-C# .NET
+C# .NET MAUI
 
 ### Backend
 Python
