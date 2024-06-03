@@ -1,9 +1,9 @@
 <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/GND.png" alt="GND Logo">
-<div align="center">
-  [![codecov](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector/graph/badge.svg?token=nEPpXWGssM)](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector)
-  ![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2024/GDPR-data-noncompliance-detector)
-  ![GitHub pull requests](https://img.shields.io/github/issues-pr/COS301-SE-2024/GDPR-data-noncompliance-detector)
-</div>
+
+[![codecov](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector/graph/badge.svg?token=nEPpXWGssM)](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector)
+![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2024/GDPR-data-noncompliance-detector)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/COS301-SE-2024/GDPR-data-noncompliance-detector)
+
 
 
 # GDPR Data Noncompliance Detector
