@@ -55,7 +55,7 @@ jobs:
       - name: Test with pytest
         run: |
           ls -a
-          cd Document_parser
+          cd backend/Document_parser
           pytest --cov=. --cov-report=xml
 
       - name: Upload coverage reports to Codecov
