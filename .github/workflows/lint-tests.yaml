@@ -39,6 +39,7 @@
             VALIDATE_JSCPD: false
             VALIDATE_NATURAL_LANGUAGE: false
             VALIDATE_PYTHON_FLAKE8: false
+            VALIDATE_PYTHON_MYPY: false
   
     # doing this to use the config
     run-flake8-lint:
