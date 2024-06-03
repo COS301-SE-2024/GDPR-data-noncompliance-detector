@@ -84,7 +84,7 @@ We use [Monday.com](https://tuks247552.monday.com/boards)
       <p><strong>Role:</strong> Designer/Frontend Engineer</p>
     </td>
     <td style="vertical-align: top;">
-      <p>I'm a third-year BSc Information and Knowledge Systems student, adept at merging technology and business insights to create captivating social media web apps. Proficient in MongoDB, Angular, and React, I implement innovative solutions efficiently. My passion for music and design enhances user experiences, especially in projects like Echo. A natural team player, I excel in collaborative environments, leading and contributing with determination and an open mind. I am continuously refining my skills and I am ready to make a significant impact in technology and enterprise.</p>
+      <p>As a third-year BSc Information and Knowledge Systems student, I specialize in merging technology and business insights to craft captivating social media web apps. Proficient in front-end development technologies like React, Ionic, and Angular, I implement innovative solutions efficiently. My passion for design enhances user experiences, reflecting in my projects where I prioritize intuitive interfaces and engaging interactions. A natural team player, I excel in collaborative environments, leading and contributing with determination and an open mind. Continuously refining my skills in front-end development, I am poised to make a significant impact in technology and enterprise.</p>
     </td>
   </tr>
 </table>
