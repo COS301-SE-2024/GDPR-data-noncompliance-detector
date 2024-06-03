@@ -4,7 +4,7 @@ import sys
 
 def main():
 
-    path = input("File Name: ")
+    path = input("File Name:  ")
     parser = document_parser(path)
     file = parser.process()
     print(file)
