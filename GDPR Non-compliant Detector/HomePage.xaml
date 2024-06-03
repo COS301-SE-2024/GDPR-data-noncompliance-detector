@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GDPR_Non_compliant_Detector.HomePage"
              Title="GND"
-             BackgroundColor="White">
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#333333}">
     <!-- Set the background color to white -->
 
     <ContentPage.Resources>
@@ -17,9 +17,9 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid BackgroundColor="White">
+    <Grid BackgroundColor="{AppThemeBinding Light=White, Dark=DarkGray}">
         <!-- Header -->
-        <Grid BackgroundColor="White">
+        <Grid BackgroundColor="{AppThemeBinding Light=White, Dark=DarkGray}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -60,7 +60,7 @@
                         Grid.Column="3" 
                         Clicked="OnHelpButtonClicked" />
             </Grid>
-                
+
             <!-- Main Content Area -->
             <Grid Grid.Row="1" Padding="50" ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
@@ -107,7 +107,7 @@
                                HeightRequest="350"/>
                     </Frame>
                 </StackLayout>
-              
+
                 <!-- Right Panel -->
                 <Frame Grid.Column="2" BackgroundColor="LightGrey" BorderColor="LightGrey" Padding="20" Margin="0,0,10,0" HorizontalOptions="End" VerticalOptions="Start">
                     <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
@@ -115,7 +115,7 @@
                                 HorizontalOptions="Center" 
                                 TextColor="Black"
                                 FontSize="16"                         
-                                Margin="0,0,0,20"/> 
+                                Margin="0,0,0,20"/>
 
                         <Grid HorizontalOptions="Center" VerticalOptions="Center">
                             <Grid.ColumnDefinitions>
@@ -160,9 +160,9 @@
                                 <Button Text="Download"
                                     BackgroundColor="#0076A8"
                                     Clicked="OnPDFDownloadClicked"
-                                    HorizontalOptions="Center" />   
+                                    HorizontalOptions="Center" />
                             </StackLayout>
-                            
+
                         </Grid>
                     </StackLayout>
                 </Frame>

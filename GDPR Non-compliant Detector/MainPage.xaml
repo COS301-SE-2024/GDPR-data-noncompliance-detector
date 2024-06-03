@@ -3,24 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GDPR_Non_compliant_Detector.MainPage"
              Title="GND"
-             BackgroundColor="White"> <!-- Set the background color to white -->
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#333333}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="Headline" TargetType="Label">
                 <Setter Property="FontSize" Value="24" />
-                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
             <Style x:Key="ButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#86BC25" />
-                <Setter Property="TextColor" Value="Black" />
-                <Setter Property="CornerRadius" Value="5" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-            </Style>
-            <Style x:Key="HoverButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#7B9F35" />
-                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#86BC25, Dark=#7B9F35}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="CornerRadius" Value="5" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
@@ -31,10 +25,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <!-- Height of the footer -->
         </Grid.RowDefinitions>
 
-        <ScrollView Grid.Row="0">
+        <ScrollView Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#333333}">
             <VerticalStackLayout Spacing="20">
 
                 <Image
@@ -43,7 +36,6 @@
                     VerticalOptions="Center" 
                     Margin="0,40,0,0"
                     HeightRequest="300" />
-                <!-- Adjust image height -->
 
                 <Label
                     Text="Welcome to GND"
@@ -58,19 +50,17 @@
                     SemanticProperties.Hint="Counts the number of times you click"
                     Clicked="OnNavigateButtonClicked"
                     HorizontalOptions="Center" />
-                <!-- Margin above the button -->
 
             </VerticalStackLayout>
         </ScrollView>
 
         <Grid Grid.Row="1" BackgroundColor="Black" Padding="10">
             <Label Text="By AprilFour" 
-                   TextColor="White" 
+                   TextColor="{AppThemeBinding Light=White, Dark=White}" 
                    VerticalOptions="End" 
                    HorizontalOptions="End"
                    VerticalTextAlignment="End"
                    HorizontalTextAlignment="End"/>
-            <!-- Margin to adjust position -->
         </Grid>
     </Grid>
 </ContentPage>

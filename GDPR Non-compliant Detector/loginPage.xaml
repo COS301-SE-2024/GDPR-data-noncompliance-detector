@@ -1,9 +1,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GDPR_Non_compliant_Detector.loginPage"  
+             x:Class="GDPR_Non_compliant_Detector.loginPage"
              Title="GND"
-             BackgroundColor="White">
-    <!-- Set the background color to white -->
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#333333}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -15,16 +14,19 @@
                 <Setter Property="Margin" Value="0,0,10,10" />
             </Style>
             <Style x:Key="ButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#86BC25" />
-                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#86BC25, Dark=#7B9F35}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="CornerRadius" Value="5" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
             <Style x:Key="LoginLabelStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="FontSize" Value="18" />
-                <!-- Adjust the font size here -->
                 <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=LightGreen, Dark=DarkGray}" />
+                <Setter Property="WidthRequest" Value="200" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -35,7 +37,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ScrollView Grid.Row="0">
+        <ScrollView Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#333333}">
             <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
 
                 <Image
@@ -44,15 +46,14 @@
                     VerticalOptions="Center" 
                     Margin="0,40,0,0"
                     HeightRequest="200" />
-                <!-- Adjust image height -->
 
                 <Label Text="Please enter your details to sign-in." Style="{StaticResource LoginLabelStyle}" />
 
+                <Entry x:Name="UsernameEntry" Placeholder="Username" Keyboard="Text" Style="{StaticResource EntryStyle}" TextColor="Black" />
+                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Keyboard="Text" Style="{StaticResource EntryStyle}" TextColor="Black" />
 
-                <Entry x:Name="UsernameEntry" Placeholder="Username" Keyboard="Text" BackgroundColor="LightGreen" WidthRequest="200" TextColor="Black"/>
-                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Keyboard="Text" BackgroundColor="LightGreen" WidthRequest="200" TextColor="Black"/>
 
-                <Button Text="Sign-in" Clicked="OnSignInButtonClicked" Style="{StaticResource ButtonStyle}"/>
+                <Button Text="Sign-in" Clicked="OnSignInButtonClicked" Style="{StaticResource ButtonStyle}" />
             </VerticalStackLayout>
         </ScrollView>
 
