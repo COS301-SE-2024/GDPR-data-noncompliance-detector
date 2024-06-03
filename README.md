@@ -32,6 +32,7 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 We use [Monday.com](https://tuks247552.monday.com/boards)
 
 ## Testing 
+[Testing](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/lang_detection_unit_test.py)
 
 ## Team
 
