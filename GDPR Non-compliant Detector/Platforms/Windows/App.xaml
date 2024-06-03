@@ -1,0 +1,8 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="GDPR_Non_compliant_Detector.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:GDPR_Non_compliant_Detector.WinUI">
+
+</maui:MauiWinUIApplication>
