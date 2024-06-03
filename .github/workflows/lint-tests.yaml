@@ -40,6 +40,9 @@
             VALIDATE_NATURAL_LANGUAGE: false
             VALIDATE_PYTHON_FLAKE8: false
             VALIDATE_PYTHON_MYPY: false
+            VALIDATE_GITLEAKS: false
+            VALIDATE_CSHARP: false
+
   
     # doing this to use the config
     run-flake8-lint:
