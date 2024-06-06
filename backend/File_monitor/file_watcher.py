@@ -1,8 +1,15 @@
 import sys
 import time
 import logging
+import json
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+
+# runs with : python file_watcher.py <path> <file_extension>
+# eg : python file_watcher.py /home/user/Downloads/ txt,docx,pdf,xlsx
+# # output:
+# {"type": "created", "path": "/Capstone/backend/File_monitor/dir/eg.pdf"}
+# {"type": "modified", "path": "/Capstone/backend/File_monitor/as.txt"}
 
 
 def check_file_extension(filename, reg):
@@ -18,12 +25,15 @@ class handle(FileSystemEventHandler):
     def on_modified(self, event):
         # print(f'{event.event_type}  path : {event.src_path}')
         if (check_file_extension(event.src_path, self.file_extension)):
-            print(f"modified:{event.src_path}")
+            print(json.dumps({"type": "modified", "path": event.src_path}))
+            return json.dumps({"type": "modified", "path": event.src_path})
 
     def on_created(self, event):
         # print(f'{event.event_type}  path : {event.src_path}')
         if (check_file_extension(event.src_path, self.file_extension)):
-            print(f"created:{event.src_path}")
+            print(json.dumps({"type": "created", "path": event.src_path}))
+            return json.dumps({"type": "created", "path": event.src_path})
+
 
     # def on_deleted(self, event):
     #     print(f'{event.event_type}  path : {event.src_path}')
