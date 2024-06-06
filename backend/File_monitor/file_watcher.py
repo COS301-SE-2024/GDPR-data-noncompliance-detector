@@ -34,7 +34,6 @@ class handle(FileSystemEventHandler):
             print(json.dumps({"type": "created", "path": event.src_path}))
             return json.dumps({"type": "created", "path": event.src_path})
 
-
     # def on_deleted(self, event):
     #     print(f'{event.event_type}  path : {event.src_path}')
 
