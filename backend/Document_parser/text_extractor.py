@@ -7,6 +7,8 @@ import pytesseract
 from PIL import Image
 import io
 import pdfplumber
+import openpyxl #we need this for excel
+from openpyxl.drawing.image import Image as OpenPyxlImage #we need this for excel
 class text_extractor:
     def __init__(self):
         self.ext = ''
@@ -49,19 +51,36 @@ class text_extractor:
                 img = document.part.rels[rel].target_part.blob
                 image = Image.open(io.BytesIO(img))
                 
-                # Perform OCR on the image
                 ocr_text = pytesseract.image_to_string(image)
                 combined_text.append(ocr_text)
         
         return "\n".join(combined_text)
 
     def extract_data_from_excel(self, file_path):
-        df = pd.read_excel(file_path)
-        if df.empty:
-            column_name = df.columns[0]
-            return column_name
-        else:
-            return df.to_string(index=False)
+        wb = openpyxl.load_workbook(file_path)
+        combined_text = []
+
+        for sheet_name in wb.sheetnames:
+            sheet = wb[sheet_name]
+
+            df = pd.read_excel(file_path, sheet_name=sheet_name)
+            if not df.empty:
+                combined_text.append(df.to_string(index=False))
+
+            for image in sheet._images:
+                try:
+                    img = image.ref
+                    if isinstance(img, OpenPyxlImage):
+                        img_stream = io.BytesIO(img.image)
+                        image_pil = Image.open(img_stream)
+
+                        ocr_text = pytesseract.image_to_string(image_pil)
+                        combined_text.append(ocr_text)
+                except Exception as e:
+                    print(f"Error processing image: {e}")
+                    combined_text.append('')
+
+        return "\n".join(combined_text)
 
     def extract_text_multi(self, file_path, extension):
         if extension == '.pdf':
