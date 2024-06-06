@@ -1,6 +1,7 @@
 import pandas as pd
 from pdfminer.high_level import extract_text
 from docx import Document
+from docx.shared import Inches
 import fitz
 import pytesseract
 from PIL import Image
@@ -37,8 +38,22 @@ class text_extractor:
         return "\n".join(combined_text)
 
     def extract_text_from_docx(self, file_path):
-        doc = Document(file_path)
-        return ' '.join([paragraph.text for paragraph in doc.paragraphs])
+        document = Document(file_path)
+        combined_text = []
+
+        for para in document.paragraphs:
+            combined_text.append(para.text)
+        
+        for rel in document.part.rels:
+            if "image" in document.part.rels[rel].target_ref:
+                img = document.part.rels[rel].target_part.blob
+                image = Image.open(io.BytesIO(img))
+                
+                # Perform OCR on the image
+                ocr_text = pytesseract.image_to_string(image)
+                combined_text.append(ocr_text)
+        
+        return "\n".join(combined_text)
 
     def extract_data_from_excel(self, file_path):
         df = pd.read_excel(file_path)
