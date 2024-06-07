@@ -2,7 +2,6 @@ import unittest
 from watchdog.events import FileModifiedEvent, FileCreatedEvent
 import json
 import file_watcher
-import os
 
 class TestFileWatcher(unittest.TestCase):
 
