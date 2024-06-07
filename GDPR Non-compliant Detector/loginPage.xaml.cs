@@ -7,20 +7,20 @@ public partial class loginPage : ContentPage
 		InitializeComponent();
 	}
 	string username = "admin";
-	string password = "password";
+	// string pw = "pw";
 	private async void OnSignInButtonClicked(object sender, EventArgs e)
     {
 		string username = UsernameEntry.Text;
-		string password = PasswordEntry.Text;
-        //I want you to check if the user has entered the right username and right password 
-        //if the user has entered the right username and password then display a message box saying "You have successfully logged in"
+		// string pw = PasswordEntry.Text;
+        //I want you to check if the user has entered the right username and right pw 
+        //if the user has entered the right username and pw then display a message box saying "You have successfully logged in"
         //Then take the user to the HomePage
 
-        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(username) )
         {
-            await DisplayAlert("Error", "Please enter both username and password.", "OK");
+            await DisplayAlert("Error", "Please enter both username and pw.", "OK");
         }
-        else if (username == this.username && password == this.password)
+        else if (username == this.username )
         {
             await DisplayAlert("Success", "You have successfully logged in", "OK");
             await Navigation.PushAsync(new HomePage());
@@ -28,7 +28,7 @@ public partial class loginPage : ContentPage
         }
         else
         {
-            await DisplayAlert("Error", "Invalid username or password.", "OK");
+            await DisplayAlert("Error", "Invalid username or pw.", "OK");
         }
 
     }
