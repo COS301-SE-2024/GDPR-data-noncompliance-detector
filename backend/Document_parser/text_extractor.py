@@ -8,7 +8,7 @@ from PIL import Image
 import io
 import pdfplumber
 import openpyxl #we need this for excel
-from openpyxl.drawing.image import Image as OpenPyxlImage #we need this for excel
+from openpyxl_image_loader import SheetImageLoader
 class text_extractor:
     def __init__(self):
         self.ext = ''
@@ -67,18 +67,16 @@ class text_extractor:
             if not df.empty:
                 combined_text.append(df.to_string(index=False))
 
-            for image in sheet._images:
-                try:
-                    img = image.ref
-                    if isinstance(img, OpenPyxlImage):
-                        img_stream = io.BytesIO(img.image)
-                        image_pil = Image.open(img_stream)
-
-                        ocr_text = pytesseract.image_to_string(image_pil)
-                        combined_text.append(ocr_text)
-                except Exception as e:
+            try:
+                image_loader = SheetImageLoader(sheet)
+                for row in sheet.iter_rows():
+                    for cell in row:
+                        if image_loader.image_in(cell.coordinate):
+                            image = image_loader.get(cell.coordinate)
+                            ocr_text = pytesseract.image_to_string(image)
+                            combined_text.append(ocr_text)
+            except Exception as e:
                     print(f"Error processing image: {e}")
-                    combined_text.append('')
 
         return "\n".join(combined_text)
 
