@@ -40,6 +40,9 @@ class handle(FileSystemEventHandler):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    if (len(sys.argv) < 3):
+        logging.error("Please provide the path and file extension")
+        sys.exit(1)
     path = sys.argv[1]
     ext = sys.argv[2]
     extparams = ext.split(',')

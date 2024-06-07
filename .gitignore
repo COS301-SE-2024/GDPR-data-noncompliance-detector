@@ -2,5 +2,7 @@
 # Ignore bin and obj folders
 bin/
 obj/
-/__pycache__/
+
+# recursivley ignores all __pycache__
+**/__pycache__/
 
