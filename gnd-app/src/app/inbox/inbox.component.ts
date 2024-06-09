@@ -6,7 +6,7 @@ import { CommonModule, NgIf } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './inbox.component.html',
-  styleUrl: './inbox.component.css'
+  styleUrls: ['./inbox.component.css']
 })
 export class InboxComponent {
 
