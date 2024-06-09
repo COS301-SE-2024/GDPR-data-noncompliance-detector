@@ -1,23 +1,17 @@
 from document_parser import document_parser
-from lang_detection import location_finder
+from detection_engine import detection_engine
 import sys
 
 def main():
 
+    parser = document_parser()
+    engine = detection_engine()
     path = input("File Name:  ")
-    parser = document_parser(path)
-    file = parser.process()
-    print(file)
-    locale_search = location_finder()
-    countries = locale_search.detect_country(file)
-
-    if countries:
-        print("Most probable countries of origin:")
-        for country in countries:
-            print(f'Country: {country[0]}, Probability: {country[1]}')
-
-    else:
-        print("Could not determine the country of origin.")
+    file = parser.process(path)
+    result = engine.process(file)
+    print(result)
+    # print(file)
+    
     
 
 if __name__ == "__main__":
