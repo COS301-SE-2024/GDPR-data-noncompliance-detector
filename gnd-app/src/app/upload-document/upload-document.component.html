@@ -1,1 +1,53 @@
-<p>upload-document works!</p>
+<link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold" rel="stylesheet">
+<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+<div class="header-container">
+  <header class="header">
+    Upload a File
+  </header>
+</div>
+
+<div class="containers">
+  <div class="inbox-rectangle">
+    <h2 class="inbox-header">
+      Upload a file
+    </h2>
+    <div class="divider"></div>
+    <!-- Add your file upload elements here -->
+      <div class="upload-container">
+        <div class="upload-icon">
+          <i class="fas fa-cloud-upload-alt"></i>
+        </div>
+        <div class="upload-text">
+          <p class="upload-description">
+            Drag and drop or
+            <a routerLink="/" class="upload-link" (click)="fileInput.click()">
+              select file
+            </a>
+            <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+          </p>
+        </div>
+      </div>
+  </div>
+
+  <div class="analysis-rectangle">
+    <h2 class="analysis-header">
+        Analysis
+    </h2>
+    <div class="divider"></div>
+
+    <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Upload a file to view results</p>
+
+    <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
+        <p>Overall Rating: {{currentAnalysis.rating}}</p>
+        <p>Country of Origin: {{currentAnalysis.origin}}</p>
+        <p>Potential Violation Areas: {{currentAnalysis.violationAreas}}</p>
+        <p>Total Violations: {{currentAnalysis.numViolations}}</p>
+    </div>
+</div>
+</div>
+
+<div class="buttons">
+  <!-- Add your buttons here -->
+</div>

@@ -17,7 +17,11 @@ import { UploadDocumentComponent } from './upload-document/upload-document.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule
+    CommonModule,
+    InboxComponent,
+    HomeComponent,
+    ReportComponent,
+    UploadDocumentComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

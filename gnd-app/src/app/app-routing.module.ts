@@ -7,11 +7,12 @@ import { ReportComponent } from './report/report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'inbox', component: InboxComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'report', component: ReportComponent},
-  {path: 'upload', component: UploadDocumentComponent},
-
+  { path: 'home', component: HomeComponent},
+  { path: 'report', component: ReportComponent},
+  { path: 'upload', component: UploadDocumentComponent},
+  { path: 'violations', component: ViolationsComponent},
 ];
 
 @NgModule({
