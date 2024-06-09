@@ -1,4 +1,5 @@
 import nltk
+import bleach
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords 
 
@@ -11,8 +12,9 @@ class text_preprocessor:
     def process(self, path):
         output = nltk.sent_tokenize(path)
         lemmatized_strings = ' '.join(output)
+        sanitized_lemmatized = bleach.clean(lemmatized_strings)
 
-        return lemmatized_strings
+        return sanitized_lemmatized
 
 
 
