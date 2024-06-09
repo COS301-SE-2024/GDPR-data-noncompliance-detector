@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { CommonModule } from '@angular/common';
+import { HomeComponent } from './home/home.component';
+import { ReportComponent } from './report/report.component';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
+
 
 @NgModule({
   declarations: [
