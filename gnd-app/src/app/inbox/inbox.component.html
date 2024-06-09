@@ -1,6 +1,7 @@
 <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold" rel="stylesheet">
 <link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet"> 
 
+
 <div class="header-container">
     <header class="header">
         Inbox
@@ -40,7 +41,7 @@
 </div>
 
 <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
-    <button class="violations-button">Violations</button>
+    <button class="violation-button" routerLink="/violations">Violations</button> <!--Working on the routing here-->
     <button class="visualisations-button">Visualisations</button>
     <button class="download-button">Download Report</button>
     <button class="clear-button" (click)="clearAnalysis()">Clear</button>
