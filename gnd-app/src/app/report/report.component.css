@@ -125,3 +125,23 @@
 .selected-email {
   background-color: lightblue;
 }
+
+
+/* I will still change this later */
+.chart {
+  display: flex;
+  justify-content: space-around;
+  height: 200px;
+  align-items: flex-end;
+}
+
+.bar {
+  width: 20%;
+  background-color: #4CAF50;
+  text-align: center;
+  color: white;
+}
+
+.bar-label {
+  padding: 5px 0;
+}

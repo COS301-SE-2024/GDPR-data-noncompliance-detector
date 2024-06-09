@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })

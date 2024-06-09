@@ -10,9 +10,11 @@ import { ReportComponent } from './report/report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,

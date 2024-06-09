@@ -41,9 +41,9 @@
 </div>
 
 <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
-    <button class="violation-button" routerLink="/violations">Violations</button> <!--Working on the routing here-->
-    <button class="visualisations-button">Visualisations</button>
-    <button class="download-button">Download Report</button>
+    <button class="violation-button" [routerLink]="['/violations']">Violations</button> <!--Working on the routing here-->
+    <button class="visualisations-button" [routerLink]="['/report']">Visualisations</button>
+    <button class="download-button" >Download Report</button>
     <button class="clear-button" (click)="clearAnalysis()">Clear</button>
 </div>
 
