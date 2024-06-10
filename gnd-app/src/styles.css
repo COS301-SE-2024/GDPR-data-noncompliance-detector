@@ -4,3 +4,6 @@ body {
   min-width: 500px; /* Set minimum width */
   min-height: 500px; /* Set minimum height */
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
