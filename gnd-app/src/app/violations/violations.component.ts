@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; //Need this for any routing (like going back button)
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-violations',
-  standalone: true,
-  imports: [RouterModule],
   templateUrl: './violations.component.html',
   styleUrls: ['./violations.component.css']
 })
-export class ViolationsComponent {
+export class ViolationsComponent implements OnInit {
+  fileType: string = '';
 
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.fileType = params.get('fileType') || '';
+    });
+  }
 }

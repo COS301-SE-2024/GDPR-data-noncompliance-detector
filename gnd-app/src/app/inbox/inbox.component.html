@@ -8,44 +8,42 @@
     </header>
 </div>
 
-<div class="containers">
-    <div class="inbox-rectangle">
-        <h2 class="inbox-header">
-            Inbox
-        </h2>
-        <div class="divider"></div>
-
-        <div class="card" (click)="showAnalysis('email1')" [ngClass]="{ 'selected-email': currentEmail === 'email1' }">Email1.pdf</div>
-        <div class="card" (click)="showAnalysis('email2')" [ngClass]="{ 'selected-email': currentEmail === 'email2' }">Email2.doc</div>
-        <div class="card" (click)="showAnalysis('email3')" [ngClass]="{ 'selected-email': currentEmail === 'email3' }">Email3.xlsx</div>
-        <div class="card" (click)="showAnalysis('email4')" [ngClass]="{ 'selected-email': currentEmail === 'email4' }">Email4.xlsx</div>
-        <div class="card" (click)="showAnalysis('email5')" [ngClass]="{ 'selected-email': currentEmail === 'email5' }">Email5.pdf</div>
-        <div class="card" (click)="showAnalysis('email6')" [ngClass]="{ 'selected-email': currentEmail === 'email6' }">Email6.txt</div>
+    
+    <div class="containers">
+        <div class="inbox-rectangle">
+            <h2 class="inbox-header">Inbox</h2>
+            <div class="divider"></div>
+    
+            <div class="card" (click)="showAnalysis('email1')" [ngClass]="{ 'selected-email': currentEmail === 'email1' }">Email1.pdf</div>
+            <div class="card" (click)="showAnalysis('email2')" [ngClass]="{ 'selected-email': currentEmail === 'email2' }">Email2.doc</div>
+            <div class="card" (click)="showAnalysis('email3')" [ngClass]="{ 'selected-email': currentEmail === 'email3' }">Email3.xlsx</div>
+            <div class="card" (click)="showAnalysis('email4')" [ngClass]="{ 'selected-email': currentEmail === 'email4' }">Email4.xlsx</div>
+            <div class="card" (click)="showAnalysis('email5')" [ngClass]="{ 'selected-email': currentEmail === 'email5' }">Email5.pdf</div>
+            <div class="card" (click)="showAnalysis('email6')" [ngClass]="{ 'selected-email': currentEmail === 'email6' }">Email6.txt</div>
+        </div>
+        
+        <div class="analysis-rectangle">
+            <h2 class="analysis-header">Analysis</h2>
+            <div class="divider"></div>
+    
+            <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results</p>
+    
+            <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
+                <p>Overall Rating: {{currentAnalysis.rating}}</p>
+                <p>Country of Origin: {{currentAnalysis.origin}}</p>
+                <p>Potential Violation Areas: {{currentAnalysis.violationAreas}}</p>
+                <p>Total Violations: {{currentAnalysis.numViolations}}</p>
+            </div>
+        </div>        
     </div>
     
-    <div class="analysis-rectangle">
-        <h2 class="analysis-header">
-            Analysis
-        </h2>
-        <div class="divider"></div>
-
-        <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results</p>
-
-        <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
-            <p>Overall Rating: {{currentAnalysis.rating}}</p>
-            <p>Country of Origin: {{currentAnalysis.origin}}</p>
-            <p>Potential Violation Areas: {{currentAnalysis.violationAreas}}</p>
-            <p>Total Violations: {{currentAnalysis.numViolations}}</p>
-        </div>
-    </div>        
-</div>
-
-<div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
-    <button class="violation-button" [routerLink]="['/violations']">Violations</button> <!--Working on the routing here-->
-    <button class="visualisations-button" [routerLink]="['/report']">Visualisations</button>
-    <button class="download-button" >Download Report</button>
-    <button class="clear-button" (click)="clearAnalysis()">Clear</button>
-</div>
+    <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
+        <button class="violation-button" [routerLink]="['/violations', currentEmailType]">Violations</button>
+        <button class="visualisations-button" [routerLink]="['/report']">Visualisations</button>
+        <button class="download-button">Download Report</button>
+        <button class="clear-button" (click)="clearAnalysis()">Clear</button>
+    </div>
+    
 
 
   

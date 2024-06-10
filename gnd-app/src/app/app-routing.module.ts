@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'report', component: ReportComponent},
   { path: 'upload', component: UploadDocumentComponent},
-  { path: 'violations', component: ViolationsComponent},
+  { path: 'violations/:fileType', component: ViolationsComponent}, //updated route for getting the email type
 ];
 
 @NgModule({
