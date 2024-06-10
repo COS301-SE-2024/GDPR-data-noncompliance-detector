@@ -10,5 +10,4 @@ import { RouterModule } from '@angular/router'; //Need this for any routing (lik
 })
 export class ViolationsComponent {
 
-  
 }
