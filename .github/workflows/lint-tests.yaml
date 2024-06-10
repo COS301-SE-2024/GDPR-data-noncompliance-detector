@@ -42,11 +42,11 @@
             VALIDATE_PYTHON_FLAKE8: false
             VALIDATE_PYTHON_MYPY: false
             VALIDATE_CSHARP: false
-            VALIDATE_CSS: false
-            VALIDATE_JSON: false
-            VALIDATE_HTML: false
-            VALIDATE_JAVASCRIPT_STANDARD: false
-            VALIDATE_TYPESCRIPT_STANDARD: false
+            # VALIDATE_CSS: false
+            # VALIDATE_JSON: false
+            # VALIDATE_HTML: false
+            # VALIDATE_JAVASCRIPT_STANDARD: false
+            # VALIDATE_TYPESCRIPT_STANDARD: false
             
     # doing this to use the config
     run-flake8-lint:
