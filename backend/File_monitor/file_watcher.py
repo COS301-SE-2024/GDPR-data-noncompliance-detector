@@ -5,11 +5,18 @@ import json
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-# runs with : python file_watcher.py <path> <file_extension>
-# eg : python file_watcher.py /home/user/Downloads/ txt,docx,pdf,xlsx
-# # output:
-# {"type": "created", "path": "/Capstone/backend/File_monitor/dir/eg.pdf"}
-# {"type": "modified", "path": "/Capstone/backend/File_monitor/as.txt"}
+# take in input string to run command
+# take in path and automatically look for
+
+# runs with : python file_watcher.py <path1>,<pathN> <file_extension>
+# eg : python3 file_watcher.py /Users/Library/CloudStorage/OneDrive-Personal/Uni/a,/Users/Library/CloudStorage/OneDrive-Personal/Uni/b txt,pdf
+# output:
+# 2024-06-10 16:38:20 - start watching directory '/Users/Library/CloudStorage/OneDrive-Personal/Uni/a'
+# 2024-06-10 16:38:20 - start watching directory '/Users/Library/CloudStorage/OneDrive-Personal/Uni/b'
+# {"type": "created", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/a/test.txt"}
+# {"type": "modified", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/a/test.txt"}
+# {"type": "created", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/b/test.pdf"}
+# {"type": "modified", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/b/test.pdf"}
 
 
 def check_file_extension(filename, reg):
@@ -48,7 +55,7 @@ if __name__ == "__main__":
     ext = sys.argv[2]
     extparams = ext.split(',')
     observers = []
-    
+
     for path in paths:
         logging.info(f'start watching directory {path!r}')
         event_handler = handle(extparams)
