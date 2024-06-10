@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './report.component.html',
-  styleUrl: './report.component.css'
+  styleUrls: ['./report.component.css']
 })
 export class ReportComponent {
 

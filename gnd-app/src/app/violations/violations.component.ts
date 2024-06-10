@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'; //Need this for any routing (like going back button)
 
 @Component({
   selector: 'app-violations',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterModule],
   templateUrl: './violations.component.html',
   styleUrls: ['./violations.component.css']
 })

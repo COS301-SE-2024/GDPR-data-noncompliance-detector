@@ -7,7 +7,7 @@ import { CommonModule, NgIf } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './upload-document.component.html',
-  styleUrl: './upload-document.component.css'
+  styleUrls: ['./upload-document.component.css']
 })
 export class UploadDocumentComponent {
 
