@@ -43,19 +43,26 @@ if __name__ == "__main__":
     if (len(sys.argv) < 3):
         logging.error("Please provide the path and file extension")
         sys.exit(1)
-    path = sys.argv[1]
+
+    paths = sys.argv[1].split(',')
     ext = sys.argv[2]
     extparams = ext.split(',')
-    logging.info(f'start watching directory {path!r}')
+    observers = []
     
-    event_handler = handle(extparams)
-    observer = Observer()
-    observer.schedule(event_handler, path, recursive=True) # watches subfolders
-    observer.start()
+    for path in paths:
+        logging.info(f'start watching directory {path!r}')
+        event_handler = handle(extparams)
+        observer = Observer()
+        observer.schedule(event_handler, path, recursive=True) # watches subfolders
+        observers.append(observer)
+        observer.start()
 
     try:
         while True:
             time.sleep(1)
+    except KeyboardInterrupt:
+        for observer in observers:
+            observer.stop()
     finally:
-        observer.stop()
-        observer.join()
+        for observer in observers:
+            observer.join()
