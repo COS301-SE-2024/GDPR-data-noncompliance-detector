@@ -1,7 +1,6 @@
 <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold" rel="stylesheet">
 <link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
 
-
 <div class="header-container">
     <header class="header">
         Violations
@@ -14,30 +13,92 @@
 
 <div class="containers">
     <div class="inbox-rectangle">
-        <p>
-            Personal Information:
-            <br>
-            <br>
-            Name: Harvey Spectre
-            <br>
-            <br>
-            Address: 12 Pearson Street, Netherlands, NL Email
-            <br>
-            <br>
-            Address: harvey.spectre&#64;example.com
-            <br>
-            <br>
-            Phone Number: (555) 555-1234
-            <br>
-            National Identification Number: 123-45-6789
-            <br>
-            IP Address: 192.168.1.100
-            <br>
-            <br>
-            Social Media Profile: &#64;HarveySpectreLaw (Twitter)
-        </p>
+        <div *ngIf="fileType === 'pdf'">
+            <p>
+                This is a PDF file. Specific content for PDF.
+                <br><br>
+                Personal Information:
+                <br><br>
+                Name: Harvey Spectre
+                <br><br>
+                Address: 12 Pearson Street, Netherlands, NL Email
+                <br><br>
+                Address: harvey.spectre&#64;example.com
+                <br><br>
+                Phone Number: (555) 555-1234
+                <br>
+                National Identification Number: 123-45-6789
+                <br>
+                IP Address: 192.168.1.100
+                <br><br>
+                Social Media Profile: &#64;HarveySpectreLaw (Twitter)
+            </p>
+        </div>
+
+        <div *ngIf="fileType === 'doc'">
+            <p>
+                This is a DOC file. Specific content for DOC.
+                <br><br>
+                Personal Information:
+                <br><br>
+                Name: Mike Ross
+                <br><br>
+                Address: 22 Pearson Street, France, FR Email
+                <br><br>
+                Address: mike.ross&#64;example.com
+                <br><br>
+                Phone Number: (555) 555-4567
+                <br>
+                National Identification Number: 987-65-4321
+                <br>
+                IP Address: 192.168.1.101
+                <br><br>
+                Social Media Profile: &#64;MikeRossLaw (Twitter)
+            </p>
+        </div>
+
+        <div *ngIf="fileType === 'xlsx'">
+            <p>
+                This is an XLSX file. Specific content for XLSX.
+                <br><br>
+                Personal Information:
+                <br><br>
+                Name: Rachel Zane
+                <br><br>
+                Address: 32 Pearson Street, England, UK Email
+                <br><br>
+                Address: rachel.zane&#64;example.com
+                <br><br>
+                Phone Number: (555) 555-7890
+                <br>
+                National Identification Number: 456-78-9123
+                <br>
+                IP Address: 192.168.1.102
+                <br><br>
+                Social Media Profile: &#64;RachelZaneLaw (Twitter)
+            </p>
+        </div>
+
+        <div *ngIf="fileType === 'txt'">
+            <p>
+                This is a TXT file. Specific content for TXT.
+                <br><br>
+                Personal Information:
+                <br><br>
+                Name: Donna Paulsen
+                <br><br>
+                Address: 42 Pearson Street, Spain, ES Email
+                <br><br>
+                Address: donna.paulsen&#64;example.com
+                <br><br>
+                Phone Number: (555) 555-0123
+                <br>
+                National Identification Number: 321-54-6789
+                <br>
+                IP Address: 192.168.1.103
+                <br><br>
+                Social Media Profile: &#64;DonnaPaulsenLaw (Twitter)
+            </p>
+        </div>
     </div>
-
 </div>
-
-

@@ -13,18 +13,17 @@ import { ViolationsComponent } from './violations/violations.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CommonModule,
-    InboxComponent,
-    HomeComponent,
-    ReportComponent,
-    UploadDocumentComponent,
+    AppComponent,    
     ViolationsComponent,
+    ],
+    imports: [
+      BrowserModule,
+      AppRoutingModule,
+      CommonModule,
+      InboxComponent,
+      HomeComponent,
+      ReportComponent,
+      UploadDocumentComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
