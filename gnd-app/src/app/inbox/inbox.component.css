@@ -4,7 +4,7 @@
     align-items: center;
     text-align: center;
     padding-bottom: 2.5em;
-    padding-top: 0.5em;
+    padding-top: 3.5em;
 }
 
 .header {
@@ -57,6 +57,7 @@
     position: relative;
     display: inline-block;
     font-size: 25px;
+    margin-bottom: 0.2em;
 }
 
 .analysis-header::after, .inbox-header::after {

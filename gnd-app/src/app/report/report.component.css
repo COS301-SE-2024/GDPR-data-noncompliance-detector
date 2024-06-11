@@ -4,7 +4,7 @@
   align-items: center;
   text-align: center;
   padding-bottom: 2.5em;
-  padding-top: 0.5em;
+  padding-top: 3.5em;
 }
 
 .header {
@@ -25,11 +25,13 @@
 
 .containers {
   display: flex;
-  justify-content: space-between;
-  margin: 0 1em;
+  justify-content: center;
+  align-items: center;
+  /* margin: 0 1em; */
+  gap: 5em;
 }
 
-.inbox-rectangle {
+.visualisation-rectangle {
   border: 2px solid #ccc;
   border-radius: 8px;
   padding: 20px;
@@ -37,29 +39,22 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 45vw;
   flex-grow: 1;
-  max-width: calc(50% - 1em);
+  max-width: calc(66%);
+  /* max-height: min-content; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.analysis-rectangle {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 45vw;
-  flex-grow: 1;
-  max-width: calc(50% - 1em);
-  height: 50vh;
-}
-
-.analysis-header, .inbox-header {
+.visualisation-header {
   font-family: "Mediator Narrow Web Extra Bold";
   position: relative;
   display: inline-block;
   font-size: 25px;
+  margin-bottom: 0.2em;
 }
 
-.analysis-header::after, .inbox-header::after {
+.visualisation-header::after {
   content: '';
   display: inline-block;
   width: 10px;
@@ -74,31 +69,12 @@
   margin-bottom: 1em;
 }
 
-
-.card {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.analysis-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75%;
-  font-family: "Roboto Bold";
-}
-
 .buttons {
   display: flex;
   justify-content: center;
   margin-top: 1.5em;
   flex-direction: column;
   align-items:stretch;
-  
 }
 
 .buttons button {
@@ -111,21 +87,6 @@
   /* background-color: #08558A; */
   /* color: white; */
 }
-
-.analysis-data {
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-}
-
-.analysis-data p {
-  font-family: "Roboto Bold";
-}
-
-.selected-email {
-  background-color: lightblue;
-}
-
 
 /* I will still change this later */
 .chart {
