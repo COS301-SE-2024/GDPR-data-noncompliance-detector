@@ -1,0 +1,108 @@
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 2.5em;
+  padding-top: 3.5em;
+}
+
+.header {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 35px;
+}
+
+.header::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #8EBA12;
+  border-radius: 50%;
+}
+
+.containers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: 0 1em; */
+  gap: 5em;
+}
+
+.visualisation-rectangle {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 45vw;
+  flex-grow: 1;
+  max-width: calc(66%);
+  /* max-height: min-content; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.visualisation-header {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 25px;
+  margin-bottom: 0.2em;
+}
+
+.visualisation-header::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #8EBA12;
+  border-radius: 50%;
+}
+
+.divider {
+  height: 2px;
+  background-color: black;
+  margin-bottom: 1em;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5em;
+  flex-direction: column;
+  align-items:stretch;
+}
+
+.buttons button {
+  /* border: 2px solid transparent; */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin: 0.5em;
+  font-family: "Roboto Bold";
+  cursor: pointer;
+  /* background-color: #08558A; */
+  /* color: white; */
+}
+
+/* I will still change this later */
+.chart {
+  display: flex;
+  justify-content: space-around;
+  height: 200px;
+  align-items: flex-end;
+}
+
+.bar {
+  width: 20%;
+  background-color: #4CAF50;
+  text-align: center;
+  color: white;
+}
+
+.bar-label {
+  padding: 5px 0;
+}
