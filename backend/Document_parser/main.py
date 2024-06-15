@@ -10,7 +10,7 @@ def main():
     file = parser.process(path)
     result = engine.process(file)
     print(result)
-    print(file)
+    # print(file)
     
     
 

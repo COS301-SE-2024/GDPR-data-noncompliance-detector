@@ -27,8 +27,8 @@ class detection_engine:
         return self.regex_filter.process(path)
 
     def process(self, path):
-        with open(path, 'r', encoding='utf-8') as file:
-            text = file.read()
+        
+        text = path
 
         location = self.determine_country_of_origin(path)
         reg_result = self.regex_report(text)

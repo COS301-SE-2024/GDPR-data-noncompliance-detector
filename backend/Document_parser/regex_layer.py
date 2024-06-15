@@ -37,16 +37,16 @@ class regex_layer:
             "Date": dobs,
             "IP Address": ip_addresses,
             "Financial Data": financial_data,
-            "ID Number": personal_ids,
+            "ID": personal_ids,
             "EU Passport Number": eu_passport_numbers,
             "File Path":paths
         }
     
     def categorize_and_print_report(self,results):
         categories = {
-            "General Personal Data": ["Email Address", "Phone Number", "Potential Name","ID Number","EU Passport Number","IP Address","Social Security Number"],
+            "General Personal Data": ["Email Address", "Phone Number", "Potential Name","ID","EU Passport Number","IP Address","Social Security Number"],
             "Genetic Data": [],  
-            "Biometric Data": ["ID Number"],
+            "Biometric Data": ["ID"],
             "Data relating to Health": [],
             "Data revealing Racial and Ethnic Origin": [], 
             "Political Opinions": [], 

@@ -16,9 +16,9 @@ class storage_and_submission:
             f.write(content)
 
     def submit(self, text):
-        with open(self.filename, 'w') as f:
-            f.write(text)
+        # with open(self.filename, 'w') as f:
+        #     f.write(text)
         
-        self.codec_handler(self.filename)
+        # result = text.encode('ISO-8859-1')
 
-        return self.filename
+        return text
