@@ -50,6 +50,11 @@
   flex-grow: 1;
   max-width: calc(50% - 1em);
   height: 50vh;
+  overflow-y: auto;
+}
+
+.result-content {
+  white-space: pre-line;
 }
 
 .analysis-header, .inbox-header {
@@ -58,6 +63,10 @@
   display: inline-block;
   font-size: 25px;
   margin-bottom: 0.2em;
+}
+
+.analysis-box-header {
+  font-family: "Roboto Bold" ;
 }
 
 .analysis-header::after, .inbox-header::after {
@@ -150,4 +159,8 @@
 .upload-description,
 .upload-instruction {
   margin: 0;
+}
+
+.hidden {
+  visibility: hidden;
 }

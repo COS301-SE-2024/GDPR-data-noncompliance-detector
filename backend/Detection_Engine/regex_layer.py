@@ -55,12 +55,13 @@ class regex_layer:
         }
         
         report = ""
+        exclude = ""
         for category, keys in categories.items():
             report += f"Category: {category}\n"
             for key in keys:
                 if key in results and results[key]:
                     for instance in results[key]:
-                        report += f"    {key}: {instance}\n"
+                        exclude += f"    {key}: {instance}\n"
             total = sum(len(results[key]) for key in keys)
             report += f"Total per category: {total}\n\n"
         

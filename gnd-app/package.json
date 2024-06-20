@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^18.0.2",
     "@angular/platform-browser-dynamic": "^18.0.2",
     "@angular/router": "^18.0.2",
+    "@types/node": "^20.14.6",
     "chart.js": "^4.4.3",
     "electron-reload": "^2.0.0-alpha.1",
     "flowbite": "^2.3.0",
