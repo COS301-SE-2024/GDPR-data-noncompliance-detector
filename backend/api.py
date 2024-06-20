@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from backend_entry import backend_entry
+import os
 
 app = FastAPI()
 
@@ -25,6 +26,8 @@ async def upload_file(file: UploadFile = File(...)):
         f.write(await file.read())
 
     endpoint.process(file_location)
+    os.remove(file_location)
+
 
     return JSONResponse(content = {"filename": file.filename})
     
