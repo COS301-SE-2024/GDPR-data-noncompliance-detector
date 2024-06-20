@@ -9,6 +9,8 @@ import { ReportComponent } from './report/report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { ViolationsComponent } from './violations/violations.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { ViolationsComponent } from './violations/violations.component';
       HomeComponent,
       ReportComponent,
       UploadDocumentComponent,
+      HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
