@@ -1,0 +1,166 @@
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 2.5em;
+  padding-top: 3.5em;
+}
+
+.header {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 35px;
+}
+
+.header::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #8EBA12;
+  border-radius: 50%;
+}
+
+.containers {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
+
+.inbox-rectangle {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 45vw;
+  flex-grow: 1;
+  max-width: calc(50% - 1em);
+}
+
+.analysis-rectangle {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 45vw;
+  flex-grow: 1;
+  max-width: calc(50% - 1em);
+  height: 50vh;
+  overflow-y: auto;
+}
+
+.result-content {
+  white-space: pre-line;
+}
+
+.analysis-header, .inbox-header {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 25px;
+  margin-bottom: 0.2em;
+}
+
+.analysis-box-header {
+  font-family: "Roboto Bold" ;
+}
+
+.analysis-header::after, .inbox-header::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #8EBA12;
+  border-radius: 50%;
+}
+
+.divider {
+  height: 2px;
+  background-color: black;
+  margin-bottom: 1em;
+}
+
+
+.card {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.analysis-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75%;
+  font-family: "Roboto Bold";
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5em;
+}
+
+.buttons button {
+  /* border: 2px solid transparent; */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin: 0.5em;
+  font-family: "Roboto Bold";
+  cursor: pointer;
+  /* background-color: #08558A; */
+  /* color: white; */
+}
+
+.analysis-data {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.analysis-data p {
+  font-family: "Roboto Bold";
+}
+
+.selected-email {
+  background-color: lightblue;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+}
+
+.upload-icon {
+  font-size: 7em;
+  color: black;
+}
+
+.upload-text {
+  margin-top: 10px;
+  text-align: center;
+  font-family: "Roboto Bold";
+}
+
+.upload-link{
+  cursor: pointer;
+}
+
+.upload-description,
+.upload-instruction {
+  margin: 0;
+}
+
+.hidden {
+  visibility: hidden;
+}
