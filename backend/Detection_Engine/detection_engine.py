@@ -1,5 +1,5 @@
-from lang_detection import location_finder
-from regex_layer import regex_layer
+from .lang_detection import location_finder
+from .regex_layer import regex_layer
 
 class detection_engine:
 
@@ -33,8 +33,11 @@ class detection_engine:
         location = self.determine_country_of_origin(path)
         reg_result = self.regex_report(text)
 
-        print(location)
-        print("Violation Report: \n")
-        print(reg_result)
+        result = location
+        result += "\n"
+        result+= "Violation Report: \n"
+        result += reg_result
+
+        return result
 
 
