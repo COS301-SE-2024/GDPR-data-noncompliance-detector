@@ -19,7 +19,7 @@ class detection_engine:
                 result += '\n'
 
         else:
-            result = "Could not determine the country of origin."
+            result = "Could not determine the country of origin. /n"
 
         return result
     

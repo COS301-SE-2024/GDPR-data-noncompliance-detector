@@ -6,6 +6,7 @@ from backend_entry import backend_entry
 import os
 
 app = FastAPI()
+report_analysis = None
 
 endpoint = backend_entry()
 
@@ -25,11 +26,11 @@ async def upload_file(file: UploadFile = File(...)):
     with open(file_location, "wb") as f:
         f.write(await file.read())
 
-    endpoint.process(file_location)
+    result = endpoint.process(file_location)
     os.remove(file_location)
 
 
-    return JSONResponse(content = {"filename": file.filename})
+    return JSONResponse(content = {"filename": file.filename, "result": result})
     
 
 if __name__ == "__main__":

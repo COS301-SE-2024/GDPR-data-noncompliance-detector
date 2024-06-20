@@ -12,8 +12,10 @@ class backend_entry:
         # path = input("File Name:  ")
         file = parser.process(path)
         result = engine.process(file)
-        print(result)
+        # print(result)
+
         # print(file)
+        return result
     
 
 if __name__ == "__main__":

@@ -19,6 +19,7 @@ export class UploadDocumentComponent {
   fileContent: string = '';
 
   fileName = '';
+  result: string = ''
 
   constructor(private http: HttpClient) {}
 
@@ -31,12 +32,22 @@ export class UploadDocumentComponent {
       const formData = new FormData();
       formData.append("file", file);
 
-      const upload$ = this.http.post("http://127.0.0.1:8000/file-upload", formData);
+      // const upload$ = this.http.post("http://127.0.0.1:8000/file-upload", formData);
 
-      upload$.subscribe();
+      // upload$.subscribe();
+      this.http.post<any>("http://127.0.0.1:8000/file-upload", formData).subscribe(
+        (response) => {
+          console.log("Server Response: ", response);
+          this.uploadedFileName = response.fileName,
+          this.result = this.processResult(response.result);
+        }
+      )
     }
   }
 
+  processResult(result: string): string {
+    return result.replace(/\n/g, "<br>");
+  }
 
   isObjectEmpty(obj: any) {
     return Object.keys(obj).length === 0;
