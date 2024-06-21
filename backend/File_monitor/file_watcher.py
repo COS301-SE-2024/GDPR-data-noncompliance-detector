@@ -62,6 +62,7 @@ class handle(FileSystemEventHandler):
 
 
 def startWatcher(paths, ext):
+
     paths = paths.split(',')
     ext = ext.split(',')
     observers = []
@@ -74,9 +75,15 @@ def startWatcher(paths, ext):
         observers.append(observer)
         observer.start()
 
+        prev_output = time.time()
+
     try:
         while True:
-            time.sleep(1)
+            current_time = time.time()
+            if current_time - prev_output >= 60:
+                logging.info('Watcher is running...')
+                prev_output = current_time
+            time.sleep(1)  #
     except KeyboardInterrupt:
         for observer in observers:
             observer.stop()
