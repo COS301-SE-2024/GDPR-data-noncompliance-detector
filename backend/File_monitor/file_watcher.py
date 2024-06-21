@@ -42,20 +42,24 @@ def scan_directories(paths, extensions):
 
 
 class handle(FileSystemEventHandler):
+    # backslash to foward slash. path is actual path. string output only
     def __init__(self, file_extension):
         self.file_extension = file_extension
+        self.prev_output = time.time()
 
     def on_modified(self, event):
-        # print(f'{event.event_type}  path : {event.src_path}')
-        if (check_file_extension(event.src_path, self.file_extension)):
-            print(json.dumps({"type": "modified", "path": event.src_path}))
-            return json.dumps({"type": "modified", "path": event.src_path})
+        current_time = time.time()
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 10): # watching every 10 seconds
+            self.prev_output = current_time
+            print(event.src_path)
+            return event.src_path
 
     def on_created(self, event):
-        # print(f'{event.event_type}  path : {event.src_path}')
-        if (check_file_extension(event.src_path, self.file_extension)):
-            print(json.dumps({"type": "created", "path": event.src_path}))
-            return json.dumps({"type": "created", "path": event.src_path})
+        current_time = time.time()
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 10):
+            self.prev_output = current_time
+            print(event.src_path)
+            return event.src_path
 
     # def on_deleted(self, event):
     #     print(f'{event.event_type}  path : {event.src_path}')
@@ -75,14 +79,8 @@ def startWatcher(paths, ext):
         observers.append(observer)
         observer.start()
 
-        prev_output = time.time()
-
     try:
         while True:
-            current_time = time.time()
-            if current_time - prev_output >= 60:
-                logging.info('Watcher is running...')
-                prev_output = current_time
             time.sleep(1)  #
     except KeyboardInterrupt:
         for observer in observers:

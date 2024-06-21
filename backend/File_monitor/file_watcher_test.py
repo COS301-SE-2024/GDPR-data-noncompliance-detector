@@ -2,6 +2,7 @@ import unittest
 from watchdog.events import FileModifiedEvent, FileCreatedEvent
 import json
 import file_watcher
+import time
 
 class TestFileWatcher(unittest.TestCase):
 
@@ -30,7 +31,7 @@ class TestFileWatcher(unittest.TestCase):
         event = FileCreatedEvent('/file.bmp')
         response = self.event_handler.on_created(event)
         self.assertIsNone(response)
-
+        
 
 if __name__ == '__main__':
     unittest.main()
