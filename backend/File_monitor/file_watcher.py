@@ -5,6 +5,7 @@ import json
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import os
+import threading
 
 # take in input string to run command
 # take in path and automatically look for
@@ -69,12 +70,18 @@ class handle(FileSystemEventHandler):
     #     print(f'{event.event_type}  path : {event.src_path}')
 
 
+stop_watcher = False
+watcher_thread = None
+
 def startWatcher(paths, ext):
+    global stop_watcher
+    global watcher_thread
+    watcher_thread = start_watcher_thread(paths, ext)
+
     paths = paths.split(',')
     ext = ext.split(',')
     observers = []
     print(f"Watcher is watching: {paths} with extensions: {ext}")
-
     for path in paths:
         logging.info(f'start watching directory {path!r}')
         event_handler = handle(ext)
@@ -82,16 +89,43 @@ def startWatcher(paths, ext):
         observer.schedule(event_handler, path, recursive=True) # watches subfolders
         observers.append(observer)
         observer.start()
-
     try:
-        while True:
-            time.sleep(1)  #
+        while not stop_watcher:
+            time.sleep(1)  # Adjust as needed
     except KeyboardInterrupt:
-        for observer in observers:
-            observer.stop()
+        pass
     finally:
         for observer in observers:
+            observer.stop()
             observer.join()
+
+
+def start_watcher_thread(paths, ext):
+    global stop_watcher
+    stop_watcher = False
+    thread = threading.Thread(target=startWatcher, args=(paths, ext))
+    thread.start()
+    return thread
+
+
+def stop_watcher_thread(thread):
+    global stop_watcher
+    stop_watcher = True
+    thread.join()
+
+
+def startWatcherTotal(paths, ext):
+    paths = "."
+    ext = "txt"        
+    # Start watcher on a thread
+    watcher_thread = start_watcher_thread(paths, ext)
+    print(watcher_thread)    
+    try:
+        # Simulate some work while watcher is running
+        time.sleep(10)
+    finally:
+        # Stop watcher thread
+        stop_watcher_thread(watcher_thread)
 
 
 if __name__ == "__main__":

@@ -18,3 +18,4 @@ bleach
 fastapi==0.111.0
 fastapi-cli==0.0.4
 uvicorn==0.30.
+watchdog

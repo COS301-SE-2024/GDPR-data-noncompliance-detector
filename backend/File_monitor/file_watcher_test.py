@@ -6,6 +6,7 @@ import time
 import os
 import signal
 
+
 class TestFileWatcher(unittest.TestCase):
 
     def setUp(self):
@@ -21,7 +22,6 @@ class TestFileWatcher(unittest.TestCase):
     #     expected_response = os.path.join(os.getcwd(), '/file.txt')
     #     self.assertEqual(response, expected_response)
     #     os.kill(signal.SIGINT)
-
 
     def test_on_created_with_invalid_extension(self):
         event = FileCreatedEvent('/file.bmp')
