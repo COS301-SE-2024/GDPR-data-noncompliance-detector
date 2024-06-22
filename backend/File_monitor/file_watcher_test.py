@@ -4,6 +4,7 @@ import json
 import file_watcher
 import time
 import os
+import signal
 
 class TestFileWatcher(unittest.TestCase):
 
@@ -12,15 +13,16 @@ class TestFileWatcher(unittest.TestCase):
         self.event_handler = file_watcher.handle(self.extensions)
 
     def test_on_created_with_valid_extension(self):
-        print("asf")
         file_watcher.startWatcher(".", 'txt')
-        print("asf")
         with open('file.txt', 'w') as f:
             f.write("Initial content\n")
         event = FileCreatedEvent(os.path.join(os.getcwd(), '/file.txt'))
         response = self.event_handler.on_created(event)
         expected_response = os.path.join(os.getcwd(), '/file.txt')
         self.assertEqual(response, expected_response)
+        os.kill(signal.SIGINT)
+
+
 
     # def test_on_created_with_invalid_extension(self):
     #     event = FileCreatedEvent('/file.bmp')
