@@ -42,22 +42,26 @@ def scan_directories(paths, extensions):
 
 
 class handle(FileSystemEventHandler):
-    # backslash to foward slash. path is actual path. string output only
+    # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
     def __init__(self, file_extension):
         self.file_extension = file_extension
         self.prev_output = time.time()
 
     def on_modified(self, event):
         current_time = time.time()
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 10): # watching every 10 seconds
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 3): # watching every 3 seconds
             self.prev_output = current_time
+            if (event.src_path.find("\\") != -1):
+                event.src_path = event.src_path.replace("\\", "/")
             print(event.src_path)
             return event.src_path
 
     def on_created(self, event):
         current_time = time.time()
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 10):
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 3):
             self.prev_output = current_time
+            if (event.src_path.find("\\") != -1):
+                event.src_path = event.src_path.replace("\\", "/")
             print(event.src_path)
             return event.src_path
 
@@ -66,10 +70,10 @@ class handle(FileSystemEventHandler):
 
 
 def startWatcher(paths, ext):
-
     paths = paths.split(',')
     ext = ext.split(',')
     observers = []
+    print(f"Watcher is watching: {paths} with extensions: {ext}")
 
     for path in paths:
         logging.info(f'start watching directory {path!r}')
