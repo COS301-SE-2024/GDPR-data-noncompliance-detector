@@ -42,6 +42,9 @@ def scan_directories(paths, extensions):
                     print(json.dumps({"type": "found", "path": os.path.join(root, file)}))
 
 
+watcher_timer = 0.1
+
+
 class handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
     def __init__(self, file_extension):
@@ -49,8 +52,10 @@ class handle(FileSystemEventHandler):
         self.prev_output = time.time()
 
     def on_modified(self, event):
+        global watcher_timer
         current_time = time.time()
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 3): # watching every 3 seconds
+
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
             self.prev_output = current_time
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
@@ -58,8 +63,10 @@ class handle(FileSystemEventHandler):
             return event.src_path
 
     def on_created(self, event):
+        global watcher_timer
         current_time = time.time()
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= 3):
+
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
             self.prev_output = current_time
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
@@ -75,8 +82,6 @@ watcher_thread = None
 
 def startWatcher(paths, ext):
     global stop_watcher
-    global watcher_thread
-    watcher_thread = start_watcher_thread(paths, ext)
 
     paths = paths.split(',')
     ext = ext.split(',')
@@ -100,7 +105,10 @@ def startWatcher(paths, ext):
             observer.join()
 
 
-def start_watcher_thread(paths, ext):
+def start_watcher_thread(paths, ext, wt):
+    global watcher_timer
+    watcher_timer = wt
+
     global stop_watcher
     stop_watcher = False
     thread = threading.Thread(target=startWatcher, args=(paths, ext))
@@ -134,4 +142,4 @@ if __name__ == "__main__":
         logging.error("Please provide the path and file extension")
         sys.exit(1)
 
-    startWatcher(sys.argv[1], sys.argv[2])
+    start_watcher_thread(sys.argv[1], sys.argv[2], 1)
