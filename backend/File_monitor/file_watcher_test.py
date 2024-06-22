@@ -17,7 +17,7 @@ class TestFileWatcher(unittest.TestCase):
         thread_watcher = file_watcher.start_watcher_thread(".", "txt", 0.0001)
         time.sleep(0.0002)
         with open('file.txt', 'w') as f:
-            f.write("Initial content\n")
+            f.write("test content\n")
         event = FileCreatedEvent(os.path.join(os.getcwd(), '/file.txt'))
         response = self.event_handler.on_created(event)
         expected_response = os.path.join(os.getcwd(), '/file.txt')
@@ -28,13 +28,14 @@ class TestFileWatcher(unittest.TestCase):
     def test_on_modified_with_valid_extension(self):
         thread_watcher = file_watcher.start_watcher_thread(".", "txt", 0.0001)
         time.sleep(0.0002)
-        with open('file.txt', 'w') as f:
-            f.write("Initial content\n")
+        with open('file.txt', 'a') as f:
+            f.write("test content 2\n")
         event = FileCreatedEvent(os.path.join(os.getcwd(), '/file.txt'))
         response = self.event_handler.on_created(event)
         expected_response = os.path.join(os.getcwd(), '/file.txt')
         self.assertEqual(response, expected_response)
         file_watcher.stop_watcher_thread(thread_watcher)
+        os.remove('file.txt')
         
 
 if __name__ == '__main__':

@@ -7,18 +7,13 @@ from watchdog.events import FileSystemEventHandler
 import os
 import threading
 
+# run with start_watcher_thread(paths, extensions, time to wait between checks)
+
 # take in input string to run command
 # take in path and automatically look for
 
 # runs with : python file_watcher.py <path1>,<pathN> <file_extension1>,<file_extensionN>
-# eg : python3 file_watcher.py /Users/Library/CloudStorage/OneDrive-Personal/Uni/a,/Users/Library/CloudStorage/OneDrive-Personal/Uni/b txt,pdf
-# output:
-# 2024-06-10 16:38:20 - start watching directory '/Users/Library/CloudStorage/OneDrive-Personal/Uni/a'
-# 2024-06-10 16:38:20 - start watching directory '/Users/Library/CloudStorage/OneDrive-Personal/Uni/b'
-# {"type": "created", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/a/test.txt"}
-# {"type": "modified", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/a/test.txt"}
-# {"type": "created", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/b/test.pdf"}
-# {"type": "modified", "path": "/Users/Library/CloudStorage/OneDrive-Personal/Uni/b/test.pdf"}
+# example: python file_watcher.py /Users/a txt,pdf
 
 
 # scan_directories("/Users/Library/CloudStorage/OneDrive-Personal/Uni/a", "txt,pdf")
@@ -42,8 +37,7 @@ def scan_directories(paths, extensions):
                     print(json.dumps({"type": "found", "path": os.path.join(root, file)}))
 
 
-watcher_timer = 0.1
-
+watcher_timer = 3
 
 class handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
@@ -105,7 +99,7 @@ def startWatcher(paths, ext):
             observer.join()
 
 
-def start_watcher_thread(paths, ext, wt):
+def start_watcher_thread(paths, ext, wt=3):  # default is 3 seconds
     global watcher_timer
     watcher_timer = wt
 
