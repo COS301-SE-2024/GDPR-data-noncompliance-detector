@@ -2,5 +2,5 @@
 # Ignore bin and obj folders
 bin/
 obj/
-/__pycache__/
+**/__pycache__/
 venv/
