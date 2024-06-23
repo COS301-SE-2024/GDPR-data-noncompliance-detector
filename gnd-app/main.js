@@ -51,7 +51,7 @@ function setupWatcher() {
       output = JSON.stringify(res.data);
       // console.log(output)
       console.log("Report successfully created")
-      const outputDir = path_.join('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Reports', newFileName);
+      const outputDir = path_.join('../backend/Reports', newFileName);
       fs.writeFileSync(outputDir, output, 'utf8');
     })
     .catch((error) => {
