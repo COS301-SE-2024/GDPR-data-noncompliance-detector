@@ -50,6 +50,7 @@ jobs:
           pip install flake8 pytest pytest-cov
           ls -a
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip show fitz
 
       - name: Test with pytest
         run: |
