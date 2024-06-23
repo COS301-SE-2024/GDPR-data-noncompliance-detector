@@ -17,5 +17,6 @@ nltk
 bleach
 fastapi==0.111.0
 fastapi-cli==0.0.4
-uvicorn==0.30.
+uvicorn==0.30.1
 watchdog
+fitz
