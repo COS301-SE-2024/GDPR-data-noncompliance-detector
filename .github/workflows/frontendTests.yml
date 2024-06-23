@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -23,7 +23,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd gnd-app
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        cache-dependency-path: gnd-app/package-lock.json
+
+    - name: Install Chrome
+      run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+    - run: |
+        cd gnd-app
+        npm ci
+    - run: |
+        cd gnd-app
+        npm test -- --watch=false --browsers=ChromeHeadless
