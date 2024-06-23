@@ -1,73 +1,81 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-// import { UploadDocumentComponent } from './upload-document.component';
-
-// describe('UploadDocumentComponent', () => {
-//   let component: UploadDocumentComponent;
-//   let fixture: ComponentFixture<UploadDocumentComponent>;
-
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       imports: [UploadDocumentComponent]
-//     })
-//     .compileComponents();
-
-//     fixture = TestBed.createComponent(UploadDocumentComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { UploadDocumentComponent } from './upload-document.component';
-import { CommonModule, NgIf } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
+ import { UploadDocumentComponent } from './upload-document.component';
+ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 describe('UploadDocumentComponent', () => {
   let component: UploadDocumentComponent;
   let fixture: ComponentFixture<UploadDocumentComponent>;
-  let httpTestingController: HttpTestingController;
-
+  let httpMock: HttpTestingController;
+  let debugElement: DebugElement; 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        UploadDocumentComponent,
-        HttpClientTestingModule, // Mock HttpClient
-        CommonModule,
-        RouterModule.forRoot([]), // Provide RouterModule
+      imports: [RouterTestingModule, HttpClientTestingModule, UploadDocumentComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({
+              get: (key: string) => {
+                switch(key) {
+                  case 'fileType': return 'someFileType';
+                  default: return null;
+                }
+              }
+            })
+          }
+        }
       ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-
     fixture = TestBed.createComponent(UploadDocumentComponent);
     component = fixture.componentInstance;
-    httpTestingController = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
+    debugElement = fixture.debugElement;
+    httpMock = TestBed.inject(HttpTestingController);
   });
-
-  afterEach(() => {
-    httpTestingController.verify(); // Verify that no unmatched requests are outstanding.
-  });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should send file on file selected', () => {
-    const mockFile = new File([''], 'test-file.txt');
-    const mockEvent = { target: { files: [mockFile] } };
-    component.onFileSelected(mockEvent as any);
-
-    const req = httpTestingController.expectOne('http://127.0.0.1:8000/file-upload');
-    expect(req.request.method).toEqual('POST');
-    req.flush({ fileName: 'test-file.txt', result: 'some-result' }); // Simulate successful response
-
-    // Additional assertions can be made here, for example, checking if component variables are set correctly after the response.
+  afterEach(() => {
+    httpMock.verify();
   });
-
-  // Additional tests can be added here
+  it('should call onFileSelected and upload file', () => {
+    const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
+    const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
+    spyOn(component, 'onFileSelected').and.callThrough();
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    input.files = dataTransfer.files;
+    input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    fixture.detectChanges();
+    expect(component.onFileSelected).toHaveBeenCalled();
+    expect(component.fileName).toBe('test.txt');
+    const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload');
+    expect(req.request.method).toBe('POST');
+    req.flush({ fileName: 'test.txt', result: 'file processed' });
+    fixture.detectChanges();
+    expect(component.uploadedFileName).toBe('test.txt');
+    expect(component.result).toBe('file processed'.replace(/\n/g, '<br>'));
+  });
+  it('should display the analysis result in the analysis window', () => {
+    const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
+    const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    input.files = dataTransfer.files;
+    input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload');
+    req.flush({ fileName: 'test.txt', result: 'line1\nline2' });
+    fixture.detectChanges();
+    const analysisHeader = debugElement.query(By.css('.analysis-box-header')).nativeElement;
+    const resultContent = debugElement.query(By.css('.result-content')).nativeElement;
+    expect(analysisHeader.textContent).toContain('Analysis Result:');
+    expect(resultContent.innerHTML).toContain('line1<br>line2');
+  });
 });
