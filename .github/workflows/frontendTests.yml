@@ -27,5 +27,9 @@ jobs:
     - run: |
         cd gnd-app
         npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: |
+        cd gnd-app
+        npm run build --if-present
+    - run: |
+        cd gnd-app
+        npm test
