@@ -25,7 +25,7 @@ app.whenReady().then(() => {
 });
 
 function setupWatcher() {
-  const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', 'C:/Users/Mervyn Rangasamy/Documents/Receiver', 'pdf,docx,xlsx,xls']);
+  const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', '../backend/Receiver', 'pdf,docx,xlsx,xls']);
 
   watcher.stdout.on('data', (data) => {
     let output = data.toString().trim();
