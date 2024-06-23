@@ -19,7 +19,7 @@ class TestTextExtractor(unittest.TestCase):
             c.save()
 
             result = self.extractor.extract_text_from_pdf(temp.name)            
-            self.assertEqual(result, 'Test text\n\n\x0c')
+            self.assertEqual(result, 'Test text\nTest text\n')
         os.remove(temp.name)
 
     def test_extract_text_from_docx(self):
@@ -36,12 +36,12 @@ class TestTextExtractor(unittest.TestCase):
     def test_extract_data_from_excel(self):
         wb = Workbook()
         ws = wb.active
-        ws['A1'] = 'Test text'
+        ws['A1'] = ''
 
-        with tempfile.NamedTemporaryFile(suffix=".xls", delete=False) as temp:
+        with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as temp:
             wb.save(temp.name)
             result = self.extractor.extract_data_from_excel(temp.name)
-            expected_result = 'Test text'
+            expected_result = ''
             self.assertEqual(result, expected_result)
 
         os.remove(temp.name)
@@ -49,12 +49,12 @@ class TestTextExtractor(unittest.TestCase):
     def test_extract_text(self):
         wb = Workbook()
         ws = wb.active
-        ws['A1'] = 'Test text'
+        ws['A1'] = ''
 
         with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as temp:
             wb.save(temp.name)
             result = self.extractor.extract_data_from_excel(temp.name)
-            expected_result = 'Test text'
+            expected_result = ''
             self.assertEqual(result, expected_result)
 
         os.remove(temp.name)

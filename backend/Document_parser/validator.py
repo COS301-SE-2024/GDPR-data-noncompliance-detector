@@ -44,7 +44,7 @@ class validator:
                 proceed = True
                 print(proceed)
 
-            elif extension in ['.xlsx']:
+            elif extension in ['.xlsx', '.xls']:
                 proceed = True
                 print(proceed)
             else:
