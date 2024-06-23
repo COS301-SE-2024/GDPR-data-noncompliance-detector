@@ -62,6 +62,7 @@
     width: 45vw;
     flex-grow: 1;
     max-width: calc(66%);   
+    margin-left: 10px;
 }
 
 .divider {

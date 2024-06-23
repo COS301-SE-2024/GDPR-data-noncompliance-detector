@@ -9,6 +9,8 @@ import { initFlowbite } from 'flowbite';
 })
 export class AppComponent implements OnInit{
 
+  title = "gnd-app";
+
   ngOnInit():void {
     initFlowbite();
   }
