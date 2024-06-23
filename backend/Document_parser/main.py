@@ -2,7 +2,7 @@ import pandas as pd
 from pdfminer.high_level import extract_text
 from docx import Document
 from docx.shared import Inches
-import fitz
+# import fitz
 import pytesseract
 from PIL import Image
 import io
