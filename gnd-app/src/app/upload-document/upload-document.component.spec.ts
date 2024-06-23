@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
+
 describe('UploadDocumentComponent', () => {
   let component: UploadDocumentComponent;
   let fixture: ComponentFixture<UploadDocumentComponent>;
@@ -33,14 +34,20 @@ describe('UploadDocumentComponent', () => {
         }
       ],
       schemas: [NO_ERRORS_SCHEMA]
+
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(UploadDocumentComponent);
     component = fixture.componentInstance;
+    httpTestingController = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
     debugElement = fixture.debugElement;
     httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify(); // Verify that no unmatched requests are outstanding.
   });
 
   it('should create', () => {
@@ -99,4 +106,5 @@ describe('UploadDocumentComponent', () => {
     expect(analysisHeader.textContent).toContain('Analysis Result:');
     expect(resultContent.innerHTML).toContain('line1<br>line2');
   });
+
 });
