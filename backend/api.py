@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from backend_entry import backend_entry
 import os
+from flask import  request, jsonify
+import json
 
 app = FastAPI()
 report_analysis = None
@@ -37,21 +39,13 @@ async def upload_file(file: UploadFile = File(...)):
 class FilePath(BaseModel):
     path: str
 
-@app.post("/new-file/")
+@app.post("/new-file")
 async def new_file(file_path: FilePath):
-    print(f"New file detected: {file_path.path}")
-    return {"status": "success", "path": file_path.path}
-    
-def start_file_watcher(paths, ext):
-    from .File_monitor.file_watcher import file_watcher
-    file_watcher.start_watcher(paths, ext)
+    result = endpoint.process(file_path.path)
+    return result
+    # return {"status": "success", "path": file_path.path}
 
-def run_app():
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
-    fastapi_thread = threading.Thread(target=run_app)
-    fastapi_thread.start()
-
-    start_file_watcher("C:/Users/Mervyn Rangasamy/Documents/Receiver", "pdf,docx,xlsx,xls")
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

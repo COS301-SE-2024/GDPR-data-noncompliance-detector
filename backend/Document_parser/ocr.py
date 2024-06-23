@@ -4,7 +4,7 @@ from PIL import Image
 import io
 import pdfplumber
 from docx import Document
-from docx.shared import Inches
+# from docx.shared import Inches
 
 def pdf_extract_text_with_ocr(pdf_path):
     combined_text = []
@@ -58,3 +58,8 @@ def extract_text_with_ocr_from_docx(docx_path):
 pdf_path = input("path:")
 combined_text = extract_text_with_ocr_from_docx(pdf_path)
 print(combined_text)
+
+if __name__ == "__main__":
+    pdf_path = input("Enter the path to the PDF file: ")
+    extracted_text = pdf_extract_text_with_ocr(pdf_path)
+    print(extracted_text)

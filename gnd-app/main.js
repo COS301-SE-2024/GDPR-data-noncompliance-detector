@@ -1,6 +1,9 @@
 const { app, BrowserWindow } = require('electron')
-const { spawn } = require('child_process')
-const path = require('path')
+const { spawn } = require('child_process');
+const http = require('http');
+const axios = require('axios');
+const path_ = require('path');
+const fs = require('fs');
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -18,39 +21,41 @@ function createWindow () {
 
 app.whenReady().then(() => {
   createWindow();
-  
-  const pythonScriptPath = path.join(__dirname, '..', 'backend', 'File_monitor', 'file_watcher.py');
-  const directoryToMonitor = 'C:/Users/Mervyn Rangasamy/Documents/Receiver';
-  const extensionsToMonitor = 'pdf,docx,xls,xlsx';
+  setTimeout(setupWatcher, 10000);
+});
 
-  const watcher = spawn('python', [pythonScriptPath, directoryToMonitor, extensionsToMonitor]);
+function setupWatcher() {
+  const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', 'C:/Users/Mervyn Rangasamy/Documents/Receiver', 'pdf,docx,xlsx,xls']);
 
   watcher.stdout.on('data', (data) => {
-    const output = data.toString().trim();
+    let output = data.toString().trim();
     console.log(`stdout: ${output}`);
-    try {
-      const jsonData = JSON.parse(output);
-      if (jsonData.type && jsonData.path) {
-        console.log(`File ${jsonData.type}: ${jsonData.path}`);
-      }
-    } catch (e) {
-      console.error('Failed to parse JSON:', e);
-    }
-  });
+    const postData = { path: output };
 
-  watcher.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
-  });
+    const path = data.toString().trim();
+    const segments = path.split('/');
+    const fileNameWithExtension = segments[segments.length - 1];
+    const parts = fileNameWithExtension.split('.');
+    const name = parts[0] + '_report.txt';
+    const extension = parts.slice(1).join('.');
+    const newFileName = extension ? `${name}` : name;
 
-  watcher.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
+    axios.post('http://127.0.0.1:8000/new-file', postData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => {
+      // console.log(`STATUS: ${res.status}`);
+      // console.log(`BODY: ${JSON.stringify(res.data)}`);
+      output = JSON.stringify(res.data);
+      // console.log(output)
+      console.log("Report successfully created")
+      const outputDir = path_.join('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Reports', newFileName);
+      fs.writeFileSync(outputDir, output, 'utf8');
+    })
+    .catch((error) => {
+      console.error(`problem with request: ${error.message}`);
+    });
   });
-
-  app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
-
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit();
-});
+}
