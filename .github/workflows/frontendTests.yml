@@ -35,7 +35,4 @@ jobs:
         npm ci
     - run: |
         cd gnd-app
-        npm run build --if-present
-    - run: |
-        cd gnd-app
-        npm test
+        npm test -- --watch=false --browsers=ChromeHeadless
