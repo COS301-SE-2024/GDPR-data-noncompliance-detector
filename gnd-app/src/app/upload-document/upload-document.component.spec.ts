@@ -128,7 +128,7 @@ describe('UploadDocumentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, UploadDocumentComponent],  // Include UploadDocumentComponent in imports
+      imports: [RouterTestingModule, HttpClientTestingModule, UploadDocumentComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -169,11 +169,9 @@ describe('UploadDocumentComponent', () => {
 
     spyOn(component, 'onFileSelected').and.callThrough();
 
-    // Create a DataTransfer to simulate file selection
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
 
-    // Set the files property with the file list
     input.files = dataTransfer.files;
     input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
 
@@ -196,11 +194,9 @@ describe('UploadDocumentComponent', () => {
     const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
     const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
 
-    // Create a DataTransfer to simulate file selection
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
 
-    // Set the files property with the file list
     input.files = dataTransfer.files;
     input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
 
@@ -216,4 +212,3 @@ describe('UploadDocumentComponent', () => {
     expect(resultContent.innerHTML).toContain('line1<br>line2');
   });
 });
-
