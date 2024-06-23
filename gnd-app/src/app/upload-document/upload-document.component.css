@@ -27,6 +27,8 @@
   display: flex;
   justify-content: space-between;
   margin: 0 1em;
+  height:100%;
+  content:Center;
 }
 
 .inbox-rectangle {

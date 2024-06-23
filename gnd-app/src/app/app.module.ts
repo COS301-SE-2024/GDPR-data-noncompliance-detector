@@ -10,6 +10,7 @@ import { UploadDocumentComponent } from './upload-document/upload-document.compo
 import { ViolationsComponent } from './violations/violations.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 
@@ -28,7 +29,9 @@ import { HttpClientModule } from '@angular/common/http';
       UploadDocumentComponent,
       HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
