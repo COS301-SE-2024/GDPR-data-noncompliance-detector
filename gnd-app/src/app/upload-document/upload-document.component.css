@@ -40,6 +40,7 @@
   width: 45vw;
   flex-grow: 1;
   max-width: calc(50% - 1em);
+  height: 50vh;
 }
 
 .analysis-rectangle {
