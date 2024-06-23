@@ -47,6 +47,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get install poppler-utils
+          sudo apt-get install tesseract-ocr tesseract-ocr-eng tesseract-ocr-dev
           python -m pip install --upgrade pip
           pip install flake8 pytest pytest-cov
           ls -a
