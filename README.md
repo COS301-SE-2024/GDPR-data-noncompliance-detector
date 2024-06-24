@@ -25,6 +25,9 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 [Demo 2 Video Presentation](https://drive.google.com/file/d/1YNrNPhaDHNjqqcLsI_5fdOUj7R9TEANV/view?usp=drive_link)
 <br></br>
 [Demo 2 Presentation](https://www.canva.com/design/DAGIxLKWsWc/owyHhSrvQEDbaabPDLZynQ/edit?utm_content=DAGIxLKWsWc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+<br></br>
+[Demo 2 Help Document](https://drive.google.com/file/d/1FDJJSWxULvbXtE0dGmIwo6O1-zbrzbuM/view?usp=sharing)
+
 
 ### Demo 3
 
