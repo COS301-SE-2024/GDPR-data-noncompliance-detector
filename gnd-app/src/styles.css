@@ -1,0 +1,12 @@
+@import 'flowbite/dist/flowbite.css';
+/* You can add global styles to this file, and also import other style files */
+body {
+  min-width: 500px; /* Set minimum width */
+  min-height: 500px; /* Set minimum height */
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

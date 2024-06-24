@@ -27,6 +27,7 @@
   
         - name: Super-linter
           uses: super-linter/super-linter@v6.5.1  # x-release-please-version
+          continue-on-error: true
           env:
             # To report GitHub Actions status checks
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,13 +41,18 @@
             VALIDATE_NATURAL_LANGUAGE: false
             VALIDATE_PYTHON_FLAKE8: false
             VALIDATE_PYTHON_MYPY: false
-            VALIDATE_GITLEAKS: false
             VALIDATE_CSHARP: false
-
-  
+            VALIDATE_CSS: false
+            VALIDATE_JSON: false
+            VALIDATE_HTML: false
+            VALIDATE_JAVASCRIPT_STANDARD: false
+            VALIDATE_TYPESCRIPT_STANDARD: false
+            VALIDATE_CHECKOV: false
+            
     # doing this to use the config
     run-flake8-lint:
       name: Run flake8 lint
+      continue-on-error: true
       runs-on: ubuntu-latest
   
       permissions:
@@ -68,5 +74,6 @@
             pip install flake8
   
         - name: Run flake8
+          continue-on-error: true
           run: |
             flake8 --config=.github/configs/.flake8

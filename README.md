@@ -17,36 +17,36 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 ## Demos
 
 ### Demo 1
-[Demo 1 Documentation](https://me-qr.com/mobile/pdf/22767945)
+[Demo 1 SRS Documentation](https://me-qr.com/mobile/pdf/22767945)
 
 ### Demo 2
+[Demo 2 SRS Documentation](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___SRS.pdf)
+<br></br>
+[Demo 2 Video Presentation](https://drive.google.com/file/d/1YNrNPhaDHNjqqcLsI_5fdOUj7R9TEANV/view?usp=drive_link)
+<br></br>
+[Demo 2 Presentation](https://www.canva.com/design/DAGIxLKWsWc/owyHhSrvQEDbaabPDLZynQ/edit?utm_content=DAGIxLKWsWc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+<br></br>
+[Demo 2 Help Document](https://drive.google.com/file/d/1FDJJSWxULvbXtE0dGmIwo6O1-zbrzbuM/view?usp=sharing)
+
 
 ### Demo 3
 
 ### Demo 4
 
-### DProject Day
-
 # Documentation
 
 ## Software Requirements Specification
-[Demo 1 SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_1_SRS.pdf)
+[SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___SRS.pdf)
 
-## Coding Standards
+## Architectural Document
+[Architectural Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___Architectural_Document.pdf)
+<br></br>
+[Architectural Diagram](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Architectural%20Document.png)
 
 ## Project Management Tools
-We use [Monday.com](https://monday.com)
+GitHub Issues and GitHub Boards
 
-## Testing 
-[Link to the lang_detection_unit_test.py file](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/lang_detection_unit_test.py)
-
-[Link to the storage_and_submission_unit_tests.py](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/storage_and_submission_unit_tests.py)
-
-[Link to the text_extractor_unit_tests.py](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/text_extractor_unit_tests.py)
-
-[Link to the validator_unit_tests.py](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/validator_unit_tests.py)
-
-## Team
+## The Team
 
 ### Dhinaz Rangasamy
 <table style="width: 100%;">
@@ -133,7 +133,7 @@ We use [Monday.com](https://monday.com)
       </p>
     </td>
     <td style="width: 150px; vertical-align: top;">
-      <p><strong>Role:</strong> Backend Developer</p>
+      <p><strong>Role:</strong> Backend Developer/DevOps</p>
     </td>
     <td style="vertical-align: top;">
       <p>I am a final year Computer Science student at the University of Pretoria. My degree has exposed me to many computer science concepts. In web development I enjoy backend and API development. I also enjoy learning about the field of graphics programming. I have a keen interest in machine learning and AI. With my knowledge I aim to aid my team with the skills I have learnt in graphics and data visualisation.</p>
@@ -172,7 +172,13 @@ Email: aprilfour301@gmail.com
 ## Tech Stack
 
 ### Frontend
-C# .NET MAUI
+Angular with Electron
 
 ### Backend
 Python
+FastAPI
+
+### Testing
+PyTest
+Karma
+Jasmine
