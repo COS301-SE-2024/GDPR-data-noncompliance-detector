@@ -20,7 +20,7 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 [Demo 1 SRS Documentation](https://me-qr.com/mobile/pdf/22767945)
 
 ### Demo 2
-[Demo 2 Documentation]
+[Demo 2 SRS Documentation](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___SRS.pdf)
 
 ### Demo 3
 
@@ -29,9 +29,10 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 # Documentation
 
 ## Software Requirements Specification
-[Demo 1 SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_1_SRS.pdf)
+[SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___SRS.pdf)
 
-## Coding Standards
+## Architectural Document
+[Architectural Document]
 
 ## Project Management Tools
 GitHub Issues and GitHub Boards
