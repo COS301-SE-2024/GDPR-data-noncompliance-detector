@@ -130,7 +130,7 @@ GitHub Issues and GitHub Boards
       </p>
     </td>
     <td style="width: 150px; vertical-align: top;">
-      <p><strong>Role:</strong> Backend Developer</p>
+      <p><strong>Role:</strong> Backend Developer/DevOps</p>
     </td>
     <td style="vertical-align: top;">
       <p>I am a final year Computer Science student at the University of Pretoria. My degree has exposed me to many computer science concepts. In web development I enjoy backend and API development. I also enjoy learning about the field of graphics programming. I have a keen interest in machine learning and AI. With my knowledge I aim to aid my team with the skills I have learnt in graphics and data visualisation.</p>
