@@ -33,6 +33,7 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 
 ## Architectural Document
 [Architectural Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___Architectural_Document.pdf)
+[Architectural Diagram](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Architectural%20Document.png)
 
 ## Project Management Tools
 GitHub Issues and GitHub Boards
