@@ -176,6 +176,7 @@ Angular with Electron
 
 ### Backend
 Python
+FastAPI
 
 ### Testing
 PyTest
