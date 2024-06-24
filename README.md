@@ -32,21 +32,12 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 [SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___SRS.pdf)
 
 ## Architectural Document
-[Architectural Document]
+[Architectural Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___Architectural_Document.pdf)
 
 ## Project Management Tools
 GitHub Issues and GitHub Boards
 
-## Testing 
-[Link to the lang_detection_unit_test.py file](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/lang_detection_unit_test.py)
-
-[Link to the storage_and_submission_unit_tests.py](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/storage_and_submission_unit_tests.py)
-
-[Link to the text_extractor_unit_tests.py](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/text_extractor_unit_tests.py)
-
-[Link to the validator_unit_tests.py](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/feature/text_extraction/backend/Document%20Parser/validator_unit_tests.py)
-
-## Team
+## The Team
 
 ### Dhinaz Rangasamy
 <table style="width: 100%;">
