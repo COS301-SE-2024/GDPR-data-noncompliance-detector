@@ -17,6 +17,7 @@
     "@angular/compiler": "^18.0.4",
     "@angular/material": "^18.0.2",
     "@angular/platform-browser": "^18.0.4",
+    "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "electron-reload": "^2.0.0-alpha.1",
     "flowbite": "^2.3.0",

@@ -27,8 +27,6 @@
   display: flex;
   justify-content: space-between;
   margin: 0 1em;
-  height:100%;
-  content:Center;
 }
 
 .inbox-rectangle {
@@ -40,7 +38,6 @@
   width: 45vw;
   flex-grow: 1;
   max-width: calc(50% - 1em);
-  height: 50vh;
 }
 
 .analysis-rectangle {
@@ -52,12 +49,8 @@
   width: 45vw;
   flex-grow: 1;
   max-width: calc(50% - 1em);
-  height: 50vh;
+  /* height: 50vh; */
   overflow-y: auto;
-}
-
-.result-content {
-  white-space: pre-line;
 }
 
 .analysis-header, .inbox-header {
