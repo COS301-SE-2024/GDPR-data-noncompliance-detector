@@ -20,9 +20,25 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
+  startAPI();
   createWindow();
-  setTimeout(setupWatcher, 10000);
+  setTimeout(setupWatcher, 1);
 });
+
+function startAPI() {
+  const api = spawn('uvicorn', ['api:app', '--reload'], {cwd: '../backend'});
+  api.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  api.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  api.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+}
 
 function setupWatcher() {
   const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', '../backend/Receiver', 'pdf,docx,xlsx,xls']);
