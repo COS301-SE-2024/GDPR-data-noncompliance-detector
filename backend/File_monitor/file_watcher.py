@@ -119,14 +119,11 @@ def stop_watcher_thread(thread):
 def startWatcherTotal(paths, ext):
     paths = "."
     ext = "txt"        
-    # Start watcher on a thread
     watcher_thread = start_watcher_thread(paths, ext)
     print(watcher_thread)    
     try:
-        # Simulate some work while watcher is running
         time.sleep(10)
     finally:
-        # Stop watcher thread
         stop_watcher_thread(watcher_thread)
 
 
