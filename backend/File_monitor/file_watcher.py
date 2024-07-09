@@ -6,6 +6,8 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import os
 import threading
+import xattr
+import plistlib
 
 # run with start_watcher_thread(paths, extensions, time to wait between checks)
 
@@ -127,10 +129,30 @@ def startWatcherTotal(paths, ext):
         stop_watcher_thread(watcher_thread)
 
 
+def startTeamsOutlookWatcher(ext):
+    # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
+    try:
+        attributes = xattr.xattr("../file.pdf")
+        where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+
+        if where_from_key in attributes:
+            where_from_data = attributes[where_from_key]
+            where_from_list = plistlib.loads(where_from_data)
+
+            for url in where_from_list:
+                print(url)
+
+            print("The 'Where from' attribute is not available for this file.")
+
+    except Exception as e:
+        print(f"Error accessing extended attributes for {"../file.pdf"}: {e}")
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    if (len(sys.argv) < 3):
-        logging.error("Please provide the path and file extension")
-        sys.exit(1)
+    # if (len(sys.argv) < 3):
+    #     logging.error("Please provide the path and file extension")
+    #     sys.exit(1)
 
-    start_watcher_thread(sys.argv[1], sys.argv[2], 1)
+    # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
+    startTeamsOutlookWatcher('sf')
