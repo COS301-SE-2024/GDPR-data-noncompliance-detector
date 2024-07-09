@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FileService } from '../services/file.service';
+// import { FileService } from '../services/file.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-inbox',
@@ -12,20 +15,28 @@ import { FileService } from '../services/file.service';
 })
 export class InboxComponent implements OnInit {
   reports: string[] = [];
-  path: string = 'C:/Users/Mervyn Rangasamy/Documents/Receiver';
-  
-  constructor(private fileService: FileService) { }
+  // path: string = '../backend/Reports';
+  path: string = '../backend/Reports';
+  private apiUrl = 'http://127.0.0.1:8000/reports';
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getReports();
   }
 
   getReports(): void{
-    this.fileService.getFiles(this.path).subscribe(r => {
+    this.fetchFiles(this.path).subscribe(r => {
       this.reports = r;
     });
+    
+    console.log('---------------------------------')
+    console.log(this.reports)
   }
 
+  fetchFiles(directory: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}?directory=${directory}`);
+  }
 
   // mockData: any = {
   //   email1: {rating: 80, origin: 'Netherlands', violationAreas: 'Personal Information', numViolations: 16, fileType: 'pdf'},

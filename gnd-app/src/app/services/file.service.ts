@@ -11,6 +11,7 @@ export class FileService {
   constructor(private http: HttpClient) {}
 
   getFiles(directory: string): Observable<string[]> {
+    console.log("Getting files")
     return this.http.get<string[]>(`${this.apiUrl}?directory=${directory}`);
   }
 }

@@ -20,7 +20,7 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  startAPI();
+  // startAPI();
   createWindow();
   setTimeout(setupWatcher, 1);
 });
@@ -62,10 +62,7 @@ function setupWatcher() {
       },
     })
     .then((res) => {
-      // console.log(`STATUS: ${res.status}`);
-      // console.log(`BODY: ${JSON.stringify(res.data)}`);
       output = JSON.stringify(res.data);
-      // console.log(output)
       console.log("Report successfully created")
       const outputDir = path_.join('../backend/Reports', newFileName);
       fs.writeFileSync(outputDir, output, 'utf8');
@@ -74,4 +71,5 @@ function setupWatcher() {
       console.error(`problem with request: ${error.message}`);
     });
   });
+  
 }

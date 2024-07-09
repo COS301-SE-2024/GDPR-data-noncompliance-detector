@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from backend_entry import backend_entry
 import os
 from flask import  request, jsonify
-import json
+from typing import List
 
 app = FastAPI()
 report_analysis = None
@@ -41,10 +41,21 @@ class FilePath(BaseModel):
 
 @app.post("/new-file")
 async def new_file(file_path: FilePath):
+    print("Incoming")
     result = endpoint.process(file_path.path)
     return result
     # return {"status": "success", "path": file_path.path}
 
+@app.get("/reports", response_model=List[str])
+def list_files(directory: str):
+    print("-----------------------------------------------------------------------------")
+    try:
+        files = os.listdir(directory)
+        print("Files")
+        print(files)
+        return files
+    except FileNotFoundError:
+        return []
 
 if __name__ == "__main__":
     import uvicorn
