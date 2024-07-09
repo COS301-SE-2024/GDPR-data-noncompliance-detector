@@ -36,9 +36,9 @@ export class InboxComponent implements OnInit {
   //   email6: {rating: 37, origin: 'Spain', violationAreas: 'Banking Details', numViolations: 12, fileType: 'txt'},
   // };
 
-  // currentAnalysis: any = {};
-  // currentEmail: string = "";  
-  // currentEmailType: string = ""; // Add this line to track file type
+  currentAnalysis: any = {};
+  currentEmail: string = "";  
+  currentEmailType: string = ""; // Add this line to track file type
 
   // showAnalysis(data: string) {
   //   this.currentAnalysis = this.mockData[data];
@@ -46,13 +46,13 @@ export class InboxComponent implements OnInit {
   //   this.currentEmailType = this.mockData[data].fileType; // Set file type
   // }
 
-  // isObjectEmpty(obj: any) {
-  //   return Object.keys(obj).length === 0;
-  // }
+  isObjectEmpty(obj: any) {
+    return Object.keys(obj).length === 0;
+  }
 
-  // clearAnalysis() {
-  //   this.currentAnalysis = {};
-  //   this.currentEmail = "";
-  //   this.currentEmailType = ""; // Clear file type
-  // }
+  clearAnalysis() {
+    this.currentAnalysis = {};
+    this.currentEmail = "";
+    this.currentEmailType = ""; // Clear file type
+  }
 }
