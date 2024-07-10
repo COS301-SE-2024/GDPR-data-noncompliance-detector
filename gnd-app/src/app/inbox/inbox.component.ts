@@ -35,7 +35,7 @@ export class InboxComponent implements OnInit {
   }
 
   fetchFiles(directory: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}?directory=${directory}`);
+    return this.http.get<string[]>(`${this.apiUrl}`);
   }
 
   // mockData: any = {

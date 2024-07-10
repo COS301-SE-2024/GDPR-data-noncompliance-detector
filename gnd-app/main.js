@@ -20,7 +20,7 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  // startAPI();
+  startAPI();
   createWindow();
   setTimeout(setupWatcher, 1);
 });

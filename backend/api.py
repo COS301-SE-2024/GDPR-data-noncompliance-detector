@@ -47,10 +47,10 @@ async def new_file(file_path: FilePath):
     # return {"status": "success", "path": file_path.path}
 
 @app.get("/reports", response_model=List[str])
-def list_files(directory: str):
+def list_files():
     print("-----------------------------------------------------------------------------")
     try:
-        files = os.listdir(directory)
+        files = os.listdir('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Reports')
         print("Files")
         print(files)
         return files
