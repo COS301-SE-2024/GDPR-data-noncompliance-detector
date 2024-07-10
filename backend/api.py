@@ -1,5 +1,5 @@
 import threading
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
 import os
 from fastapi.middleware.cors import CORSMiddleware
@@ -56,6 +56,18 @@ def list_files():
         return files
     except FileNotFoundError:
         return []
+
+@app.get("/read-report")
+def get_file_content(path: str):
+    try:
+        with open(path, 'r') as file:
+            content = file.read()
+        return {"content": content}
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="File not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 
 if __name__ == "__main__":
     import uvicorn
