@@ -64,7 +64,7 @@ def get_file_content(path: str):
             content = file.read()
         return {"content": content}
     except FileNotFoundError:
-        raise HTTPException(status_code=404, detail="File not found")
+        raise HTTPException(status_code=404 , detail="File not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
