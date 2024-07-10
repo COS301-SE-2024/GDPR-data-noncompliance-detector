@@ -15,7 +15,9 @@
         <h2 class="inbox-header">Inbox</h2>
         <div class="divider"></div>
         <ul>
-            <li *ngFor="let i of reports">{{ i }}</li>
+            <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
+                <li>{{ i }}</li>
+            </div>
         </ul>
     </div>
 
@@ -27,6 +29,7 @@
         </p>
 
         <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
+            <p>Pulled Content: {{currentAnalysis.content}}</p>
             <p>Overall Rating: {{currentAnalysis.rating}}</p>
             <p>Country of Origin: {{currentAnalysis.origin}}</p>
             <p>Potential Violation Areas: {{currentAnalysis.violationAreas}}</p>

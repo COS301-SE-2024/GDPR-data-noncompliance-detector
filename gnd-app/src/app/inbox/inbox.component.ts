@@ -38,6 +38,22 @@ export class InboxComponent implements OnInit {
     return this.http.get<string[]>(`${this.apiUrl}`);
   }
 
+  getReportContent(filePath: string): void {
+    this.http.get<{ content: string }>(`${this.apiUrl}/read-report?path=${encodeURIComponent(filePath)}`).subscribe(response => {
+      this.currentAnalysis = {
+        content: response.content,
+        origin: "Unknown",
+        violationAreas: "N/A",
+        numViolations: "N/A"
+      };
+      console.log(response.content);
+    });
+  }
+
+  mock(): void{
+    console.log("clicked");
+  }
+
   // mockData: any = {
   //   email1: {rating: 80, origin: 'Netherlands', violationAreas: 'Personal Information', numViolations: 16, fileType: 'pdf'},
   //   email2: {rating: 37, origin: 'France', violationAreas: 'Banking Details', numViolations: 29, fileType: 'doc'},
