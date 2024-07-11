@@ -17,12 +17,9 @@
         <ul>
             <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
                 <li>{{ i }}
-                    <button (click)="getReportContent(i)">FETCH</button>
                 </li>
             </div>
         </ul>
-        <button (click)="getReportContent('dutch.txt')">FETCH</button>
-
     </div>
 
     <div class="analysis-rectangle">
