@@ -22,3 +22,15 @@
     background-color: #8EBA12;
     border-radius: 50%;
 }
+
+.grid-container-element { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: 20px; 
+    width: 50%;     
+} 
+.grid-child-element { 
+    margin: 10px; 
+    border: 1px solid black;
+    /* border: 1px solid red;  */
+}
