@@ -1,6 +1,9 @@
 {
   "name": "gnd-app",
-  "version": "0.0.0",
+  "productName": "GND",
+  "icon": "assets/logo.ico",
+  "author": "AprilFour",
+  "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
@@ -8,7 +11,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "electron": "ng build && electron ."
+    "electron": "ng build && electron .",
+    "electron:dev": "ng build --base-href ./ && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "ng build --base-href ./ && electron-builder"
   },
   "private": true,
   "dependencies": {
@@ -38,7 +44,8 @@
     "@angular/router": "^18.0.4",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^20.14.8",
-    "electron": "^30.1.0",
+    "electron": "^30.2.0",
+    "electron-builder": "^24.13.3",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -47,5 +54,34 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "tailwindcss": "^3.4.4",
     "typescript": "~5.4.5"
+  },
+  "build": {
+    "appId": "com.aprilfour.gnd",
+    "directories": {
+      "output": "release/"
+    },
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "package.json",
+      "assets/logo.ico"
+    ],
+    "win": {
+      "icon": "assets/logo.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/logo.ico",
+      "uninstallerIcon": "assets/logo.ico",
+      "uninstallDisplayName": "GND",
+      "license": "license.txt",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "GND"
+    }
   }
 }
