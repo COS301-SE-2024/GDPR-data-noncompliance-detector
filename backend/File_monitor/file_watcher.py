@@ -132,17 +132,28 @@ def startWatcherTotal(paths, ext):
 def startTeamsOutlookWatcher(ext):
     # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
     try:
-        attributes = xattr.xattr("../file.pdf")
+        attributes = xattr.xattr("/Users/yudigovender/Downloads/file.pdf")
         where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
 
-        if where_from_key in attributes:
-            where_from_data = attributes[where_from_key]
-            where_from_list = plistlib.loads(where_from_data)
+        # print(attributes.items)
+        # for key, value in attributes.items():
+        #     print(f"{key}: {value}")
+        #     print("\n")
 
-            for url in where_from_list:
-                print(url)
+        line = attributes.get(where_from_key)
+        if( "my.sharepoint.com" in line):
+            print("file is from teams")
 
-            print("The 'Where from' attribute is not available for this file.")
+        # if("my.sharepoint.com" in attributes[where_from_key].decode("utf-8")):
+        #     print("file is from teams")
+        # if where_from_key in attributes:
+        #     where_from_data = attributes[where_from_key]
+        #     where_from_list = plistlib.loads(where_from_data)
+
+        #     for url in where_from_list:
+        #         print(url)
+
+        #     print("The 'Where from' attribute is not available for this file.")
 
     except Exception as e:
         print(f"Error accessing extended attributes for {"../file.pdf"}: {e}")
