@@ -46,6 +46,7 @@ watcher_timer = 3
 
 class handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
+
     def __init__(self, file_extension):
         self.file_extension = file_extension
         self.prev_output = time.time()
@@ -58,8 +59,22 @@ class handle(FileSystemEventHandler):
             self.prev_output = current_time
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
-            print(event.src_path)
-            return event.src_path
+            try:
+                attributes = xattr.xattr(f"{event.src_path}")
+                
+                where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+
+                line = attributes.get(where_from_key)
+                print(line)
+
+                if (b"my.sharepoint.com" in line):
+                    print("file is from teams")
+                    print(event.src_path + " from teams true")
+                
+                print(event.src_path + " from teams false")
+            except Exception as e:
+                print(f"teams error : {e}")
+        return event.src_path
 
     def on_created(self, event):
         global watcher_timer
@@ -69,7 +84,21 @@ class handle(FileSystemEventHandler):
             self.prev_output = current_time
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
-            print(event.src_path)
+            try:
+                attributes = xattr.xattr(f"{event.src_path}")
+                
+                where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+
+                line = attributes.get(where_from_key)
+                print(line)
+
+                if (b"my.sharepoint.com" in line):
+                    print("file is from teams")
+                    print(event.src_path + " from teams true")
+                
+                print(event.src_path + " from teams false")
+            except Exception as e:
+                print(f"teams error : {e}")
             return event.src_path
 
     # def on_deleted(self, event):
@@ -95,7 +124,7 @@ def startWatcher(paths, ext):
         observer.start()
     try:
         while not stop_watcher:
-            time.sleep(1)  # Adjust as needed
+            time.sleep(1)
     except KeyboardInterrupt:
         pass
     finally:
@@ -105,6 +134,7 @@ def startWatcher(paths, ext):
 
 
 def start_watcher_thread(paths, ext, wt=3):  # default is 3 seconds
+    # can start in download folder
     global watcher_timer
     watcher_timer = wt
 
@@ -123,7 +153,7 @@ def stop_watcher_thread(thread):
 
 def startWatcherTotal(paths, ext):
     paths = "."
-    ext = "txt"        
+    ext = "txt"
     watcher_thread = start_watcher_thread(paths, ext)
     print(watcher_thread)    
     try:
@@ -132,37 +162,26 @@ def startWatcherTotal(paths, ext):
         stop_watcher_thread(watcher_thread)
 
 
-def startTeamsOutlookWatcher(ext):
+def verifyFromTeams(ext):
     # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
     try:
         downloads_path = str(Path.home() / "Downloads")
         print(downloads_path)
-        attributes = xattr.xattr("/Users/yudigovender/Downloads/file.pdf")
-        where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+        attributes = xattr.xattr(f"{downloads_path}/file.pdf")
         
-        # print(attributes.items)
-        # for key, value in attributes.items():
-        #     print(f"{key}: {value}")
-        #     print("\n")
+        where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
 
         line = attributes.get(where_from_key)
         print(line)
-        if( b"my.sharepoint.com" in line):
+
+        if (b"my.sharepoint.com" in line):
             print("file is from teams")
-
-        # if("my.sharepoint.com" in attributes[where_from_key].decode("utf-8")):
-        #     print("file is from teams")
-        # if where_from_key in attributes:
-        #     where_from_data = attributes[where_from_key]
-        #     where_from_list = plistlib.loads(where_from_data)
-
-        #     for url in where_from_list:
-        #         print(url)
-
-        #     print("The 'Where from' attribute is not available for this file.")
-
+            return True
+        
+        return False
+    
     except Exception as e:
-        print(f"Error accessing extended attributes for {"../file.pdf"}: {e}")
+        print(f"teams error : {e}")
 
 
 if __name__ == "__main__":
@@ -172,4 +191,4 @@ if __name__ == "__main__":
     #     sys.exit(1)
 
     # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
-    startTeamsOutlookWatcher('sf')
+    verifyFromTeams('sf')
