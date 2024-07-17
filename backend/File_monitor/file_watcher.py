@@ -8,6 +8,9 @@ import os
 import threading
 import xattr
 import plistlib
+from pathlib import Path
+
+
 
 # run with start_watcher_thread(paths, extensions, time to wait between checks)
 
@@ -132,16 +135,19 @@ def startWatcherTotal(paths, ext):
 def startTeamsOutlookWatcher(ext):
     # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
     try:
+        downloads_path = str(Path.home() / "Downloads")
+        print(downloads_path)
         attributes = xattr.xattr("/Users/yudigovender/Downloads/file.pdf")
         where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
-
+        
         # print(attributes.items)
         # for key, value in attributes.items():
         #     print(f"{key}: {value}")
         #     print("\n")
 
         line = attributes.get(where_from_key)
-        if( "my.sharepoint.com" in line):
+        print(line)
+        if( b"my.sharepoint.com" in line):
             print("file is from teams")
 
         # if("my.sharepoint.com" in attributes[where_from_key].decode("utf-8")):
