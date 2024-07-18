@@ -21,6 +21,7 @@
   height: 10px;
   background-color: #8EBA12;
   border-radius: 50%;
+  transform: translateX(-100%);
 }
 
 .containers {
@@ -72,6 +73,8 @@
   height: 10px;
   background-color: #8EBA12;
   border-radius: 50%;
+  transform: translateX(-65%);
+
 }
 
 .divider {

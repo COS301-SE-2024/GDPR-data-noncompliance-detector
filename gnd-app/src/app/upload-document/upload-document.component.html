@@ -15,7 +15,7 @@
     </h2>
     <div class="divider"></div>
 
-<div class="flex items-center justify-center w-full"  [class.dropzone-active]="isDragActive" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onFileDropped($event)">
+<div class="flex items-center justify-center w-full"  [class.dropzone-active]="isDragActive" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onFileDropped($event)" id="uploadFile">
   <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
       <div class="flex flex-col items-center justify-center pt-5 pb-6">
           <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -25,27 +25,28 @@
       </div>
       <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)" />
   </label>
-</div> 
+</div>
 
   </div>
 
-  <div class="analysis-rectangle">
+  <div class="analysis-rectangle" >
     <h2 class="analysis-header">
         Analysis
     </h2>
-    <div class="divider"></div>
+    <div class="divider" ></div>
 
-    <div class="analysis-data" *ngIf="result">
-      <h2 class="analysis-box-header">Analysis Result:</h2>
-      <div class = "result-content" [innerHTML]="result"></div>
+    <div class="analysis-data" *ngIf="result" >
+      <h2 class="analysis-box-header" >Analysis Result:</h2>
+      <div class = "result-content" [innerHTML]="result" ></div>
     </div>
 
-    <div class="analysis-data"  *ngIf="uploadedFileName && !result; else uploadPrompt">
+<!--    <div class="analysis-data"  *ngIf="uploadedFileName && !result; else uploadPrompt">-->
+    <div class="analysis-data"  *ngIf="uploadedFileName && !result">
       <h2>File Details:</h2>
       <p>{{ uploadedFileName }}</p>
- 
+
     </div>
-<!-- 
+<!--
     <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis); else uploadPrompt">
       <h2>File Details:</h2>
       <p>{{ uploadedFileName }}</p>
@@ -54,9 +55,13 @@
       </div>
     </div> -->
 
-    <ng-template #uploadPrompt>
-      <p class="analysis-text">Upload a file to view results</p>
-    </ng-template>
+<!--    <ng-template #uploadPrompt>-->
+<!--      <p class="analysis-text" id="Report">Upload a file to view results</p>-->
+<!--    </ng-template>-->
+<!--    I have fixed the prompt not being able to disappear as the results show.-->
+    <div class="analysis-data" *ngIf="!result && !uploadedFileName">
+      <p class="analysis-text" id="Report">Upload a file to view results</p>
+    </div>
   </div>
 </div>
 
@@ -65,4 +70,6 @@
   <!-- <button *ngIf="uploadedFileName" [routerLink]="['/violations']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Violations</button> -->
   <!-- <button *ngIf="uploadedFileName" [routerLink]="['/report']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Report</button> -->
 </div>
+
+
 

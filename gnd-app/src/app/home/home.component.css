@@ -15,7 +15,6 @@
 .button-container {
   display: flex;
   flex-direction: column;
-
 }
 
 .button-container button {
@@ -26,15 +25,3 @@
   cursor: pointer;
 }
 
-/*Walkthrough message box*/
-.walkthrough-toggle {
-  float: right;
-  padding: 14px 16px;
-  color: white;
-  cursor: pointer;
-}
-
-.walkthrough-toggle:hover {
-  background-color: #ddd;
-  color: black;
-}
