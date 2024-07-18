@@ -20,7 +20,7 @@ class backend_entry:
 
 if __name__ == "__main__":
     try:
-        backend_entry.main()
+        backend_entry.process()
     except SystemExit as e:
         print("An error occurred: ", e)
         sys.exit(1)

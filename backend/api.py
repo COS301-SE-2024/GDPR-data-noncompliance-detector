@@ -42,9 +42,12 @@ class FilePath(BaseModel):
 @app.post("/new-file")
 async def new_file(file_path: FilePath):
     print("Incoming")
-    result = endpoint.process(file_path.path)
-    return result
-    # return {"status": "success", "path": file_path.path}
+    if(file_path == " Watcher is watching: ['\''C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Receiver'\''] with extensions: ['\''pdf'\'', '\''docx'\'', '\''xlsx'\'', '\''xls'\'']"):
+        return "crash"
+    else:
+        result = endpoint.process(file_path.path)
+        return result
+        # return {"status": "success", "path": file_path.path}
 
 @app.get("/reports", response_model=List[str])
 def list_files():
