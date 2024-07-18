@@ -23,14 +23,25 @@
     border-radius: 50%;
 }
 
-.grid-container-element { 
-    display: grid; 
+.grid-parent { 
+    /* display: grid; 
     grid-template-columns: 1fr 1fr; 
     grid-gap: 20px; 
-    width: 50%;     
+    width: 50%;      */
+    display: flex;
+    justify-content: space-around;
 } 
-.grid-child-element { 
+
+.grid-gnd { 
     margin: 10px; 
     border: 1px solid black;
-    /* border: 1px solid red;  */
+    width: 40%;
+    padding: 20px;    
+}
+
+.grid-gdpr {
+    margin: 10px; 
+    border: 1px solid black;
+    width: 40%;
+    padding: 20px;
 }
