@@ -1,15 +1,35 @@
+import http
+import json
 import subprocess
 import requests
 
 def send_to_api(path):
-    url = "http://127.0.0.1:8000/new-file"
-    data = {"path": path}
+    url = "127.0.0.1:8000"
+    endpoint = "/new-file"
+    data = json.dumps({"path": path})
+    headers = {
+        "Content-type": "application/json",
+    }
+
     try:
-        response = requests.post(url, json=data)
-        response.raise_for_status()
-        print(response.json())
-    except requests.exceptions.RequestException as e:
+        conn = http.client.HTTPConnection(url)
+        conn.request("POST", endpoint, body=data, headers=headers)
+        response = conn.getresponse()
+        if response.status == 200:
+            print(response.read().decode())
+        else:
+            print(f"Error sending to API: {response.status} {response.reason}")
+        conn.close()
+    except Exception as e:
         print(f"Error sending to API: {e}")
+    # url = "http://127.0.0.1:8000/new-file"
+    # data = {"path": path}
+    # try:
+    #     response = requests.post(url, json=data)
+    #     response.raise_for_status()
+    #     print(response.json())
+    # except requests.exceptions.RequestException as e:
+    #     print(f"Error sending to API: {e}")
 
 def start():
     file_watcher_script_path = './File_monitor/file_watcher.py'
@@ -26,7 +46,8 @@ def start():
             break
         if output:
             print(output.strip())
-            send_to_api(output)
+            if(output != "Watcher is watching: ['./Receiver'] with extensions: ['pdf', 'docx', 'xlsx']"):
+                send_to_api(output)
 
 
 
