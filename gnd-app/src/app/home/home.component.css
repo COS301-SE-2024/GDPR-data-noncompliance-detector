@@ -15,7 +15,6 @@
 .button-container {
   display: flex;
   flex-direction: column;
-
 }
 
 .button-container button {
@@ -25,3 +24,4 @@
   font-family: "Roboto Bold";
   cursor: pointer;
 }
+
