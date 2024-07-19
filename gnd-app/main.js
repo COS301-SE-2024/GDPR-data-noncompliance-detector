@@ -22,7 +22,7 @@ function createWindow () {
 app.whenReady().then(() => {
   startAPI();
   createWindow();
-  // setTimeout(setupWatcher, 10000);
+  setTimeout(setupWatcher, 10000);
 });
 
 function startAPI() {
@@ -41,7 +41,7 @@ function startAPI() {
 }
 
 function setupWatcher() {
-  const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', 'C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Receiver', 'pdf,docx,xlsx,xls']);
+  const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', '../backend/Receiver', 'pdf,docx,xlsx,xls']);
 
   watcher.stdout.on('data', (data) => {
     let output = data.toString().trim();

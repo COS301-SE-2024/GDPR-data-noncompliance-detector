@@ -2,6 +2,7 @@ import http
 import json
 import subprocess
 import requests
+import time
 
 def send_to_api(path):
     url = "127.0.0.1:8000"
@@ -47,7 +48,9 @@ def start():
         if output:
             print(output.strip())
             if(output != "Watcher is watching: ['./Receiver'] with extensions: ['pdf', 'docx', 'xlsx']"):
-                send_to_api(output)
+                send = "Receiver/NCE1.pdf"
+                time.sleep(120)
+                send_to_api(output[2:])
 
 
 
