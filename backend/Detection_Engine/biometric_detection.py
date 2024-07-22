@@ -1,7 +1,7 @@
 from transformers import DetrImageProcessor, DetrForObjectDetection
 import torch
 from PIL import Image
-from retinaface import RetinaFace
+# from retinaface import RetinaFace
 # from tensorflow.python.framework.ops import disable_eager_execution
 # disable_eager_execution()
 
@@ -41,9 +41,9 @@ def biometric_detect_people(source):
     return output
 
 
-def biometric_detect_eye(source):
-    resp = RetinaFace.detect_faces(source)
-    return resp
+# def biometric_detect_eye(source):
+#     resp = RetinaFace.detect_faces(source)
+#     return resp
 
 
 if __name__ == "__main__":
