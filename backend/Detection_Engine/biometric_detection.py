@@ -51,4 +51,4 @@ if __name__ == "__main__":
     print(out)
 
     # print(biometric_detect_eye("../mockdata/p2.png"))
-    # save_model_local()
+    save_model_local()
