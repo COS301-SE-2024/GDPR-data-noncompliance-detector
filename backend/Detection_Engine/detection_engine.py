@@ -1,11 +1,12 @@
 from .lang_detection import location_finder
 from .regex_layer import regex_layer
-
+from .text_classification_layer import text_classification_layer
 class detection_engine:
 
     def __init__(self):
         self.locale_search = location_finder()
         self.regex_filter = regex_layer()
+        self.text_classification_layer = text_classification_layer()
 
 
     def determine_country_of_origin(self, path):
@@ -25,11 +26,14 @@ class detection_engine:
     
     def regex_report(self, path):
         return self.regex_filter.process(path)
+    
+    def text_classifier_report(self, input):
+        return self.text_classification_layer.process(text)
 
     def process(self, path):
         
         text = path
-
+        
         location = self.determine_country_of_origin(path)
         reg_result = self.regex_report(text)
 

@@ -1,5 +1,5 @@
 import spacy
-model = spacy.load('./Entity_builder')
+model = spacy.load('Entity_builder')
 
 
 class NER:
