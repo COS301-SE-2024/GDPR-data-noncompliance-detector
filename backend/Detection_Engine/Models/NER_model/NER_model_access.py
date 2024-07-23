@@ -1,9 +1,10 @@
 import spacy
+model = spacy.load('./Entity_builder')
+
 
 class NER:
 
-    def __init__(self):
-        self.model = spacy.load('Entity_builder')
+    # def __init__(self):
 
     def extract_entities(self, res):
         entities = []
@@ -12,7 +13,7 @@ class NER:
         return entities
 
     def run_NER(self, text):
-        res = self.model(text)
+        res = model(text)
         processed = self.extract_entities(res)
         return processed
     
