@@ -3,7 +3,7 @@ import spacy
 import requests 
 import sentencepiece as spm
 from bs4 import BeautifulSoup
-nlp = spacy.load("en_core_web_trf")
+nlp = spacy.load("en_core_web_sm")
 pd.set_option("display.max_rows", 5000)
 
 
