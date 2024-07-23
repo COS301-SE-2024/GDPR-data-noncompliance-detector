@@ -22,7 +22,7 @@ function createWindow () {
 app.whenReady().then(() => {
   startAPI();
   createWindow();
-  setTimeout(setupWatcher, 10000);
+  setTimeout(setupWatcher, 100);
 });
 
 function startAPI() {
@@ -65,7 +65,7 @@ function setupWatcher() {
         console.log("Alive--------------------------");
       output = JSON.stringify(res.data);
       console.log("Report successfully created")
-      const outputDir = path_.join('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Reports', newFileName);
+      const outputDir = path_.join('../backend/Reports', newFileName);
       fs.writeFileSync(outputDir, output, 'utf8');
     })
     .catch((error) => {
