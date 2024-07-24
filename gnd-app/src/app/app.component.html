@@ -11,6 +11,14 @@
   <a class="active" routerLink="report">Help</a>
   <a class="active" routerLink="faq-page">FAQ</a>
 
+  <a class="active" routerLink="/" id="home">Home</a>
+  <a class="active" routerLink="report" id="Help">Help</a>
+  <a class="walkthrough-toggle" (click)="toggleWalkthrough()">
+    <i class="fas fa-question-circle"></i>
+  </a>
 </div>
 
-<router-outlet></router-outlet>
+
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
