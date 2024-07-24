@@ -26,7 +26,7 @@ def detection_engine_worker():
 class backend_entry:
 
     @staticmethod
-    def process(path):
+    def mq_process(path):
         parser_thread = threading.Thread(target=document_parser_worker, args=(path,))
         engine_thread = threading.Thread(target=detection_engine_worker)
 
@@ -42,6 +42,18 @@ class backend_entry:
 
         result = result_holder.get()
         return result
+    
+    def process(path):
+        parser = document_parser()
+        engine = detection_engine()
+        # path = input("File Name:  ")
+        file = parser.process(path)
+        result = engine.process(file)
+        # print(result)
+
+        # print(file)
+        return result
+
 
 if __name__ == "__main__":
     try:
