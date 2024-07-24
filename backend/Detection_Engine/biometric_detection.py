@@ -1,9 +1,14 @@
 from transformers import DetrImageProcessor, DetrForObjectDetection
 import torch
 from PIL import Image
-# from retinaface import RetinaFace
-from ...backend.Document_parser.extract_images import extract_images
+import sys
 import os
+
+# below added because of the relative import error
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+from backend.Document_parser.extract_images import extract_images
+# from retinaface import RetinaFace
 # from tensorflow.python.framework.ops import disable_eager_execution
 # disable_eager_execution()
 
