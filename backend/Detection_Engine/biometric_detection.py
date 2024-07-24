@@ -1,9 +1,9 @@
 from transformers import DetrImageProcessor, DetrForObjectDetection
 import torch
 from PIL import Image
-from pypdf import PdfReader
+# from retinaface import RetinaFace
+from ...backend.Document_parser.extract_images import extract_images
 import os
-from retinaface import RetinaFace
 # from tensorflow.python.framework.ops import disable_eager_execution
 # disable_eager_execution()
 
@@ -43,27 +43,26 @@ def biometric_detect_people(source):
     return output
 
 
-def biometric_detect_eye(source):
-    resp = RetinaFace.detect_faces(source)
-    return resp
+# def biometric_detect_eye(source):
+#     resp = RetinaFace.detect_faces(source)
+#     return resp
 
 
-def extract_images():
-    pypdf_reader = PdfReader("../mockdata/pdfWimages.pdf")
-    output_dir = "pdf_images"
-    os.makedirs(output_dir, exist_ok=True)
+def biometric_detect_all(pdf_path):
+    extract_images(pdf_path)
+    images = [f'pdf_images/{i}' for i in os.listdir('pdf_images')]
+    output = []
+    for image in images:
+        output.append(biometric_detect_people(image))
+    return output
 
-    for page in pypdf_reader.pages:
-        for image in page.images:
-            image_path = os.path.join(output_dir, image.name)
-            with open(image_path, "wb") as fp:
-                fp.write(image.data)
 
 if __name__ == "__main__":
     # out = biometric_detect_people("../mockdata/p2.png")
     # print(out)
 
-    print(biometric_detect_eye("../mockdata/p2.png"))
+    # print(biometric_detect_eye("../mockdata/p2.png"))
     # save_model_local()
 
     # extract_images()
+    print(biometric_detect_all("../mockdata/pdfWimages.pdf"))
