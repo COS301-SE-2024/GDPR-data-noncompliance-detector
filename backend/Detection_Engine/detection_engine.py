@@ -1,6 +1,6 @@
-from lang_detection import location_finder
-from regex_layer import regex_layer
-from report_generation_layer import report_generation_layer
+from .lang_detection import location_finder
+from .regex_layer import regex_layer
+from .report_generation_layer import report_generation_layer
 class detection_engine:
 
     def __init__(self):
@@ -26,9 +26,6 @@ class detection_engine:
     
     def regex_report(self, path):
         return self.regex_filter.process(path)
-    
-    def text_classifier_report(self, input):
-        return self.text_classification_layer.process(text)
 
     def process(self, path):
         

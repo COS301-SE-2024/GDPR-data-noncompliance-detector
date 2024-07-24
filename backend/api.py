@@ -50,7 +50,8 @@ async def new_file(file_path: FilePath):
 def list_files():
     print("-----------------------------------------------------------------------------")
     try:
-        files = os.listdir('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Reports')
+        reports_dir = os.path.abspath('./backend/Reports')
+        files = os.listdir(reports_dir)
         print("Files")
         print(files)
         return files

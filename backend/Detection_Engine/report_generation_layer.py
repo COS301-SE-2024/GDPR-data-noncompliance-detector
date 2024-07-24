@@ -1,4 +1,4 @@
-from text_classification_layer import text_classification_layer
+from .text_classification_layer import text_classification_layer
 
 class report_generation_layer:
 
@@ -16,7 +16,7 @@ class report_generation_layer:
                     names.append(text)
                     entities += 1
     
-        return f"Document potentially references {entities} different individuals"
+        return f"Document potentially references {entities} different individuals\n"
     
 if __name__ == "__main__":
     cl_ = report_generation_layer()

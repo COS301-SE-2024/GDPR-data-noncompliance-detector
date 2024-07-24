@@ -1,6 +1,9 @@
 import spacy
-model = spacy.load('Entity_builder')
+import os
+base_dir = os.path.dirname(__file__)
+model_path = os.path.join(base_dir, 'Entity_builder')
 
+model = spacy.load(model_path)
 
 class NER:
 

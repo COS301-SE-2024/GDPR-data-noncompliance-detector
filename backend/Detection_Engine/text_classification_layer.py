@@ -1,9 +1,9 @@
-import NER_model_access
+from .NER_model_access import NER
 
 class text_classification_layer:
 
     def __init__(self):
-        self.NER_model_ = NER_model_access.NER()
+        self.NER_model_ = NER()
 
     def run_NER_model(self, text):
         res = self.NER_model_.run_NER(text)
