@@ -16,7 +16,7 @@ class report_generation_layer:
                     names.append(text)
                     entities += 1
     
-        return f"Document potentially references {entities} different individuals\n"
+        return f"Document potentially references {entities} different individuals\n\n"
     
 if __name__ == "__main__":
     cl_ = report_generation_layer()
