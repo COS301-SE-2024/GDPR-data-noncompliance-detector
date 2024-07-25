@@ -3,12 +3,14 @@ import torch
 from PIL import Image
 import sys
 import os
+import docx2txt
+
 
 # below added because of the relative import error
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-from backend.Document_parser.extract_images import extract_images
-# from retinaface import RetinaFace
+from backend.Document_parser.extract_images import extract_images_from_pdf
+from retinaface import RetinaFace
 # from tensorflow.python.framework.ops import disable_eager_execution
 # disable_eager_execution()
 
@@ -48,18 +50,22 @@ def biometric_detect_people(source):
     return output
 
 
-# def biometric_detect_eye(source):
-#     resp = RetinaFace.detect_faces(source)
-#     return resp
+def biometric_detect_eye(source):
+    resp = RetinaFace.detect_faces(source)
+    return resp
 
 
-def biometric_detect_all(pdf_path):
-    extract_images(pdf_path)
+def biometric_detect_pdf(pdf_path):
+    extract_images_from_pdf(pdf_path)
     images = [f'pdf_images/{i}' for i in os.listdir('pdf_images')]
     output = []
     for image in images:
         output.append(biometric_detect_people(image))
     return output
+
+def biometric_detect_word(docx_path):
+    text = docx2txt.process(docx_path, './temp')
+    return text
 
 
 if __name__ == "__main__":
@@ -70,4 +76,5 @@ if __name__ == "__main__":
     # save_model_local()
 
     # extract_images()
-    print(biometric_detect_all("../mockdata/pdfWimages.pdf"))
+    # print(biometric_detect_all("../mockdata/pdfWimages.pdf"))
+    print(biometric_detect_word("../mockdata/wordWimages.docx"))

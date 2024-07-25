@@ -1,8 +1,9 @@
 from pypdf import PdfReader
 import os
+import docx2txt
 
 
-def extract_images(dir):
+def extract_images_from_pdf(dir):
     # ensure folders are removed/replaced after each run
     # add to document parser
     pypdf_reader = PdfReader(dir)
@@ -16,3 +17,4 @@ def extract_images(dir):
             image_path = os.path.join(output_dir, image.name)
             with open(image_path, "wb") as fp:
                 fp.write(image.data)
+
