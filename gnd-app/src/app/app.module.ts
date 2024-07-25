@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { ReportComponent } from './report/report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { ViolationsComponent } from './violations/violations.component';
-
+import { FaqPageComponent } from './faq-page/faq-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -27,6 +27,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
       HomeComponent,
       ReportComponent,
       UploadDocumentComponent,
+      FaqPageComponent,
       HttpClientModule,
   ],
   providers: [
