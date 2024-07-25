@@ -3,7 +3,7 @@ import torch
 from PIL import Image
 import sys
 import os
-import docx2txt
+import glob
 
 
 # below added because of the relative import error
@@ -59,12 +59,17 @@ def biometric_detect_eye(source):
 
 
 def biometric_detect_all(pdf_path):
+    # clean up folders
     if (pdf_path.endswith('.pdf')):
         extract_images_from_pdf(pdf_path)
         images = [f'extracted_images/pdf_images/{i}' for i in os.listdir('extracted_images/pdf_images')]
         output = []
         for image in images:
             output.append(biometric_detect_people(image))
+        
+        png_files = glob.glob(os.path.join("extracted_images/pdf_images", '*.png'))
+        for file in png_files:
+            os.remove(file)
         
         return output
     
@@ -74,8 +79,12 @@ def biometric_detect_all(pdf_path):
         output = []
         for image in images:
             output.append(biometric_detect_people(image))
-        return output
+        
+        png_files = glob.glob(os.path.join("extracted_images/docx_images", '*.png'))
+        for file in png_files:
+            os.remove(file)
 
+        return output
 
 
 
@@ -87,4 +96,4 @@ if __name__ == "__main__":
     # save_model_local()
 
     # extract_images()
-    print(biometric_detect_all("../mockdata/docxWimages.docx"))
+    print(biometric_detect_all("../mockdata/pdfWimages.pdf"))
