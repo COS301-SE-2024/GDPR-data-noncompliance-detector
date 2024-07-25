@@ -9,7 +9,7 @@ def extract_images_from_pdf(dir):
     pypdf_reader = PdfReader(dir)
 
     # this folder is made in the current working dir, eg in Document_parser
-    output_dir = "pdf_images"
+    output_dir = "../Detection_Engine/extracted_images/pdf_images"
     os.makedirs(output_dir, exist_ok=True)
 
     for page in pypdf_reader.pages:
@@ -18,3 +18,6 @@ def extract_images_from_pdf(dir):
             with open(image_path, "wb") as fp:
                 fp.write(image.data)
 
+
+def extract_images_from_docx(docx_path):
+    docx2txt.process(docx_path, '../Detection_Engine/extracted_images/docx_images')
