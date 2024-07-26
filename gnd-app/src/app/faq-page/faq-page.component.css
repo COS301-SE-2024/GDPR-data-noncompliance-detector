@@ -1,3 +1,12 @@
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 2.5em;
+    padding-top: 1.0em;
+}
+
 .header {
     font-family: "Mediator Narrow Web Extra Bold";
     position: relative;
