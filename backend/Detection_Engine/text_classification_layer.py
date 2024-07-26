@@ -1,12 +1,18 @@
 from .NER_model_access import NER
+from .CA_model_access import CA
 
 class text_classification_layer:
 
     def __init__(self):
         self.NER_model_ = NER()
+        self.CA_model_ = CA()
 
     def run_NER_model(self, text):
         res = self.NER_model_.run_NER(text)
+        return res
+    
+    def run_CA_model(self, text):
+        res = self.CA_model_.run_CA(text)
         return res
 
     # def process(self, text):
