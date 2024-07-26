@@ -8,7 +8,7 @@ def extract_images_from_pdf(dir):
     # add to document parser
     pypdf_reader = PdfReader(dir)
 
-    # this folder is made in the current working dir, eg in Document_parser
+    # this folder is made detection engine extracted images
     output_dir = "../Detection_Engine/extracted_images/pdf_images"
     os.makedirs(output_dir, exist_ok=True)
 
