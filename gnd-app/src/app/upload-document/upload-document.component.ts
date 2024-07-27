@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+// import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import * as introJs from 'intro.js/intro.js';
+import {WalkthroughService} from '../services/walkthrough.service';
+import {Subscription} from "rxjs";
+
 
 
 @Component({
@@ -11,24 +16,64 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './upload-document.component.html',
   styleUrls: ['./upload-document.component.css']
 })
-export class UploadDocumentComponent {
-  
+export class UploadDocumentComponent implements OnInit{
+  private walkthroughSubscription?: Subscription;
+
+  constructor(private walkthroughService: WalkthroughService,private http: HttpClient) {}
+
+
+  ngOnInit() {
+    // Check if the user has seen the intro before
+    const hasSeenIntro = localStorage.getItem('hasSeenIntro');
+    if (!hasSeenIntro) {
+      this.startIntro();
+      // Mark that the user has seen the intro
+      localStorage.setItem('hasSeenIntro', 'true');
+    }
+    this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
+      this.startIntro();
+    })
+  }
+  ngOnDestroy() {
+    if(this.walkthroughSubscription)
+      this.walkthroughSubscription.unsubscribe();
+  }
+
+  startIntro() {
+    const intro = introJs();
+    intro.setOptions({
+      steps: [
+        {
+          element: '#uploadFile',
+          intro: 'Click here to upload a document'
+        },
+        {
+          element: '#Report',
+          intro: 'This where the report shows after the upload'
+        }
+      ],
+    });
+    intro.start();
+  }
+  toggleWalkthrough() {
+    this.startIntro();
+  }
+
   isDragActive: boolean = false;
   currentAnalysis: any = {};
-  uploadedFileName: string = ''; 
+  uploadedFileName: string = '';
   fileContent: string = '';
 
   fileName = '';
   result: string = ''
 
-  constructor(private http: HttpClient) {}
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
     if(file) {
       this.fileName = file.name;
-      
+
       const formData = new FormData();
       formData.append("file", file);
 
@@ -86,4 +131,5 @@ export class UploadDocumentComponent {
     event.preventDefault();
     this.isDragActive = false;
   }
+
 }

@@ -1,8 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 const { spawn } = require('child_process');
-const http = require('http');
 const axios = require('axios');
-const path_ = require('path');
+const path = require('path');
 const fs = require('fs');
 
 function createWindow () {
@@ -11,12 +10,13 @@ function createWindow () {
     height: 600,
     minWidth: 700,
     minHeight: 600,
+    icon: path.join(__dirname, 'src/assets/logo.ico'),
     webPreferences: {
       nodeIntegration: true,
     }
   })
-
-  win.loadFile('dist/gnd-app/index.html')
+  win.setMenu(null);
+  win.loadFile(path.join(__dirname, 'dist', 'gnd-app', 'index.html'))
 }
 
 app.whenReady().then(() => {
@@ -26,13 +26,19 @@ app.whenReady().then(() => {
 });
 
 function startAPI() {
-  const api = spawn('uvicorn', ['api:app', '--reload'], {cwd: '../backend'});
+  const apiPath = path.join(__dirname, '..', 'backend');
+  const api = spawn('uvicorn', ['api:app', '--reload'], {cwd: apiPath});
+
   api.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
+    console.log(`API stdout: ${data}`);
   });
 
   api.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
+    console.error(`API stderr: ${data}`);
+  });
+
+  api.on('error', (error) => {
+    console.error(`Failed to start API: ${error}`);
   });
 
   api.on('close', (code) => {
@@ -67,11 +73,10 @@ function setupWatcher() {
 
   watcher.stdout.on('data', (data) => {
     let output = data.toString().trim();
-    console.log(`stdout: ${output}`);
+    console.log(`Watcher stdout: ${output}`);
     const postData = { path: output };
 
-    const path = data.toString().trim();
-    const segments = path.split('/');
+    const segments = output.split(path.sep);
     const fileNameWithExtension = segments[segments.length - 1];
     const parts = fileNameWithExtension.split('.');
     const name = parts[0] + '_report.txt';
@@ -87,7 +92,7 @@ function setupWatcher() {
         console.log("Alive--------------------------");
       output = JSON.stringify(res.data);
       console.log("Report successfully created")
-      const outputDir = path_.join('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Reports', newFileName);
+      const outputDir = path_.join('../backend/Reports', newFileName);
       fs.writeFileSync(outputDir, output, 'utf8');
     })
     .catch((error) => {
