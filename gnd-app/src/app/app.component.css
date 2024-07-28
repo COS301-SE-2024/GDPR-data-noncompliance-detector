@@ -9,6 +9,7 @@ body {
   min-height: 100vh;
   box-sizing: border-box;
 }
+
 /* Add a black background color to the top navigation */
 .topnav {
   background-color: #333;
@@ -16,14 +17,60 @@ body {
   font-family: "Mediator Narrow Web Extra Bold";
   position: fixed;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start; /* Aligns items to the left */
+  padding: 0 20px; /* Adds padding around the navbar */
+}
+
+/* Style the logo */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  padding-right: 20px; /* Space between logo and nav links */
+}
+
+.navbar-brand img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle; /* Aligns logo vertically */
+}
+
+/* New CSS for Underline Hover Effect */
+.nav-links {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center-aligns the text links */
+  margin-left: 10px; /* Space between logo and links */
 }
 
 /* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
+.nav-links a {
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  position: relative; /* Position for underline effect */
+  transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+.nav-links a:hover {
+  color: #ffffff; /* Change color on hover */
+}
+
+/* Underline effect on hover */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px; /* Thickness of the underline */
+  background-color: #ffffff; /* Color of the underline */
+  transition: width 0.3s ease; /* Smooth transition for underline */
+}
+
+.nav-links a:hover::after {
+  width: 100%; /* Expand underline on hover */
 }
