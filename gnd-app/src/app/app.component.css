@@ -66,8 +66,8 @@ body {
   bottom: 0;
   transform: translateX(-50%);
   width: 0;
-  height: 2px; /* Thickness of the underline */
-  background-color: #ffffff; /* Color of the underline */
+  height: 5px; /* Thickness of the underline */
+  background-color: #8EBA12; /* Color of the underline */
   transition: width 0.3s ease; /* Smooth transition for underline */
 }
 
