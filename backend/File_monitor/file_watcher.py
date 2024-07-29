@@ -8,6 +8,7 @@ import os
 import threading
 import xattr
 import plistlib
+import platform
 from pathlib import Path
 
 
@@ -164,21 +165,44 @@ def startWatcherTotal(paths, ext):
 
 def verifyFromTeams(ext):
     # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
+    domains = [
+        'my.sharepoint.com',
+        'teams.microsoft.com',
+        'teams.live.com',
+        'onedrive.live.com',
+        'sharepoint.com',
+        'live.com',
+        'office.com',
+        'microsoft.com',
+        '1drv.ms'
+    ]
+
     try:
-        downloads_path = str(Path.home() / "Downloads")
-        print(downloads_path)
-        attributes = xattr.xattr(f"{downloads_path}/file.pdf")
-        
-        where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+        if platform.system() == 'Darwin':
+            downloads_path = str(Path.home() / "Downloads")
+            print(downloads_path)
+            attributes = xattr.xattr(f"{downloads_path}/file.pdf")
+            
+            where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
 
-        line = attributes.get(where_from_key)
-        print(line)
+            line = attributes.get(where_from_key)
+            print(line)
 
-        if (b"my.sharepoint.com" in line):
-            print("file is from teams")
-            return True
-        
-        return False
+            for domain in domains:
+                if (bytes(domain, 'utf-8') in line):
+                    print("file is from teams")
+                    return True
+            
+            return False
+        elif platform.system() == 'Windows':
+            zone_identifier_path = ext + ':Zone.Identifier'
+            if os.path.exists(zone_identifier_path):
+                with open(zone_identifier_path, 'r') as f:
+                    content = f.read()
+                    if 'microsoft.com' in content or 'teams.microsoft.com' in content:
+                        return True
+            return False
+
     
     except Exception as e:
         print(f"teams error : {e}")
