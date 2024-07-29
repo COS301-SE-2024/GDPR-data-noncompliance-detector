@@ -1,5 +1,5 @@
 from .NER_model_access import NER
-from .CA_model_access import CA
+# from .CA_model_access import CA
 
 class text_classification_layer:
 
@@ -11,9 +11,9 @@ class text_classification_layer:
         res = self.NER_model_.run_NER(text)
         return res
     
-    def run_CA_model(self, text):
-        res = self.CA_model_.run_CA(text)
-        return res
+    # def run_CA_model(self, text):
+    #     res = self.CA_model_.run_CA(text)
+    #     return res
 
     # def process(self, text):
 
