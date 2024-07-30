@@ -33,7 +33,7 @@ class detection_engine:
         
         location = self.determine_country_of_origin(path)
         reg_result = self.regex_report(text)
-        # ca_statement = self.report_generator.CA_report(text)
+        ca_statement = self.report_generator.CA_report(text)
 
 
         result = self.report_generator.ner_report(text)
@@ -41,7 +41,7 @@ class detection_engine:
         result += "\n"
         result+= "Violation Report: \n"
         result += reg_result
-        # result += ca_statement
+        result += ca_statement
 
 
         return result
