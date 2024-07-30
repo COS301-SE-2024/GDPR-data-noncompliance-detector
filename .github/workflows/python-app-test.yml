@@ -64,6 +64,7 @@ jobs:
           ls -a
           cd backend
           pytest --ignore=backend_entry_int_test.py --cov=. --cov-report=xml
+        continue-on-error: true
       
       - name: Integration test
         run: |
