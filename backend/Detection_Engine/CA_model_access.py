@@ -3,8 +3,9 @@ from transformers import BertTokenizer, BertForSequenceClassification, pipeline
 
 base_dir = os.path.dirname(__file__)
 model_path = os.path.join(base_dir, 'trained_model')
+tokenizer_path = os.path.join(base_dir,'ca_tokenizer')
 
-tokenizer = BertTokenizer.from_pretrained(model_path)
+tokenizer = BertTokenizer.from_pretrained(tokenizer_path)
 model = BertForSequenceClassification.from_pretrained(model_path)
 
 class CA:
