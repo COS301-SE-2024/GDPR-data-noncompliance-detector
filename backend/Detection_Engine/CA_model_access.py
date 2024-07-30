@@ -5,8 +5,18 @@ base_dir = os.path.dirname(__file__)
 model_path = os.path.join(base_dir, 'trained_model')
 tokenizer_path = os.path.join(base_dir,'ca_tokenizer')
 
-tokenizer = BertTokenizer.from_pretrained(model_path)
+tokenizer = BertTokenizer.from_pretrained(tokenizer_path)
 model = BertForSequenceClassification.from_pretrained(model_path)
+
+try:
+    tokenizer = BertTokenizer.from_pretrained(model_path)
+except Exception as e:
+    print(f"Error loading tokenizer: {e}")
+
+try:
+    model = BertForSequenceClassification.from_pretrained(model_path)
+except Exception as e:
+    print(f"Error loading model: {e}")
 
 class CA:
 
