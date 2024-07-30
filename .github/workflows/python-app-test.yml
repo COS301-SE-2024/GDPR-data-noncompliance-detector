@@ -63,15 +63,13 @@ jobs:
         run: |
           ls -a
           cd backend
-          pytest --cov=. --cov-report=xml
-        continue-on-error: true
+          pytest --ignore=backend_entry_int_test.py --cov=. --cov-report=xml
       
       - name: Integration test
         run: |
           ls -a
           cd backend
           python backend_entry_int_test.py
-        continue-on-error: true
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
