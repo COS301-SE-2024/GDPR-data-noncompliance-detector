@@ -74,7 +74,7 @@ if __name__ == '__main__':
     # a = ({'text':'I hereby consent to the use of my personal data','class':'positive'})
     # print(process_record(a))
     print("Reading data: ")
-    df = pd.read_csv('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Detection_Engine/Models/Consent_agreement_data/gdpr_consent_dataset.csv')
+    df = pd.read_csv('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Model_data/gdpr_consent_dataset.csv')
 
     # print(df.head())
 
