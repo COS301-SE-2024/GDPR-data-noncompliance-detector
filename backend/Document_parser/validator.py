@@ -29,6 +29,7 @@ class validator:
             return None
 
     def process_file(self, file_path):
+        print("CURRENT WORKING DIR -------", os.getcwd())
         try:
             if not os.path.exists(file_path):
                 raise FileNotFoundError(f"File not found: {file_path}")
