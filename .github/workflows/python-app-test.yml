@@ -62,8 +62,13 @@ jobs:
       - name: Test with pytest
         run: |
           ls -a
-          cd backend
-          pytest --ignore=backend_entry_int_test.py --cov=. --cov-report=xml
+          cd backend/Detection_Engine
+          pytest --cov=. --cov-report=xml
+          cd ../Document_parser
+          pytest --cov=. --cov-report=xml
+          cd ../File_monitor
+          pytest --cov=. --cov-report=xml
+          
         # continue-on-error: true
       
       - name: Integration test
