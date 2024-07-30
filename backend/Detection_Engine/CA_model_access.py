@@ -1,42 +1,42 @@
-import os
-from transformers import BertTokenizer, BertForSequenceClassification, pipeline
+# import os
+# from transformers import BertTokenizer, BertForSequenceClassification, pipeline
 
-base_dir = os.path.dirname(__file__)
-model_path = os.path.join(base_dir, 'trained_model')
-tokenizer_path = os.path.join(base_dir,'ca_tokenizer')
+# base_dir = os.path.dirname(__file__)
+# model_path = os.path.join(base_dir, 'trained_model')
+# tokenizer_path = os.path.join(base_dir,'ca_tokenizer')
 
-tokenizer = BertTokenizer.from_pretrained(tokenizer_path)
-model = BertForSequenceClassification.from_pretrained(model_path)
+# tokenizer = BertTokenizer.from_pretrained(tokenizer_path)
+# model = BertForSequenceClassification.from_pretrained(model_path)
 
-try:
-    tokenizer = BertTokenizer.from_pretrained(model_path)
-except Exception as e:
-    print(f"Error loading tokenizer: {e}")
+# try:
+#     tokenizer = BertTokenizer.from_pretrained(model_path)
+# except Exception as e:
+#     print(f"Error loading tokenizer: {e}")
 
-try:
-    model = BertForSequenceClassification.from_pretrained(model_path)
-except Exception as e:
-    print(f"Error loading model: {e}")
+# try:
+#     model = BertForSequenceClassification.from_pretrained(model_path)
+# except Exception as e:
+#     print(f"Error loading model: {e}")
 
-class CA:
+# class CA:
 
-    def __init__(self):
-        self.model_ = model
-        self.tokenizer_ = tokenizer
-        self.max_length_ = 512
-        self.classifier = pipeline("text-classification", model=self.model_, tokenizer=self.tokenizer_)
-        self.max_length = self.max_length_
+#     def __init__(self):
+#         self.model_ = model
+#         self.tokenizer_ = tokenizer
+#         self.max_length_ = 512
+#         self.classifier = pipeline("text-classification", model=self.model_, tokenizer=self.tokenizer_)
+#         self.max_length = self.max_length_
 
-    def run_CA(self, text):
-        return self.predict(text)
+#     def run_CA(self, text):
+#         return self.predict(text)
 
-    def predict(self, input_text):
-        tokens = self.classifier.tokenizer.encode(input_text, truncation=True, max_length=self.max_length_)
-        truncated_text = self.classifier.tokenizer.decode(tokens, skip_special_tokens=True)
+#     def predict(self, input_text):
+#         tokens = self.classifier.tokenizer.encode(input_text, truncation=True, max_length=self.max_length_)
+#         truncated_text = self.classifier.tokenizer.decode(tokens, skip_special_tokens=True)
         
-        result = self.classifier(truncated_text)
-        return result[0]['label']
+#         result = self.classifier(truncated_text)
+#         return result[0]['label']
 
-if __name__ == '__main__':
-    ca = CA()
-    print(ca.run_CA("Sure, you can use my data"))
+# if __name__ == '__main__':
+#     ca = CA()
+#     print(ca.run_CA("Sure, you can use my data"))
