@@ -4,6 +4,8 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
+let apiProcess;
+
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
@@ -92,7 +94,7 @@ function setupWatcher() {
         console.log("Alive--------------------------");
       output = JSON.stringify(res.data);
       console.log("Report successfully created")
-      const outputDir = path_.join('../backend/Reports', newFileName);
+      const outputDir = path.join('../backend/Reports', newFileName);
       fs.writeFileSync(outputDir, output, 'utf8');
     })
     .catch((error) => {
@@ -101,3 +103,9 @@ function setupWatcher() {
   });
   
 }
+
+app.on('before-quit', () => {
+  if (apiProcess) {
+    apiProcess.kill();
+  }
+});
