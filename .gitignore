@@ -6,3 +6,4 @@ obj/
 venv/
 myenv/
 **/results/
+__pycache__/
