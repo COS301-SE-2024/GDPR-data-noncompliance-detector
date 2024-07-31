@@ -4,29 +4,38 @@ import docx2txt
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image
 
-def extract_images_from_excel(excel_path):
-    output_dir = "../Detection_Engine/extracted_images/pdf_images"
 
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+def extract_images_from_excel(excel_file):
+    output_folder = "../Detection_Engine/extracted_images/xlsx_images"
     
-    workbook = load_workbook(excel_path)
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    
+    workbook = load_workbook(excel_file)
     
     for sheet_name in workbook.sheetnames:
         sheet = workbook[sheet_name]
+        
         for image in sheet._images:
-            img = image.image
-            
-            img_format = img.format if img.format else 'png'
+            img_format = 'png'
+            if image.path.lower().endswith('.jpeg') or image.path.lower().endswith('.jpg'):
+                img_format = 'jpeg'
+            elif image.path.lower().endswith('.bmp'):
+                img_format = 'bmp'
             
             img_filename = f"{sheet_name}_{image.anchor._from.row}_{image.anchor._from.col}.{img_format.lower()}"
-            img_path = os.path.join(output_dir, img_filename)
+            img_path = os.path.join(output_folder, img_filename)
             
             with open(img_path, 'wb') as f:
-                f.write(img._data())
+                f.write(image._data())
+            
 
 
 def extract_images_from_pdf(dir):
+    output_folder = "../Detection_Engine/extracted_images/pdf_images"
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
     # ensure folders are removed/replaced after each run
     # add to document parser
     pypdf_reader = PdfReader(dir)
@@ -43,4 +52,8 @@ def extract_images_from_pdf(dir):
 
 
 def extract_images_from_docx(docx_path):
+    output_folder = "../Detection_Engine/extracted_images/docx_images"
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
     docx2txt.process(docx_path, '../Detection_Engine/extracted_images/docx_images')

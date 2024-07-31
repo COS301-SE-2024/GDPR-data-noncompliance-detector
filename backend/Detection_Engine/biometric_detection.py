@@ -11,6 +11,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from backend.Document_parser.extract_images import extract_images_from_pdf
 from backend.Document_parser.extract_images import extract_images_from_docx
+from backend.Document_parser.extract_images import extract_images_from_excel
 
 from retinaface import RetinaFace
 
@@ -85,6 +86,19 @@ def biometric_detect_all(pdf_path):
             os.remove(file)
 
         return output
+    
+    elif (pdf_path.endswith('.xlsx')):
+        extract_images_from_excel(pdf_path)
+        images = [f'extracted_images/xlsx_images/{i}' for i in os.listdir('extracted_images/xlsx_images')]
+        output = []
+        for image in images:
+            output.append(biometric_detect_people(image))
+        
+        png_files = glob.glob(os.path.join("extracted_images/xlsx_images", '*.png'))
+        for file in png_files:
+            os.remove(file)
+
+        return output
 
 
 
@@ -96,4 +110,5 @@ if __name__ == "__main__":
     # save_model_local()
 
     # extract_images()
-    print(biometric_detect_all("../mockdata/pdfWimages.pdf"))
+    print(biometric_detect_all("../mockdata/excelWimages.xlsx"))
+    # extract_images_from_excel("../mockdata/excelWimages.xlsx")
