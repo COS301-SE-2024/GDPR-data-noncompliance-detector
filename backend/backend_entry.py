@@ -43,7 +43,7 @@ class backend_entry:
         result = result_holder.get()
         return result
     
-    def process(path):
+    def process(self, path):
         parser = document_parser()
         engine = detection_engine()
         # path = input("File Name:  ")
