@@ -5,13 +5,16 @@
   <a class="navbar-brand" routerLink="/home">
     <img src="assets/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
   </a>
-  <a class="active" routerLink="/" id="home">Home</a>
-  <a class="active" routerLink="report" id="Help">Help</a>
-  <a class="walkthrough-toggle" (click)="toggleWalkthrough()">
-    <i class="fas fa-question-circle"></i>
-  </a>
-</div>
 
+  <!-- New Div for Links with Hover Effect -->
+  <div class="hover-links">
+    <a class="active" routerLink="/" id="home">Home</a>
+    <a class="active" routerLink="report" id="help">Help</a>
+    <a class="walkthrough-toggle" (click)="toggleWalkthrough()">
+      <i class="fas fa-question-circle"></i>
+    </a>
+  </div>
+</div>
 
 <div class="main-content">
   <router-outlet></router-outlet>
