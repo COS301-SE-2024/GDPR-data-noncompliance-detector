@@ -57,6 +57,7 @@ class backend_entry:
 
 if __name__ == "__main__":
     try:
+        backend_entry = backend_entry() 
         res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/NCE1.pdf")
         print(res)
     except SystemExit as e:
