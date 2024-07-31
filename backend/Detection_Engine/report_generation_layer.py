@@ -18,15 +18,12 @@ class report_generation_layer:
     
         return f"Document potentially references {entities} different individuals\n\n"
     
-    # def CA_report(self, text):
-    #     res1 = self.classification_layer.run_CA_model(text)
-    #     if res1 == 'LABEL_0':
-    #         return "The document does not seem to contain any data consent agreements\n\n"
-    #     else:
-    #         return "The document does appear to contain data consent agreements\n\n"
-
-    
-
+    def CA_report(self, text):
+        res1 = self.classification_layer.run_CA_model(text)
+        if res1 == 'LABEL_0':
+            return "The document does not seem to contain any data consent agreements\n\n"
+        else:
+            return "The document does appear to contain data consent agreements\n\n"
     
 if __name__ == "__main__":
     cl_ = report_generation_layer()
