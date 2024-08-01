@@ -31,9 +31,9 @@ from biplist import readPlistFromString
 
 def check_file_extension(filename, reg):
     # print("filename : ", filename, "reg : ", reg) 
-    print(f"filename : {filename} -- reg : {reg}")
+    # print(f"filename : {filename} -- reg : {reg}")
     for str in reg:
-        if (filename.endswith(f".{str}") ):#and ".download" not in filename):
+        if (filename.endswith(f".{str}") and ".download" not in filename):
             return True
 
 
@@ -85,7 +85,7 @@ def verifyFromTeams(ext):
             return False
 
     except Exception as e:
-        print(f"teams error : {e}")
+        print(f"error in file_watcher-verifyfromteams : {e}")
 
 
 def scan_directories(paths, extensions):
@@ -107,19 +107,22 @@ class handle(FileSystemEventHandler):
     def __init__(self, file_extension):
         self.file_extension = file_extension
         self.prev_output = time.time()
+    
+    def on_any_event(self, event):
+        try:
+            global watcher_timer
+            current_time = time.time()
+            # print("mov")
+            if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
+                self.prev_output = current_time
+                
+                if (event.src_path.find("\\") != -1):
+                    event.src_path = event.src_path.replace("\\", "/")
 
-    def on_moved(self, event):
-        global watcher_timer
-        current_time = time.time()
-        print("mov")
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
-            self.prev_output = current_time
-            
-            if (event.src_path.find("\\") != -1):
-                event.src_path = event.src_path.replace("\\", "/")
-
-            if (verifyFromTeams(event.src_path)):
-                return event.src_path
+                if (verifyFromTeams(event.src_path)):
+                    return event.src_path
+        except Exception as e:
+            print(f"error in file_watcher-on_any_event : {e}")
 
     def on_modified(self, event):
         global watcher_timer
@@ -127,7 +130,7 @@ class handle(FileSystemEventHandler):
         
         if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
             self.prev_output = current_time
-            print("mod")
+            # print("mod")
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
 
@@ -141,15 +144,13 @@ class handle(FileSystemEventHandler):
 
         if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
             self.prev_output = current_time
-            print("cre")
+            # print("cre")
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
 
             if (verifyFromTeams(event.src_path)):
                 return event.src_path
 
-    # def on_deleted(self, event):
-    #     print(f'{event.event_type}  path : {event.src_path}')
 
 
 stop_watcher = False
@@ -222,7 +223,7 @@ if __name__ == "__main__":
 
     # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
     # verifyFromTeams('sf')
-    start_watcher_thread_downloads("pdf,xlsx,docx", 0.001)  # default is 3 seconds
+    start_watcher_thread_downloads("pdf,xlsx,docx", 1)  # default is 3 seconds
 
 
     # define 2 functions. one which watches a folder. one wich watches downloads
