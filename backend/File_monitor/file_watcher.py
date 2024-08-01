@@ -28,9 +28,61 @@ from pathlib import Path
 
 
 def check_file_extension(filename, reg):
+    # print("filename : ", filename, "reg : ", reg) 
     for str in reg:
-        if filename.endswith(f".{str}"):
+        if (filename.endswith(f".{str}") and ".download" not in filename):
             return True
+
+
+def verifyFromTeams(ext):
+    if isinstance(ext, bytes):
+        ext = ext.decode('utf-8')
+
+    # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
+    # trigger function when monitor sees a new file
+    domains = [
+        'my.sharepoint.com',
+        'teams.microsoft.com',
+        'teams.live.com',
+        'onedrive.live.com',
+        'sharepoint.com',
+        'live.com',
+        'office.com',
+        'microsoft.com',
+        '1drv.ms'
+    ]
+
+    try:
+        if platform.system() == 'Darwin':
+            # downloads_path = str(Path.home() / "Downloads")
+            # print(downloads_path)
+            attributes = xattr.xattr(f"{ext}")
+            
+            where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+
+            line = attributes.get(where_from_key)
+            # print(line)
+
+            for domain in domains:
+                if (bytes(domain, 'utf-8') in line):
+                    # print("file is from teams")
+                    return True
+            return False
+        
+        elif platform.system() == 'Windows':
+            zone_identifier_path = ext + ':Zone.Identifier'
+
+            if os.path.exists(zone_identifier_path):
+                with open(zone_identifier_path, 'r') as f:
+                    content = f.read()
+                    for domain in domains:
+                        if domain in content:
+                            # print("file is from teams")
+                            return True
+            return False
+
+    except Exception as e:
+        print(f"teams error : {e}")
 
 
 def scan_directories(paths, extensions):
@@ -48,53 +100,7 @@ watcher_timer = 3
 class handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
 
-    def verifyFromTeams(ext):
-        # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
-        # trigger function when monitor sees a new file
-        domains = [
-            'my.sharepoint.com',
-            'teams.microsoft.com',
-            'teams.live.com',
-            'onedrive.live.com',
-            'sharepoint.com',
-            'live.com',
-            'office.com',
-            'microsoft.com',
-            '1drv.ms'
-        ]
-
-        try:
-            if platform.system() == 'Darwin':
-                # downloads_path = str(Path.home() / "Downloads")
-                # print(downloads_path)
-                attributes = xattr.xattr(f"{ext}")
-                
-                where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
-
-                line = attributes.get(where_from_key)
-                # print(line)
-
-                for domain in domains:
-                    if (bytes(domain, 'utf-8') in line):
-                        # print("file is from teams")
-                        return True
-                return False
-            
-            elif platform.system() == 'Windows':
-                zone_identifier_path = ext + ':Zone.Identifier'
-
-                if os.path.exists(zone_identifier_path):
-                    with open(zone_identifier_path, 'r') as f:
-                        content = f.read()
-                        for domain in domains:
-                            if domain in content:
-                                # print("file is from teams")
-                                return True
-                return False
-        
-        except Exception as e:
-            print(f"teams error : {e}")
-
+    
     def __init__(self, file_extension):
         self.file_extension = file_extension
         self.prev_output = time.time()
@@ -107,22 +113,9 @@ class handle(FileSystemEventHandler):
             self.prev_output = current_time
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
-            try:
-                attributes = xattr.xattr(f"{event.src_path}")
-                
-                where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
 
-                line = attributes.get(where_from_key)
-                print(line)
-
-                if (b"my.sharepoint.com" in line):
-                    print("file is from teams")
-                    print(event.src_path + " from teams true")
-                
-                print(event.src_path + " from teams false")
-            except Exception as e:
-                print(f"teams error : {e}")
-        return event.src_path
+            if (verifyFromTeams(event.src_path)):
+                return event.src_path
 
     def on_created(self, event):
         global watcher_timer
@@ -132,22 +125,9 @@ class handle(FileSystemEventHandler):
             self.prev_output = current_time
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
-            try:
-                attributes = xattr.xattr(f"{event.src_path}")
-                
-                where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
 
-                line = attributes.get(where_from_key)
-                print(line)
-
-                if (b"my.sharepoint.com" in line):
-                    print("file is from teams")
-                    print(event.src_path + " from teams true")
-                
-                print(event.src_path + " from teams false")
-            except Exception as e:
-                print(f"teams error : {e}")
-            return event.src_path
+            if (verifyFromTeams(event.src_path)):
+                return event.src_path
 
     # def on_deleted(self, event):
     #     print(f'{event.event_type}  path : {event.src_path}')
@@ -222,6 +202,8 @@ if __name__ == "__main__":
     #     sys.exit(1)
 
     # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
-    verifyFromTeams('sf')
+    # verifyFromTeams('sf')
+    start_watcher_thread_downloads("pdf,xlsx", 0.01)  # default is 3 seconds
+
 
     # define 2 functions. one which watches a folder. one wich watches downloads
