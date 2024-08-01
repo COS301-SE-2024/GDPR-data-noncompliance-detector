@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+// import { FileService } from '../services/file.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-inbox',
@@ -9,7 +13,54 @@ import { RouterModule } from '@angular/router';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent {
+export class InboxComponent implements OnInit {
+  reports: string[] = [];
+  // path: string = '../backend/Reports';
+  path: string = '../backend/Reports/';
+  private apiUrl = 'http://127.0.0.1:8000/reports';
+  private iUrl = 'http://127.0.0.1:8000/read-report/';
+
+  constructor(private http: HttpClient) { }
+
+  ngOnInit(): void {
+    this.getReports();
+  }
+
+  getReports(): void{
+    this.fetchFiles(this.path).subscribe(r => {
+      this.reports = r;
+    });
+    
+    console.log('---------------------------------')
+    console.log(this.reports)
+  }
+
+  fetchFiles(directory: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}`);
+  }
+
+  getReportContent(filePath: string) {
+    
+    console.log(filePath);
+    this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path + filePath)}`).subscribe(response => {
+      this.currentAnalysis.content = response.content;
+    });
+    this.currentEmail = 'NA';
+    this.currentEmailType = 'txt';
+  }
+
+  mock(){
+    this.currentAnalysis.content = 'sandwich spread ';
+    this.currentEmail = 'NA';
+    this.currentEmailType = 'txt'; // Set file type
+  }
+
+  smock(filePath: string){
+    this.currentAnalysis.content = filePath;
+    this.currentEmail = 'NA';
+    this.currentEmailType = 'txt'; // Set file type
+  }
+
   mockData: any = {
     email1: {rating: 80, origin: 'Netherlands', violationAreas: 'Personal Information', numViolations: 16, fileType: 'pdf'},
     email2: {rating: 37, origin: 'France', violationAreas: 'Banking Details', numViolations: 29, fileType: 'doc'},

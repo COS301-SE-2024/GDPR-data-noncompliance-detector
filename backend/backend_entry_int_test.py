@@ -2,6 +2,8 @@ import unittest
 from backend_entry import backend_entry
 
 class TestBackendEntryIntegration(unittest.TestCase):
+    
+    backend_entry = backend_entry()
 
     def test_process_returns_expected_output(self):
         # Arrange
@@ -38,7 +40,7 @@ class TestBackendEntryIntegration(unittest.TestCase):
         )
 
         # Act
-        result = backend_entry.process(path)
+        result = backend_entry.process(self, path)
 
         # Remove the 'Probability' line from the actual result
         actual_output_lines = result.splitlines()

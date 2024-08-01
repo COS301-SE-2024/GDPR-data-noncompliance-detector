@@ -4,6 +4,8 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
+let apiProcess;
+
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
@@ -22,7 +24,7 @@ function createWindow () {
 app.whenReady().then(() => {
   startAPI();
   createWindow();
-  setTimeout(setupWatcher, 1000);  // Increased delay to ensure API is ready
+  setTimeout(setupWatcher, 100);
 });
 
 function startAPI() {
@@ -42,14 +44,34 @@ function startAPI() {
   });
 
   api.on('close', (code) => {
-    console.log(`API process exited with code ${code}`);
+    console.log(`child process exited with code ${code}`);
+  });
+}
+
+function getReceiverPath() {
+  return new Promise((resolve, reject) => {
+    const pythonProcess = spawn('python', ['get_absolute_path.py']);
+    
+    pythonProcess.stdout.on('data', (data) => {
+      resolve(data.toString().trim());
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      reject(data.toString());
+    });
+
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        reject(`Python script exited with code ${code}`);
+      }
+    });
   });
 }
 
 function setupWatcher() {
-  const watcherPath = path.join(__dirname, '..', 'backend', 'File_monitor', 'file_watcher.py');
-  const receiverPath = path.join(__dirname, '..', 'backend', 'Receiver');
-  const watcher = spawn('python', [watcherPath, receiverPath, 'pdf,docx,xlsx,xls']);
+
+  // const receiver_path = getReceiverPath();
+  const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', '../backend/Receiver', 'pdf,docx,xlsx,xls']);
 
   watcher.stdout.on('data', (data) => {
     let output = data.toString().trim();
@@ -61,34 +83,29 @@ function setupWatcher() {
     const parts = fileNameWithExtension.split('.');
     const name = parts[0] + '_report.txt';
     const extension = parts.slice(1).join('.');
+    console.log("Crashing");
     const newFileName = extension ? `${name}` : name;
-
     axios.post('http://127.0.0.1:8000/new-file', postData, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then((res) => {
-        console.log("Report successfully created");
-        const outputDir = path.join(__dirname, '..', 'backend', 'Reports', newFileName);
-        fs.writeFile(outputDir, JSON.stringify(res.data), 'utf8', (err) => {
-          if (err) console.error(`Failed to write report: ${err}`);
-        });
-      })
-      .catch((error) => {
-        console.error(`Problem with request: ${error.message}`);
-      });
+        console.log("Alive--------------------------");
+      output = JSON.stringify(res.data);
+      console.log("Report successfully created")
+      const outputDir = path.join('../backend/Reports', newFileName);
+      fs.writeFileSync(outputDir, output, 'utf8');
+    })
+    .catch((error) => {
+      console.error(`problem with request: ${error.message}`);
+    });
   });
-
-  watcher.stderr.on('data', (data) => {
-    console.error(`Watcher stderr: ${data}`);
-  });
-
-  watcher.on('error', (error) => {
-    console.error(`Failed to start watcher: ${error}`);
-  });
-
-  watcher.on('close', (code) => {
-    console.log(`Watcher process exited with code ${code}`);
-  });
+  
 }
+
+app.on('before-quit', () => {
+  if (apiProcess) {
+    apiProcess.kill();
+  }
+});
