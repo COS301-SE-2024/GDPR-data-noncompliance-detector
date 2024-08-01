@@ -5,4 +5,5 @@ obj/
 **/__pycache__/
 venv/
 myenv/
-
+**/results/
+__pycache__/

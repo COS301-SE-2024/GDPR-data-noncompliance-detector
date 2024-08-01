@@ -1,0 +1,43 @@
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 2.5em;
+    padding-top: 1.0em;
+}
+
+.header {
+    font-family: "Mediator Narrow Web Extra Bold";
+    position: relative;
+    display: inline-block;
+    font-size: 35px;
+}
+
+.header::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #8EBA12;
+    border-radius: 50%;
+}
+
+.grid-parent {    
+    display: flex;
+    justify-content: space-around;
+} 
+
+.grid-gnd { 
+    margin: 10px; 
+    border: 1px solid black;
+    width: 40%;
+    padding: 20px;    
+}
+
+.grid-gdpr {
+    margin: 10px; 
+    border: 1px solid black;
+    width: 40%;
+    padding: 20px;
+}

@@ -159,6 +159,10 @@ class handle(FileSystemEventHandler):
 
 
 
+    # def on_deleted(self, event):
+    #     print(f'{event.event_type}  path : {event.src_path}')
+
+
 stop_watcher = False
 watcher_thread = None
 
@@ -168,7 +172,7 @@ def startWatcher(paths, ext):
     paths = paths.split(',')
     ext = ext.split(',')
     observers = []
-    print(f"Watcher is watching: {paths} with extensions: {ext}")
+    # print(f"Watcher is watching: {paths} with extensions: {ext}")
     for path in paths:
         logging.info(f'start watching directory {path!r}')
         event_handler = handle(ext)
