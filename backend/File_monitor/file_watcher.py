@@ -32,9 +32,14 @@ from biplist import readPlistFromString
 def check_file_extension(filename, reg):
     # print("filename : ", filename, "reg : ", reg) 
     # print(f"filename : {filename} -- reg : {reg}")
-    for str in reg:
-        if (filename.endswith(f".{str}") and ".download" not in filename):
-            return True
+    try:
+        for str in reg:
+            if (filename.endswith(f".{str}") and ".download" not in filename):
+                return True
+    except Exception as e:
+        print(f"error in file_watcher-checkfileextension : {e}")
+
+    return False
 
 
 def verifyFromTeams(ext):
@@ -67,7 +72,7 @@ def verifyFromTeams(ext):
             for item in plist_data:
                 for domain in domains:
                     if domain in item:
-                        print("teams")
+                        # print("teams")
                         return True
 
             return False
@@ -120,36 +125,37 @@ class handle(FileSystemEventHandler):
                     event.src_path = event.src_path.replace("\\", "/")
 
                 if (verifyFromTeams(event.src_path)):
+                    print(event.src_path)
                     return event.src_path
         except Exception as e:
             print(f"error in file_watcher-on_any_event : {e}")
 
-    def on_modified(self, event):
-        global watcher_timer
-        current_time = time.time()
+    # def on_modified(self, event):
+    #     global watcher_timer
+    #     current_time = time.time()
         
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
-            self.prev_output = current_time
-            # print("mod")
-            if (event.src_path.find("\\") != -1):
-                event.src_path = event.src_path.replace("\\", "/")
+    #     if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
+    #         self.prev_output = current_time
+    #         # print("mod")
+    #         if (event.src_path.find("\\") != -1):
+    #             event.src_path = event.src_path.replace("\\", "/")
 
-            if (verifyFromTeams(event.src_path)):
-                return event.src_path
+    #         if (verifyFromTeams(event.src_path)):
+    #             return event.src_path
 
-    def on_created(self, event):
-        global watcher_timer
-        current_time = time.time()
+    # def on_created(self, event):
+    #     global watcher_timer
+    #     current_time = time.time()
         
 
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
-            self.prev_output = current_time
-            # print("cre")
-            if (event.src_path.find("\\") != -1):
-                event.src_path = event.src_path.replace("\\", "/")
+    #     if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
+    #         self.prev_output = current_time
+    #         # print("cre")
+    #         if (event.src_path.find("\\") != -1):
+    #             event.src_path = event.src_path.replace("\\", "/")
 
-            if (verifyFromTeams(event.src_path)):
-                return event.src_path
+    #         if (verifyFromTeams(event.src_path)):
+    #             return event.src_path
 
 
 
@@ -175,6 +181,8 @@ def startWatcher(paths, ext):
             time.sleep(1)
     except KeyboardInterrupt:
         pass
+    except Exception as e:
+        print(f"error in file_watcher-startwatcher : {e}")
     finally:
         for observer in observers:
             observer.stop()
