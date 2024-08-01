@@ -33,12 +33,8 @@ def biometric_detect_people(source):
         image = image.convert('RGB')
     # image.show()
 
-    try:
-        processor = DetrImageProcessor.from_pretrained('./local_model/detr_image_processor')
-        model = DetrForObjectDetection.from_pretrained('./local_model/detr_for_object_detection')
-    except (EnvironmentError, ValueError):
-        processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
-        model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+    processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+    model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
         
     inputs = processor(images=image, return_tensors="pt")
     outputs = model(**inputs)
