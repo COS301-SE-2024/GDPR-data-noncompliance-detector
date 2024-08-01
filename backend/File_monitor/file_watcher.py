@@ -6,7 +6,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
 import os
 import threading
-import xattr
+# import xattr
 import plistlib
 import platform
 from pathlib import Path
@@ -62,20 +62,20 @@ def verifyFromTeams(ext):
 
     try:
         if platform.system() == 'Darwin':
-            # downloads_path = str(Path.home() / "Downloads")
-            # print(downloads_path)
-            attributes = xattr.xattr(f"{ext}")
+            downloads_path = str(Path.home() / "Downloads")
+        #     # print(downloads_path)
+        #     attributes = xattr.xattr(f"{ext}")
             
-            where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
-            raw_metadata = xattr.getxattr(ext, where_from_key)
-            plist_data = readPlistFromString(raw_metadata)
-            for item in plist_data:
-                for domain in domains:
-                    if domain in item:
-                        # print("teams")
-                        return True
+        #     where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+        #     raw_metadata = xattr.getxattr(ext, where_from_key)
+        #     plist_data = readPlistFromString(raw_metadata)
+        #     for item in plist_data:
+        #         for domain in domains:
+        #             if domain in item:
+        #                 # print("teams")
+        #                 return True
 
-            return False
+        #     return False
         
         elif platform.system() == 'Windows':
             zone_identifier_path = ext + ':Zone.Identifier'
