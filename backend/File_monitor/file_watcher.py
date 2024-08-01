@@ -10,6 +10,8 @@ import xattr
 import plistlib
 import platform
 from pathlib import Path
+from biplist import readPlistFromString
+
 
 
 
@@ -29,12 +31,14 @@ from pathlib import Path
 
 def check_file_extension(filename, reg):
     # print("filename : ", filename, "reg : ", reg) 
+    print(f"filename : {filename} -- reg : {reg}")
     for str in reg:
-        if (filename.endswith(f".{str}") and ".download" not in filename):
+        if (filename.endswith(f".{str}") ):#and ".download" not in filename):
             return True
 
 
 def verifyFromTeams(ext):
+    print("teams running")
     if isinstance(ext, bytes):
         ext = ext.decode('utf-8')
 
@@ -59,14 +63,14 @@ def verifyFromTeams(ext):
             attributes = xattr.xattr(f"{ext}")
             
             where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+            raw_metadata = xattr.getxattr(ext, where_from_key)
+            plist_data = readPlistFromString(raw_metadata)
+            for item in plist_data:
+                for domain in domains:
+                    if domain in item:
+                        print("teams")
+                        return True
 
-            line = attributes.get(where_from_key)
-            # print(line)
-
-            for domain in domains:
-                if (bytes(domain, 'utf-8') in line):
-                    # print("file is from teams")
-                    return True
             return False
         
         elif platform.system() == 'Windows':
@@ -99,7 +103,7 @@ watcher_timer = 3
 
 class handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
-
+    # problem, its not identifying .pdf as normal. only .download.pdf and verify from teams running after that but .downlload.pdf doesnt exist
     
     def __init__(self, file_extension):
         self.file_extension = file_extension
@@ -108,9 +112,10 @@ class handle(FileSystemEventHandler):
     def on_modified(self, event):
         global watcher_timer
         current_time = time.time()
-
+        
         if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
             self.prev_output = current_time
+            print("mod")
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
 
@@ -120,9 +125,11 @@ class handle(FileSystemEventHandler):
     def on_created(self, event):
         global watcher_timer
         current_time = time.time()
+        
 
         if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
             self.prev_output = current_time
+            print("cre")
             if (event.src_path.find("\\") != -1):
                 event.src_path = event.src_path.replace("\\", "/")
 
@@ -203,7 +210,7 @@ if __name__ == "__main__":
 
     # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
     # verifyFromTeams('sf')
-    start_watcher_thread_downloads("pdf,xlsx", 0.01)  # default is 3 seconds
+    start_watcher_thread_downloads("pdf,xlsx", 1)  # default is 3 seconds
 
 
     # define 2 functions. one which watches a folder. one wich watches downloads
