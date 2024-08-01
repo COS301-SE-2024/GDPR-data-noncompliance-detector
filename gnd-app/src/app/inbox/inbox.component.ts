@@ -43,10 +43,14 @@ export class InboxComponent implements OnInit {
     
     console.log(filePath);
     this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path + filePath)}`).subscribe(response => {
-      this.currentAnalysis.content = response.content;
+      this.currentAnalysis.content = this.processResult(response.content);
     });
     this.currentEmail = 'NA';
     this.currentEmailType = 'txt';
+  }
+
+  processResult(result: string): string {
+    return result.replace(/\n/g, "<br>");
   }
 
   mock(){

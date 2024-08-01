@@ -6,9 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
-
-
-
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
 @Component({
   selector: 'app-upload-document',
   standalone: true,
@@ -130,6 +129,19 @@ export class UploadDocumentComponent implements OnInit{
     event.stopPropagation();
     event.preventDefault();
     this.isDragActive = false;
+  }
+
+  public downloadAsPdf(): void {
+    const doc = new jsPDF();
+    doc.text(this.result, 10, 10);
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+
+    const filename = `gnd_${year}${month}${day}_${hours}.pdf`;
+    doc.save(filename);
   }
 
 }
