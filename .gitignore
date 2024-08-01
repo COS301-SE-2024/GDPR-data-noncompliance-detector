@@ -5,4 +5,5 @@ obj/
 **/__pycache__/
 venv/
 myenv/
-backend/Detection_Engine/local_model/detr_for_object_detection/model.safetensors
+**/results/
+__pycache__/

@@ -63,9 +63,10 @@ class handle(FileSystemEventHandler):
         if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
             self.prev_output = current_time
             if (event.src_path.find("\\") != -1):
-                event.src_path = event.src_path.replace("\\", "/")
-            print(event.src_path)
-            return event.src_path
+                # event.src_path = event.src_path.replace("\\", "/")
+                res = event.src_path.replace("\\", "/")
+            print(res)
+            return res
 
     # def on_deleted(self, event):
     #     print(f'{event.event_type}  path : {event.src_path}')
@@ -80,7 +81,7 @@ def startWatcher(paths, ext):
     paths = paths.split(',')
     ext = ext.split(',')
     observers = []
-    print(f"Watcher is watching: {paths} with extensions: {ext}")
+    # print(f"Watcher is watching: {paths} with extensions: {ext}")
     for path in paths:
         logging.info(f'start watching directory {path!r}')
         event_handler = handle(ext)

@@ -1,4 +1,5 @@
-<link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold" rel="stylesheet">
+<link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
+    rel="stylesheet">
 <link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
 
 
@@ -9,41 +10,43 @@
 </div>
 
 
-    <div class="containers">
-        <div class="inbox-rectangle">
-            <h2 class="inbox-header">Inbox</h2>
-            <div class="divider"></div>
-
-            <div class="card" (click)="showAnalysis('email1')" [ngClass]="{ 'selected-email': currentEmail === 'email1' }">Email1.pdf</div>
-            <div class="card" (click)="showAnalysis('email2')" [ngClass]="{ 'selected-email': currentEmail === 'email2' }">Email2.doc</div>
-            <div class="card" (click)="showAnalysis('email3')" [ngClass]="{ 'selected-email': currentEmail === 'email3' }">Email3.xlsx</div>
-            <div class="card" (click)="showAnalysis('email4')" [ngClass]="{ 'selected-email': currentEmail === 'email4' }">Email4.xlsx</div>
-            <div class="card" (click)="showAnalysis('email5')" [ngClass]="{ 'selected-email': currentEmail === 'email5' }">Email5.pdf</div>
-            <div class="card" (click)="showAnalysis('email6')" [ngClass]="{ 'selected-email': currentEmail === 'email6' }">Email6.txt</div>
-        </div>
-
-        <div class="analysis-rectangle">
-            <h2 class="analysis-header">Analysis</h2>
-            <div class="divider"></div>
-
-            <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results</p>
-
-            <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
-                <p>Overall Rating: {{currentAnalysis.rating}}</p>
-                <p>Country of Origin: {{currentAnalysis.origin}}</p>
-                <p>Potential Violation Areas: {{currentAnalysis.violationAreas}}</p>
-                <p>Total Violations: {{currentAnalysis.numViolations}}</p>
+<div class="containers">
+    <div class="inbox-rectangle">
+        <h2 class="inbox-header">Inbox</h2>
+        <div class="divider"></div>
+        <ul>
+            <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
+                <li>{{ i }}
+                </li>
             </div>
+        </ul>
+    </div>
+
+    <div class="analysis-rectangle">
+        <h2 class="analysis-header">Analysis</h2>
+        <div class="divider"></div>
+
+        <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results
+        </p>
+
+        <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
+            <p>Pulled Content: {{currentAnalysis.content}}</p>
+            <p>Overall Rating: {{currentAnalysis.rating}}</p>
+            <p>Country of Origin: {{currentAnalysis.origin}}</p>
+            <p>Potential Violation Areas: {{currentAnalysis.violationAreas}}</p>
+            <p>Total Violations: {{currentAnalysis.numViolations}}</p>
         </div>
     </div>
+</div>
 
-    <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
-        <button type="button" [routerLink]="['/violations', currentEmailType]" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
-        <button type="button" [routerLink]="['/report']" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button>
-        <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download Report</button>
-        <button type="button" (click)="clearAnalysis()" class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button>
-    </div>
-
-
-
-
+<div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
+    <button type="button" [routerLink]="['/violations', currentEmailType]"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
+    <button type="button" [routerLink]="['/report']"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button>
+    <button type="button"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
+        Report</button>
+    <button type="button" (click)="clearAnalysis()"
+        class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button>
+</div>

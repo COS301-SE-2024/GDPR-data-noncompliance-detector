@@ -2,20 +2,16 @@
 // import { HttpClient } from '@angular/common/http';
 // import { Observable } from 'rxjs';
 
-// interface FilePathResponse {
-//   status: string;
-//   path: string;
-// }
-
 // @Injectable({
 //   providedIn: 'root'
 // })
 // export class FileService {
-//   private apiUrl = 'http://127.0.0.1:8000/file-upload';
+//   private apiUrl = 'http://127.0.0.1:8000/reports';
 
 //   constructor(private http: HttpClient) {}
 
-//   postNewFile(filePath: string): Observable<FilePathResponse> {
-//     return this.http.post<FilePathResponse>(this.apiUrl, { path: filePath });
+//   getFiles(directory: string): Observable<string[]> {
+//     console.log("Getting files")
+//     return this.http.get<string[]>(`${this.apiUrl}?directory=${directory}`);
 //   }
 // }
