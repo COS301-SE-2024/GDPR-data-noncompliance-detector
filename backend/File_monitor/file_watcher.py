@@ -208,18 +208,6 @@ def start_watcher_thread_downloads(ext, wt=3):  # default is 3 seconds
     return thread
 
 
-def start_watcher_thread_path(paths, ext, wt=3):  # default is 3 seconds
-    # this function will watch a specific dir for the extensions and logs all 
-    #   file updates/additions in the dir
-    global watcher_timer
-    watcher_timer = wt
-
-    global stop_watcher
-    stop_watcher = False
-    thread = threading.Thread(target=startWatcher, args=(paths, ext))
-    thread.start()
-    return thread
-
 
 def stop_watcher_thread(thread):
     global stop_watcher

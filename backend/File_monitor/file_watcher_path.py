@@ -31,7 +31,7 @@ from biplist import readPlistFromString
 
 def check_file_extension(filename, reg):
     # print("filename : ", filename, "reg : ", reg) 
-    print(f"filename : {filename} -- reg : {reg}")
+    # print(f"filename : {filename} -- reg : {reg}")
     try:
         for str in reg:
             if (filename.endswith(f".{str}") and ".download" not in filename):
@@ -62,20 +62,33 @@ class handle(FileSystemEventHandler):
         self.file_extension = file_extension
         self.prev_output = time.time()
     
-    def on_any_event(self, event):
-        try:
-            global watcher_timer
-            current_time = time.time()
-            if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
-                self.prev_output = current_time
-                
-                if (event.src_path.find("\\") != -1):
-                    event.src_path = event.src_path.replace("\\", "/")
-                    print(event.src_path)
-                    return event.src_path
-        except Exception as e:
-            print(f"error in file_watcher_path-on_any_event : {e}")
+    def on_modified(self, event):
+        global watcher_timer
+        current_time = time.time()
+        
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
+            self.prev_output = current_time
+            # print("mod")
+            if (event.src_path.find("\\") != -1):
+                event.src_path = event.src_path.replace("\\", "/")
 
+            print(event.src_path)
+            return event.src_path
+
+
+    def on_created(self, event):
+        global watcher_timer
+        current_time = time.time()
+
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
+            self.prev_output = current_time
+            # print("cre")
+            if (event.src_path.find("\\") != -1):
+                event.src_path = event.src_path.replace("\\", "/")
+
+            print(event.src_path)
+            return event.src_path
+            
 
 stop_watcher = False
 watcher_thread = None
@@ -105,8 +118,6 @@ def startWatcher(paths, ext):
         for observer in observers:
             observer.stop()
             observer.join()
-
-
 
 
 def start_watcher_thread_path(paths, ext, wt=3):  # default is 3 seconds
