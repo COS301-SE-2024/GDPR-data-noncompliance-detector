@@ -13,7 +13,6 @@ from backend.Document_parser.extract_images import extract_images_from_pdf
 from backend.Document_parser.extract_images import extract_images_from_docx
 from backend.Document_parser.extract_images import extract_images_from_excel
 
-from retinaface import RetinaFace
 
 # from tensorflow.python.framework.ops import disable_eager_execution
 # disable_eager_execution()
@@ -49,10 +48,6 @@ def biometric_detect_people(source):
 
     return output
 
-
-def biometric_detect_eye(source):
-    resp = RetinaFace.detect_faces(source)
-    return resp
 
 
 def biometric_detect_all(pdf_path):
