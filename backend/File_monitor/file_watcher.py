@@ -48,6 +48,53 @@ watcher_timer = 3
 class handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
 
+    def verifyFromTeams(ext):
+        # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
+        # trigger function when monitor sees a new file
+        domains = [
+            'my.sharepoint.com',
+            'teams.microsoft.com',
+            'teams.live.com',
+            'onedrive.live.com',
+            'sharepoint.com',
+            'live.com',
+            'office.com',
+            'microsoft.com',
+            '1drv.ms'
+        ]
+
+        try:
+            if platform.system() == 'Darwin':
+                # downloads_path = str(Path.home() / "Downloads")
+                # print(downloads_path)
+                attributes = xattr.xattr(f"{ext}")
+                
+                where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+
+                line = attributes.get(where_from_key)
+                # print(line)
+
+                for domain in domains:
+                    if (bytes(domain, 'utf-8') in line):
+                        # print("file is from teams")
+                        return True
+                return False
+            
+            elif platform.system() == 'Windows':
+                zone_identifier_path = ext + ':Zone.Identifier'
+
+                if os.path.exists(zone_identifier_path):
+                    with open(zone_identifier_path, 'r') as f:
+                        content = f.read()
+                        for domain in domains:
+                            if domain in content:
+                                # print("file is from teams")
+                                return True
+                return False
+        
+        except Exception as e:
+            print(f"teams error : {e}")
+
     def __init__(self, file_extension):
         self.file_extension = file_extension
         self.prev_output = time.time()
@@ -134,8 +181,24 @@ def startWatcher(paths, ext):
             observer.join()
 
 
-def start_watcher_thread(paths, ext, wt=3):  # default is 3 seconds
-    # can start in download folder
+def start_watcher_thread_downloads(ext, wt=3):  # default is 3 seconds
+    # this function will watch the downloads dir and will first check
+    #   if the file is from teams then it will log it
+    downloads_path = str(Path.home() / "Downloads")
+    print(downloads_path)
+    global watcher_timer
+    watcher_timer = wt
+
+    global stop_watcher
+    stop_watcher = False
+    thread = threading.Thread(target=startWatcher, args=(downloads_path, ext))
+    thread.start()
+    return thread
+
+
+def start_watcher_thread_path(paths, ext, wt=3):  # default is 3 seconds
+    # this function will watch a specific dir for the extensions and logs all 
+    #   file updates/additions in the dir
     global watcher_timer
     watcher_timer = wt
 
@@ -152,65 +215,6 @@ def stop_watcher_thread(thread):
     thread.join()
 
 
-def startWatcherTotal(paths, ext):
-    paths = "."
-    ext = "txt"
-    watcher_thread = start_watcher_thread(paths, ext)
-    print(watcher_thread)    
-    try:
-        time.sleep(10)
-    finally:
-        stop_watcher_thread(watcher_thread)
-
-
-def verifyFromTeams(ext):
-    # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
-    # trigger function when monitor sees a new filw 
-    domains = [
-        'my.sharepoint.com',
-        'teams.microsoft.com',
-        'teams.live.com',
-        'onedrive.live.com',
-        'sharepoint.com',
-        'live.com',
-        'office.com',
-        'microsoft.com',
-        '1drv.ms'
-    ]
-
-    try:
-        if platform.system() == 'Darwin':
-            # downloads_path = str(Path.home() / "Downloads")
-            # print(downloads_path)
-            attributes = xattr.xattr(f"{ext}")
-            
-            where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
-
-            line = attributes.get(where_from_key)
-            print(line)
-
-            for domain in domains:
-                if (bytes(domain, 'utf-8') in line):
-                    print("file is from teams")
-                    return True
-            return False
-        
-        elif platform.system() == 'Windows':
-            zone_identifier_path = ext + ':Zone.Identifier'
-
-            if os.path.exists(zone_identifier_path):
-                with open(zone_identifier_path, 'r') as f:
-                    content = f.read()
-                    for domain in domains:
-                        if domain in content:
-                            print("file is from teams")
-                            return True
-            return False
-    
-    except Exception as e:
-        print(f"teams error : {e}")
-
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     # if (len(sys.argv) < 3):
@@ -219,3 +223,5 @@ if __name__ == "__main__":
 
     # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
     verifyFromTeams('sf')
+
+    # define 2 functions. one which watches a folder. one wich watches downloads
