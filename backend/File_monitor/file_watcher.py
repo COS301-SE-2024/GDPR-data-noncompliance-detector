@@ -3,7 +3,7 @@ import time
 import logging
 import json
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+from watchdog.events import FileSystemEvent, FileSystemEventHandler
 import os
 import threading
 import xattr
@@ -38,7 +38,6 @@ def check_file_extension(filename, reg):
 
 
 def verifyFromTeams(ext):
-    print("teams running")
     if isinstance(ext, bytes):
         ext = ext.decode('utf-8')
 
@@ -108,6 +107,19 @@ class handle(FileSystemEventHandler):
     def __init__(self, file_extension):
         self.file_extension = file_extension
         self.prev_output = time.time()
+
+    def on_moved(self, event):
+        global watcher_timer
+        current_time = time.time()
+        print("mov")
+        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
+            self.prev_output = current_time
+            
+            if (event.src_path.find("\\") != -1):
+                event.src_path = event.src_path.replace("\\", "/")
+
+            if (verifyFromTeams(event.src_path)):
+                return event.src_path
 
     def on_modified(self, event):
         global watcher_timer
@@ -210,7 +222,7 @@ if __name__ == "__main__":
 
     # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
     # verifyFromTeams('sf')
-    start_watcher_thread_downloads("pdf,xlsx", 1)  # default is 3 seconds
+    start_watcher_thread_downloads("pdf,xlsx,docx", 0.001)  # default is 3 seconds
 
 
     # define 2 functions. one which watches a folder. one wich watches downloads
