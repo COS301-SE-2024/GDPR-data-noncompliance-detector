@@ -4,9 +4,9 @@ from langcodes import Language
 
 class location_finder:
     def detect_country(self, file):
-        with open(file, 'r', encoding='utf-8') as file:
-            data = file.read()
-        # data = file
+        # with open(file, 'r', encoding='utf-8') as file:
+        #     data = file.read()
+        data = file
 
         try:
             languages = detect_langs(data)
