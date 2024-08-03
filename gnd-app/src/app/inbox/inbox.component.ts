@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 export class InboxComponent implements OnInit {
   reports: string[] = [];
   // path: string = '../backend/Reports';
-  path: string = '../backend/Reports/';
+  path: string = '../backend/Reports';
   private apiUrl = 'http://127.0.0.1:8000/reports';
   private iUrl = 'http://127.0.0.1:8000/read-report/';
 
