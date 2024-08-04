@@ -1,5 +1,6 @@
 from .text_classification_layer import text_classification_layer
 from .biometric_detection import biometric_detection
+from .GDPR_model_access import GDPR
 
 # from text_classification_layer import text_classification_layer
 # from biometric_detection import biometric_detection
@@ -9,6 +10,7 @@ class report_generation_layer:
     def __init__(self):
         self.classification_layer = text_classification_layer()
         self.image_classification_layer = biometric_detection()
+        self.gdpr_base = GDPR()
 
     def ner_report(self, text):
         res1 = self.classification_layer.run_NER_model(text)
@@ -46,6 +48,24 @@ class report_generation_layer:
             return f"{count} person can be identified through images in the document"
         else:
             return f"{count} persons can be identified through images in the document"
+        
+    def PIF_report(self, text):
+        count = 0
+        lines = text.split('.')
+    
+        for i in lines:
+            i = lines.strip()
+        
+            if not i:
+                continue
+
+            if GDPR.run_GDPR(i) == True:
+                count += 1
+            else:
+                count += 0
+
+        return count           
+
 
 
 
