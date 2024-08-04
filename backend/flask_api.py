@@ -40,7 +40,7 @@ def new_file():
 @app.route("/reports", methods=["GET"])
 def list_files():
     try:
-        reports_dir = os.path.abspath('./backend/Reports')
+        reports_dir = os.path.abspath('../backend/Reports')
 
         files = os.listdir(reports_dir)
         return jsonify(files)

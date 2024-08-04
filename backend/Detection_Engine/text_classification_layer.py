@@ -1,5 +1,8 @@
-from .NER_model_access import NER
-from .CA_model_access import CA
+# from .NER_model_access import NER
+# from .CA_model_access import CA
+
+from NER_model_access import NER
+from CA_model_access import CA
 
 class text_classification_layer:
 

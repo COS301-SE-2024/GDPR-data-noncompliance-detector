@@ -26,6 +26,9 @@ class detection_engine:
     
     def regex_report(self, path):
         return self.regex_filter.process(path)
+    
+    def biometric_and_image_report(self, path):
+        return self.biometric_and_image_report(path)
 
     def process(self, path):
         
@@ -39,9 +42,12 @@ class detection_engine:
         result = self.report_generator.ner_report(text)
         result += location
         result += "\n"
-        result+= "Violation Report: \n"
+        result += "Violation Report: \n"
         result += reg_result
         result += ca_statement
+        result += "\n"
+        result += "Biometrics and Imaging:\n"
+        result += self.report_generator.Image_report(path)
 
 
         return result
