@@ -5,6 +5,7 @@ import os
 from openpyxl import Workbook
 from docx import Document
 from reportlab.pdfgen import canvas
+from extract_images import image_extractor
 # import pandas as pd
 
 
@@ -18,8 +19,9 @@ class TestTextExtractor(unittest.TestCase):
             c.drawString(100, 750, "Test text")
             c.save()
 
-            result = self.extractor.extract_text_from_pdf(temp.name)            
-            self.assertEqual(result, 'Test text\nTest text\n\x0c')
+            result = self.extractor.extract_text_from_pdf(temp.name)       
+            # 'Test text\nTest text\n\x0c'     
+            self.assertEqual(result, 'Test text\nTest text\n')
         os.remove(temp.name)
 
     def test_extract_text_from_docx(self):

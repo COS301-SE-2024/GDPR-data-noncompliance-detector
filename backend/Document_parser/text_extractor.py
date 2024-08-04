@@ -10,6 +10,7 @@ import openpyxl #we need this for excel
 from openpyxl_image_loader import SheetImageLoader
 from pdf2image import convert_from_path
 from .extract_images import image_extractor
+
 class text_extractor:
     def __init__(self):
         self.ext = ''
