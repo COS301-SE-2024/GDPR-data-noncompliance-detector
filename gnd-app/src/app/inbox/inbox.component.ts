@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 // import { FileService } from '../services/file.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import axios from 'axios';
 
 
 @Component({
@@ -18,7 +19,10 @@ export class InboxComponent implements OnInit {
   // path: string = '../backend/Reports';
   path: string = '../backend/Reports';
   private apiUrl = 'http://127.0.0.1:8000/reports';
-  private iUrl = 'http://127.0.0.1:8000/read-report/';
+  private iUrl = 'http://127.0.0.1:8000/read-report';
+  public currentAnalysis: any = {};
+  public currentEmail: string = "";  
+  public currentEmailType: string = ""; // Add this line to track file type
 
   constructor(private http: HttpClient) { }
 
@@ -39,12 +43,37 @@ export class InboxComponent implements OnInit {
     return this.http.get<string[]>(`${this.apiUrl}`);
   }
 
-  getReportContent(filePath: string) {
+  
+  // getReportContent(filePath: string) {
+  //   console.log(filePath);
+  //   const payload = { path: filePath };
+  //   this.http.post<{ content: string }>(this.iUrl, payload).subscribe(response => {
+  //     this.currentAnalysis.content = response.content;
+  //   });
+  //   this.currentEmail = 'NA';
+  //   this.currentEmailType = 'txt';
+  // }
+
+  // getReportContent(filePath: string) {
     
+  //   console.log(filePath);
+  //   this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path +'/' +filePath)}`).subscribe(response => {
+  //     this.currentAnalysis.content = response.content;
+  //   });
+  //   this.currentEmail = 'NA';
+  //   this.currentEmailType = 'txt';
+  // }
+
+  getReportContent(filePath: string) {
     console.log(filePath);
-    this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path + filePath)}`).subscribe(response => {
-      this.currentAnalysis.content = response.content;
-    });
+    const payload = { path: filePath };
+    axios.post(this.iUrl, payload)
+      .then(response => {
+        this.currentAnalysis.content = response.data.content;
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
     this.currentEmail = 'NA';
     this.currentEmailType = 'txt';
   }
@@ -69,10 +98,6 @@ export class InboxComponent implements OnInit {
     email5: {rating: 37, origin: 'Germany', violationAreas: 'Personal Information', numViolations: 19, fileType: 'pdf'},
     email6: {rating: 37, origin: 'Spain', violationAreas: 'Banking Details', numViolations: 12, fileType: 'txt'},
   };
-
-  currentAnalysis: any = {};
-  currentEmail: string = "";  
-  currentEmailType: string = ""; // Add this line to track file type
 
   showAnalysis(data: string) {
     this.currentAnalysis = this.mockData[data];
