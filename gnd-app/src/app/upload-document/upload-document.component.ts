@@ -63,7 +63,7 @@ export class UploadDocumentComponent implements OnInit{
   currentAnalysis: any = {};
   uploadedFileName: string = '';
   fileContent: string = '';
-
+  styledReportContent: string = '';
   fileName = '';
   result: string = ''
 
@@ -91,7 +91,20 @@ export class UploadDocumentComponent implements OnInit{
   }
 
   processResult(result: string): string {
-    return result.replace(/\n/g, "<br>");
+    result = result.replace(/\n/g, "<br>");
+    result = result.replace(/\{status\}(.*?)\{\/status\}/g, '<div class="status" [ngClass]="getStatusClass(\'$1\')">$1</div>')
+    result = result.replace(/\{ca_statement\}(.*?)\{\/ca_statement\}/g, '<div class="ca_statement">$1</div>')
+    return result
+  }
+
+  getStatusClass(status: string): string {
+    if (status === 'success') {
+      return 'status-success';
+    } else if (status === 'error') {
+      return 'status-error';
+    } else {
+      return 'status-default';
+    }
   }
 
   isObjectEmpty(obj: any) {

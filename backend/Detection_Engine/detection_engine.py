@@ -63,27 +63,29 @@ class detection_engine:
         else:
             status = "Non-compliant"
         
-        result = status
+        result = ""
+        result += f'{{status}}{status}{{/status}}'
+        result += "\n\n"
         result += ner_result
+        # result += "\n"
         result += location
         result += "\n"
-        result += "Violation Report: \n"
+        result += "Violation Report: \n\n"
         result += "General Personal Data:\n"
         result += str(reg_result+gi_result)
         result += "\n"
+        result += "\n"
         result += "Biometrics and Imaging:\n"
         result += self.report_generator.Image_report(path_)
-        result += "\n"
-        result += "Data relating to Health:\n"
-        result += "Data revealing Racial and Ethnic Origin\n"
+        result += "\n\n"
+        result += "Data relating to Health:\n\n"
+        result += "Data revealing Racial and Ethnic Origin:\n"
         result += str(em_result)
-        result += "\n"
-        result += ca_statement
-        result += "\n"
+        result += "\n\n"
+        result += f'{{ca_statement}}{ca_statement}{{/ca_statement}}'
+        result += "\n\n"
         # print(path_)
         # print(self.report_generator.Image_report(path_))
-
-
         return result
 
 

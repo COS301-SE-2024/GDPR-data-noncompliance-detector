@@ -26,17 +26,19 @@
         <h2 class="analysis-header">Analysis</h2>
         <div class="divider"></div>
 
+        <div class="analysis-data" *ngIf="result">
+            <h2 class="analysis-box-header">Analysis Result:</h2>
+            <div class="result-content" [innerHTML]="result"></div>
+        </div>
+
         <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results
         </p>
 
-        <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
-            <p>Pulled Content: {{currentAnalysis.content}}</p>
-            <p>Overall Rating: {{currentAnalysis.rating}}</p>
-            <p>Country of Origin: {{currentAnalysis.origin}}</p>
-            <p>Potential Violation Areas: {{currentAnalysis.violationAreas}}</p>
-            <p>Total Violations: {{currentAnalysis.numViolations}}</p>
-        </div>
+        <!-- <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
+            <div class="result-content" [innerHTML]="result"></div>
+        </div> -->
     </div>
+
 </div>
 
 <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">

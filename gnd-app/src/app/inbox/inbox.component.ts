@@ -23,6 +23,7 @@ export class InboxComponent implements OnInit {
   public currentAnalysis: any = {};
   public currentEmail: string = "";  
   public currentEmailType: string = ""; // Add this line to track file type
+  public result: string = "";
 
   constructor(private http: HttpClient) { }
 
@@ -70,12 +71,30 @@ export class InboxComponent implements OnInit {
     axios.post(this.iUrl, payload)
       .then(response => {
         this.currentAnalysis.content = response.data.content;
+        this.result = this.processResult(this.currentAnalysis.content)
       })
       .catch(error => {
         console.error('There was an error!', error);
       });
     this.currentEmail = 'NA';
     this.currentEmailType = 'txt';
+  }
+
+  processResult(result: string): string {
+    result = result.replace(/\n/g, "<br>");
+    result = result.replace(/\{status\}(.*?)\{\/status\}/g, '<div class="status" [ngClass]="getStatusClass(\'$1\')">$1</div>')
+    result = result.replace(/\{ca_statement\}(.*?)\{\/ca_statement\}/g, '<div class="ca_statement">$1</div>')
+    return result
+  }
+
+  getStatusClass(status: string): string {
+    if (status === 'success') {
+      return 'status-success';
+    } else if (status === 'error') {
+      return 'status-error';
+    } else {
+      return 'status-default';
+    }
   }
 
   mock(){
