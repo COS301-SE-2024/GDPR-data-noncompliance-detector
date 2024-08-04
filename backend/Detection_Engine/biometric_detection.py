@@ -9,9 +9,13 @@ import glob
 # below added because of the relative import error
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-from backend.Document_parser.extract_images import extract_images_from_pdf
-from backend.Document_parser.extract_images import extract_images_from_docx
-from backend.Document_parser.extract_images import extract_images_from_excel
+# from backend.Document_parser.extract_images import extract_images_from_pdf
+# from backend.Document_parser.extract_images import extract_images_from_docx
+# from backend.Document_parser.extract_images import extract_images_from_excel
+
+# from ..Document_parser.extract_images import extract_images_from_pdf
+# from ..Document_parser.extract_images import extract_images_from_docx
+# from ..Document_parser.extract_images import extract_images_from_excel
 
 
 # from tensorflow.python.framework.ops import disable_eager_execution
@@ -53,39 +57,40 @@ class biometric_detection:
     def biometric_detect_all(self,pdf_path):
         # clean up folders
         if (pdf_path.endswith('.pdf')):
-            extract_images_from_pdf(pdf_path)
-            images = [f'extracted_images/pdf_images/{i}' for i in os.listdir('extracted_images/pdf_images')]
+            # extract_images_from_pdf(pdf_path)
+            images = [f'./Detection_Engine/extracted_images/pdf_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/pdf_images')]
             output = []
             for image in images:
                 output.append(self.biometric_detect_people(image))
             
-            png_files = glob.glob(os.path.join("extracted_images/pdf_images", '*.png'))
+            png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/pdf_images", '*.png'))
             for file in png_files:
                 os.remove(file)
             
             return output
         
         elif (pdf_path.endswith('.docx')):
-            extract_images_from_docx(pdf_path)
-            images = [f'extracted_images/docx_images/{i}' for i in os.listdir('extracted_images/docx_images')]
+            # extract_images_from_docx(pdf_path)
+            images = [f'./Detection_Engine/extracted_images/docx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/docx_images')]
             output = []
             for image in images:
                 output.append(self.biometric_detect_people(image))
             
-            png_files = glob.glob(os.path.join("extracted_images/docx_images", '*.png'))
+            png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/docx_images", '*.png'))
             for file in png_files:
                 os.remove(file)
 
             return output
         
         elif (pdf_path.endswith('.xlsx')):
-            extract_images_from_excel(pdf_path)
-            images = [f'extracted_images/xlsx_images/{i}' for i in os.listdir('extracted_images/xlsx_images')]
+            # extract_images_from_excel(pdf_path)
+            images = [f'./Detection_Engine/extracted_images/xlsx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/xlsx_images')]
+            # images = [f'extracted_images/xlsx_images/{i}' for i in os.listdir('extracted_images/xlsx_images')]
             output = []
             for image in images:
                 output.append(self.biometric_detect_people(image))
             
-            png_files = glob.glob(os.path.join("extracted_images/xlsx_images", '*.png'))
+            png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/xlsx_images", '*.png'))
             for file in png_files:
                 os.remove(file)
 

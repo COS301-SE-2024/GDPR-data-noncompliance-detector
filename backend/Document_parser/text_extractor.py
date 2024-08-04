@@ -9,11 +9,14 @@ import pdfplumber
 import openpyxl #we need this for excel
 from openpyxl_image_loader import SheetImageLoader
 from pdf2image import convert_from_path
+from .extract_images import image_extractor
 class text_extractor:
     def __init__(self):
         self.ext = ''
+        self.image_extractor = image_extractor()
 
     def extract_text_from_pdf(self, file_path):
+        self.image_extractor.extract_images_from_pdf(file_path)
         combined_text = []
 
         with pdfplumber.open(file_path) as pdf:
@@ -32,6 +35,7 @@ class text_extractor:
 
 
     def extract_text_from_docx(self, file_path):
+        self.image_extractor.extract_images_from_docx(file_path)
         document = Document(file_path)
         combined_text = []
 
@@ -49,6 +53,7 @@ class text_extractor:
         return "\n".join(combined_text)
 
     def extract_data_from_excel(self, file_path):
+        self.image_extractor.extract_images_from_excel(file_path)
         wb = openpyxl.load_workbook(file_path)
         combined_text = []
 

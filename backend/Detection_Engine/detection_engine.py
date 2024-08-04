@@ -30,7 +30,7 @@ class detection_engine:
     def biometric_and_image_report(self, path):
         return self.biometric_and_image_report(path)
 
-    def process(self, path):
+    def process(self, path, path_):
         
         text = path
         
@@ -47,7 +47,9 @@ class detection_engine:
         result += ca_statement
         result += "\n"
         result += "Biometrics and Imaging:\n"
-        result += self.report_generator.Image_report(path)
+        result += self.report_generator.Image_report(path_)
+        print(path_)
+        print(self.report_generator.Image_report(path_))
 
 
         return result

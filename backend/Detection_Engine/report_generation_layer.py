@@ -1,8 +1,8 @@
-# from .text_classification_layer import text_classification_layer
-# from .biometric_detection import biometric_detection
+from .text_classification_layer import text_classification_layer
+from .biometric_detection import biometric_detection
 
-from text_classification_layer import text_classification_layer
-from biometric_detection import biometric_detection
+# from text_classification_layer import text_classification_layer
+# from biometric_detection import biometric_detection
 
 class report_generation_layer:
 
@@ -32,6 +32,7 @@ class report_generation_layer:
         
     def Image_report(self, path):
         arr_ = self.image_classification_layer.biometric_detect_all(path)
+        # return arr_
         if arr_ is None:
             return "0 persons can be identified through images in the document"
         
