@@ -45,6 +45,18 @@ export class HomeComponent implements OnInit, OnDestroy {
         {
           element: '#InboxButton',
           intro: 'Click here to see all the new attachments in the received inbox'
+        },
+        {
+          element: '#home',
+          intro: 'This button will always navigate you back to the home page'
+        },
+        {
+          element: '#help',
+          intro: 'This button will navigate you to the help page. Where you will see how to use the app.'
+        },
+        {
+          element: '#FAQ',
+          intro: 'This button will navigate you to the FAQ page. Where you will see the most frequently asked questions.'
         }
       ],
     });

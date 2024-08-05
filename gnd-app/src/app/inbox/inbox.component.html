@@ -11,7 +11,7 @@
 
 
 <div class="containers">
-    <div class="inbox-rectangle">
+    <div class="inbox-rectangle" id="InboxAttachments">
         <h2 class="inbox-header">Inbox</h2>
         <div class="divider"></div>
         <ul>
@@ -22,11 +22,11 @@
         </ul>
     </div>
 
-    <div class="analysis-rectangle">
+    <div class="analysis-rectangle" >
         <h2 class="analysis-header">Analysis</h2>
         <div class="divider"></div>
 
-        <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results
+        <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)" >Please select a file to view analysis results
         </p>
 
         <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
