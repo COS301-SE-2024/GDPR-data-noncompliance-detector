@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 // import { FileService } from '../services/file.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { Subscription } from 'rxjs';
+import * as introJs from 'intro.js/intro.js';
+import {WalkthroughService} from '../services/walkthrough.service';
 
 @Component({
   selector: 'app-inbox',
@@ -13,17 +15,34 @@ import { Observable } from 'rxjs';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent implements OnInit, OnDestroy {
+  private walkthroughSubscription?: Subscription;
+
+
   reports: string[] = [];
   // path: string = '../backend/Reports';
   path: string = '../backend/Reports/';
   private apiUrl = 'http://127.0.0.1:8000/reports';
   private iUrl = 'http://127.0.0.1:8000/read-report/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private walkthroughService: WalkthroughService) { }
 
   ngOnInit(): void {
     this.getReports();
+    const hasSeenIntro = localStorage.getItem('hasSeenIntro');
+    if (!hasSeenIntro) {
+      this.startIntro();
+      // Mark that the user has seen the intro
+      localStorage.setItem('hasSeenIntro', 'true');
+    }
+    this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
+      this.startIntro();
+    })
+  }
+
+  ngOnDestroy() {
+    if(this.walkthroughSubscription)
+      this.walkthroughSubscription.unsubscribe();
   }
 
   getReports(): void{
@@ -88,5 +107,25 @@ export class InboxComponent implements OnInit {
     this.currentAnalysis = {};
     this.currentEmail = "";
     this.currentEmailType = ""; // Clear file type
+  }
+
+  startIntro() {
+    const intro = introJs();
+    intro.setOptions({
+      steps: [
+        {
+          element: '#InboxAttachments',
+          intro: 'This is where you will see all the new attachments in the received inbox directory.'
+        },
+        // {
+        //   element: '#ReportOfClickedDoc',
+        //   intro: 'Here you will see the generated report of the selected document from the attachments on the left.'
+        // }
+      ],
+    });
+    intro.start();
+  }
+  toggleWalkthrough() {
+    this.startIntro();
   }
 }
