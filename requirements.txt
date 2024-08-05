@@ -169,3 +169,5 @@ torch
 pypdf
 docx2txt
 openpyxl
+# xattr
+biplist

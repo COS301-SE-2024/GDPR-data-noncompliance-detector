@@ -63,6 +63,7 @@ jobs:
         run: |
           ls -a
           cd backend/Document_parser
+          # cd backend
           pytest --cov=. --cov-report=xml
       
       - name: Integration test
