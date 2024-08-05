@@ -168,5 +168,6 @@ transformers
 torch
 pypdf
 docx2txt
-openpyxl# xattr
+openpyxl
+# xattr
 biplist
