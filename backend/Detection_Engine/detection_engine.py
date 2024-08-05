@@ -57,14 +57,14 @@ class detection_engine:
         gi_result = self.report_generator.gen_report(text)
         em_result = self.report_generator.EM_report(text)
         status = ""
-
+        
         if self.flag(ner_result, reg_result, gi_result, em_result) == 0:
             status = "Compliant"
         else:
             status = "Non-compliant"
         
         result = ""
-        result += f'{{status}}{status}{{/status}}'
+        result += status
         result += "\n\n"
         result += ner_result
         # result += "\n"
@@ -82,7 +82,7 @@ class detection_engine:
         result += "Data revealing Racial and Ethnic Origin:\n"
         result += str(em_result)
         result += "\n\n"
-        result += f'{{ca_statement}}{ca_statement}{{/ca_statement}}'
+        result += ca_statement
         result += "\n\n"
         # print(path_)
         # print(self.report_generator.Image_report(path_))

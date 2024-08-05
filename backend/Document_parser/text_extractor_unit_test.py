@@ -1,11 +1,14 @@
 import unittest
-from text_extractor import text_extractor
 import tempfile
 import os
 from openpyxl import Workbook
 from docx import Document
 from reportlab.pdfgen import canvas
-from extract_images import image_extractor
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from Document_parser.text_extractor import text_extractor
+# from extract_images import image_extractor
 # import pandas as pd
 
 
