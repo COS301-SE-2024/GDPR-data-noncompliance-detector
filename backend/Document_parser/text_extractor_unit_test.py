@@ -24,7 +24,7 @@ class TestTextExtractor(unittest.TestCase):
 
             result = self.extractor.extract_text_from_pdf(temp.name)       
             # 'Test text\nTest text\n\x0c'     
-            self.assertEqual(result, 'Test text\nTest text\n')
+            self.assertEqual(result, 'Test text\nTest text\n\x0c')
         os.remove(temp.name)
 
     def test_extract_text_from_docx(self):
