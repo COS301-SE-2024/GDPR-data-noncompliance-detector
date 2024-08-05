@@ -23,7 +23,10 @@ export class InboxComponent implements OnInit {
   public currentAnalysis: any = {};
   public currentEmail: string = "";  
   public currentEmailType: string = ""; // Add this line to track file type
-  public result: string = "";
+  result: string = '';
+  status: string = '';
+  ca_statement: string = '';
+  // currentAnalysis: any = {};
 
   constructor(private http: HttpClient) { }
 
@@ -82,11 +85,79 @@ export class InboxComponent implements OnInit {
 
   processResult(result: string): string {
     result = result.replace(/\n/g, "<br>");
-    result = result.replace(/\{status\}(.*?)\{\/status\}/g, '<div class="status" [ngClass]="getStatusClass(\'$1\')">$1</div>')
-    result = result.replace(/\{ca_statement\}(.*?)\{\/ca_statement\}/g, '<div class="ca_statement">$1</div>')
-    return result
+    this.status = this.searchComplianceStatus(result);
+    this.result = this.cleanComplianceStatus(result);
+    this.ca_statement = this.searchContractStatus(result);
+    this.result = this.cleanContractSearch(this.result);
+    return result;
   }
 
+  searchComplianceStatus(result: string): string {
+    const compliantMatch = result.match(/compliant/i);
+    const nonCompliantMatch = result.match(/non-compliant/i);
+  
+    let status = '';
+  
+    if (compliantMatch) {
+      status = 'compliant';
+    } else if (nonCompliantMatch) {
+      status = 'non-compliant';
+    }
+  
+    return status;
+  }
+
+  cleanComplianceStatus(result: string): string {
+    console.log("Original result:", result);
+
+    const compliantMatch = result.match(/compliant/i);
+    const nonCompliantMatch = result.match(/non-compliant/i);
+    const contractStatementMatch = result.match(/\{status\}(.*?)\{\/status\}/);
+
+    console.log("Compliant match:", compliantMatch);
+    console.log("Non-compliant match:", nonCompliantMatch);
+    console.log("Contract statement match:", contractStatementMatch);
+
+    let cleanedResult = result;
+
+    if (compliantMatch) {
+        cleanedResult = cleanedResult.replace(/compliant/i, '');
+        console.log("After removing compliant:", cleanedResult);
+    } else if (nonCompliantMatch) {
+        cleanedResult = cleanedResult.replace(/non-compliant/i, '');
+        console.log("After removing non-compliant:", cleanedResult);
+    }
+
+    if (contractStatementMatch) {
+        cleanedResult = cleanedResult.replace(contractStatementMatch[0], '');
+        console.log("After removing contract statement:", cleanedResult);
+    }
+
+    console.log("Final cleaned result:", cleanedResult);
+    return cleanedResult;
+}
+
+  searchContractStatus(result: string): string {
+    const contractStatementMatch = result.match(/The document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
+    let contractStatement = '';
+  
+    if (contractStatementMatch) {
+      contractStatement = contractStatementMatch[0];
+    }
+  
+    return contractStatement;
+  }
+
+  cleanContractSearch(result: string): string {
+    const contractStatementMatch = result.match(/\{ca_statement\}(.*?)\{\/ca_statement\}/s);
+    let cleaned_result = result;
+  
+    if (contractStatementMatch) {
+      cleaned_result = result.replace(contractStatementMatch[0], '');
+    }
+  
+    return cleaned_result;
+  }
   getStatusClass(status: string): string {
     if (status === 'success') {
       return 'status-success';

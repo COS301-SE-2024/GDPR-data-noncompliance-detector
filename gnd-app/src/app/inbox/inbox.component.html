@@ -28,27 +28,29 @@
 
         <div class="analysis-data" *ngIf="result">
             <h2 class="analysis-box-header">Analysis Result:</h2>
+            <div [ngClass]="{'status-success': status === 'compliant', 'status-error': status === 'non-compliant'}">
+                {{ status }}
+            </div>
             <div class="result-content" [innerHTML]="result"></div>
-        </div>
+            <div class="ca_statement" [innerHTML]="ca_statement"></div>
+            <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis
+                results</p>
 
-        <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results
-        </p>
-
-        <!-- <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
+            <!-- <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
             <div class="result-content" [innerHTML]="result"></div>
         </div> -->
+        </div>
+
     </div>
 
-</div>
-
-<div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
-    <button type="button" [routerLink]="['/violations', currentEmailType]"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
-    <button type="button" [routerLink]="['/report']"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button>
-    <button type="button"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
-        Report</button>
-    <button type="button" (click)="clearAnalysis()"
-        class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button>
-</div>
+    <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
+        <button type="button" [routerLink]="['/violations', currentEmailType]"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
+        <button type="button" [routerLink]="['/report']"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button>
+        <button type="button"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
+            Report</button>
+        <button type="button" (click)="clearAnalysis()"
+            class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button>
+    </div>
