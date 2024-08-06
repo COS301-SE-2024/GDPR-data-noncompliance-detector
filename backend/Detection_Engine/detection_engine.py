@@ -72,7 +72,7 @@ class detection_engine:
         result += "\n"
         result += "Violation Report: \n\n"
         result += "General Personal Data:\n"
-        result += str(reg_result+gi_result)
+        result += "Total per category : " + str(reg_result+gi_result)
         result += "\n"
         result += "\n"
         result += "Biometrics and Imaging:\n"
@@ -80,7 +80,7 @@ class detection_engine:
         result += "\n\n"
         result += "Data relating to Health:\n\n"
         result += "Data revealing Racial and Ethnic Origin:\n"
-        result += str(em_result)
+        result += "Total per category : " + str(em_result)
         result += "\n\n"
         result += ca_statement
         result += "\n\n"
