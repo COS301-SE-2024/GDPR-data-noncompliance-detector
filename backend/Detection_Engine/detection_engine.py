@@ -56,6 +56,7 @@ class detection_engine:
         ca_statement = self.report_generator.CA_report(text)
         gi_result = self.report_generator.gen_report(text)
         em_result = self.report_generator.EM_report(text)
+        md_result = self.report_generator.MD_report(text)
         status = ""
         
         if self.flag(ner_result, reg_result, gi_result, em_result) == 0:
@@ -78,7 +79,9 @@ class detection_engine:
         result += "Biometrics and Imaging:\n"
         result += self.report_generator.Image_report(path_)
         result += "\n\n"
-        result += "Data relating to Health:\n\n"
+        result += "Data relating to Health:\n"
+        result += "Total per category : " + str(md_result)
+        result += "\n\n"
         result += "Data revealing Racial and Ethnic Origin:\n"
         result += "Total per category : " + str(em_result)
         result += "\n\n"

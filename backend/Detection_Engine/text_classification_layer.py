@@ -2,6 +2,7 @@ from .NER_model_access import NER
 from .CA_model_access import CA
 from .GDPR_model_access import GDPR
 from .EM_model_access import EM
+from .MD_model_access import MD
 
 # from NER_model_access import NER
 # from CA_model_access import CA
@@ -13,6 +14,7 @@ class text_classification_layer:
         self.CA_model_ = CA()
         self.gdpr_base = GDPR()
         self.em_model = EM()
+        self.md_model = MD()
 
     def run_NER_model(self, text):
         res = self.NER_model_.run_NER(text)
@@ -28,6 +30,9 @@ class text_classification_layer:
     def run_EM_model(self, text):
         return self.em_model.run_EM(text)
     # def process(self, text):
+
+    def run_MD_model(self, text):
+        return self.md_model.run_MD(text)
 
 if __name__ == "__main__":
     this_layer = text_classification_layer()

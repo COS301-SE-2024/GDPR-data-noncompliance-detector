@@ -54,6 +54,10 @@ class report_generation_layer:
     def EM_report(self, text):
         test = self.classification_layer.run_EM_model(text)
         return test 
+    
+    def MD_report(self, text):
+        result = self.classification_layer.run_MD_model(text)
+        return len(result)
 
 
 if __name__ == "__main__":
