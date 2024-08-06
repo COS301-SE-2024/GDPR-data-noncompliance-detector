@@ -101,13 +101,17 @@ function setupWatcher() {
     console.log(`Watcher stdout: ${output}`);
     const postData = { path: output };
 
-    const segments = output.split(path.sep);
-    const fileNameWithExtension = segments[segments.length - 1];
-    const parts = fileNameWithExtension.split('.');
+    const fileName = path.basename(output);
+    console.log(`Extracted file name: ${fileName}`);
+
+    const parts = fileName.split('.');
     const name = parts[0] + '_report.txt';
-    const extension = parts.slice(1).join('.');
-    console.log("Crashing");
-    const newFileName = extension ? `${name}` : name;
+    const newFileName = name;
+
+    // Construct output directory
+    const outputDir = path.join('../backend/Reports', newFileName);
+
+
     axios.post('http://127.0.0.1:8000/new-file', postData, {
       headers: {
         'Content-Type': 'application/json',
