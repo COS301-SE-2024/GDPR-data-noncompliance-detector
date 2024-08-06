@@ -3,9 +3,17 @@ import time
 import logging
 import json
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+from watchdog.events import FileSystemEvent, FileSystemEventHandler
 import os
 import threading
+# import xattr
+import plistlib
+import platform
+from pathlib import Path
+from biplist import readPlistFromString
+
+
+
 
 # run with start_watcher_thread(paths, extensions, time to wait between checks)
 
@@ -22,9 +30,67 @@ import threading
 
 
 def check_file_extension(filename, reg):
-    for str in reg:
-        if filename.endswith(f".{str}"):
-            return True
+    # print("filename : ", filename, "reg : ", reg) 
+    # print(f"filename : {filename} -- reg : {reg}")
+    try:
+        for str in reg:
+            if (filename.endswith(f".{str}") and ".download" not in filename):
+                return True
+    except Exception as e:
+        print(f"error in file_watcher-checkfileextension : {e}")
+
+    return False
+
+
+def verifyFromTeams(ext):
+    if isinstance(ext, bytes):
+        ext = ext.decode('utf-8')
+
+    # look at files properties for my.sharepoint.com (possibly teams.microsoft.com)
+    # trigger function when monitor sees a new file
+    domains = [
+        'my.sharepoint.com',
+        'teams.microsoft.com',
+        'teams.live.com',
+        'onedrive.live.com',
+        'sharepoint.com',
+        'live.com',
+        'office.com',
+        'microsoft.com',
+        '1drv.ms'
+    ]
+
+    try:
+        if platform.system() == 'Darwin':
+            downloads_path = str(Path.home() / "Downloads")
+        #     # print(downloads_path)
+        #     attributes = xattr.xattr(f"{ext}")
+            
+        #     where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+        #     raw_metadata = xattr.getxattr(ext, where_from_key)
+        #     plist_data = readPlistFromString(raw_metadata)
+        #     for item in plist_data:
+        #         for domain in domains:
+        #             if domain in item:
+        #                 # print("teams")
+        #                 return True
+
+        #     return False
+        
+        elif platform.system() == 'Windows':
+            zone_identifier_path = ext + ':Zone.Identifier'
+
+            if os.path.exists(zone_identifier_path):
+                with open(zone_identifier_path, 'r') as f:
+                    content = f.read()
+                    for domain in domains:
+                        if domain in content:
+                            # print("file is from teams")
+                            return True
+            return False
+
+    except Exception as e:
+        print(f"error in file_watcher-verifyfromteams : {e}")
 
 
 def scan_directories(paths, extensions):
@@ -41,32 +107,57 @@ watcher_timer = 3
 
 class handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
+    # problem, its not identifying .pdf as normal. only .download.pdf and verify from teams running after that but .downlload.pdf doesnt exist
+    
     def __init__(self, file_extension):
         self.file_extension = file_extension
         self.prev_output = time.time()
+    
+    def on_any_event(self, event):
+        try:
+            global watcher_timer
+            current_time = time.time()
+            # print("mov")
+            if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
+                self.prev_output = current_time
+                
+                if (event.src_path.find("\\") != -1):
+                    event.src_path = event.src_path.replace("\\", "/")
 
-    def on_modified(self, event):
-        global watcher_timer
-        current_time = time.time()
+                if (verifyFromTeams(event.src_path)):
+                    print(event.src_path)
+                    return event.src_path
+        except Exception as e:
+            print(f"error in file_watcher-on_any_event : {e}")
 
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
-            self.prev_output = current_time
-            if (event.src_path.find("\\") != -1):
-                event.src_path = event.src_path.replace("\\", "/")
-            print(event.src_path)
-            return event.src_path
+    # def on_modified(self, event):
+    #     global watcher_timer
+    #     current_time = time.time()
+        
+    #     if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
+    #         self.prev_output = current_time
+    #         # print("mod")
+    #         if (event.src_path.find("\\") != -1):
+    #             event.src_path = event.src_path.replace("\\", "/")
 
-    def on_created(self, event):
-        global watcher_timer
-        current_time = time.time()
+    #         if (verifyFromTeams(event.src_path)):
+    #             return event.src_path
 
-        if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
-            self.prev_output = current_time
-            if (event.src_path.find("\\") != -1):
-                # event.src_path = event.src_path.replace("\\", "/")
-                res = event.src_path.replace("\\", "/")
-            print(res)
-            return res
+    # def on_created(self, event):
+    #     global watcher_timer
+    #     current_time = time.time()
+        
+
+    #     if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
+    #         self.prev_output = current_time
+    #         # print("cre")
+    #         if (event.src_path.find("\\") != -1):
+    #             event.src_path = event.src_path.replace("\\", "/")
+
+    #         if (verifyFromTeams(event.src_path)):
+    #             return event.src_path
+
+
 
     # def on_deleted(self, event):
     #     print(f'{event.event_type}  path : {event.src_path}')
@@ -91,24 +182,31 @@ def startWatcher(paths, ext):
         observer.start()
     try:
         while not stop_watcher:
-            time.sleep(1)  # Adjust as needed
+            time.sleep(1)
     except KeyboardInterrupt:
         pass
+    except Exception as e:
+        print(f"error in file_watcher-startwatcher : {e}")
     finally:
         for observer in observers:
             observer.stop()
             observer.join()
 
 
-def start_watcher_thread(paths, ext, wt=3):  # default is 3 seconds
+def start_watcher_thread_downloads(ext, wt=3):  # default is 3 seconds
+    # this function will watch the downloads dir and will first check
+    #   if the file is from teams then it will log it
+    downloads_path = str(Path.home() / "Downloads")
+    print(downloads_path)
     global watcher_timer
     watcher_timer = wt
 
     global stop_watcher
     stop_watcher = False
-    thread = threading.Thread(target=startWatcher, args=(paths, ext))
+    thread = threading.Thread(target=startWatcher, args=(downloads_path, ext))
     thread.start()
     return thread
+
 
 
 def stop_watcher_thread(thread):
@@ -117,24 +215,15 @@ def stop_watcher_thread(thread):
     thread.join()
 
 
-def startWatcherTotal(paths, ext):
-    paths = "."
-    ext = "txt"        
-    # Start watcher on a thread
-    watcher_thread = start_watcher_thread(paths, ext)
-    print(watcher_thread)    
-    try:
-        # Simulate some work while watcher is running
-        time.sleep(10)
-    finally:
-        # Stop watcher thread
-        stop_watcher_thread(watcher_thread)
-
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    if (len(sys.argv) < 3):
-        logging.error("Please provide the path and file extension")
-        sys.exit(1)
+    # if (len(sys.argv) < 3):
+    #     logging.error("Please provide the path and file extension")
+    #     sys.exit(1)
 
-    start_watcher_thread(sys.argv[1], sys.argv[2], 1)
+    # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
+    # verifyFromTeams('sf')
+    start_watcher_thread_downloads("pdf,xlsx,docx", 1)  # default is 3 seconds
+
+
+    # define 2 functions. one which watches a folder. one wich watches downloads

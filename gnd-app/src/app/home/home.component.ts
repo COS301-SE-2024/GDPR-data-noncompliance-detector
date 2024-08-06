@@ -39,12 +39,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     intro.setOptions({
       steps: [
         {
-          element: '#Help',
-          intro: 'Click here to go to the help page on how to use the app'
+          element: '#UploadButton',
+          intro: 'Click here to upload a document'
         },
         {
-          element: '#uploadButton',
-          intro: 'Click here to start uploading documents'
+          element: '#InboxButton',
+          intro: 'Click here to see all the new attachments in the received inbox'
+        },
+        {
+          element: '#home',
+          intro: 'This button will always navigate you back to the home page'
+        },
+        {
+          element: '#help',
+          intro: 'This button will navigate you to the help page. Where you will see how to use the app.'
+        },
+        {
+          element: '#FAQ',
+          intro: 'This button will navigate you to the FAQ page. Where you will see the most frequently asked questions.'
         }
       ],
     });
