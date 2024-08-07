@@ -27,13 +27,13 @@ class detection_engine:
         return result
     
     def regex_report_personal(self, path):
-        return self.regex_filter.categorize_and_report_personal(path)
+        return self.regex_filter.process_personal_regex(path)
     
     def regex_report_financial(self, path):
-        return self.regex_filter.categorize_and_report_financial(path)
+        return self.regex_filter.process_financial(path)
     
     def regex_report_contact(self, path):
-        return self.regex_filter.categorize_and_report_contact(path)
+        return self.regex_filter.process_contact_details(path)
     
     def biometric_and_image_report(self, path):
         return self.biometric_and_image_report(path)

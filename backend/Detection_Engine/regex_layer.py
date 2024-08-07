@@ -133,3 +133,18 @@ class regex_layer:
         report = self.categorize_and_print_report(res)
         return report
     
+    def process_financial(self,text):
+        res = self.financial_data_regex(text)
+        report = self.categorize_and_report_financial(res)
+        return report
+    
+    def process_contact_details(self,text):
+        res = self.contact_data_regex(text)
+        report = self.categorize_and_report_contact(res)
+        return report
+    
+    def process_personal_regex(self,text):
+        res = self.personal_data_regex(text)
+        report = self.categorize_and_report_personal(res)
+        return report
+    
