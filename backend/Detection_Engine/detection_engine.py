@@ -56,8 +56,9 @@ class detection_engine:
         
         text = path
         
+        location = self.report_generator.location_report(text)
         ner_result = self.report_generator.ner_report(text)
-        location = self.determine_country_of_origin(path)
+        # location = self.determine_country_of_origin(path)
         reg_result_personal = self.regex_report_personal(text)
         reg_result_financial = self.regex_report_financial(text)
         reg_result_contact = self.regex_report_contact(text)
@@ -76,9 +77,12 @@ class detection_engine:
         result += status
         result += "\n\n"
         result += ner_result
+        result += "\n\n"
         # result += "\n"
-        result += location
+        result += "Potential Location of Origin : "
         result += "\n"
+        result += location
+        result += "\n\n"
         result += "Violation Report: \n\n"
         result += "General Personal Data:\n"
         result += "Financial Data:\n"

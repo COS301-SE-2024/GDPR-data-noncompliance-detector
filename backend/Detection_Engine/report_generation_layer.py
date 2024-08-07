@@ -1,5 +1,7 @@
 from .text_classification_layer import text_classification_layer
 from .biometric_detection import biometric_detection
+from .lang_detection import location_finder
+from langcodes import Language
 
 # from text_classification_layer import text_classification_layer
 # from biometric_detection import biometric_detection
@@ -9,6 +11,24 @@ class report_generation_layer:
     def __init__(self):
         self.classification_layer = text_classification_layer()
         self.image_classification_layer = biometric_detection()
+        self.eu_languages = [
+            'bg', 'hr', 'cs', 'da', 'nl', 'et', 'fi', 'fr', 'de',
+            'el', 'hu', 'ga', 'it', 'lv', 'lt', 'mt', 'pl', 'pt', 'ro',
+            'sk', 'sl', 'es', 'sv'
+        ]
+
+    def location_report(self, text):
+        countries = location_finder.detect_country(self, text)
+        # countries = self.detect_country(result)
+
+        if countries:
+            for country in countries:
+                language_code = Language.find(country[0]).to_tag()
+                if language_code in self.eu_languages:
+                    return "EU"
+            return "Not EU"
+        else:
+            return "Undefined"
         
     def ner_report(self, text):
         res1 = self.classification_layer.run_NER_model(text)
