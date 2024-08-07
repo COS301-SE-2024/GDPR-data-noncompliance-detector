@@ -108,7 +108,6 @@ function setupWatcher() {
     const name = parts[0] + '_report.txt';
     const newFileName = name;
 
-    // Construct output directory
     const outputDir = path.join('../backend/Reports', newFileName);
 
 
