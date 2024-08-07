@@ -75,6 +75,32 @@ class regex_layer:
         
         return total
     
+    def categorize_and_report_financial(self,results):
+        categories = {
+            # "General Personal Data": ["Date","ID","EU Passport Number","Social Security Number","File Path"]
+            # "Genetic Data": [],  
+            # "Biometric Data": ["ID"],
+            # "Data relating to Health": [],
+            # "Data revealing Racial and Ethnic Origin": [], 
+            # "Political Opinions": [], 
+            # "Religious or Ideological Convictions": [],
+            # "Occupational Information": ["Date","Social Security Number"] 
+            "Financial data":["Visa Card Number","Mastercard Number","Financial Data"] 
+        }
+        
+        report = ""
+        exclude = ""
+        for category, keys in categories.items():
+            report += f"Category: {category}\n"
+            for key in keys:
+                if key in results and results[key]:
+                    for instance in results[key]:
+                        exclude += f"    {key}: {instance}\n"
+            total = sum(len(results[key]) for key in keys)
+            report += f"Total per category: {total}\n\n"
+        
+        return total
+
     def process(self,text):
         res = self.personal_data_regex(text)
         report = self.categorize_and_print_report(res)
