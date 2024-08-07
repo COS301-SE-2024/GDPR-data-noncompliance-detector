@@ -100,6 +100,33 @@ class regex_layer:
             report += f"Total per category: {total}\n\n"
         
         return total
+    
+    def categorize_and_report_contact(self,results):
+        categories = {
+            # "General Personal Data": ["Date","ID","EU Passport Number","Social Security Number","File Path"]
+            # "Genetic Data": [],  
+            # "Biometric Data": ["ID"],
+            # "Data relating to Health": [],
+            # "Data revealing Racial and Ethnic Origin": [], 
+            # "Political Opinions": [], 
+            # "Religious or Ideological Convictions": [],
+            # "Occupational Information": ["Date","Social Security Number"] 
+            # "Financial data":["Visa Card Number","Mastercard Number","Financial Data"] 
+            "Contact Details":["Email Address","Phone Number"]
+        }
+        
+        report = ""
+        exclude = ""
+        for category, keys in categories.items():
+            report += f"Category: {category}\n"
+            for key in keys:
+                if key in results and results[key]:
+                    for instance in results[key]:
+                        exclude += f"    {key}: {instance}\n"
+            total = sum(len(results[key]) for key in keys)
+            report += f"Total per category: {total}\n\n"
+        
+        return total
 
     def process(self,text):
         res = self.personal_data_regex(text)
