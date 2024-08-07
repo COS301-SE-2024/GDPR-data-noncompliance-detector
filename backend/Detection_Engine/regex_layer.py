@@ -1,17 +1,24 @@
 import re
 
 class regex_layer:
-    def personal_data_regex(self, text):
 
-        emails = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', text)
-        
-        phones = re.findall(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', text)
-        
-        names = re.findall(r'\b[A-Z][a-z]+\s[A-Z][a-z]+\b', text)
-
+    def financial_data_regex(self, text):
         visa = re.findall(r'\b([4]\d{3}[\s]\d{4}[\s]\d{4}[\s]\d{4}|[4]\d{3}[-]\d{4}[-]\d{4}[-\d{4}|[4]\d{3}[.]\d{4}[.]\d{4}[.]\d{4}|[4]\d{3}\d{4}\d{4}\d{4})\b', text)
 
         mastercard = re.findall(r'^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$', text)
+
+        financial_data = re.findall(r'\b[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}\b', text)
+
+        return {
+            "Visa Card Number": visa,
+            "Mastercard Number": mastercard,
+            "Financial Data": financial_data
+        }
+
+
+    def personal_data_regex(self, text):
+        
+        # names = re.findall(r'\b[A-Z][a-z]+\s[A-Z][a-z]+\b', text)
 
         ssns = re.findall(r'\b\d{3}-\d{2}-\d{4}\b', text)
         
@@ -20,30 +27,32 @@ class regex_layer:
         # ip_addresses = re.findall(r'\b(?:\d{1,3}\.){3}\d{1,3}\b', text)
         # ip_addresses.extend(re.findall(r'\b([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b', text))
         
-        financial_data = re.findall(r'\b[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}\b', text)
-
         personal_ids = re.findall(r'\b[A-Z0-9]{8,10}\b', text) 
 
         eu_passport_numbers = re.findall('\b[A-Z]{1}[0-9A-Z]{7,8}\b',text)
 
         paths = re.findall(r'\\[^\\]+$',text)
         return {
-            "Email Address": emails,
-            "Phone Number": phones,
-            "Potential Name": names,
-            "Visa Card Number": visa,
-            "Mastercard Number": mastercard,
             "Social Security Number": ssns,
             "Date": dobs,
-            "Financial Data": financial_data,
             "ID": personal_ids,
             "EU Passport Number": eu_passport_numbers,
             "File Path":paths
         }
     
-    def categorize_and_print_report(self,results):
+    def contact_data_regex(self, text):
+
+        emails = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', text)
+        phones = re.findall(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', text)
+
+        return {
+            "Email Address": emails,
+            "Phone Number": phones
+        }
+
+    def categorize_and_report_personal(self,results):
         categories = {
-            "General Personal Data": ["Email Address", "Phone Number", "Potential Name","ID","EU Passport Number","Social Security Number"]
+            "General Personal Data": ["Date","ID","EU Passport Number","Social Security Number","File Path"]
             # "Genetic Data": [],  
             # "Biometric Data": ["ID"],
             # "Data relating to Health": [],

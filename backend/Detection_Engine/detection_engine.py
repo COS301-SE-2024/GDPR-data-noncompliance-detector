@@ -73,6 +73,15 @@ class detection_engine:
         result += "\n"
         result += "Violation Report: \n\n"
         result += "General Personal Data:\n"
+        result += "Financial Data:\n"
+        result += "Total per category : " + str(reg_result+gi_result)
+        result += "\n"
+        result += "\n"
+        result += "Personal Identification Data:\n"
+        result += "Total per category : " + str(reg_result+gi_result)
+        result += "\n"
+        result += "\n"
+        result += "Contact Details:\n"
         result += "Total per category : " + str(reg_result+gi_result)
         result += "\n"
         result += "\n"
