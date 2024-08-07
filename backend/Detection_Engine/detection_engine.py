@@ -26,8 +26,14 @@ class detection_engine:
 
         return result
     
-    def regex_report(self, path):
-        return self.regex_filter.process(path)
+    def regex_report_personal(self, path):
+        return self.regex_filter.categorize_and_report_personal(path)
+    
+    def regex_report_financial(self, path):
+        return self.regex_filter.categorize_and_report_financial(path)
+    
+    def regex_report_contact(self, path):
+        return self.regex_filter.categorize_and_report_contact(path)
     
     def biometric_and_image_report(self, path):
         return self.biometric_and_image_report(path)
@@ -42,9 +48,9 @@ class detection_engine:
         else:
             return 0
 
-    def flag(self, ner_result, reg_result, gi_result, em_result):
+    def flag(self, ner_result, reg_result_contact,reg_result_financial,reg_result_personal, gi_result, em_result):
         ner_val = self.extract_number(ner_result)
-        total = ner_val + reg_result + gi_result + em_result
+        total = ner_val + reg_result_contact + reg_result_financial + reg_result_personal + gi_result + em_result
 
     def process(self, path, path_):
         
@@ -52,14 +58,16 @@ class detection_engine:
         
         ner_result = self.report_generator.ner_report(text)
         location = self.determine_country_of_origin(path)
-        reg_result = self.regex_report(text)
+        reg_result_personal = self.regex_report_personal(text)
+        reg_result_financial = self.regex_report_financial(text)
+        reg_result_contact = self.regex_report_contact(text)
         ca_statement = self.report_generator.CA_report(text)
         gi_result = self.report_generator.gen_report(text)
         em_result = self.report_generator.EM_report(text)
         md_result = self.report_generator.MD_report(text)
         status = ""
         
-        if self.flag(ner_result, reg_result, gi_result, em_result) == 0:
+        if self.flag(ner_result, reg_result_contact,reg_result_financial,reg_result_personal, gi_result, em_result) == 0:
             status = "Compliant"
         else:
             status = "Non-compliant"
@@ -74,15 +82,15 @@ class detection_engine:
         result += "Violation Report: \n\n"
         result += "General Personal Data:\n"
         result += "Financial Data:\n"
-        result += "Total per category : " + str(reg_result+gi_result)
+        result += "Total per category : " + str(reg_result_financial)
         result += "\n"
         result += "\n"
         result += "Personal Identification Data:\n"
-        result += "Total per category : " + str(reg_result+gi_result)
+        result += "Total per category : " + str(reg_result_personal + gi_result)
         result += "\n"
         result += "\n"
         result += "Contact Details:\n"
-        result += "Total per category : " + str(reg_result+gi_result)
+        result += "Total per category : " + str(reg_result_contact)
         result += "\n"
         result += "\n"
         result += "Biometrics and Imaging:\n"
