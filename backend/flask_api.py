@@ -40,18 +40,21 @@ def new_file():
 @app.route("/reports", methods=["GET"])
 def list_files():
     try:
-        reports_dir = os.path.abspath('./backend/Reports')
+        reports_dir = os.path.abspath('../backend/Reports')
 
         files = os.listdir(reports_dir)
         return jsonify(files)
     except FileNotFoundError:
         return jsonify([])
 
-@app.route("/read-report", methods=["GET"])
+@app.route("/read-report", methods=["POST"])
 def get_file_content():
-    path = request.args.get('path')
+    data = request.get_json()
+    path = data.get('path')
+    reports_dir = os.path.abspath('../backend/Reports')
+    file_ = reports_dir + '/' +path
     try:
-        with open(path, 'r') as file:
+        with open(file_, 'r') as file:
             content = file.read()
         return jsonify({"content": content})
     except FileNotFoundError:

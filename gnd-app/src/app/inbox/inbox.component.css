@@ -123,3 +123,30 @@
 .selected-email {
     background-color: lightblue;
 }
+
+.ca_statement {
+    background-color: #0062c5;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+  }
+
+  .status-success {
+    background-color: rgb(6, 187, 142);
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .status-error {
+    background-color: rgb(148, 4, 4);
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+  }
+  

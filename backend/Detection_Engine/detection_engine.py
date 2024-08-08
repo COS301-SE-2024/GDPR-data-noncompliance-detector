@@ -1,6 +1,8 @@
+import re
 from .lang_detection import location_finder
 from .regex_layer import regex_layer
 from .report_generation_layer import report_generation_layer
+
 class detection_engine:
 
     def __init__(self):
@@ -24,26 +26,90 @@ class detection_engine:
 
         return result
     
-    def regex_report(self, path):
-        return self.regex_filter.process(path)
+    def regex_report_personal(self, path):
+        return self.regex_filter.process_personal_regex(path)
+    
+    def regex_report_financial(self, path):
+        return self.regex_filter.process_financial(path)
+    
+    def regex_report_contact(self, path):
+        return self.regex_filter.process_contact_details(path)
+    
+    def biometric_and_image_report(self, path):
+        return self.biometric_and_image_report(path)
+    
+    def extract_number(self, ner_result):
+        pattern = r'\d+'
+        
+        match = re.search(pattern, ner_result)
+        
+        if match:
+            return int(match.group())
+        else:
+            return 0
 
-    def process(self, path):
+    def flag(self, ner_result, reg_result_contact,reg_result_financial,reg_result_personal, gi_result, em_result):
+        ner_val = self.extract_number(ner_result)
+        total = ner_val + reg_result_contact + reg_result_financial + reg_result_personal + gi_result + em_result
+
+    def process(self, path, path_):
         
         text = path
         
-        location = self.determine_country_of_origin(path)
-        reg_result = self.regex_report(text)
+        location = self.report_generator.location_report(text)
+        ner_result = self.report_generator.ner_report(text)
+        # location = self.determine_country_of_origin(path)
+        reg_result_personal = self.regex_report_personal(text)
+        reg_result_financial = self.regex_report_financial(text)
+        reg_result_contact = self.regex_report_contact(text)
         ca_statement = self.report_generator.CA_report(text)
-
-
-        result = self.report_generator.ner_report(text)
-        result += location
+        gi_result = self.report_generator.gen_report(text)
+        em_result = self.report_generator.EM_report(text)
+        md_result = self.report_generator.MD_report(text)
+        status = ""
+        
+        if self.flag(ner_result, reg_result_contact,reg_result_financial,reg_result_personal, gi_result, em_result) == 0:
+            status = "Compliant"
+        else:
+            status = "Non-compliant"
+        
+        result = ""
+        result += status
+        result += "\n\n"
+        result += ner_result
+        result += "\n\n"
+        # result += "\n"
+        result += "Potential Location of Origin : "
         result += "\n"
-        result+= "Violation Report: \n"
-        result += reg_result
+        result += location
+        result += "\n\n"
+        result += "Violation Report: \n\n"
+        result += "General Personal Data:\n"
+        result += "Financial Data:\n"
+        result += "Total per category : " + str(reg_result_financial)
+        result += "\n"
+        result += "\n"
+        result += "Personal Identification Data:\n"
+        result += "Total per category : " + str(reg_result_personal + gi_result)
+        result += "\n"
+        result += "\n"
+        result += "Contact Details:\n"
+        result += "Total per category : " + str(reg_result_contact)
+        result += "\n"
+        result += "\n"
+        result += "Biometrics and Imaging:\n"
+        result += self.report_generator.Image_report(path_)
+        result += "\n\n"
+        result += "Data relating to Health:\n"
+        result += "Total per category : " + str(md_result)
+        result += "\n\n"
+        result += "Data revealing Racial and Ethnic Origin:\n"
+        result += "Total per category : " + str(em_result)
+        result += "\n\n"
         result += ca_statement
-
-
+        result += "\n\n"
+        # print(path_)
+        # print(self.report_generator.Image_report(path_))
         return result
 
 
