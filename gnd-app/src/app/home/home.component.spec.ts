@@ -117,20 +117,24 @@ describe('HomeComponent', () => {
     expect(introJsSpy.start).toHaveBeenCalled();
   });
 
-  it('should navigate to /upload on UploadButton click', () => {
+  it('should navigate to /upload when the "Upload a File" button is clicked', () => {
+    // Find the button element with the text "Upload a File"
     const uploadButton = fixture.debugElement.query(By.css('#UploadButton')).nativeElement;
-    
+  
     // Spy on the router's navigate method
     spyOn(router, 'navigate');
-    
+  
     // Trigger change detection to update the DOM
     fixture.detectChanges();
-    
+  
     // Simulate button click
     uploadButton.click();
+  
+    // Trigger change detection again to ensure navigation
     fixture.detectChanges();
-    
+  
     // Check if router.navigate was called with the expected route
     expect(router.navigate).toHaveBeenCalledWith(['/upload']);
   });
+    
 });
