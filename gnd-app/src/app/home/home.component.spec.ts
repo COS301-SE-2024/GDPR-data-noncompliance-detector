@@ -14,10 +14,8 @@ describe('HomeComponent', () => {
   let router: Router; // Router instance
 
   beforeEach(async () => {
-    // Initialize the walkthroughSubject as Subject
     walkthroughSubject = new Subject<void>();
 
-    // Create a mock WalkthroughService using the Subject
     const mockWalkthroughService = {
       walkthroughRequested$: walkthroughSubject.asObservable()
     };
@@ -25,7 +23,10 @@ describe('HomeComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HomeComponent,  // Import HomeComponent as a standalone component
-        RouterTestingModule // Import RouterTestingModule for routing-related tests
+        RouterTestingModule.withRoutes([
+          { path: 'upload', component: HomeComponent },
+          { path: 'inbox', component: HomeComponent }
+        ])
       ],
       providers: [
         { provide: WalkthroughService, useValue: mockWalkthroughService }
@@ -35,12 +36,11 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     walkthroughService = TestBed.inject(WalkthroughService);
-    router = TestBed.inject(Router); // Inject Router instance
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    // Cleanup after each test
     localStorage.removeItem('hasSeenIntro');
     if (component['walkthroughSubscription']) {
       component['walkthroughSubscription'].unsubscribe();
@@ -118,23 +118,28 @@ describe('HomeComponent', () => {
   });
 
   it('should navigate to /upload when the "Upload a File" button is clicked', () => {
-    // Find the button element with the text "Upload a File"
     const uploadButton = fixture.debugElement.query(By.css('#UploadButton')).nativeElement;
-  
-    // Spy on the router's navigate method
-    spyOn(router, 'navigate');
-  
-    // Trigger change detection to update the DOM
+    spyOn(router, 'navigate'); // Spy on the router's navigate method
+
     fixture.detectChanges();
-  
-    // Simulate button click
+
     uploadButton.click();
-  
-    // Trigger change detection again to ensure navigation
-    fixture.detectChanges();
-  
-    // Check if router.navigate was called with the expected route
-    expect(router.navigate).toHaveBeenCalledWith(['/upload']);
+
+    fixture.whenStable().then(() => {
+      expect(router.navigate).toHaveBeenCalledWith(['/upload']);
+    });
   });
-    
+
+  it('should navigate to /inbox when the "View inbox" button is clicked', () => {
+    const inboxButton = fixture.debugElement.query(By.css('#InboxButton')).nativeElement;
+    spyOn(router, 'navigate'); // Spy on the router's navigate method
+
+    fixture.detectChanges();
+
+    inboxButton.click();
+
+    fixture.whenStable().then(() => {
+      expect(router.navigate).toHaveBeenCalledWith(['/inbox']);
+    });
+  });
 });
