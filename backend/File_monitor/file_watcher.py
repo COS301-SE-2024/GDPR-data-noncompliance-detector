@@ -197,7 +197,7 @@ def start_watcher_thread_downloads(ext, wt=3):  # default is 3 seconds
     # this function will watch the downloads dir and will first check
     #   if the file is from teams then it will log it
     downloads_path = str(Path.home() / "Downloads")
-    print(downloads_path)
+    # print(downloads_path)
     global watcher_timer
     watcher_timer = wt
 
