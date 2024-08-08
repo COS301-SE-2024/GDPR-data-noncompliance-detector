@@ -13,6 +13,7 @@ class GDPR:
         return self.predict(text)
 
     def predict(self, input_text):
+        count  = 0
         tokens = self.classifier.tokenizer.encode(input_text, truncation=True, max_length=self.max_length_)
         truncated_text = self.classifier.tokenizer.decode(tokens, skip_special_tokens=True)
         
@@ -20,7 +21,13 @@ class GDPR:
         # return result[0]['label']
 
         label = result[0]['label']
-        return label != 'LABEL_0'
+        if label != 'LABEL_0':
+            count += 1
+        else:
+            count += 0
+
+        return count
+
 
 if __name__ == '__main__':
     gdpr = GDPR()

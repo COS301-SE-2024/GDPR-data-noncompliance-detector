@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 // import { FileService } from '../services/file.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import axios from 'axios';
+
 import { Subscription } from 'rxjs';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
@@ -21,9 +23,16 @@ export class InboxComponent implements OnInit, OnDestroy {
 
   reports: string[] = [];
   // path: string = '../backend/Reports';
-  path: string = '../backend/Reports/';
+  path: string = '../backend/Reports';
   private apiUrl = 'http://127.0.0.1:8000/reports';
-  private iUrl = 'http://127.0.0.1:8000/read-report/';
+  private iUrl = 'http://127.0.0.1:8000/read-report';
+  public currentAnalysis: any = {};
+  public currentEmail: string = "";  
+  public currentEmailType: string = ""; // Add this line to track file type
+  result: string = '';
+  status: string = '';
+  ca_statement: string = '';
+  // currentAnalysis: any = {};
 
   constructor(private http: HttpClient, private walkthroughService: WalkthroughService) { }
 
@@ -58,14 +67,125 @@ export class InboxComponent implements OnInit, OnDestroy {
     return this.http.get<string[]>(`${this.apiUrl}`);
   }
 
-  getReportContent(filePath: string) {
+  
+  // getReportContent(filePath: string) {
+  //   console.log(filePath);
+  //   const payload = { path: filePath };
+  //   this.http.post<{ content: string }>(this.iUrl, payload).subscribe(response => {
+  //     this.currentAnalysis.content = response.content;
+  //   });
+  //   this.currentEmail = 'NA';
+  //   this.currentEmailType = 'txt';
+  // }
+
+  // getReportContent(filePath: string) {
     
+  //   console.log(filePath);
+  //   this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path +'/' +filePath)}`).subscribe(response => {
+  //     this.currentAnalysis.content = response.content;
+  //   });
+  //   this.currentEmail = 'NA';
+  //   this.currentEmailType = 'txt';
+  // }
+
+  getReportContent(filePath: string) {
     console.log(filePath);
-    this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path + filePath)}`).subscribe(response => {
-      this.currentAnalysis.content = response.content;
-    });
+    const payload = { path: filePath };
+    axios.post(this.iUrl, payload)
+      .then(response => {
+        this.currentAnalysis.content = response.data.content;
+        this.result = this.processResult(this.currentAnalysis.content)
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
     this.currentEmail = 'NA';
     this.currentEmailType = 'txt';
+  }
+
+  processResult(result: string): string {
+    result = result.replace(/\n/g, "<br>");
+    this.status = this.searchComplianceStatus(result);
+    this.result = this.cleanComplianceStatus(result);
+    this.ca_statement = this.searchContractStatus(result);
+    this.result = this.cleanContractSearch(this.result);
+    return result;
+  }
+
+  searchComplianceStatus(result: string): string {
+    const compliantMatch = result.match(/compliant/i);
+    const nonCompliantMatch = result.match(/non-compliant/i);
+  
+    let status = '';
+  
+    if (compliantMatch) {
+      status = 'compliant';
+    } else if (nonCompliantMatch) {
+      status = 'non-compliant';
+    }
+  
+    return status;
+  }
+
+  cleanComplianceStatus(result: string): string {
+    console.log("Original result:", result);
+
+    const compliantMatch = result.match(/compliant/i);
+    const nonCompliantMatch = result.match(/non-compliant/i);
+    const contractStatementMatch = result.match(/\{status\}(.*?)\{\/status\}/);
+
+    console.log("Compliant match:", compliantMatch);
+    console.log("Non-compliant match:", nonCompliantMatch);
+    console.log("Contract statement match:", contractStatementMatch);
+
+    let cleanedResult = result;
+
+    if (compliantMatch) {
+        cleanedResult = cleanedResult.replace(/compliant/i, '');
+        console.log("After removing compliant:", cleanedResult);
+    } else if (nonCompliantMatch) {
+        cleanedResult = cleanedResult.replace(/non-compliant/i, '');
+        console.log("After removing non-compliant:", cleanedResult);
+    }
+
+    if (contractStatementMatch) {
+        cleanedResult = cleanedResult.replace(contractStatementMatch[0], '');
+        console.log("After removing contract statement:", cleanedResult);
+    }
+
+    console.log("Final cleaned result:", cleanedResult);
+    return cleanedResult;
+}
+
+  searchContractStatus(result: string): string {
+    const contractStatementMatch = result.match(/The document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
+    let contractStatement = '';
+  
+    if (contractStatementMatch) {
+      contractStatement = contractStatementMatch[0];
+    }
+  
+    return contractStatement;
+  }
+
+  cleanContractSearch(result: string): string {
+    const contractStatementMatch = result.match(/\{ca_statement\}(.*?)\{\/ca_statement\}/s);
+    let cleaned_result = result;
+  
+    if (contractStatementMatch) {
+      cleaned_result = result.replace(contractStatementMatch[0], '');
+    }
+  
+    return cleaned_result;
+  }
+  getStatusClass(status: string): string {
+    if (status === 'success') {
+      return 'status-success';
+    } else if (status === 'error') {
+      return 'status-error';
+    } else {
+      return 'status-default';
+    }
   }
 
   mock(){
@@ -88,10 +208,6 @@ export class InboxComponent implements OnInit, OnDestroy {
     email5: {rating: 37, origin: 'Germany', violationAreas: 'Personal Information', numViolations: 19, fileType: 'pdf'},
     email6: {rating: 37, origin: 'Spain', violationAreas: 'Banking Details', numViolations: 12, fileType: 'txt'},
   };
-
-  currentAnalysis: any = {};
-  currentEmail: string = "";  
-  currentEmailType: string = ""; // Add this line to track file type
 
   showAnalysis(data: string) {
     this.currentAnalysis = this.mockData[data];

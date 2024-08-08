@@ -3,7 +3,7 @@ import os
 base_dir = os.path.dirname(__file__)
 model_path = os.path.join(base_dir, 'Entity_builder')
 
-model = spacy.load(model_path)
+model = spacy.load("en_core_web_sm")
 
 class NER:
 

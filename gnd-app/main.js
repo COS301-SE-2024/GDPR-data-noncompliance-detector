@@ -22,10 +22,33 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  startAPI();
+  // startAPI();
+  startFlaskAPI();
   createWindow();
   setTimeout(setupWatcher, 100);
 });
+
+function startFlaskAPI() {
+  const apiPath = path.join(__dirname, '..', 'backend');
+  apiProcess = spawn('python', ['flask_api.py'], { cwd: apiPath });
+
+  apiProcess.stdout.on('data', (data) => {
+    console.log(`Flask API stdout: ${data}`);
+  });
+
+  apiProcess.stderr.on('data', (data) => {
+    console.error(`Flask API stderr: ${data}`);
+  });
+
+  apiProcess.on('error', (error) => {
+    console.error(`Failed to start Flask API: ${error}`);
+  });
+
+  apiProcess.on('close', (code) => {
+    console.log(`Flask API process exited with code ${code}`);
+  });
+}
+
 
 function startAPI() {
   const apiPath = path.join(__dirname, '..', 'backend');
@@ -78,13 +101,16 @@ function setupWatcher() {
     console.log(`Watcher stdout: ${output}`);
     const postData = { path: output };
 
-    const segments = output.split(path.sep);
-    const fileNameWithExtension = segments[segments.length - 1];
-    const parts = fileNameWithExtension.split('.');
+    const fileName = path.basename(output);
+    console.log(`Extracted file name: ${fileName}`);
+
+    const parts = fileName.split('.');
     const name = parts[0] + '_report.txt';
-    const extension = parts.slice(1).join('.');
-    console.log("Crashing");
-    const newFileName = extension ? `${name}` : name;
+    const newFileName = name;
+
+    const outputDir = path.join('../backend/Reports', newFileName);
+
+
     axios.post('http://127.0.0.1:8000/new-file', postData, {
       headers: {
         'Content-Type': 'application/json',
