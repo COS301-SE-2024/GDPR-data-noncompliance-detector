@@ -4,7 +4,7 @@
   "description": "GDPR Non-compliance Detector Application",
   "icon": "src/assets/logo.ico",
   "author": "AprilFour",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
