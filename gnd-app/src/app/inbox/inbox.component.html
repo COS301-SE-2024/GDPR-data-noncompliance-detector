@@ -3,49 +3,53 @@
 <link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
 
 
-<div class="header-container">
-    <header class="header">
+<div class="main-content">
+    <div class="header-container">
+      <header class="header">
         Inbox
-    </header>
-</div>
-
-
-<div class="containers">
-    <div class="inbox-rectangle" id="InboxAttachments">
-        <h2 class="inbox-header">Inbox</h2>
-        <div class="divider"></div>
-        <ul>
-            <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
-                <li>{{ i }}
-                </li>
-            </div>
-        </ul>
+      </header>
     </div>
 
-    <div class="analysis-rectangle">
-      <h2 class="analysis-header">Analysis</h2>
-      <div class="divider"></div>
-  
-      <div class="analysis-data" *ngIf="result">
-          <h3 class="analysis-box-header">Analysis Result:</h3>
-          <div class="status" [ngClass]="{'status-success': status === 'Compliant', 'status-error': status === 'Non-compliant'}">
-              {{ status }}
-          </div>
-          <div [innerHTML]="result"></div>
-          <div class="ca_statement" *ngIf="ca_statement">
-              <strong>Contract Agreement Statement:</strong> {{ ca_statement }}
-          </div>
+
+  <div class="containers">
+      <div class="inbox-rectangle" id="InboxAttachments">
+          <h2 class="inbox-header">Inbox</h2>
+          <div class="divider"></div>
+          <ul>
+              <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
+                  <li>{{ i }}
+                  </li>
+              </div>
+          </ul>
+      </div>
+
+      <div class="analysis-rectangle">
+        <h2 class="analysis-header">Analysis</h2>
+        <div class="divider"></div>
+    
+        <div class="analysis-data" *ngIf="result">
+            <h2 class="analysis-box-header">Analysis Result:</h2>
+            <div class="status" [ngClass]="{'status-success': status === 'Compliant', 'status-error': status === 'Non-compliant'}">
+                {{ status }}
+            </div>
+            <div class="result-content" [innerHTML]="result"></div>
+            <div class="ca_statement" [innerHTML]="ca_statement"></div>
+            <!-- <div class="ca_statement" *ngIf="ca_statement">
+                <strong>Contract Agreement Statement:</strong> {{ ca_statement }}
+            </div> -->
+        </div>
+    </div>
+
+      <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
+          <button type="button" [routerLink]="['/violations', currentEmailType]"
+              class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
+          <button type="button" [routerLink]="['/report']"
+              class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button>
+          <button type="button"
+              class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
+              Report</button>
+          <button type="button" (click)="clearAnalysis()"
+              class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button>
       </div>
   </div>
-
-    <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
-        <button type="button" [routerLink]="['/violations', currentEmailType]"
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
-        <button type="button" [routerLink]="['/report']"
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button>
-        <button type="button"
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
-            Report</button>
-        <button type="button" (click)="clearAnalysis()"
-            class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button>
-    </div>
+</div>

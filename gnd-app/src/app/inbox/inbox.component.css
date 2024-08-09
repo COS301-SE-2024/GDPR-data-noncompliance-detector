@@ -1,14 +1,20 @@
+.main-content {
+    padding-top: 10px; /* Adjust this value to match your nav bar's height */
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
 .header-container {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding-bottom: 2.5em;
-    padding-top: 3.5em;
+    padding-top: 1em;
   }
   
   .header {
-    font-family: "Mediator Narrow Web Extra Bold", Arial, sans-serif;
+    font-family: "Mediator Narrow Web Extra Bold";
     position: relative;
     display: inline-block;
     font-size: 35px;
