@@ -1,190 +1,187 @@
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-.page-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    font-family: "Roboto Bold", sans-serif;
-}
-
 .header-container {
-    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 1em 0;
-}
-
-.header {
-    font-family: "Mediator Narrow Web Extra Bold", sans-serif;
-    font-size: 35px;
+    padding-bottom: 2.5em;
+    padding-top: 3.5em;
+  }
+  
+  .header {
+    font-family: "Mediator Narrow Web Extra Bold", Arial, sans-serif;
     position: relative;
-}
-
-.header::after {
-    content: '';
+    display: inline-block;
+    font-size: 35px;
+  }
+  
+  .header::after {
+    content: "";
     display: inline-block;
     width: 10px;
     height: 10px;
-    background-color: #8EBA12;
+    background-color: #8eba12;
     border-radius: 50%;
-    margin-left: 5px;
-    vertical-align: super;
-}
-
-.content-container {
-    flex: 1;
+  }
+  
+  .containers {
     display: flex;
-    flex-direction: column;
-    padding: 0 2em;
-    overflow: hidden;
-}
-
-.containers {
-    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 2em;
-    flex: 1;
-    overflow: hidden;
-}
-
-.inbox-rectangle, .analysis-rectangle {
-    flex: 1;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.section-header {
-    flex-shrink: 0;
-    font-family: "Mediator Narrow Web Extra Bold", sans-serif;
-    font-size: 25px;
-    margin: 0.5em 0;
-    padding: 0 20px;
+    margin: 0 1em;
+  }
+  
+  .inbox-rectangle, .analysis-rectangle {
+    flex-basis: calc(50% - 1em);
+    margin-bottom: 1em;
+  }
+  
+  .analysis-rectangle {
+    height: 50vh;
+    overflow-y: auto;
+  }
+  
+  .analysis-header, .inbox-header {
+    font-family: "Mediator Narrow Web Extra Bold", Arial, sans-serif;
     position: relative;
-}
-
-.section-header::after {
-    content: '';
     display: inline-block;
-    width: 8px;
-    height: 8px;
-    background-color: #8EBA12;
+    font-size: 25px;
+    margin-bottom: 0.2em;
+  }
+  
+  .analysis-header::after, .inbox-header::after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #8eba12;
     border-radius: 50%;
-    margin-left: 5px;
-    vertical-align: super;
-}
-
-.divider {
-    flex-shrink: 0;
+  }
+  
+  .divider {
     height: 2px;
     background-color: black;
-    margin: 0 20px 1em;
-}
-
-.scrollable-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 20px;
-}
-
-.inbox-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.inbox-item {
+    margin-bottom: 1em;
+  }
+  
+  .card {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 10px;
     margin-bottom: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.inbox-item:hover {
-    background-color: #f0f0f0;
-}
-
-.analysis-subheader {
-    font-size: 20px;
-    margin-bottom: 0.5em;
-}
-
-.status-bar {
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1em;
-}
-
-.status-success {
-    background-color: #06bb8e;
-    color: white;
-}
-
-.status-error {
-    background-color: #ff4d4d;
-    color: white;
-}
-
-.result-content {
-    margin-bottom: 1em;
-}
-
-.ca-statement {
-    background-color: #0062c5;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    margin-bottom: 1em;
-}
-
-.button-container {
-    flex-shrink: 0;
+  }
+  
+  .analysis-text {
     display: flex;
     justify-content: center;
-    padding: 20px;
-    background-color: #f0f0f0;
-}
-
-.action-button {
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    margin: 0 0.5em;
-    padding: 10px 20px;
-    font-family: "Roboto Bold", sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    background-color: white;
-    color: #08558A;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.action-button:hover {
-    background-color: #08558A;
-    color: white;
-}
-.buttons button {
+    align-items: center;
+    height: 75%;
+    font-family: "Roboto Bold", Arial, sans-serif;
+  }
+  
+  .buttons {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+  }
+  
+  .buttons button {
     border: 2px solid #ccc;
     border-radius: 8px;
     margin: 0.5em;
-    font-family: "Roboto Bold";
+    font-family: "Roboto Bold", Arial, sans-serif;
     cursor: pointer;
-    padding-left: 50px;
-}
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+  }
+  
+  .buttons button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .analysis-data {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .analysis-data p {
+    font-family: "Roboto Bold", Arial, sans-serif;
+    margin-bottom: 5px;
+  }
+  
+  .selected-email {
+    background-color: #e6f3ff;
+  }
+  
+  .status {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .status-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .ca_statement {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .analysis-data h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .analysis-data h3 {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #444;
+  }
+  
+  .analysis-data ul {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .analysis-data li {
+    margin-bottom: 5px;
+  }
+  
+  .analysis-content {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+  
+  .analysis-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .analysis-content ul {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .analysis-content li {
+    margin-bottom: 5px;
+  }
