@@ -94,7 +94,6 @@
     font-family: "Roboto Bold", Arial, sans-serif;
     cursor: pointer;
     padding: 10px 15px;
-    background-color: #f0f0f0;
     transition: background-color 0.3s;
   }
   
@@ -116,28 +115,53 @@
     background-color: #e6f3ff;
   }
   
-  .status {
+  /* .status {
     padding: 10px;
     margin-bottom: 20px;
     font-weight: bold;
     text-align: center;
     border-radius: 5px;
-  }
+  } */
   
   .status-success {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: rgb(6, 187, 142);
+    border-radius: 12px; /* More rounded corners */
+    color: white;
+    font-weight: bold;
+    text-align: left; /* Align text to the left */
+    padding: 10px 15px; /* Increased padding */
+    height: auto; /* Allow height to adjust based on content */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+    display: flex;
+    align-items: center;
   }
   
   .status-error {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: rgb(206, 14, 14);
+    border-radius: 12px; /* More rounded corners */
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px; /* Increased padding */
+    height: auto; /* Allow height to adjust based on content */
+    text-align: left; /* Align text to the left */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+    display: flex;
+    align-items: center;
   }
+  
+  .ca_statement i,
+  .status-success i,
+  .status-error i {
+    margin-right: 10px; /* Space between icon and text */
+  }
+  
   
   .ca_statement {
     margin-top: 20px;
     padding: 10px;
-    background-color: #e9ecef;
+    background-color: #0875e2;
+    border-radius: 12px; /* More rounded corners */
+    color: white;
     border-radius: 5px;
     font-weight: bold;
   }

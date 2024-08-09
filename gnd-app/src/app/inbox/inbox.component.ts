@@ -67,26 +67,6 @@ export class InboxComponent implements OnInit, OnDestroy {
     return this.http.get<string[]>(`${this.apiUrl}`);
   }
 
-  
-  // getReportContent(filePath: string) {
-  //   console.log(filePath);
-  //   const payload = { path: filePath };
-  //   this.http.post<{ content: string }>(this.iUrl, payload).subscribe(response => {
-  //     this.currentAnalysis.content = response.content;
-  //   });
-  //   this.currentEmail = 'NA';
-  //   this.currentEmailType = 'txt';
-  // }
-
-  // getReportContent(filePath: string) {
-    
-  //   console.log(filePath);
-  //   this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path +'/' +filePath)}`).subscribe(response => {
-  //     this.currentAnalysis.content = response.content;
-  //   });
-  //   this.currentEmail = 'NA';
-  //   this.currentEmailType = 'txt';
-  // }
 
   getReportContent(filePath: string) {
     console.log(filePath);
@@ -136,41 +116,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   
     return { status, ca_statement, cleanedResult };
   }
-  // formatResult(result: string): string {
-  //   const lines = result.split('\n').filter(line => line.trim() !== '');
-  //   let formattedResult = '<div class="analysis-content">';
-  //   let currentSection = '';
-  
-  //   lines.forEach((line, index) => {
-  //     line = line.trim();
-  //     if (line.endsWith(':')) {
-  //       // This is a section header
-  //       if (currentSection) {
-  //         formattedResult += '</ul>';
-  //       }
-  //       currentSection = line;
-  //       formattedResult += `<h3>${currentSection}</h3><ul>`;
-  //     } else if (line.includes(':')) {
-  //       // This is a key-value pair
-  //       const [key, value] = line.split(':').map(part => part.trim());
-  //       formattedResult += `<li><strong>${key}:</strong> ${value}</li>`;
-  //     } else {
-  //       // This is either a standalone value or part of the previous section
-  //       if (currentSection || index === 0) {
-  //         formattedResult += `<li>${line}</li>`;
-  //       } else {
-  //         formattedResult += `<p>${line}</p>`;
-  //       }
-  //     }
-  //   });
-  
-  //   if (currentSection) {
-  //     formattedResult += '</ul>';
-  //   }
-  
-  //   formattedResult += '</div>';
-  //   return formattedResult;
-  // }
+
   formatResult(result: string): string {
     const lines = result.split('\n').filter(line => line.trim() !== '');
     let formattedResult = '<div class="analysis-content">';
@@ -280,90 +226,6 @@ getStatusClass(status: string): string {
     }
   }
 
-//   processResult(result: string): string {
-//     result = result.replace(/\n/g, "<br>");
-//     this.status = this.searchComplianceStatus(result);
-//     this.result = this.cleanComplianceStatus(result);
-//     this.ca_statement = this.searchContractStatus(result);
-//     this.result = this.cleanContractSearch(this.result);
-//     return result;
-//   }
-
-//   searchComplianceStatus(result: string): string {
-//     const compliantMatch = result.match(/compliant/i);
-//     const nonCompliantMatch = result.match(/non-compliant/i);
-  
-//     let status = '';
-  
-//     if (compliantMatch) {
-//       status = 'compliant';
-//     } else if (nonCompliantMatch) {
-//       status = 'non-compliant';
-//     }
-  
-//     return status;
-//   }
-
-//   cleanComplianceStatus(result: string): string {
-//     console.log("Original result:", result);
-
-//     const compliantMatch = result.match(/compliant/i);
-//     const nonCompliantMatch = result.match(/non-compliant/i);
-//     const contractStatementMatch = result.match(/\{status\}(.*?)\{\/status\}/);
-
-//     console.log("Compliant match:", compliantMatch);
-//     console.log("Non-compliant match:", nonCompliantMatch);
-//     console.log("Contract statement match:", contractStatementMatch);
-
-//     let cleanedResult = result;
-
-//     if (compliantMatch) {
-//         cleanedResult = cleanedResult.replace(/compliant/i, '');
-//         console.log("After removing compliant:", cleanedResult);
-//     } else if (nonCompliantMatch) {
-//         cleanedResult = cleanedResult.replace(/non-compliant/i, '');
-//         console.log("After removing non-compliant:", cleanedResult);
-//     }
-
-//     if (contractStatementMatch) {
-//         cleanedResult = cleanedResult.replace(contractStatementMatch[0], '');
-//         console.log("After removing contract statement:", cleanedResult);
-//     }
-
-//     console.log("Final cleaned result:", cleanedResult);
-//     return cleanedResult;
-// }
-
-//   searchContractStatus(result: string): string {
-//     const contractStatementMatch = result.match(/The document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
-//     let contractStatement = '';
-  
-//     if (contractStatementMatch) {
-//       contractStatement = contractStatementMatch[0];
-//     }
-  
-//     return contractStatement;
-//   }
-
-//   cleanContractSearch(result: string): string {
-//     const contractStatementMatch = result.match(/\{ca_statement\}(.*?)\{\/ca_statement\}/s);
-//     let cleaned_result = result;
-  
-//     if (contractStatementMatch) {
-//       cleaned_result = result.replace(contractStatementMatch[0], '');
-//     }
-  
-//     return cleaned_result;
-//   }
-//   getStatusClass(status: string): string {
-//     if (status === 'success') {
-//       return 'status-success';
-//     } else if (status === 'error') {
-//       return 'status-error';
-//     } else {
-//       return 'status-default';
-//     }
-//   }
 
   mock(){
     this.currentAnalysis.content = 'sandwich spread ';

@@ -7,8 +7,6 @@ import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
 
-
-
 @Component({
   selector: 'app-upload-document',
   standalone: true,
@@ -89,14 +87,7 @@ export class UploadDocumentComponent implements OnInit{
     }
   }
 
-  // processResult(result: string): string {
-  //   const analysis = this.analyzeDocument(result);
-  //   this.status = analysis.status;
-  //   this.ca_statement = analysis.ca_statement;
-  //   let res = analysis.cleanedResult
-  //   let bulk = res.replace(/\n/g, "<br>");
-  //   return bulk;
-  // }
+
   processResult(result: string): string {
     const analysis = this.analyzeDocument(result);
     this.status = analysis.status;
