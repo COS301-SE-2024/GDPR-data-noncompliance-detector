@@ -16,7 +16,7 @@ describe('InboxComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        InboxComponent
+        InboxComponent // Importing standalone component
       ],
       providers: [
         { provide: WalkthroughService, useValue: { walkthroughRequested$: of(null) } },
@@ -37,6 +37,7 @@ describe('InboxComponent', () => {
     fixture.detectChanges();
 
     const downloadButton = fixture.debugElement.query(By.css('button'));
+    expect(downloadButton).toBeTruthy();
     if (downloadButton) {
       expect(downloadButton.nativeElement.textContent.trim()).toBe('Download Report');
     } else {
@@ -50,8 +51,9 @@ describe('InboxComponent', () => {
     component.currentAnalysis = {}; // Ensure the button is visible
     fixture.detectChanges();
 
-    const clearButton = fixture.debugElement.query(By.css('button'));
-    if (clearButton && clearButton.nativeElement.textContent.trim() === 'Clear') {
+    const clearButton = fixture.debugElement.queryAll(By.css('button'))
+      .find(btn => btn.nativeElement.textContent.trim() === 'Clear');
+    if (clearButton) {
       clearButton.nativeElement.click();
       expect(component.clearAnalysis).toHaveBeenCalled();
     } else {
@@ -64,7 +66,8 @@ describe('InboxComponent', () => {
     component.currentAnalysis = {}; // Ensure the button is visible
     fixture.detectChanges();
 
-    const violationsButton = fixture.debugElement.query(By.css('button'));
+    const violationsButton = fixture.debugElement.queryAll(By.css('button'))
+      .find(btn => btn.nativeElement.textContent.trim() === 'Violations');
     if (violationsButton) {
       expect(violationsButton.nativeElement.textContent.trim()).toBe('Violations');
     } else {
@@ -77,7 +80,8 @@ describe('InboxComponent', () => {
     component.currentAnalysis = {}; // Ensure the button is visible
     fixture.detectChanges();
 
-    const visualisationsButton = fixture.debugElement.query(By.css('button'));
+    const visualisationsButton = fixture.debugElement.queryAll(By.css('button'))
+      .find(btn => btn.nativeElement.textContent.trim() === 'Visualisations');
     if (visualisationsButton) {
       expect(visualisationsButton.nativeElement.textContent.trim()).toBe('Visualisations');
     } else {
