@@ -1,46 +1,42 @@
-<link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
-    rel="stylesheet">
-<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
 
 
-<div class="header-container">
-    <header class="header">
-        Inbox
-    </header>
-</div>
-
-
-<div class="containers">
-    <div class="inbox-rectangle" id="InboxAttachments">
-        <h2 class="inbox-header">Inbox</h2>
-        <div class="divider"></div>
-        <ul>
-            <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
-                <li>{{ i }}
-                </li>
-            </div>
-        </ul>
+<div class="page-container">
+    <div class="header-container">
+      <header class="header">Inbox</header>
     </div>
-
-    <div class="analysis-rectangle">
-        <h2 class="analysis-header">Analysis</h2>
-        <div class="divider"></div>
-
-        <div class="analysis-data" *ngIf="result">
-            <h2 class="analysis-box-header">Analysis Result:</h2>
-            <div [ngClass]="{'status-success': status === 'compliant', 'status-error': status === 'non-compliant'}">
-                {{ status }}
-            </div>
-            <div class="result-content" [innerHTML]="result"></div>
-            <div class="ca_statement" [innerHTML]="ca_statement"></div>
-            <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis
-                results</p>
-
-            <!-- <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
-            <div class="result-content" [innerHTML]="result"></div>
-        </div> -->
+    
+    <div class="content-container">
+      <div class="containers">
+        <div class="inbox-rectangle" id="InboxAttachments">
+          <h2 class="section-header">Inbox</h2>
+          <div class="divider"></div>
+          <div class="scrollable-container">
+            <ul class="inbox-list">
+              <li class="inbox-item" *ngFor="let i of reports" (click)="getReportContent(i)">
+                {{ i }}
+              </li>
+            </ul>
+          </div>
         </div>
-
+        
+        <div class="analysis-rectangle">
+          <h2 class="section-header">Analysis</h2>
+          <div class="divider"></div>
+          <div class="scrollable-container">
+            <div class="analysis-content">
+              <div class="analysis-data" *ngIf="result">
+                <h3 class="analysis-subheader">Analysis Result:</h3>
+                <div class="status-bar" [ngClass]="{'status-success': status === 'compliant', 'status-error': status !== 'compliant'}">
+                  {{ status }}
+                </div>
+                <div class="result-content" [innerHTML]="formattedResult"></div>
+                <div class="ca-statement" [innerHTML]="ca_statement"></div>
+              </div>
+              <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis results</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
@@ -54,3 +50,4 @@
         <button type="button" (click)="clearAnalysis()"
             class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button>
     </div>
+</div>

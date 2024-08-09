@@ -87,7 +87,12 @@ export class InboxComponent implements OnInit, OnDestroy {
   //   this.currentEmail = 'NA';
   //   this.currentEmailType = 'txt';
   // }
+  formattedResult: string = '';
+  formatResult(result: string): string {
 
+    return result.replace(/<\/?[^>]+(>|$)/g, "").replace(/\n/g, "<br>");
+  }
+  
   getReportContent(filePath: string) {
     console.log(filePath);
     const payload = { path: filePath };
@@ -101,7 +106,10 @@ export class InboxComponent implements OnInit, OnDestroy {
       });
     this.currentEmail = 'NA';
     this.currentEmailType = 'txt';
+    this.formattedResult = this.formatResult(this.currentAnalysis.content);
   }
+
+
 
   processResult(result: string): string {
     result = result.replace(/\n/g, "<br>");
