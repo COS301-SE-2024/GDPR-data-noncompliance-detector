@@ -8,14 +8,15 @@
   "main": "main.js",
   "scripts": {
     "ng": "ng",
-    "start": "npm run electron",
+    "start": "concurrently \"npm run start-flask\" \"npm run electron\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "electron": "ng build && electron .",
     "electron:dev": "ng build --base-href ./ && electron .",
     "pack": "electron-builder --dir",
-    "dist": "ng build --base-href ./ && electron-builder"
+    "dist": "ng build --base-href ./ && electron-builder",
+    "start-flask": "node run-flask.js"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "chart.js": "^4.4.3",
     "electron-reload": "^2.0.0-alpha.1",
     "flowbite": "^2.3.0",
+    "gnd-app": "file:",
     "intro.js": "^7.2.0",
     "ng2-charts": "^6.0.1",
     "rxjs": "~7.8.0",
@@ -45,6 +47,7 @@
     "@angular/router": "^18.0.4",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^20.14.8",
+    "concurrently": "^8.2.2",
     "electron": "^30.2.0",
     "electron-builder": "^24.13.3",
     "jasmine-core": "~4.6.0",
