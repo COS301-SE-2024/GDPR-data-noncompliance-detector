@@ -4,7 +4,20 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
+// Must delete the following line after testing
+let electronReload;
+try {
+  electronReload = require('electron-reload');
+} catch (err) {
+  console.log('electron-reload not found. Hot reloading will not be available.');
+}
+
 let apiProcess;
+
+//Must remember to delete this line after being done
+electronReload(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+});
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -18,7 +31,16 @@ function createWindow () {
     }
   })
   win.setMenu(null);
-  win.loadFile(path.join(__dirname, 'dist', 'gnd-app', 'index.html'))
+  // win.loadFile(path.join(__dirname, 'dist', 'gnd-app', 'index.html'))
+
+  //While fixing the frontend code
+  win.loadURL('http://localhost:4200');
+  
+  // Open DevTools in development
+  if (process.env.NODE_ENV === 'development') {
+    win.webContents.openDevTools();
+  }
+
 }
 
 app.whenReady().then(() => {
@@ -129,6 +151,20 @@ function setupWatcher() {
   });
   
 }
+
+//Delete the following lines after the 148 to 158
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
+});
+
 
 app.on('before-quit', () => {
   if (apiProcess) {

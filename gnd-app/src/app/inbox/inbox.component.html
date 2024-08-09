@@ -23,25 +23,20 @@
     </div>
 
     <div class="analysis-rectangle">
-        <h2 class="analysis-header">Analysis</h2>
-        <div class="divider"></div>
-
-        <div class="analysis-data" *ngIf="result">
-            <h2 class="analysis-box-header">Analysis Result:</h2>
-            <div [ngClass]="{'status-success': status === 'compliant', 'status-error': status === 'non-compliant'}">
-                {{ status }}
-            </div>
-            <div class="result-content" [innerHTML]="result"></div>
-            <div class="ca_statement" [innerHTML]="ca_statement"></div>
-            <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis
-                results</p>
-
-            <!-- <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
-            <div class="result-content" [innerHTML]="result"></div>
-        </div> -->
-        </div>
-
-    </div>
+      <h2 class="analysis-header">Analysis</h2>
+      <div class="divider"></div>
+  
+      <div class="analysis-data" *ngIf="result">
+          <h3 class="analysis-box-header">Analysis Result:</h3>
+          <div class="status" [ngClass]="{'status-success': status === 'Compliant', 'status-error': status === 'Non-compliant'}">
+              {{ status }}
+          </div>
+          <div [innerHTML]="result"></div>
+          <div class="ca_statement" *ngIf="ca_statement">
+              <strong>Contract Agreement Statement:</strong> {{ ca_statement }}
+          </div>
+      </div>
+  </div>
 
     <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)">
         <button type="button" [routerLink]="['/violations', currentEmailType]"

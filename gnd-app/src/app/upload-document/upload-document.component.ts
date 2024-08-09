@@ -78,9 +78,7 @@ export class UploadDocumentComponent implements OnInit{
       const formData = new FormData();
       formData.append("file", file);
 
-      // const upload$ = this.http.post("http://127.0.0.1:8000/file-upload", formData);
-
-      // upload$.subscribe();
+    
       this.http.post<any>("http://127.0.0.1:8000/file-upload", formData).subscribe(
         (response) => {
           console.log("Server Response: ", response);
@@ -91,24 +89,45 @@ export class UploadDocumentComponent implements OnInit{
     }
   }
 
+  // processResult(result: string): string {
+  //   const analysis = this.analyzeDocument(result);
+  //   this.status = analysis.status;
+  //   this.ca_statement = analysis.ca_statement;
+  //   let res = analysis.cleanedResult
+  //   let bulk = res.replace(/\n/g, "<br>");
+  //   return bulk;
+  // }
   processResult(result: string): string {
     const analysis = this.analyzeDocument(result);
     this.status = analysis.status;
-    // this.result = this.cleanComplianceStatus(result);
     this.ca_statement = analysis.ca_statement;
-    // this.result = this.cleanContractSearch(this.result);
+    return this.formatResult(analysis.cleanedResult);
+  }
 
-    // Extract status, ca_statement, and the content in between
-    // const status = this.status;
-    // const ca_statement = this.ca_statement;
-    // const contentBetween = this.result;
+  formatResult(result: string): string {
+    // Split the result into sections
+    const sections = result.split('\n\n');
+    
+    let formattedResult = '';
+    
+    sections.forEach(section => {
+      const lines = section.split('\n');
+      if (lines[0].trim()) {
+        // Assume the first line is a header
+        formattedResult += `<br/><b>${lines[0]}</b>`;
+        if (lines.length > 1) {
+          formattedResult += '<ul>';
+          for (let i = 1; i < lines.length; i++) {
+            if (lines[i].trim()) {
+              formattedResult += `<li>${lines[i]}</li>`;
+            }
+          }
+          formattedResult += '</ul>';
+        }
+      }
+    });
 
-    // console.log("Status:", status);
-    // console.log("Content Between:", contentBetween);
-    // console.log("CA Statement:", ca_statement);
-    let res = analysis.cleanedResult
-    let bulk = res.replace(/\n/g, "<br>");
-    return bulk;
+    return formattedResult;
   }
   
   analyzeDocument(result: string): { status: string, ca_statement: string, cleanedResult: string } {
@@ -182,7 +201,7 @@ cleanComplianceStatus(result: string): string {
 }
 
 searchContractStatus(result: string): string {
-    const contractStatementMatch = result.match(/The document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
+    const contractStatementMatch = result.match(/\nThe document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
     let contractStatement = '';
 
     if (contractStatementMatch) {
@@ -218,19 +237,6 @@ getStatusClass(status: string): string {
     return Object.keys(obj).length === 0;
   }
 
-  // onFileSelected(event:any) {
-  //   const file: File = event.target.files[0];
-  //   if (file) {
-  //     this.uploadedFileName = file.name;
-  //     const reader = new FileReader();
-  //     reader.readAsText(file);
-  //     reader.onload = () => {
-  //       if (reader.result) {
-  //         this.fileContent = reader.result.toString();
-  //       }
-  //     };
-  //   }
-  // }
 
   onFileDropped(event: DragEvent) {
     event.preventDefault();
