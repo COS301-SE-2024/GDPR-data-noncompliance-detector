@@ -63,11 +63,17 @@ jobs:
         run: |
           ls -a
           cd backend/Detection_Engine
-          pytest --cov=. --cov-report=xml
+          pytest --cov=. --cov-report=xml --cov-append
+
           cd ../Document_parser
-          pytest --cov=. --cov-report=xml
+          pytest --cov=. --cov-report=xml --cov-append
+
           cd ../File_monitor
-          pytest --cov=. --cov-report=xml
+          pytest --cov=. --cov-report=xml --cov-append
+          cd ../..
+          coverage combine
+          coverage xml
+
         continue-on-error: true
       
       - name: Integration test
