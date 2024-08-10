@@ -78,25 +78,47 @@ describe('UploadDocumentComponent', () => {
     expect(component.result).toBe('file processed'.replace(/\n/g, '<br>'));
   });
 
-  it('should display the analysis result in the analysis window', () => {
-    const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
-    const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
+//   it('should display the analysis result in the analysis window', () => {
+//     const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
+//     const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
 
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(file);
+//     const dataTransfer = new DataTransfer();
+//     dataTransfer.items.add(file);
 
-    input.files = dataTransfer.files;
-    input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+//     input.files = dataTransfer.files;
+//     input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload');
-    req.flush({ fileName: 'test.txt', result: 'line1\nline2' });
+//     const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload');
+//     req.flush({ fileName: 'test.txt', result: 'line1\nline2' });
 
-    fixture.detectChanges();
+//     fixture.detectChanges();
 
-    const analysisHeader = debugElement.query(By.css('.analysis-box-header')).nativeElement;
-    const resultContent = debugElement.query(By.css('.result-content')).nativeElement;
+//     const analysisHeader = debugElement.query(By.css('.analysis-box-header')).nativeElement;
+//     const resultContent = debugElement.query(By.css('.result-content')).nativeElement;
 
-    expect(analysisHeader.textContent).toContain('Analysis Result:');
-    expect(resultContent.innerHTML).toContain('line1<br>line2');
-  });
+//     expect(analysisHeader.textContent).toContain('Analysis Result:');
+//     expect(resultContent.innerHTML).toContain('line1<br>line2');
+//   });
+// });
+it('should display the analysis result in the analysis window', () => {
+  const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
+  const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
+
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(file);
+
+  input.files = dataTransfer.files;
+  input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+
+  const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload');
+  req.flush({ fileName: 'test.txt', result: 'line1\nline2' });
+
+  fixture.detectChanges();
+
+  const analysisHeader = debugElement.query(By.css('.analysis-box-header')).nativeElement;
+  const resultContent = debugElement.query(By.css('.result-content')).nativeElement;
+
+  expect(analysisHeader.textContent).toContain('Analysis Result:');
+  expect(resultContent.innerHTML).toContain('<b>line1</b><br>line2');
+});
 });

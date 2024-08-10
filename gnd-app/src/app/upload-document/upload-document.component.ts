@@ -1,4 +1,3 @@
-// import { Component } from '@angular/core';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -6,8 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
-
-
 
 @Component({
   selector: 'app-upload-document',
@@ -23,11 +20,9 @@ export class UploadDocumentComponent implements OnInit{
 
 
   ngOnInit() {
-    // Check if the user has seen the intro before
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       this.startIntro();
-      // Mark that the user has seen the intro
       localStorage.setItem('hasSeenIntro', 'true');
     }
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
@@ -78,9 +73,7 @@ export class UploadDocumentComponent implements OnInit{
       const formData = new FormData();
       formData.append("file", file);
 
-      // const upload$ = this.http.post("http://127.0.0.1:8000/file-upload", formData);
-
-      // upload$.subscribe();
+    
       this.http.post<any>("http://127.0.0.1:8000/file-upload", formData).subscribe(
         (response) => {
           console.log("Server Response: ", response);
@@ -91,24 +84,11 @@ export class UploadDocumentComponent implements OnInit{
     }
   }
 
-  processResult(result: string): string {
+    processResult(result: string): string {
     const analysis = this.analyzeDocument(result);
     this.status = analysis.status;
-    // this.result = this.cleanComplianceStatus(result);
     this.ca_statement = analysis.ca_statement;
-    // this.result = this.cleanContractSearch(this.result);
-
-    // Extract status, ca_statement, and the content in between
-    // const status = this.status;
-    // const ca_statement = this.ca_statement;
-    // const contentBetween = this.result;
-
-    // console.log("Status:", status);
-    // console.log("Content Between:", contentBetween);
-    // console.log("CA Statement:", ca_statement);
-    let res = analysis.cleanedResult
-    let bulk = res.replace(/\n/g, "<br>");
-    return bulk;
+    return analysis.cleanedResult; 
   }
   
   analyzeDocument(result: string): { status: string, ca_statement: string, cleanedResult: string } {
@@ -182,7 +162,7 @@ cleanComplianceStatus(result: string): string {
 }
 
 searchContractStatus(result: string): string {
-    const contractStatementMatch = result.match(/The document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
+    const contractStatementMatch = result.match(/\nThe document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
     let contractStatement = '';
 
     if (contractStatementMatch) {
@@ -218,19 +198,6 @@ getStatusClass(status: string): string {
     return Object.keys(obj).length === 0;
   }
 
-  // onFileSelected(event:any) {
-  //   const file: File = event.target.files[0];
-  //   if (file) {
-  //     this.uploadedFileName = file.name;
-  //     const reader = new FileReader();
-  //     reader.readAsText(file);
-  //     reader.onload = () => {
-  //       if (reader.result) {
-  //         this.fileContent = reader.result.toString();
-  //       }
-  //     };
-  //   }
-  // }
 
   onFileDropped(event: DragEvent) {
     event.preventDefault();
@@ -250,6 +217,15 @@ getStatusClass(status: string): string {
     event.stopPropagation();
     event.preventDefault();
     this.isDragActive = false;
+  }
+
+  formatResult(result: string): string {
+    return result.split('\n\n').map(section => {
+      const lines = section.split('\n');
+      const header = `<b>${lines[0]}</b>`;
+      const content = lines.slice(1).join('<br>');
+      return `${header}<br>${content}`;
+    }).join('<br>');
   }
 
 }
