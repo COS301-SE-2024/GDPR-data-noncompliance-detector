@@ -225,7 +225,7 @@ getStatusClass(status: string): string {
       const header = `<b>${lines[0]}</b>`;
       const content = lines.slice(1).join('<br>');
       return `${header}<br>${content}`;
-    }).join('<br><br>');
+    }).join('<br>');
   }
 
 }
