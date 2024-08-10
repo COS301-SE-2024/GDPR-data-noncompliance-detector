@@ -59,22 +59,29 @@ jobs:
           ls -a
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Test with pytest
+      - name: Test detection engine with pytest
         run: |
-          ls -a
           cd backend/Detection_Engine
           pytest --cov=. --cov-report=xml --cov-append
+        continue-on-error: true
 
-          cd ../Document_parser
+      - name: Test document parser with pytest
+        run: |
+          cd backend/Document_parser
           pytest --cov=. --cov-report=xml --cov-append
+        continue-on-error: true
+      
+      - name: Test file monitor with pytest
+        run: |
+          cd backend/File_monitor
+          pytest --cov=. --cov-report=xml --cov-append
+        continue-on-error: true
 
-          cd ../File_monitor
-          pytest --cov=. --cov-report=xml --cov-append
-          cd ../..
+      - name: combine coverage
+        run: |
+          cd backend
           coverage combine
           coverage xml
-
-        continue-on-error: true
       
       - name: Integration test
         run: |
