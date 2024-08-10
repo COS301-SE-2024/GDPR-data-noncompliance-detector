@@ -77,23 +77,16 @@ jobs:
           pytest --cov=. --cov-report=xml --cov-append
         continue-on-error: true
       
-      - name: List Coverage Files in Detection Engine
+      - name: Move Coverage Files to Root
         run: |
-          ls -a backend/Detection_Engine/.coverage*
-        
-      - name: List Coverage Files in Document Parser
-        run: |
-          ls -a backend/Document_parser/.coverage*
-        
-      - name: List Coverage Files in File Monitor
-        run: |
-          ls -a backend/File_monitor/.coverage*
+          mv backend/Detection_Engine/.coverage backend/.coverage.detection_engine
+          mv backend/Document_parser/.coverage backend/.coverage.document_parser
+          mv backend/File_monitor/.coverage backend/.coverage.file_monitor
       
-
-      - name: combine coverage
+      - name: Combine Coverage Reports
         run: |
           cd backend
-          coverage combine
+          coverage combine .coverage.*
           coverage xml
       
       - name: Integration test
