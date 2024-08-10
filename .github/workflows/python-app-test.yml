@@ -62,8 +62,11 @@ jobs:
       - name: Test with pytest
         run: |
           ls -a
-          cd backend/Document_parser
-          # cd backend
+          cd backend/Detection_Engine
+          pytest --cov=. --cov-report=xml
+          cd ../Document_parser
+          pytest --cov=. --cov-report=xml
+          cd ../File_monitor
           pytest --cov=. --cov-report=xml
       
       - name: Integration test
