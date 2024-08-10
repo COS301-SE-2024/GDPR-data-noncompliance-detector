@@ -76,6 +76,19 @@ jobs:
           cd backend/File_monitor
           pytest --cov=. --cov-report=xml --cov-append
         continue-on-error: true
+      
+      - name: List Coverage Files in Detection Engine
+        run: |
+          ls -a backend/Detection_Engine/.coverage*
+        
+      - name: List Coverage Files in Document Parser
+        run: |
+          ls -a backend/Document_parser/.coverage*
+        
+      - name: List Coverage Files in File Monitor
+        run: |
+          ls -a backend/File_monitor/.coverage*
+      
 
       - name: combine coverage
         run: |
