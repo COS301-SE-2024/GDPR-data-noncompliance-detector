@@ -49,6 +49,7 @@ class backend_entry:
         # path = input("File Name:  ")
         file = parser.process(path)
         result = engine.process(file,path)
+        engine.report_generation(file, path)
         # print(result)
 
         # print(file)

@@ -72,6 +72,36 @@ class detection_engine:
             status = "Compliant"
         else:
             status = "Non-compliant"
+
+#----------------------------------------------------------REPORT GEN------------------------------------------------------------------# 
+        
+        location_report = self.report_generator.location_report_generation(text)
+        ner_result_report = self.report_generator.ner_report_generation(text)
+        reg_result_personal_report = self.regex_report_personal(text)
+        reg_result_financial_report = self.regex_report_financial(text)
+        reg_result_contact_report = self.regex_report_contact(text)
+        ca_statement_report = self.report_generator.CA_report_generation(text)
+        gi_result_report = self.report_generator.gen_report(text)
+        em_result_report = self.report_generator.EM_report(text)
+        md_result_report = self.report_generator.MD_report(text)
+        image_result_report = self.report_generator.Image_report_generation(path_)
+
+        violation_data = {
+            "score": {
+                "Location": location_report,
+                "NER": ner_result_report,
+                "Personal": reg_result_personal_report,
+                "Financial": reg_result_financial_report,
+                "Contact": reg_result_contact_report,
+                "Consent Agreement": ca_statement_report,
+                "Genetic": gi_result_report,
+                "Ethnic": em_result_report,
+                "Medical": md_result_report,
+                "Biometric": image_result_report,
+            }
+        }
+
+#----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
         
         result = ""
         result += status
@@ -111,6 +141,44 @@ class detection_engine:
         # print(path_)
         # print(self.report_generator.Image_report(path_))
         return result
+    
+#----------------------------------------------------------REPORT GEN------------------------------------------------------------------# 
+    
+    def report_generation(self, path, path_):
+
+        text = path
+
+        location_report = self.report_generator.location_report_generation(text)
+        ner_result_report = self.report_generator.ner_report_generation(text)
+        reg_result_personal_report = self.regex_report_personal(text)
+        reg_result_financial_report = self.regex_report_financial(text)
+        reg_result_contact_report = self.regex_report_contact(text)
+        ca_statement_report = self.report_generator.CA_report_generation(text)
+        gi_result_report = self.report_generator.gen_report(text)
+        em_result_report = self.report_generator.EM_report(text)
+        md_result_report = self.report_generator.MD_report(text)
+        image_result_report = self.report_generator.Image_report_generation(path_)
+
+        violation_data = {
+            "score": {
+                "Location": location_report,
+                "NER": ner_result_report,
+                "Personal": reg_result_personal_report,
+                "Financial": reg_result_financial_report,
+                "Contact": reg_result_contact_report,
+                "Consent Agreement": ca_statement_report,
+                "Genetic": gi_result_report,
+                "Ethnic": em_result_report,
+                "Medical": md_result_report,
+                "Biometric": image_result_report,
+            }
+        }
+
+        output_file = "violation_report.pdf"
+        self.report_generator.generate_pdf(violation_data, output_file)
+        # return violation_data
+
+#----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
 
 
 if __name__ == "__main__":
