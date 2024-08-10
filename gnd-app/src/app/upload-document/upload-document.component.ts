@@ -1,4 +1,3 @@
-// import { Component } from '@angular/core';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -21,11 +20,9 @@ export class UploadDocumentComponent implements OnInit{
 
 
   ngOnInit() {
-    // Check if the user has seen the intro before
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       this.startIntro();
-      // Mark that the user has seen the intro
       localStorage.setItem('hasSeenIntro', 'true');
     }
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
@@ -93,39 +90,6 @@ export class UploadDocumentComponent implements OnInit{
     this.ca_statement = analysis.ca_statement;
     return analysis.cleanedResult; 
   }
-
-  // processResult(result: string): string {
-  //   const analysis = this.analyzeDocument(result);
-  //   this.status = analysis.status;
-  //   this.ca_statement = analysis.ca_statement;
-  //   return this.formatResult(analysis.cleanedResult);
-  // }
-
-  // formatResult(result: string): string {
-  //   // Split the result into sections
-  //   const sections = result.split('\n\n');
-    
-  //   let formattedResult = '';
-    
-  //   sections.forEach(section => {
-  //     const lines = section.split('\n');
-  //     if (lines[0].trim()) {
-  //       // Assume the first line is a header
-  //       formattedResult += `<br/><b>${lines[0]}</b>`;
-  //       if (lines.length > 1) {
-  //         formattedResult += '<ul>';
-  //         for (let i = 1; i < lines.length; i++) {
-  //           if (lines[i].trim()) {
-  //             formattedResult += `<li>${lines[i]}</li>`;
-  //           }
-  //         }
-  //         formattedResult += '</ul>';
-  //       }
-  //     }
-  //   });
-
-  //   return formattedResult;
-  // }
   
   analyzeDocument(result: string): { status: string, ca_statement: string, cleanedResult: string } {
     let status: string = '';
@@ -253,6 +217,15 @@ getStatusClass(status: string): string {
     event.stopPropagation();
     event.preventDefault();
     this.isDragActive = false;
+  }
+
+  formatResult(result: string): string {
+    return result.split('\n\n').map(section => {
+      const lines = section.split('\n');
+      const header = `<b>${lines[0]}</b>`;
+      const content = lines.slice(1).join('<br>');
+      return `${header}<br>${content}`;
+    }).join('<br><br>');
   }
 
 }
