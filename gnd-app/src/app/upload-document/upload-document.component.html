@@ -36,6 +36,7 @@
       </div>
 
     </div>
+
     <div class="analysis-rectangle">
       <h2 class="analysis-header">
         Analysis
@@ -47,7 +48,16 @@
         <div [ngClass]="{'status-success': status === 'compliant', 'status-error': status === 'Non-compliant'}">
           {{ status }}
         </div>
-        <div class="result-content" [innerHTML]="result"></div>
+        <div class="result-content">
+          <div *ngFor="let section of result.split('\n\n')">
+            <div *ngIf="section.trim()">
+              <b>{{ section.split('\n')[0] }}</b>
+              <div *ngFor="let line of section.split('\n').slice(1)">
+                {{ line }}
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="ca_statement" [innerHTML]="ca_statement"></div>
       </div>
 
