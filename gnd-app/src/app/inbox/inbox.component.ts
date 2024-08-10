@@ -67,27 +67,6 @@ export class InboxComponent implements OnInit, OnDestroy {
     return this.http.get<string[]>(`${this.apiUrl}`);
   }
 
-  
-  // getReportContent(filePath: string) {
-  //   console.log(filePath);
-  //   const payload = { path: filePath };
-  //   this.http.post<{ content: string }>(this.iUrl, payload).subscribe(response => {
-  //     this.currentAnalysis.content = response.content;
-  //   });
-  //   this.currentEmail = 'NA';
-  //   this.currentEmailType = 'txt';
-  // }
-
-  // getReportContent(filePath: string) {
-    
-  //   console.log(filePath);
-  //   this.http.get<{ content: string }>(`${this.iUrl}?path=${encodeURIComponent(this.path +'/' +filePath)}`).subscribe(response => {
-  //     this.currentAnalysis.content = response.content;
-  //   });
-  //   this.currentEmail = 'NA';
-  //   this.currentEmailType = 'txt';
-  // }
-
   getReportContent(filePath: string) {
     console.log(filePath);
     const payload = { path: filePath };
@@ -103,13 +82,55 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.currentEmailType = 'txt';
   }
 
+  // processResult(result: string): string {
+  //   result = result.replace(/\n/g, "<br>");
+  //   this.status = this.searchComplianceStatus(result);
+  //   this.result = this.cleanComplianceStatus(result);
+  //   this.ca_statement = this.searchContractStatus(result);
+  //   this.result = this.cleanContractSearch(this.result);
+  //   return result;
+  // }
+
   processResult(result: string): string {
-    result = result.replace(/\n/g, "<br>");
-    this.status = this.searchComplianceStatus(result);
-    this.result = this.cleanComplianceStatus(result);
-    this.ca_statement = this.searchContractStatus(result);
-    this.result = this.cleanContractSearch(this.result);
-    return result;
+    // Decode the string to handle escape characters
+    result = JSON.parse('"' + result.replace(/"/g, '\\"') + '"');
+    
+    const analysis = this.analyzeDocument(result);
+    this.status = analysis.status;
+    this.ca_statement = analysis.ca_statement;
+    return this.formatResult(analysis.cleanedResult);
+  }
+
+  formatResult(result: string): string {
+    const lines = result.split('\n').filter(line => line.trim() !== '');
+    let formattedResult = '<div class="analysis-content">';
+    let currentSection = '';
+  
+    lines.forEach((line, index) => {
+      line = line.trim();
+      if (line.endsWith(':')) {
+        // This is a section header
+        if (currentSection) {
+          formattedResult += '</ul>';
+        }
+        currentSection = line;
+        formattedResult += `<b>${currentSection}</b><ul>`;
+      } else if (line.includes(':')) {
+        // This is a key-value pair
+        const [key, value] = line.split(':').map(part => part.trim());
+        formattedResult += `<li><strong>${key}:</strong> ${value}</li>`;
+      } else {
+        // This is either a standalone value or part of the previous section
+        formattedResult += `<li>${line}</li>`;
+      }
+    });
+  
+    if (currentSection) {
+      formattedResult += '</ul>';
+    }
+  
+    formattedResult += '</div>';
+    return formattedResult;
   }
 
   searchComplianceStatus(result: string): string {
@@ -126,6 +147,32 @@ export class InboxComponent implements OnInit, OnDestroy {
   
     return status;
   }
+
+  analyzeDocument(result: string): { status: string, ca_statement: string, cleanedResult: string } {
+    let status: string = 'Non-compliant'; // Default status
+    let ca_statement: string = '';
+    let cleanedResult: string = result;
+  
+    // Extract status if present
+    const statusMatch = result.match(/\{status\}(.*?)\{\/status\}/);
+    if (statusMatch) {
+      status = statusMatch[1].trim();
+      cleanedResult = cleanedResult.replace(statusMatch[0], '');
+    }
+  
+    // Extract CA statement if present
+    const caMatch = result.match(/\{ca_statement\}(.*?)\{\/ca_statement\}/s);
+    if (caMatch) {
+      ca_statement = caMatch[1].trim();
+      cleanedResult = cleanedResult.replace(caMatch[0], '');
+    }
+  
+    // Clean up any remaining newlines at the start or end
+    cleanedResult = cleanedResult.trim();
+  
+    return { status, ca_statement, cleanedResult };
+  }
+
 
   cleanComplianceStatus(result: string): string {
     console.log("Original result:", result);

@@ -3,11 +3,13 @@
 <link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
 
 
-<div class="header-container">
-    <header class="header">
+<div class="main-content">
+    <div class="header-container">
+      <header class="header">
         Inbox
-    </header>
-</div>
+      </header>
+    </div>
+
 
 
 <div class="containers">
@@ -35,10 +37,6 @@
             <div class="ca_statement" [innerHTML]="ca_statement"></div>
             <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis
                 results</p>
-
-            <!-- <div class="analysis-data" *ngIf="!isObjectEmpty(currentAnalysis)">
-            <div class="result-content" [innerHTML]="result"></div>
-        </div> -->
         </div>
 
     </div>
