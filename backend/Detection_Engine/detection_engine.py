@@ -3,6 +3,9 @@ from .lang_detection import location_finder
 from .regex_layer import regex_layer
 from .report_generation_layer import report_generation_layer
 
+import datetime
+import os
+
 class detection_engine:
 
     def __init__(self):
@@ -72,6 +75,36 @@ class detection_engine:
             status = "Compliant"
         else:
             status = "Non-compliant"
+
+#----------------------------------------------------------REPORT GEN------------------------------------------------------------------# 
+        
+        location_report = self.report_generator.location_report_generation(text)
+        ner_result_report = self.report_generator.ner_report_generation(text)
+        reg_result_personal_report = self.regex_report_personal(text)
+        reg_result_financial_report = self.regex_report_financial(text)
+        reg_result_contact_report = self.regex_report_contact(text)
+        ca_statement_report = self.report_generator.CA_report_generation(text)
+        gi_result_report = self.report_generator.gen_report(text)
+        em_result_report = self.report_generator.EM_report(text)
+        md_result_report = self.report_generator.MD_report(text)
+        image_result_report = self.report_generator.Image_report_generation(path_)
+
+        violation_data = {
+            "score": {
+                "Location": location_report,
+                "NER": ner_result_report,
+                "Personal": reg_result_personal_report,
+                "Financial": reg_result_financial_report,
+                "Contact": reg_result_contact_report,
+                "Consent Agreement": ca_statement_report,
+                "Genetic": gi_result_report,
+                "Ethnic": em_result_report,
+                "Medical": md_result_report,
+                "Biometric": image_result_report,
+            }
+        }
+
+#----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
         
         result = ""
         result += status
@@ -111,6 +144,65 @@ class detection_engine:
         # print(path_)
         # print(self.report_generator.Image_report(path_))
         return result
+    
+#----------------------------------------------------------REPORT GEN------------------------------------------------------------------# 
+    
+    def report_generation(self, path, path_):
+
+        text = path
+
+        location_report = self.report_generator.location_report_generation(text)
+        ner_result_report = self.report_generator.ner_report_generation(text)
+        reg_result_personal_report = self.regex_report_personal(text)
+        reg_result_financial_report = self.regex_report_financial(text)
+        reg_result_contact_report = self.regex_report_contact(text)
+        ca_statement_report = self.report_generator.CA_report_generation(text)
+        gi_result_report = self.report_generator.gen_report(text)
+        em_result_report = self.report_generator.EM_report(text)
+        md_result_report = self.report_generator.MD_report(text)
+        image_result_report = self.report_generator.Image_report_generation(path_)
+
+        status = 1
+
+        if (reg_result_personal_report > 0 or 
+            reg_result_financial_report > 0 or 
+            reg_result_contact_report > 0 or  
+            gi_result_report > 0 or 
+            em_result_report > 0 or 
+            md_result_report > 0 or 
+            image_result_report > 0):
+    
+                status = 0
+
+
+        violation_data = {            
+            "score": {
+                "Status": status,
+                "Location": location_report,
+                "NER": ner_result_report,
+                "Personal": reg_result_personal_report,
+                "Financial": reg_result_financial_report,
+                "Contact": reg_result_contact_report,
+                "Consent Agreement": ca_statement_report,
+                "Genetic": gi_result_report,
+                "Ethnic": em_result_report,
+                "Medical": md_result_report,
+                "Biometric": image_result_report,
+            }
+        }
+
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        # output_file = f"violation_report_{timestamp}.pdf"
+        output_dir = os.path.join(".", "Generated_Reports")
+        output_file = os.path.join(output_dir, f"violation_report_{timestamp}.pdf")
+
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        self.report_generator.generate_pdf(violation_data, output_file)
+        return violation_data
+
+#----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
 
 
 if __name__ == "__main__":

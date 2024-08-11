@@ -5,7 +5,11 @@ module.exports = {
     "./node_modules/flowbite/**/*.js" // add this line
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'roboto-bold': ['Roboto Bold', 'sans-serif'],
+      },
+    },
   },
   plugins: [
     require('flowbite/plugin')

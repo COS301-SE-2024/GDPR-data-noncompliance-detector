@@ -67,13 +67,73 @@ export class InboxComponent implements OnInit, OnDestroy {
     return this.http.get<string[]>(`${this.apiUrl}`);
   }
 
+  documentStatus: string = "";
+  nerCount: number = 0;
+  location: string = "";
+  personalData: number = 0;
+  financialData: number = 0;
+  contactData: number = 0;
+  medicalData: number = 0;
+  ethnicData: number = 0;
+  biometricData: number = 0;
+  consentAgreement: string = "";
+
+  docStatus(status: number): string {
+    if(status == 1){
+      return "Compliant"
+    }
+    return "Non-Compliant"
+  }
+
+  locationStatus(location: number): string {
+    if(location == 0 ) {
+      return "Not EU"
+    }
+
+    else if(location == 1) {
+      return "EU"
+    }
+
+    return "Not Available"
+  }
+
+  consentAgreementStatus(consent: boolean): string {
+    if(consent == true) {
+      return "The document does appear to contain data consent agreements";
+    }
+
+    return "The document does not seem to contain any data consent agreements";
+  }
+
   getReportContent(filePath: string) {
     console.log(filePath);
     const payload = { path: filePath };
     axios.post(this.iUrl, payload)
       .then(response => {
-        this.currentAnalysis.content = response.data.content;
-        this.result = this.processResult(this.currentAnalysis.content)
+        // this.currentAnalysis.content = response.data.content;
+        // this.result = this.processResult(this.currentAnalysis.content)
+
+        // console.log("datp = " + response.data.content);
+        let dat = JSON.parse(response.data.content);
+        // console.log("logger" + dat.score.Biometric);
+        
+        this.documentStatus = this.docStatus(dat.score.Status);
+
+        this.nerCount = dat.score.NER;
+        this.location = this.locationStatus(dat.score.Location);
+
+        this.personalData = dat.score.Personal;
+        this.financialData = dat.score.Financial;
+        this.contactData = dat.score.Contact;
+        this.medicalData = dat.score.Medical;
+        this.ethnicData = dat.score.Ethnic;
+        this.biometricData = dat.score.Biometric;
+        this.consentAgreement = this.consentAgreementStatus(dat.score["Consent Agreement"]);
+
+        // this.checkdata();
+
+        this.result = "Y";
+
       })
       .catch(error => {
         console.error('There was an error!', error);
