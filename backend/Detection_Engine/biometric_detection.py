@@ -59,44 +59,50 @@ class biometric_detection:
         if (pdf_path.endswith('.pdf')):
             # extract_images_from_pdf(pdf_path)
 
-            images = [f'./Detection_Engine/extracted_images/pdf_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/pdf_images') if i.endswith('.png')]
+            images = [f'./Detection_Engine/extracted_images/pdf_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/pdf_images')  if i.endswith('.png') or i.endswith('.jpg')]
 
             output = []
+            count = 0
             for image in images:
+                count += 1
                 output.append(self.biometric_detect_people(image))
             
             png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/pdf_images", '*.png'))
             for file in png_files:
                 os.remove(file)
             
-            return output
+            return count
         
         elif (pdf_path.endswith('.docx')):
             # extract_images_from_docx(pdf_path)
-            images = [f'./Detection_Engine/extracted_images/docx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/docx_images') if i.endswith('.png')]
+            images = [f'./Detection_Engine/extracted_images/docx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/docx_images')  if i.endswith('.png') or i.endswith('.jpg')]
             output = []
+            count = 0
             for image in images:
+                count += 1
                 output.append(self.biometric_detect_people(image))
             
             png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/docx_images", '*.png'))
             for file in png_files:
                 os.remove(file)
 
-            return output
+            return count
         
         elif (pdf_path.endswith('.xlsx')):
             # extract_images_from_excel(pdf_path)
-            images = [f'./Detection_Engine/extracted_images/xlsx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/xlsx_images') if i.endswith('.png')]
+            images = [f'./Detection_Engine/extracted_images/xlsx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/xlsx_images')  if i.endswith('.png') or i.endswith('.jpg')]
             # images = [f'extracted_images/xlsx_images/{i}' for i in os.listdir('extracted_images/xlsx_images')]
             output = []
+            count = 0
             for image in images:
+                count += 1
                 output.append(self.biometric_detect_people(image))
             
             png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/xlsx_images", '*.png'))
             for file in png_files:
                 os.remove(file)
 
-            return output
+            return count
         
         directories = [
             "./Detection_Engine/extracted_images/xlsx_images",
