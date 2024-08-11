@@ -1,4 +1,3 @@
-// import { Component } from '@angular/core';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -6,8 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
-
-
 
 @Component({
   selector: 'app-upload-document',
@@ -23,11 +20,9 @@ export class UploadDocumentComponent implements OnInit{
 
 
   ngOnInit() {
-    // Check if the user has seen the intro before
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       this.startIntro();
-      // Mark that the user has seen the intro
       localStorage.setItem('hasSeenIntro', 'true');
     }
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{

@@ -38,11 +38,13 @@
       </div>
 
     </div>
-    <div class="analysis-rectangle">
+
+      <div class="analysis-rectangle">
       <h2 class="analysis-header">
         Analysis
       </h2>
       <div class="divider"></div>
+<<<<<<< HEAD
       
       <div class="upload-container">
         <div *ngIf="!result && uploadedFileName" class="flex items-center justify-center w-full h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
@@ -102,6 +104,25 @@
         <div class="analysis-data" *ngIf="!result && !uploadedFileName">
           <p class="analysis-text" id="Report">Upload a file to view results</p>
         </div>
+=======
+    
+      <div class="analysis-data" *ngIf="result">
+        <h2 class="analysis-box-header">Analysis Result:</h2>
+        <div [ngClass]="{'status-success': status === 'compliant', 'status-error': status === 'Non-compliant'}">
+          {{ status }}
+        </div>
+        <div class="result-content" [innerHTML]="formatResult(result)"></div>
+        <div class="ca_statement" [innerHTML]="ca_statement"></div>
+      </div>
+    
+      <div class="analysis-data" *ngIf="uploadedFileName && !result">
+        <h2>File Details:</h2>
+        <p>{{ uploadedFileName }}</p>
+      </div>
+    
+      <div class="analysis-data" *ngIf="!result && !uploadedFileName">
+        <p class="analysis-text" id="Report">Upload a file to view results</p>
+>>>>>>> 29baf864eb0fb0b4f4c25ab9dbef4d264f33077f
       </div>
     </div>
   </div>
