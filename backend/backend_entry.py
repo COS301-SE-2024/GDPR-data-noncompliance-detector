@@ -48,7 +48,7 @@ class backend_entry:
         engine = detection_engine()
         # path = input("File Name:  ")
         file = parser.process(path)
-        result = engine.process(file,path)
+        # result = engine.process(file,path)
         result_new = engine.report_generation(file, path)
         # print(result)
 
