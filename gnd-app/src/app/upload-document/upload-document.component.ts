@@ -74,6 +74,8 @@ export class UploadDocumentComponent implements OnInit{
 
     if(file) {
       this.fileName = file.name;
+      this.uploadedFileName = file.name;
+      this.result = '';
 
       const formData = new FormData();
       formData.append("file", file);
@@ -250,6 +252,23 @@ getStatusClass(status: string): string {
     event.stopPropagation();
     event.preventDefault();
     this.isDragActive = false;
+  }
+
+  onDownload() {
+    const reportUrl = 'http://127.0.0.1:8000/get-report';
+
+    this.http.get(reportUrl, { responseType: 'blob' }).subscribe(blob => {
+      const link = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      link.href = url;
+      link.download = 'GND_violation_report.pdf';
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+    }, error => {
+      console.error('Download failed', error);
+    });
   }
 
 }

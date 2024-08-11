@@ -9,6 +9,9 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 from reportlab.lib.units import mm
 from reportlab.lib import colors
+from reportlab.lib.colors import HexColor
+
+import os
 
 # from text_classification_layer import text_classification_layer
 # from biometric_detection import biometric_detection
@@ -151,11 +154,12 @@ class report_generation_layer:
         return len(result)
     
 
-    def generate_pdf(self, student_data, output_file):
+    def generate_pdf(self, violation_data, output_file):
         c = canvas.Canvas(output_file, pagesize = A4)
         width, height = A4
 
-        # pdfmetrics.registerFont(TTFont('MediatorNarrowExtraBold', 'Mediator Narrow Web Extra Bold.ttf'))
+        font_path = os.path.join(os.path.dirname(__file__), 'Mediator Narrow Web Extra Bold.ttf')
+        pdfmetrics.registerFont(TTFont('MediatorNarrowExtraBold', font_path))
 
         c.setFillColor(colors.lightseagreen)
         c.rect(0, height - 40 * mm, width, 50 * mm, fill = 1, stroke = 0) 
@@ -163,19 +167,21 @@ class report_generation_layer:
 
         c.setFillColor(colors.whitesmoke)
 
-        c.setFont("Helvetica", 24)
+        c.setFont("MediatorNarrowExtraBold", 24)
         c.drawString(20 * mm, height - 15 * mm, "GND")
         c.setFont("Helvetica", 12)
-        c.drawString(20 * mm, height - 25 * mm, "Phone: (123) 456-7890")
+        c.drawString(20 * mm, height - 25 * mm, "Phone: 068 590 1787")
         c.drawString(20 * mm, height - 32 * mm, "Email: aprilfour301@gmail.com")
 
-        # logo_width = 35 * mm
-        # logo_height = 30 * mm
-        # c.drawImage("GND_LSG.jpg", width - logo_width - 25 * mm, height - logo_height - 5 * mm, width = logo_width, height = logo_height)
+    
+        logo_path = os.path.join(os.path.dirname(__file__), 'GND_LSG.jpg')
+        logo_width = 35 * mm
+        logo_height = 30 * mm
+        c.drawImage(logo_path, width - logo_width - 25 * mm, height - logo_height - 5 * mm, width = logo_width, height = logo_height)
 
         c.setFillColor(colors.black)
 
-        c.setFont("Helvetica", 28)
+        c.setFont("MediatorNarrowExtraBold", 28)
         c.drawCentredString(width/2, height - 55 * mm, "GDPR Violations Report")
 
         rect_width = 100 * mm
@@ -185,66 +191,227 @@ class report_generation_layer:
         rect_x = (width - rect_width) / 2
         rect_y = height - 65 * mm - rect_height
         
-        c.setFillColor(colors.red)
-        c.setStrokeColor(colors.black)
-        c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
 
-        text = "This document may contain GDPR violations"
-        text_width = c.stringWidth(text, "Helvetica", 12)
-        text_x = rect_x + (rect_width - text_width) / 2
-        text_y = rect_y + (rect_height - 8) / 2
-        
-        c.setFillColor(colors.whitesmoke)
-        c.setFont("Helvetica", 12)
-        c.drawString(text_x, text_y, text)
+
+        if (violation_data['score']['Status'] == 1):
+            c.setFillColor(colors.green)
+            c.setStrokeColor(colors.black)
+            c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
+            
+            text = "This document does not appear to contain GDPR violations"
+            text_width = c.stringWidth(text, "MediatorNarrowExtraBold", 12)
+            text_x = rect_x + (rect_width - text_width) / 2
+            text_y = rect_y + (rect_height - 8) / 2
+
+            c.setFillColor(colors.whitesmoke)
+            c.setFont("MediatorNarrowExtraBold", 12)
+            c.drawString(text_x, text_y, text)
+
+        else:
+            c.setFillColor(colors.red)
+            c.setStrokeColor(colors.black)
+            c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
+            
+            text = "This document may contain GDPR violations"
+            text_width = c.stringWidth(text, "MediatorNarrowExtraBold", 12)
+            text_x = rect_x + (rect_width - text_width) / 2
+            text_y = rect_y + (rect_height - 8) / 2
+
+            c.setFillColor(colors.whitesmoke)
+            c.setFont("MediatorNarrowExtraBold", 12)
+            c.drawString(text_x, text_y, text)
+
+        y_position = height - 85 * mm
 
         c.setFillColor(colors.black)
-
-        # y_position = height - 95 * mm
-        # c.setFont("MediatorNarrowExtraBold", 15)
-        # c.drawString(22 * mm, y_position - 10, "Violation")
-        # c.drawString(145 * mm, y_position, "Number of Violations")
-        # c.drawString(160 * mm, y_position - 8 * mm, "Detected")
+        c.setFont("MediatorNarrowExtraBold", 14)        
+        c.drawString(22 * mm, y_position, f"The document potentially references {str(violation_data['score']['NER'])} different individuals")
+        # c.drawString(180 * mm, y_position, str(violation_data['score']['Personal']))
+        # location_text = self.location_helper(violation_data['score']['Location'])
+        # text_width = c.stringWidth(location_text, "Helvetica", 12)
+        # icon_path = os.path.join(os.path.dirname(__file__), 'location-dot-solid.jpg')
+        # c.drawString((width - text_width)/2, y_position, location_text)
+        # icon_width = 3 * mm 
+        # icon_height = 3 * mm 
+        # c.drawImage(icon_path, 23 * mm - icon_width, y_position, width = icon_width, height = icon_height)
 
         descriptions = {
-            "Personal": "This may include Personal data such as names, identification number, dates of birth, banking details etc.",
+            "Personal": "This may include personal data such as names, identification number, dates of birth etc.",
+            "Financial": "This may include personal financial data such as banking details, tax numbers, account details etc.",
+            "Contact": "This may include personal contact details such as phone numbers, email addresses and social media.",
             "Medical": "This may include personal medical data such as chronic illnesses, past injuries, diseases etc.",
             "Biometric": "This may include biometric data such as fingerprints, facial recognition, iris scans etc.",
             "Ethnic": "This may include ethnic data such as racial or ethnic origin, nationality, language etc."
         }
 
-        y_position = height - 125 * mm
+        y_position = height - 100 * mm
 
-        # icon_path = "circle-question-regular.jpg"
-        # icon_width = 3 * mm 
-        # icon_height = 3 * mm 
+        icon_path = os.path.join(os.path.dirname(__file__), 'circle-question-regular.jpg')
+        icon_width = 3 * mm 
+        icon_height = 3 * mm
 
-        for violation, score in student_data["score"].items():
-            c.setFont("Helvetica", 18)        
-            c.drawString(22 * mm, y_position, f"{violation} Data")
-            c.drawString(180 * mm, y_position, str(score))
+        c.setFont("MediatorNarrowExtraBold", 18)        
+        c.drawString(22 * mm, y_position, "General Personal Data")
+        c.drawString(180 * mm, y_position, str(violation_data['score']['Personal']))
 
-            c.setFillColor(colors.grey)
+        c.setFillColor(colors.grey)
 
-            c.setFont("Helvetica", 8)
-            description = descriptions.get(violation, "No description available.")
-            # c.drawImage(icon_path, 23 * mm - icon_width, y_position - 22, width=icon_width, height=icon_height)
-            c.drawString(25 * mm, y_position - 20, description)
+        c.setFont("Helvetica", 8)
+        description = descriptions.get("Personal", "Description not available")
+        c.drawImage(icon_path, 23 * mm - icon_width, y_position - 22, width=icon_width, height=icon_height)
+        c.drawString(25 * mm, y_position - 20, description)
 
+        c.setStrokeColor(colors.black)
+        c.setLineWidth(0.5)
+        c.line(20 * mm, y_position - 30, width - 20 * mm, y_position - 30)
+
+        y_position -= 30 * mm
+
+        c.setFillColor(colors.black)
+
+        c.setFont("MediatorNarrowExtraBold", 18)        
+        c.drawString(22 * mm, y_position, "Financial Data")
+        c.drawString(180 * mm, y_position, str(violation_data['score']['Financial']))
+
+        c.setFillColor(colors.grey)
+
+        c.setFont("Helvetica", 8)
+        description = descriptions.get("Financial", "Description not available")
+        c.drawImage(icon_path, 23 * mm - icon_width, y_position - 22, width=icon_width, height=icon_height)
+        c.drawString(25 * mm, y_position - 20, description)
+
+        c.setStrokeColor(colors.black)
+        c.setLineWidth(0.5)
+        c.line(20 * mm, y_position - 30, width - 20 * mm, y_position - 30)
+
+        y_position -= 30 * mm
+
+        c.setFillColor(colors.black)
+
+        c.setFont("MediatorNarrowExtraBold", 18)        
+        c.drawString(22 * mm, y_position, "Contact Details")
+        c.drawString(180 * mm, y_position, str(violation_data['score']['Contact']))
+
+        c.setFillColor(colors.grey)
+
+        c.setFont("Helvetica", 8)
+        description = descriptions.get("Contact", "Description not available")
+        c.drawImage(icon_path, 23 * mm - icon_width, y_position - 22, width=icon_width, height=icon_height)
+        c.drawString(25 * mm, y_position - 20, description)
+
+        c.setStrokeColor(colors.black)
+        c.setLineWidth(0.5)
+        c.line(20 * mm, y_position - 30, width - 20 * mm, y_position - 30)
+
+        y_position -= 30 * mm
+
+        c.setFillColor(colors.black)
+
+        c.setFont("MediatorNarrowExtraBold", 18)        
+        c.drawString(22 * mm, y_position, "Medical Information")
+        c.drawString(180 * mm, y_position, str(violation_data['score']['Medical']))
+
+        c.setFillColor(colors.grey)
+
+        c.setFont("Helvetica", 8)
+        description = descriptions.get("Medical", "Description not available")
+        c.drawImage(icon_path, 23 * mm - icon_width, y_position - 22, width=icon_width, height=icon_height)
+        c.drawString(25 * mm, y_position - 20, description)
+
+        c.setStrokeColor(colors.black)
+        c.setLineWidth(0.5)
+        c.line(20 * mm, y_position - 30, width - 20 * mm, y_position - 30)
+
+        y_position -= 30 * mm
+
+        c.setFillColor(colors.black)
+
+        c.setFont("MediatorNarrowExtraBold", 18)        
+        c.drawString(22 * mm, y_position, "Ethnic Information")
+        c.drawString(180 * mm, y_position, str(violation_data['score']['Ethnic']))
+
+        c.setFillColor(colors.grey)
+
+        c.setFont("Helvetica", 8)
+        description = descriptions.get("Ethnic", "Description not available")
+        c.drawImage(icon_path, 23 * mm - icon_width, y_position - 22, width=icon_width, height=icon_height)
+        c.drawString(25 * mm, y_position - 20, description)
+
+        c.setStrokeColor(colors.black)
+        c.setLineWidth(0.5)
+        c.line(20 * mm, y_position - 30, width - 20 * mm, y_position - 30)
+
+        y_position -= 30 * mm
+
+        c.setFillColor(colors.black)
+
+        c.setFont("MediatorNarrowExtraBold", 18)        
+        c.drawString(22 * mm, y_position, "Biometric Data")
+        c.drawString(180 * mm, y_position, str(violation_data['score']['Biometric']))
+
+        c.setFillColor(colors.grey)
+
+        c.setFont("Helvetica", 8)
+        description = descriptions.get("Biometric", "Description not available")
+        c.drawImage(icon_path, 23 * mm - icon_width, y_position - 22, width=icon_width, height=icon_height)
+        c.drawString(25 * mm, y_position - 20, description)
+
+        c.setStrokeColor(colors.black)
+        c.setLineWidth(0.5)
+        c.line(20 * mm, y_position - 30, width - 20 * mm, y_position - 30)
+
+        y_position -= 30 * mm
+
+        c.setFillColor(colors.black)
+
+        rect_width = 150 * mm
+        rect_height = 10 * mm
+        radius = 2 * mm
+        
+        rect_x = (width - rect_width) / 2
+        rect_y = 25 * mm - rect_height
+        
+
+
+        if (violation_data['score']['Consent Agreement'] == False):
+            c.setFillColor(HexColor("#0875e2"))
             c.setStrokeColor(colors.black)
-            c.setLineWidth(0.5)
-            c.line(20 * mm, y_position - 30, width - 20 * mm, y_position - 30)
+            c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
+            
+            text = "The document does not seem to contain any data consent agreements"
+            text_width = c.stringWidth(text, "MediatorNarrowExtraBold", 12)
+            text_x = rect_x + (rect_width - text_width) / 2
+            text_y = rect_y + (rect_height - 8) / 2
 
-            y_position -= 30 * mm
+            c.setFillColor(colors.whitesmoke)
+            c.setFont("MediatorNarrowExtraBold", 12)
+            c.drawString(text_x, text_y, text)
 
-            c.setFillColor(colors.black)
+        else:
+            c.setFillColor(HexColor("#0875e2"))
+            c.setStrokeColor(colors.black)
+            c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
+            
+            text = "The document appears to contain a data consent agreement"
+            text_width = c.stringWidth(text, "MediatorNarrowExtraBold", 12)
+            text_x = rect_x + (rect_width - text_width) / 2
+            text_y = rect_y + (rect_height - 8) / 2
 
+            c.setFillColor(colors.whitesmoke)
+            c.setFont("MediatorNarrowExtraBold", 12)
+            c.drawString(text_x, text_y, text)
 
+        
         c.setFillColor(colors.lightseagreen)
         c.rect(0, 0, width, 10 * mm, fill = 1, stroke = 0)
 
-
         c.save()
+
+    def location_helper(self, data):
+        if data == 0:
+            return "The document does not appear to originate from within the EU"
+        
+        return "The document appears to originate from within the EU"
 
 
 if __name__ == "__main__":
