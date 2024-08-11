@@ -68,7 +68,7 @@ describe('UploadDocumentComponent', () => {
     expect(component.onFileSelected).toHaveBeenCalled();
     expect(component.fileName).toBe('test.txt');
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload');
+    const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
     expect(req.request.method).toBe('POST');
     req.flush({ fileName: 'test.txt', result: 'file processed' });
 
@@ -88,7 +88,7 @@ it('should display the analysis result in the analysis window', () => {
   input.files = dataTransfer.files;
   input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
 
-  const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload');
+  const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
   req.flush({ fileName: 'test.txt', result: 'line1\nline2' });
 
   fixture.detectChanges();
