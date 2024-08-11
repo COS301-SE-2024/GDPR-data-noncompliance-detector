@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         },
         {
           element: '#inbox',
-          into: 'This button will navigate you to the inbox page. Where you can see all the attachments in the received inbox.'
+          intro: 'This button will navigate you to the inbox page. Where you can see all the attachments in the received inbox.'
         },
         {
           element: '#help',
