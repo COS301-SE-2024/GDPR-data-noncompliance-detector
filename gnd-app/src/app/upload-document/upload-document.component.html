@@ -71,13 +71,8 @@
       </div>
 
       <div class="upload-data" *ngIf="result">
-
-        <!-- <div class="comp-status">
-          <span *ngIf="documentStatus == 'Compliant'" class="bg-green-100 text-green-800 text-4xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ documentStatus }}</span>
-          <span *ngIf="documentStatus == 'Non-Compliant'" class="bg-red-100 text-red-800 text-4xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ documentStatus }}</span>        
-        </div> -->
+        
         <div class="ner-data">
-          <!-- <strong>NER Count:</strong> {{ nerCount }} -->
           <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{ nerCount }} different individuals</p>
         </div>
         
@@ -122,10 +117,7 @@
         </div>
 
         <div class="divider-text"></div>
-
-        <!-- <div class="CA-data">
-          <strong>Consent Agreement:</strong> {{ consentAgreement }}
-        </div> -->
+    
       </div>
 
       <div class="consent-status-container" *ngIf="result">

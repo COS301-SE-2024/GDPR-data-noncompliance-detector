@@ -51,6 +51,14 @@ export class HomeComponent implements OnInit, OnDestroy {
           intro: 'This button will always navigate you back to the home page'
         },
         {
+          element:'#upload-document',
+          intro:'This button will navigate you to the upload document page. Where you can upload a document.'
+        },
+        {
+          element: '#inbox',
+          intro: 'This button will navigate you to the inbox page. Where you can see all the attachments in the received inbox.'
+        },
+        {
           element: '#help',
           intro: 'This button will navigate you to the help page. Where you will see how to use the app.'
         },
