@@ -74,6 +74,7 @@ export class InboxComponent implements OnInit, OnDestroy {
       .then(response => {
         this.currentAnalysis.content = response.data.content;
         this.result = this.processResult(this.currentAnalysis.content)
+        console.log(this.result)
       })
       .catch(error => {
         console.error('There was an error!', error);
