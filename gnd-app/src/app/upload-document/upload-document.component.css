@@ -5,7 +5,7 @@ body {
 }
 
 .main-content {
-  padding-top: 10px; /* Adjust this value to match your nav bar's height */
+  padding-top: 10px;
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -16,7 +16,7 @@ body {
   align-items: center;
   text-align: center;
   padding-bottom: 2.5em;
-  padding-top: 1em;  /*Reduced from 3.5em*/
+  padding-top: 1em;
 }
 
 .header {
@@ -192,7 +192,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px; /* Space below the divider */
+  padding-bottom: 20px;
 }
 
 .comp-status {
@@ -213,4 +213,60 @@ body {
   font-size: 1.5em;
   padding: 0.5em;
   border-radius: 0.25em;
+}
+
+.ner-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  font-family: "Roboto Bold";
+}
+
+.result-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  font-family: "Roboto Bold";
+}
+
+.result-data p {
+  flex-shrink: 0;
+  padding-left: 44px;
+}
+
+.result-data span {
+  flex-grow: 1;
+  text-align: right;
+  padding-right: 44px;
+}
+
+.divider-text {
+  height: 1px;
+  background-color: gray;
+  margin-bottom: 1em;
+  width: 90%;
+  margin: 0 auto 1em;
+}
+
+.consent-status-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.consent-status {
+  text-align: center;
+}
+
+.consent-agreement {
+  background-color: #0875e2;;
+  color: whitesmoke;;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  padding-top: 15px;
 }

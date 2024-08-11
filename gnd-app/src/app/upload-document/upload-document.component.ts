@@ -331,10 +331,10 @@ export class UploadDocumentComponent implements OnInit{
 
   consentAgreementStatus(consent: boolean): string {
     if(consent == true) {
-      return "The document does appear to contain data consent agreements";
+      return "This document does appear to contain data consent agreements";
     }
 
-    return "The document does not seem to contain any data consent agreements";
+    return "This document does not seem to contain any data consent agreements";
   }
 
   onDownload() {
