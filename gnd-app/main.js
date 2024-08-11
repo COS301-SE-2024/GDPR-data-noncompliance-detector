@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const { spawn } = require('child_process');
+const notifier = require('node-notifier');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
@@ -121,7 +122,14 @@ function setupWatcher() {
       output = JSON.stringify(res.data);
       console.log("Report successfully created")
       const outputDir = path.join('../backend/Reports', newFileName);
-      fs.writeFileSync(outputDir, output, 'utf8');
+        fs.writeFileSync(outputDir, output, 'utf8');
+        notifier.notify({
+          title: 'GND Notification',
+          message: `GND has created a new report`,
+          sound: true,
+          wait: false,
+          icon: 'src/assets/logo.png'
+        });
     })
     .catch((error) => {
       console.error(`problem with request: ${error.message}`);
