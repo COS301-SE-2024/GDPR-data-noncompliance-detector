@@ -3,7 +3,6 @@
 body {
   min-width: 500px; /* Set minimum width */
   min-height: 500px; /* Set minimum height */
-  background-color: #708090
 }
 @tailwind base;
 @tailwind components;
