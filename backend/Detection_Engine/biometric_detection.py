@@ -58,7 +58,9 @@ class biometric_detection:
         # clean up folders
         if (pdf_path.endswith('.pdf')):
             # extract_images_from_pdf(pdf_path)
-            images = [f'./Detection_Engine/extracted_images/pdf_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/pdf_images')]
+
+            images = [f'./Detection_Engine/extracted_images/pdf_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/pdf_images') if i.endswith('.png')]
+
             output = []
             for image in images:
                 output.append(self.biometric_detect_people(image))
@@ -71,7 +73,7 @@ class biometric_detection:
         
         elif (pdf_path.endswith('.docx')):
             # extract_images_from_docx(pdf_path)
-            images = [f'./Detection_Engine/extracted_images/docx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/docx_images')]
+            images = [f'./Detection_Engine/extracted_images/docx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/docx_images') if i.endswith('.png')]
             output = []
             for image in images:
                 output.append(self.biometric_detect_people(image))
@@ -84,7 +86,7 @@ class biometric_detection:
         
         elif (pdf_path.endswith('.xlsx')):
             # extract_images_from_excel(pdf_path)
-            images = [f'./Detection_Engine/extracted_images/xlsx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/xlsx_images')]
+            images = [f'./Detection_Engine/extracted_images/xlsx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/xlsx_images') if i.endswith('.png')]
             # images = [f'extracted_images/xlsx_images/{i}' for i in os.listdir('extracted_images/xlsx_images')]
             output = []
             for image in images:
@@ -95,6 +97,19 @@ class biometric_detection:
                 os.remove(file)
 
             return output
+        
+        directories = [
+            "./Detection_Engine/extracted_images/xlsx_images",
+            "./Detection_Engine/extracted_images/docx_images",
+            "./Detection_Engine/extracted_images/pdf_images"
+        ]
+
+        for directory in directories:
+            all_files = glob.glob(os.path.join(directory, '*'))
+            for file in all_files:
+                os.remove(file)
+
+        return output
 
 
 
