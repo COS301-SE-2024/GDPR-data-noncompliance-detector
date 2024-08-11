@@ -49,11 +49,11 @@ class backend_entry:
         # path = input("File Name:  ")
         file = parser.process(path)
         result = engine.process(file,path)
-        engine.report_generation(file, path)
+        result_new = engine.report_generation(file, path)
         # print(result)
 
         # print(file)
-        return result
+        return result_new
 
 
 if __name__ == "__main__":

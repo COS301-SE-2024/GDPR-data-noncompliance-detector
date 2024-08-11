@@ -53,6 +53,14 @@ body {
   max-width: calc(50% - 1em);
 }
 
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
 .analysis-rectangle {
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -109,7 +117,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 75%;
+  /* height: %; */
   font-family: "Roboto Bold";
 }
 
@@ -133,7 +141,11 @@ body {
 .analysis-data {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  /* padding-top: 20px; */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 75%;
 }
 
 .analysis-data p {
@@ -176,46 +188,29 @@ body {
   visibility: hidden;
 }
 
-.ca_statement {
-  background-color: #0875e2;
-  border-radius: 12px; /* More rounded corners */
-  color: white;
-  padding: 10px 15px; /* Increased padding */
-  height: auto; /* Allow height to adjust based on content */
-  text-align: left; /* Align text to the left */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+.comp-status-container {
   display: flex;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 10px; /* Space below the divider */
 }
 
-.status-success {
-  background-color: rgb(6, 187, 142);
-  border-radius: 12px; /* More rounded corners */
-  color: white;
-  font-weight: bold;
-  text-align: left; /* Align text to the left */
-  padding: 10px 15px; /* Increased padding */
-  height: auto; /* Allow height to adjust based on content */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
-  display: flex;
-  align-items: center;
+.comp-status {
+  text-align: center;
 }
 
-.status-error {
-  background-color: rgb(206, 14, 14);
-  border-radius: 12px; /* More rounded corners */
-  color: white;
-  font-weight: bold;
-  padding: 10px 15px; /* Increased padding */
-  height: auto; /* Allow height to adjust based on content */
-  text-align: left; /* Align text to the left */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
-  display: flex;
-  align-items: center;
+.status-compliant {
+  background-color: #d4edda;
+  color: #155724;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border-radius: 0.25em;
 }
 
-.ca_statement i,
-.status-success i,
-.status-error i {
-  margin-right: 10px; /* Space between icon and text */
+.status-non-compliant {
+  background-color: #f8d7da;
+  color: #721c24;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border-radius: 0.25em;
 }

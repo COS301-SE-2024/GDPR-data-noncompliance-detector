@@ -200,7 +200,7 @@ class detection_engine:
             os.makedirs(output_dir)
 
         self.report_generator.generate_pdf(violation_data, output_file)
-        # return violation_data
+        return violation_data
 
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
 
