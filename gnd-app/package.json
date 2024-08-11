@@ -28,6 +28,7 @@
     "chart.js": "^4.4.3",
     "electron-reload": "^2.0.0-alpha.1",
     "flowbite": "^2.3.0",
+    "gnd-app": "file:",
     "intro.js": "^7.2.0",
     "ng2-charts": "^6.0.1",
     "node-notifier": "^10.0.1",
