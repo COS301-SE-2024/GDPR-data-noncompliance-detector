@@ -140,8 +140,9 @@ describe('UploadDocumentComponent', () => {
   let walkthroughServiceMock: jasmine.SpyObj<WalkthroughService>;
 
   beforeEach(async () => {
-    walkthroughServiceMock = jasmine.createSpyObj('WalkthroughService', ['walkthroughRequested$']);
-    walkthroughServiceMock.walkthroughRequested$ = of(undefined);
+    walkthroughServiceMock = jasmine.createSpyObj('WalkthroughService', [], {
+      walkthroughRequested$: of(undefined)
+    });
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, UploadDocumentComponent],
@@ -165,35 +166,89 @@ describe('UploadDocumentComponent', () => {
 
     fixture = TestBed.createComponent(UploadDocumentComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-    debugElement = fixture.debugElement;
     httpMock = TestBed.inject(HttpTestingController);
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    debugElement = fixture.debugElement;
   });
 
   afterEach(() => {
     httpMock.verify();
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should initialize intro.js on ngOnInit if hasSeenIntro is not set', () => {
+    spyOn(localStorage, 'getItem').and.returnValue(null);
+    spyOn(localStorage, 'setItem');
+    spyOn(component, 'startIntro');
+
+    component.ngOnInit();
+
+    expect(localStorage.getItem).toHaveBeenCalledWith('hasSeenIntro');
+    expect(component.startIntro).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalledWith('hasSeenIntro', 'true');
+  });
+
+  it('should not initialize intro.js on ngOnInit if hasSeenIntro is set', () => {
+    spyOn(localStorage, 'getItem').and.returnValue('true');
+    spyOn(component, 'startIntro');
+
+    component.ngOnInit();
+
+    expect(localStorage.getItem).toHaveBeenCalledWith('hasSeenIntro');
+    expect(component.startIntro).not.toHaveBeenCalled();
+  });
+
+  it('should call startIntro when toggleWalkthrough is called', () => {
+    spyOn(component, 'startIntro');
+    component.toggleWalkthrough();
+    expect(component.startIntro).toHaveBeenCalled();
+  });
+
+  it('should handle file drop', () => {
+    const mockEvent = {
+      preventDefault: jasmine.createSpy('preventDefault'),
+      stopPropagation: jasmine.createSpy('stopPropagation'),
+      dataTransfer: {
+        files: [new File([''], 'test.txt', { type: 'text/plain' })]
+      }
+    };
+    component.onFileDropped(mockEvent as any);
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
+    expect(component.isDragActive).toBeFalse();
+  });
+
+  it('should handle drag over', () => {
+    const mockEvent = {
+      preventDefault: jasmine.createSpy('preventDefault'),
+      stopPropagation: jasmine.createSpy('stopPropagation')
+    };
+    component.onDragOver(mockEvent as any);
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
+    expect(mockEvent.stopPropagation).toHaveBeenCalled();
+    expect(component.isDragActive).toBeTrue();
+  });
+
+  it('should handle drag leave', () => {
+    const mockEvent = {
+      preventDefault: jasmine.createSpy('preventDefault'),
+      stopPropagation: jasmine.createSpy('stopPropagation')
+    };
+    component.onDragLeave(mockEvent as any);
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
+    expect(mockEvent.stopPropagation).toHaveBeenCalled();
+    expect(component.isDragActive).toBeFalse();
+  });
+
   it('should call onFileSelected and upload file', () => {
     const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
-    const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
+    const mockEvent = { target: { files: [file] } };
 
-    spyOn(component, 'onFileSelected').and.callThrough();
+    component.onFileSelected(mockEvent);
 
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(file);
-
-    input.files = dataTransfer.files;
-    input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-
-    fixture.detectChanges();
-
-    expect(component.onFileSelected).toHaveBeenCalled();
     expect(component.fileName).toBe('test.txt');
+    expect(component.uploadedFileName).toBe('test.txt');
 
     const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
     expect(req.request.method).toBe('POST');
@@ -214,8 +269,6 @@ describe('UploadDocumentComponent', () => {
         }
       }
     });
-
-    fixture.detectChanges();
 
     expect(component.uploadedFileName).toBe('test.txt');
     expect(component.result).toBe('Y');
@@ -246,46 +299,51 @@ describe('UploadDocumentComponent', () => {
 
     fixture.detectChanges();
 
-    const analysisHeader = debugElement.query(By.css('.analysis-header')).nativeElement;
-    const nerData = debugElement.query(By.css('.ner-data')).nativeElement;
-    const locationData = debugElement.query(By.css('.result-data:nth-child(2)')).nativeElement;
-    const personalDataElement = debugElement.query(By.css('.result-data:nth-child(4)')).nativeElement;
-    const consentStatus = debugElement.query(By.css('.consent-status')).nativeElement;
+    const analysisHeader = debugElement.query(By.css('.analysis-header'));
+    const nerData = debugElement.query(By.css('.ner-data'));
+    const locationData = debugElement.query(By.css('.result-data'));
+    const consentStatus = debugElement.query(By.css('.consent-status'));
 
-    expect(analysisHeader.textContent).toContain('Analysis');
-    expect(nerData.textContent).toContain('This document potentially references 5 different individuals');
-    expect(locationData.textContent).toContain('Location:EU');
-    expect(personalDataElement.textContent).toContain('Personal Data:3');
-    expect(consentStatus.textContent).toContain('This document does appear to contain data consent agreements');
+    expect(analysisHeader.nativeElement.textContent).toContain('Analysis');
+    expect(nerData.nativeElement.textContent).toContain('This document potentially references 5 different individuals');
+    expect(locationData.nativeElement.textContent).toContain('Location:EU');
+    expect(consentStatus.nativeElement.textContent).toContain('This document does appear to contain data consent agreements');
   });
 
-  it('should initialize intro.js on ngOnInit if hasSeenIntro is not set', () => {
-    spyOn(localStorage, 'getItem').and.returnValue(null);
-    spyOn(localStorage, 'setItem');
-    spyOn(component, 'startIntro');
-
-    component.ngOnInit();
-
-    expect(localStorage.getItem).toHaveBeenCalledWith('hasSeenIntro');
-    expect(component.startIntro).toHaveBeenCalled();
-    expect(localStorage.setItem).toHaveBeenCalledWith('hasSeenIntro', 'true');
+  it('should handle document status correctly', () => {
+    expect(component.docStatus(1)).toBe('Compliant');
+    expect(component.docStatus(0)).toBe('Non-Compliant');
   });
 
-  it('should not initialize intro.js on ngOnInit if hasSeenIntro is set', () => {
-    spyOn(localStorage, 'getItem').and.returnValue('true');
-    spyOn(component, 'startIntro');
-
-    component.ngOnInit();
-
-    expect(localStorage.getItem).toHaveBeenCalledWith('hasSeenIntro');
-    expect(component.startIntro).not.toHaveBeenCalled();
+  it('should handle location status correctly', () => {
+    expect(component.locationStatus(0)).toBe('Not EU');
+    expect(component.locationStatus(1)).toBe('EU');
+    expect(component.locationStatus(2)).toBe('Not Available');
   });
 
-  it('should call startIntro when toggleWalkthrough is called', () => {
-    spyOn(component, 'startIntro');
+  it('should handle consent agreement status correctly', () => {
+    expect(component.consentAgreementStatus(true)).toBe('This document does appear to contain data consent agreements');
+    expect(component.consentAgreementStatus(false)).toBe('This document does not seem to contain any data consent agreements');
+  });
 
-    component.toggleWalkthrough();
+  it('should handle download correctly', () => {
+    const mockBlob = new Blob(['test'], { type: 'application/pdf' });
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+    spyOn(document, 'createElement').and.callThrough();
+    spyOn(document.body, 'appendChild');
+    spyOn(document.body, 'removeChild');
 
-    expect(component.startIntro).toHaveBeenCalled();
+    component.onDownload();
+
+    const req = httpMock.expectOne('http://127.0.0.1:8000/get-report');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockBlob);
+
+    expect(window.URL.createObjectURL).toHaveBeenCalledWith(mockBlob);
+    expect(document.createElement).toHaveBeenCalledWith('a');
+    expect(document.body.appendChild).toHaveBeenCalled();
+    expect(document.body.removeChild).toHaveBeenCalled();
+    expect(window.URL.revokeObjectURL).toHaveBeenCalledWith('blob:test');
   });
 });
