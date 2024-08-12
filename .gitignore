@@ -5,4 +5,8 @@ obj/
 **/__pycache__/
 venv/
 myenv/
-
+**/results/
+__pycache__/
+.DS_Store
+**/.DS_Store
+env

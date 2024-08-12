@@ -1,7 +1,7 @@
 import unittest
 import os
 from datetime import datetime
-from storage_and_submission import storage_and_submission
+from .storage_and_submission import storage_and_submission
 
 
 class TestStorageAndSubmission(unittest.TestCase):
