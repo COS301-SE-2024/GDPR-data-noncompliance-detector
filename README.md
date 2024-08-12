@@ -30,6 +30,8 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 
 
 ### Demo 3
+[Demo 2 SRS Documentation](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_3___SRS.pdf)
+<br></br>
 [Demo 3 Video Presentation](https://drive.google.com/file/d/1MiGo9iybk75pbj5HlVkt20Jh9sM_36tb/view?usp=drive_link)
 <br></br>
 
@@ -38,12 +40,20 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 # Documentation
 
 ## Software Requirements Specification
-[SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___SRS.pdf)
+[SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_3___SRS.pdf)
 
 ## Architectural Document
-[Architectural Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_2___Architectural_Document.pdf)
+[Architectural Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_3___Architectural_Document-1.pdf)
 <br></br>
 [Architectural Diagram](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Architectural%20Document.png)
+
+## Technical Installation Manual
+[Technical Installation](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Technical_Installation_Manual-2.pdf)
+<br></br>
+
+## Coding Standards
+[Technical Installation](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Coding_Standards.pdf)
+<br></br>
 
 ## Project Management Tools
 GitHub Issues and GitHub Boards
