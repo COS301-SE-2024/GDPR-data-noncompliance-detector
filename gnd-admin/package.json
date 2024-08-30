@@ -18,7 +18,9 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "chart.js": "^4.4.4",
     "flowbite": "^2.5.1",
+    "ng2-charts": "^6.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
