@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { Chart, registerables } from 'chart.js';
-// Chart.register(...registerables);
 import { Chart } from 'chart.js/auto';
 
 @Component({
