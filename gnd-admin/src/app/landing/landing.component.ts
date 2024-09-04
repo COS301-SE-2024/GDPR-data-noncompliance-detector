@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { addIcons } from "ionicons";
 
 @Component({
   selector: 'app-landing',
