@@ -4,7 +4,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  position: relative;
+  overflow: hidden;
+}
+
+.fullscreen-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/landing-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.landing-container h1,
+.landing-container p {
   color: white;
-  text-align: center;
+  z-index: 1;
 }
