@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
+import {FormsModule, NgModel} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
