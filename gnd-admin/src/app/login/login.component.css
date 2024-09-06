@@ -1,0 +1,121 @@
+.fullscreen-image {
+  width: 100%;
+  height: 100%;
+  background-image: url('/professional.jpg');
+  background-size: cover;
+  z-index: -1;
+}
+.login-form {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-form .form-group {
+    margin-bottom: 20px;
+}
+
+.login-form .form-group label {
+    display: block;
+    font-weight: bold;
+}
+
+.login-form .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form .form-group button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.login-form .form-group button:hover {
+    background-color: #0056b3;
+}
+
+.login-form .form-group .text-center {
+    text-align: center;
+}
+
+.login-form .form-group .text-center a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.login-form .form-group .text-center a:hover {
+    text-decoration: underline;
+}
+
+.register-form {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.register-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register-form .form-group {
+    margin-bottom: 20px;
+}
+
+.register-form .form-group label {
+    display: block;
+    font-weight: bold;
+}
+
+.register-form .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-form .form-group button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.register-form .form-group button:hover {
+    background-color: #0056b3;
+}
+
+.register-form .form-group .text-center {
+    text-align: center;
+}
+
+.register-form .form-group .text-center a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.register-form .form-group .text-center a:hover {
+    text-decoration: underline;
+}
+
