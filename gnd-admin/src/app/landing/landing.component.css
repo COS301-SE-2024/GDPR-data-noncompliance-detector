@@ -18,7 +18,7 @@
   background-size: cover;
   background-position: center;
   z-index: -1;
-  rotate: 180deg;
+  /*rotate: 180deg;*/
 }
 
 .horizontal-strips {

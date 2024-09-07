@@ -5,117 +5,72 @@
   background-size: cover;
   z-index: -1;
 }
+/*Everything to do with Login form*/
 .login-form {
-    width: 300px;
+    width: 50vh;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: white;
 }
-
-.login-form h2 {
+/*Here I will be styling the login form*/
+.login-form h1 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.login-form .form-group {
-    margin-bottom: 20px;
-}
-
-.login-form .form-group label {
-    display: block;
+    font-size: large;
     font-weight: bold;
 }
 
-.login-form .form-group input {
+.login-form input {
     width: 100%;
     padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.login-form .form-group button {
+.login-form button {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #007bff;
     color: #fff;
-    font-weight: bold;
+    cursor: pointer;
 }
 
-.login-form .form-group button:hover {
-    background-color: #0056b3;
-}
-
-.login-form .form-group .text-center {
-    text-align: center;
-}
-
-.login-form .form-group .text-center a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-.login-form .form-group .text-center a:hover {
-    text-decoration: underline;
-}
-
+/*Everything to do with the register form*/
 .register-form {
-    width: 300px;
+    width: 100vh;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: white;
 }
 
-.register-form h2 {
+
+/*Here I will be styling the register form*/
+.register-form h1 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.register-form .form-group {
-    margin-bottom: 20px;
-}
-
-.register-form .form-group label {
-    display: block;
     font-weight: bold;
 }
 
-.register-form .form-group input {
+.register-form input {
     width: 100%;
     padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.register-form .form-group button {
+.register-form button {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #007bff;
     color: #fff;
-    font-weight: bold;
-}
-
-.register-form .form-group button:hover {
-    background-color: #0056b3;
-}
-
-.register-form .form-group .text-center {
-    text-align: center;
-}
-
-.register-form .form-group .text-center a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-.register-form .form-group .text-center a:hover {
-    text-decoration: underline;
+    cursor: pointer;
 }
 
