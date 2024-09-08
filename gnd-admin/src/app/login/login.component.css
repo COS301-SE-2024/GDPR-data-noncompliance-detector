@@ -30,39 +30,3 @@
     color: #fff;
     cursor: pointer;
 }
-
-/*Everything to do with the register form*/
-.register-form {
-    width: 100vh;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white;
-}
-
-
-/*Here I will be styling the register form*/
-.register-form h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-.register-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.register-form button {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-}
-
