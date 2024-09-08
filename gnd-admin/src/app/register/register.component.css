@@ -1,7 +1,42 @@
 
-/*Everything to do with the register form*/
-.register-form {
-  width: 100vh;
+/*!*Everything to do with the register form*!*/
+/*.register-form {*/
+/*  width: 100vh;*/
+/*  margin: 0 auto;*/
+/*  padding: 20px;*/
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 5px;*/
+/*  background-color: white;*/
+/*}*/
+
+
+/*!*Here I will be styling the register form*!*/
+/*.register-form h1 {*/
+/*  text-align: center;*/
+/*  margin-bottom: 20px;*/
+/*  font-weight: bold;*/
+/*}*/
+
+/*.register-form input {*/
+/*  width: 100%;*/
+/*  padding: 10px;*/
+/*  margin-bottom: 15px;*/
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 5px;*/
+/*}*/
+
+/*.register-form button {*/
+/*  width: 100%;*/
+/*  padding: 10px;*/
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 5px;*/
+/*  color: #fff;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/* Register form container */
+.login-container {
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -9,28 +44,144 @@
   background-color: white;
 }
 
-
-/*Here I will be styling the register form*/
-.register-form h1 {
+/* Form header */
+.login-container h2 {
   text-align: center;
   margin-bottom: 20px;
   font-weight: bold;
+  color: #333;
 }
 
-.register-form input {
+/* Form inputs */
+.login-container input {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px;
 }
 
-.register-form button {
+/* Labels */
+.login-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Submit button */
+.login-container button[type="submit"] {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 5px;
+  background-color: #3490dc;
   color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-container button[type="submit"]:hover {
+  background-color: #2779bd;
+}
+
+.login-container button[type="submit"]:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+/* Invalid input styling */
+.login-container input.is-invalid {
+  border-color: #e3342f;
+}
+
+/* Error messages */
+.invalid-feedback {
+  color: #e3342f;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/* Password strength indicator */
+.password-strength {
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.password-strength.weak {
+  color: #e3342f;
+}
+
+.password-strength.medium {
+  color: #f6993f;
+}
+
+.password-strength.strong {
+  color: #38c172;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
   cursor: pointer;
 }
 
+.eye-icon {
+  font-size: 20px;
+  color: #666;
+}
+
+.eye-icon.visible {
+  color: #3490dc;
+}
+
+/* Checkbox styling */
+.login-container input[type="checkbox"] {
+  width: auto;
+  margin-right: 5px;
+}
+
+/* Link styling */
+.login-container a {
+  color: #3490dc;
+  text-decoration: none;
+}
+
+.login-container a:hover {
+  text-decoration: underline;
+}
+
+/* Grid layout for name fields */
+.grid {
+  display: grid;
+  gap: 15px;
+}
+
+.md\:grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .login-container {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}

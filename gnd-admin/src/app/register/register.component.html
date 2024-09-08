@@ -8,42 +8,153 @@
 </head>
 <body class="fullscreen-image">
 
-<div class="login-container">
-  <form *ngIf="!showRegisterForm" class="register-form" (ngSubmit)="onRegisterSubmit()">
-    <h1>Register</h1>
-    <div class="grid gap-6 mb-6 md:grid-cols-2">
-      <div>
-        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-        <input type="text" id="first_name" [(ngModel)]="firstName" name="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
+<!--<div class="login-container">-->
+<!--  <form *ngIf="!showRegisterForm" class="register-form" (ngSubmit)="onRegisterSubmit()">-->
+<!--    <h1>Register</h1>-->
+<!--    <div class="grid gap-6 mb-6 md:grid-cols-2">-->
+<!--      <div>-->
+<!--        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>-->
+<!--        <input type="text" id="first_name" [(ngModel)]="firstName" name="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>-->
+<!--        <input type="text" id="last_name" [(ngModel)]="lastName" name="lastName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required />-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="mb-6">-->
+<!--      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>-->
+<!--      <input type="email" id="email" [(ngModel)]="registerEmail" name="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />-->
+<!--    </div>-->
+<!--    <div class="mb-6">-->
+<!--      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>-->
+<!--      <input type="password" id="password" [(ngModel)]="registerPassword" name="registerPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />-->
+<!--    </div>-->
+<!--    <div class="mb-6">-->
+<!--      <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>-->
+<!--      <input type="password" id="confirm_password" [(ngModel)]="confirmPassword" name="confirmPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />-->
+<!--    </div>-->
+<!--    <div class="flex items-start mb-6">-->
+<!--      <div class="flex items-center h-5">-->
+<!--        <input id="remember" type="checkbox" [(ngModel)]="agreeTerms" name="agreeTerms" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />-->
+<!--      </div>-->
+<!--      <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>-->
+<!--    </div>-->
+<!--    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>-->
+<!--    <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">-->
+<!--      <a routerLink="/login" class="text-blue-600 hover:underline dark:text-blue-500">Back to Login</a>-->
+<!--    </label>-->
+<!--  </form>-->
+  <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+    <div class="login-container">
+      <h2>Register</h2>
+
+      <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+          <label for="firstName">First name</label>
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            [class.is-invalid]="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)"
+          >
+          <div *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)" class="invalid-feedback">
+            <div *ngIf="registerForm.get('firstName')?.errors?.['required']">First name is required.</div>
+            <div *ngIf="registerForm.get('firstName')?.errors?.['pattern']">Only letters are allowed.</div>
+          </div>
+        </div>
+
+        <div>
+          <label for="lastName">Last name</label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            [class.is-invalid]="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)"
+          >
+          <div *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)" class="invalid-feedback">
+            <div *ngIf="registerForm.get('lastName')?.errors?.['required']">Last name is required.</div>
+            <div *ngIf="registerForm.get('lastName')?.errors?.['pattern']">Only letters are allowed.</div>
+          </div>
+        </div>
       </div>
-      <div>
-        <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-        <input type="text" id="last_name" [(ngModel)]="lastName" name="lastName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required />
+
+      <div class="mb-6">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.is-invalid]="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)"
+        >
+        <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)" class="invalid-feedback">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        </div>
       </div>
-    </div>
-    <div class="mb-6">
-      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
-      <input type="email" id="email" [(ngModel)]="registerEmail" name="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />
-    </div>
-    <div class="mb-6">
-      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-      <input type="password" id="password" [(ngModel)]="registerPassword" name="registerPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
-    </div>
-    <div class="mb-6">
-      <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-      <input type="password" id="confirm_password" [(ngModel)]="confirmPassword" name="confirmPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
-    </div>
-    <div class="flex items-start mb-6">
-      <div class="flex items-center h-5">
-        <input id="remember" type="checkbox" [(ngModel)]="agreeTerms" name="agreeTerms" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />
+
+      <div class="mb-6 relative">
+        <label for="password">Password</label>
+        <div class="password-input-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            [class.is-invalid]="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)"
+          >
+          <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+            <i class="eye-icon" [class.visible]="showPassword">👁️</i>
+          </button>
+        </div>
+        <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="invalid-feedback">
+          <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
+          <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</div>
+          <div *ngIf="registerForm.get('password')?.errors?.['pattern']">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.</div>
+        </div>
+        <div [ngClass]="{'text-red-500': passwordStrength === 'weak', 'text-yellow-500': passwordStrength === 'medium', 'text-green-500': passwordStrength === 'strong'}">
+          Password strength: {{ passwordStrength }}
+        </div>
       </div>
-      <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
+
+      <div class="mb-6 relative">
+        <label for="confirmPassword">Confirm password</label>
+        <div class="password-input-wrapper">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            [class.is-invalid]="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)"
+          >
+          <button type="button" class="password-toggle" (click)="toggleConfirmPasswordVisibility()">
+            <i class="eye-icon" [class.visible]="showConfirmPassword">👁️</i>
+          </button>
+        </div>
+        <div *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" class="invalid-feedback">
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm password is required.</div>
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['mustMatch']">Passwords must match.</div>
+        </div>
+      </div>
+
+      <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+          <input
+            type="checkbox"
+            id="agreeTerms"
+            formControlName="agreeTerms"
+            [class.is-invalid]="registerForm.get('agreeTerms')?.invalid && (registerForm.get('agreeTerms')?.dirty || registerForm.get('agreeTerms')?.touched)"
+          >
+        </div>
+        <label for="agreeTerms" class="ml-2">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
+      </div>
+
+      <button type="submit" [disabled]="registerForm.invalid" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Register
+      </button>
+
+      <p class="mt-4">
+        <a routerLink="/login" class="text-blue-600 hover:underline dark:text-blue-500">Back to Login</a>
+      </p>
     </div>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>
-    <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-      <a routerLink="/login" class="text-blue-600 hover:underline dark:text-blue-500">Back to Login</a>
-    </label>
   </form>
-</div>
+<!--</div>-->
 </body>
 </html>
