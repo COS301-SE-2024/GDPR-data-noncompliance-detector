@@ -8,22 +8,65 @@
 </head>
 <body>
 
+<!--<div class="login-container">-->
+<!--  <form *ngIf="showLoginForm" class="login-form" (ngSubmit)="onLoginSubmit()">-->
+<!--    <h1>Login</h1>-->
+<!--    <div class="mb-6">-->
+<!--      <label for="user-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>-->
+<!--      <input type="email" id="user-email" [(ngModel)]="loginEmail" name="loginEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />-->
+<!--    </div>-->
+<!--    <div class="mb-6">-->
+<!--      <label for="current-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>-->
+<!--      <input type="password" id="current-password" [(ngModel)]="loginPassword" name="loginPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />-->
+<!--    </div>-->
+<!--    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>-->
+<!--    <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Or click here to register-->
+<!--      <a routerLink="/register" class="text-blue-600 hover:cursor-pointer dark:text-blue-500">Register</a>-->
+<!--    </label>-->
+<!--  </form>-->
+<!--</div>-->
 <div class="login-container">
-  <form *ngIf="showLoginForm" class="login-form" (ngSubmit)="onLoginSubmit()">
-    <h1>Login</h1>
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
     <div class="mb-6">
-      <label for="user-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
-      <input type="email" id="user-email" [(ngModel)]="loginEmail" name="loginEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />
+      <label for="email">Email address</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        [class.is-invalid]="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
+      >
+      <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+        <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+      </div>
     </div>
-    <div class="mb-6">
-      <label for="current-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-      <input type="password" id="current-password" [(ngModel)]="loginPassword" name="loginPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
+
+    <div class="mb-6 relative">
+      <label for="password">Password</label>
+      <div class="password-input-wrapper">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="password"
+          formControlName="password"
+          [class.is-invalid]="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+        >
+        <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+          <i class="eye-icon" [class.visible]="showPassword">👁️</i>
+        </button>
+      </div>
+      <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+        <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+      </div>
     </div>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
-    <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Or click here to register
-      <a routerLink="/register" class="text-blue-600 hover:cursor-pointer dark:text-blue-500">Register</a>
-    </label>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
   </form>
+
+  <p class="mt-4">
+    Or click here to register
+    <a routerLink="/register" class="text-blue-600 hover:underline dark:text-blue-500">Register</a>
+  </p>
 </div>
 </body>
 </html>
