@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent {
+export class RegisterComponent {
   showLoginForm = true;
   showRegisterForm = false;
 
@@ -25,13 +25,18 @@ export class LoginComponent {
   confirmPassword = '';
   agreeTerms = false;
 
-  // toggleForms() {
-  //   this.showRegisterForm = !this.showRegisterForm;
-  // }
+  toggleForms() {
+    this.showRegisterForm = !this.showRegisterForm;
+  }
 
   onLoginSubmit() {
     // Implement login logic here
     console.log('Login submitted', this.loginEmail, this.loginPassword);
   }
 
+
+  onRegisterSubmit() {
+    // Implement registration logic here
+    console.log('Register submitted', this.firstName, this.lastName, this.registerEmail, this.registerPassword);
+  }
 }
