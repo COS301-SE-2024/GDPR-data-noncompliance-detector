@@ -1,38 +1,3 @@
-// import { Component } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule } from '@angular/forms';
-// import {RouterLink} from "@angular/router";
-//
-// @Component({
-//   selector: 'app-register',
-//   standalone: true,
-//   imports: [CommonModule, FormsModule, RouterLink],
-//   templateUrl: './register.component.html',
-//   styleUrl: './register.component.css'
-// })
-// export class RegisterComponent {
-//   showRegisterForm = false;
-//
-//   // Register form fields
-//   firstName = '';
-//   lastName = '';
-//   registerEmail = '';
-//   registerPassword = '';
-//   confirmPassword = '';
-//   agreeTerms = false;
-//
-//   onRegisterSubmit() {
-//     // Implement registration logic here
-//     // lets make sure the user is able to see the values they entered in the form and give error if the user tries to submit the form with empty fields
-//     console.log('Register submitted', this.firstName, this.lastName, this.registerEmail, this.registerPassword);
-//     if (!this.firstName || !this.lastName || !this.registerEmail || !this.registerPassword) {
-//       alert('Please fill out all fields');
-//       return;
-//     }
-//     this.showRegisterForm = false;
-//
-//   }
-// }
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -56,7 +21,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   ]
 })
 export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup; // Add the non-null assertion operator
+  registerForm!: FormGroup;
   passwordStrength: string = '';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
