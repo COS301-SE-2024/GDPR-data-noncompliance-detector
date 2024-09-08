@@ -1,50 +1,83 @@
-html, body {
-  height: 100%;
+body {
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.page-container {
-  display: flex;
-  flex-direction: column;
+.main-content {
+  padding-top: 60px; /* Adjust this value to match your nav bar's height */
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
-.content-wrapper {
-  flex: 1;
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: fixed;
+  width: 100%;
+  display: flex;
+  /*align-items: center;*/
+  /*justify-content: start; !* Aligns items to the left *!*/
+  padding: 0 20px; /* Adds padding around the navbar */
+  justify-content: space-between;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-areas:
-    'header header'
-    'sidebar main';
-  grid-gap: 10px;
-  padding: 10px;
+/* Style the logo */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  padding-right: 20px; /* Space between logo and nav links */
 }
 
-.grid-item {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
+.navbar-brand img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle; /* Aligns logo vertically */
+}
+
+/* New CSS for Underline Hover Effect */
+.hover-links {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center-aligns the text links */
+  margin-left: 10px; /* Space between logo and links */
+}
+
+.hover-links a {
+  color: #f2f2f2;
   text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  position: relative; /* Position for underline effect */
+  transition: color 0.3s ease; /* Smooth transition for color */
 }
 
-.header {
-  grid-area: header;
+.hover-links a:hover {
+  color: #ffffff; /* Change color on hover */
 }
 
-.sidebar {
-  grid-area: sidebar;
+/* Underline effect on hover */
+.hover-links a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 5px; /* Thickness of the underline */
+  background-color: #8EBA12; /* Color of the underline */
+  transition: width 0.3s ease; /* Smooth transition for underline */
 }
 
-.main {
-  grid-area: main;
+.hover-links a:hover::after {
+  width: 100%; /* Expand underline on hover */
+}
+.hover-links #login, #register{
+  margin-left:auto;
 }
 
-.footer {
-  grid-area: footer;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  text-align: center;
+.hover-links a:not(#dashboard) {
+  margin-left: auto;
 }

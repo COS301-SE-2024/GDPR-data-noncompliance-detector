@@ -1,11 +1,3 @@
-/*.fullscreen-image {*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  !*background-image: url('/professional.jpg');*!*/
-/*  background-size: cover;*/
-/*  z-index: -1;*/
-/*}*/
-/*Everything to do with Login form*/
 .login-form {
     width: 50vh;
     margin: 0 auto;
