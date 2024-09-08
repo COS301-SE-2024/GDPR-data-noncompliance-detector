@@ -20,7 +20,7 @@ export class RegisterComponent {
   registerPassword = '';
   confirmPassword = '';
   agreeTerms = false;
-  
+
   onRegisterSubmit() {
     // Implement registration logic here
     console.log('Register submitted', this.firstName, this.lastName, this.registerEmail, this.registerPassword);
