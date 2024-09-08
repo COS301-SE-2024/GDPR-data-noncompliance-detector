@@ -1,10 +1,56 @@
+<!--<div class="dashboard-container">-->
+<!--  <h1>GDPR Violations Dashboard</h1>-->
+
+<!--  <div class="time-range-selector">-->
+<!--    <label class="text-2xl"> Select the duration:</label><br>-->
+<!--    <br>-->
+<!--    <select [(ngModel)]="timeRange">-->
+<!--      <option value="7d">Last 7 days</option>-->
+<!--      <option value="30d">Last 30 days</option>-->
+<!--      <option value="90d">Last 90 days</option>-->
+<!--    </select>-->
+<!--  </div>-->
+
+<!--  <div class="overview-cards">-->
+<!--    <div class="card">-->
+<!--      <h3>Total Violations</h3>-->
+<!--      <p class="big-number">158</p>-->
+<!--      <p class="trend">+12% from last period</p>-->
+<!--    </div>-->
+<!--    <div class="card">-->
+<!--      <h3>Documents Scanned</h3>-->
+<!--      <p class="big-number">2,345</p>-->
+<!--      <p class="trend">+5% from last period</p>-->
+<!--    </div>-->
+<!--    <div class="card">-->
+<!--      <h3>Highest Category</h3>-->
+<!--      <p class="big-number">42</p>-->
+<!--      <p class="trend">+2 from last period</p>-->
+<!--    </div>-->
+<!--    <div class="card">-->
+<!--      <h3>Last Scan</h3>-->
+<!--      <p class="big-number">2h ago</p>-->
+<!--      <p class="trend">Updated every 3 hours</p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="charts-container">-->
+<!--    <div class="chart">-->
+<!--      <h3>Violation Trends</h3>-->
+<!--      <canvas id="violationTrendChart"></canvas>-->
+<!--    </div>-->
+<!--    <div class="chart">-->
+<!--      <h3>Violation Types</h3>-->
+<!--      <canvas id="violationTypesChart"></canvas>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 <div class="dashboard-container">
   <h1>GDPR Violations Dashboard</h1>
 
   <div class="time-range-selector">
-    <label class="text-2xl"> Select the duration:</label><br>
-    <br>
-    <select [(ngModel)]="timeRange">
+    <label for="timeRange">Select the duration:</label>
+    <select id="timeRange" [(ngModel)]="timeRange" (change)="updateDashboard()">
       <option value="7d">Last 7 days</option>
       <option value="30d">Last 30 days</option>
       <option value="90d">Last 90 days</option>
@@ -14,23 +60,23 @@
   <div class="overview-cards">
     <div class="card">
       <h3>Total Violations</h3>
-      <p class="big-number">158</p>
-      <p class="trend">+12% from last period</p>
+      <p class="large-number">{{ totalViolations }}</p>
+      <p class="trend">{{ totalViolationsTrend }}% from last period</p>
     </div>
     <div class="card">
       <h3>Documents Scanned</h3>
-      <p class="big-number">2,345</p>
-      <p class="trend">+5% from last period</p>
+      <p class="large-number">{{ documentsScanned }}</p>
+      <p class="trend">{{ documentsScannedTrend }}% from last period</p>
     </div>
     <div class="card">
-      <h3>Highest Category</h3>
-      <p class="big-number">42</p>
-      <p class="trend">+2 from last period</p>
+      <h3>Highest Violation Category</h3>
+      <p class="large-number">{{ highestViolationCategory }}</p>
+      <p class="trend">{{ highestViolationCategoryDiff }} from last period</p>
     </div>
     <div class="card">
       <h3>Last Scan</h3>
-      <p class="big-number">2h ago</p>
-      <p class="trend">Updated every 3 hours</p>
+      <p class="large-number">{{ lastScan }}</p>
+      <p>Updated every 3 hours</p>
     </div>
   </div>
 
@@ -43,5 +89,55 @@
       <h3>Violation Types</h3>
       <canvas id="violationTypesChart"></canvas>
     </div>
+  </div>
+
+  <div class="violation-type-trends">
+    <h3>Violation Type Trends</h3>
+    <div class="trend-charts">
+      <div class="trend-chart">
+        <h4>Personal Data Violations</h4>
+        <canvas id="personalDataTrendChart"></canvas>
+      </div>
+      <div class="trend-chart">
+        <h4>Medical Data Violations</h4>
+        <canvas id="medicalDataTrendChart"></canvas>
+      </div>
+      <div class="trend-chart">
+        <h4>Biometric Data Violations</h4>
+        <canvas id="biometricDataTrendChart"></canvas>
+      </div>
+      <div class="trend-chart">
+        <h4>Ethnic Data Violations</h4>
+        <canvas id="ethnicDataTrendChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="recent-reports">
+    <h3>Recent Violation Reports</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Document</th>
+        <th>Total Violations</th>
+        <th>Personal</th>
+        <th>Medical</th>
+        <th>Biometric</th>
+        <th>Ethnic</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let report of recentReports">
+        <td>{{ report.report_date | date:'short' }}</td>
+        <td>{{ report.document_name }}</td>
+        <td>{{ report.total_violations }}</td>
+        <td>{{ report.personal_data_violations }}</td>
+        <td>{{ report.medical_data_violations }}</td>
+        <td>{{ report.biometric_data_violations }}</td>
+        <td>{{ report.ethnic_data_violations }}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
