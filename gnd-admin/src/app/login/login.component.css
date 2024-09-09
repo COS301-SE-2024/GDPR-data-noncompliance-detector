@@ -1,3 +1,17 @@
+.background{
+  height: 100vh;
+  background-image: url('/professional.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+}
+
 /* Login form container */
 .login-container {
   max-width: 500px;
