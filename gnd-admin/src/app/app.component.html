@@ -1,38 +1,27 @@
-<div class="topnav navbar-dark bg-black">
+<nav class="topnav">
   <a class="navbar-brand" routerLink="/">
-    <img src="/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+    <img src="/logo.png" alt="Logo" width="30" height="30">
   </a>
-
   <div class="hover-links">
-    <a class="active" routerLink="/home" id="dashboard">Dashboad</a>
-    <a class="active" routerLink="/login" id="login">Login</a>
+    <a id="dashboard" routerLink="/home">Dashboard</a>
+    <a id="login" routerLink="/login">Login</a>
   </div>
-</div>
+</nav>
 
 <div class="main-content">
   <router-outlet></router-outlet>
 </div>
 
-
-<footer class="bg-black shadow m-4 dark:bg-gray-800">
-  <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a class="hover:underline">AprilFour™</a>. All Rights Reserved.
-    </span>
-    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-      <li>
-        <a href="#" class="hover:underline me-4 md:me-6">About</a>
-      </li>
-      <li>
-        <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-      </li>
-      <li>
-        <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-      </li>
-      <li>
-        <a href="#" class="hover:underline">Contact</a>
-      </li>
-    </ul>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-text">
+      © 2024 <a href="#" class="hover:underline">AprilFour™</a>. All Rights Reserved.
+    </div>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Licensing</a>
+      <a href="#">Contact</a>
+    </div>
   </div>
 </footer>
-
-
