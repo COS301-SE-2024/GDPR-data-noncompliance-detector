@@ -6,7 +6,7 @@
 
 .hero-section {
   height: 100vh;
-  background-image: url('https://source.unsplash.com/random/1920x1080?data');
+  background-image: url('/professional.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
