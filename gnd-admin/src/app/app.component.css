@@ -74,7 +74,7 @@ body {
 
 /* Footer */
 .footer {
-  background-color: #f8f9fa;
+  background-color: #333;
   padding: 20px 0;
   position: relative;
   bottom: 0;
@@ -93,7 +93,7 @@ body {
 
 .footer-text {
   font-size: 14px;
-  color: #6c757d;
+  color: #ffffff;
 }
 
 .footer-links {
