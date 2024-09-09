@@ -1,56 +1,91 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-</head>
-<body class="background">
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport"-->
+<!--        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+<!--  <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--</head>-->
+<!--<body class="background">-->
 
-<div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-    <div class="mb-6">
-      <label for="email">Email address</label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        [class.is-invalid]="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
-      >
-      <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
-        <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
-        <div *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+<!--<div class="login-container">-->
+<!--  <h2>Login</h2>-->
+<!--  <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">-->
+<!--    <div class="mb-6">-->
+<!--      <label for="email">Email address</label>-->
+<!--      <input-->
+<!--        type="email"-->
+<!--        id="email"-->
+<!--        formControlName="email"-->
+<!--        [class.is-invalid]="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"-->
+<!--      >-->
+<!--      <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">-->
+<!--        <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>-->
+<!--        <div *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="mb-6 relative">-->
+<!--      <label for="password">Password</label>-->
+<!--      <div class="password-input-wrapper">-->
+<!--        <input-->
+<!--          [type]="showPassword ? 'text' : 'password'"-->
+<!--          id="password"-->
+<!--          formControlName="password"-->
+<!--          [class.is-invalid]="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"-->
+<!--        >-->
+<!--        <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">-->
+<!--          <i class="eye-icon" [class.visible]="showPassword">👁️</i>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">-->
+<!--        <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <button type="submit" [disabled]="loginForm.invalid">Login</button>-->
+<!--  </form>-->
+
+<!--  <p class="mt-4">-->
+<!--    Or click here to register-->
+<!--    <a routerLink="/register" class="text-blue-600 hover:underline dark:text-blue-500">Register</a>-->
+<!--  </p>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+<div class="fullscreen-image">
+  <div class="login-container">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <div class="form-group mb-6">
+        <label for="email">Email address</label>
+        <input type="email" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)}">
+        <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+          <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        </div>
       </div>
-    </div>
 
-    <div class="mb-6 relative">
-      <label for="password">Password</label>
-      <div class="password-input-wrapper">
-        <input
-          [type]="showPassword ? 'text' : 'password'"
-          id="password"
-          formControlName="password"
-          [class.is-invalid]="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
-        >
-        <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
-          <i class="eye-icon" [class.visible]="showPassword">👁️</i>
-        </button>
+      <div class="form-group mb-6 relative">
+        <label for="password">Password</label>
+        <div class="password-input-wrapper">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-control" [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)}">
+          <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+            <span class="eye-icon" [ngClass]="{'visible': showPassword}">👁️</span>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+          <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+        </div>
       </div>
-      <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
-        <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+
+      <button type="submit" [disabled]="loginForm.invalid" class="submit-button">Login</button>
+
+      <div class="register-link mt-4 text-center">
+        <span>Or click here to register </span>
+        <a routerLink="/register" class="text-blue-600 hover:underline dark:text-blue-500">Register</a>
       </div>
-    </div>
-
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
-
-  <p class="mt-4">
-    Or click here to register
-    <a routerLink="/register" class="text-blue-600 hover:underline dark:text-blue-500">Register</a>
-  </p>
+    </form>
+  </div>
 </div>
-
-</body>
-</html>
