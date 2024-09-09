@@ -6,10 +6,9 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
-<body class="background">
-<div class="login-container">
+<body class="fullscreen-image">
   <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
-
+    <div class="login-container">
       <h2>Register</h2>
 
       <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -117,7 +116,8 @@
       <p class="mt-4">
         <a routerLink="/login" class="text-blue-600 hover:underline dark:text-blue-500">Back to Login</a>
       </p>
+    </div>
   </form>
-</div>
+<!--</div>-->
 </body>
 </html>
