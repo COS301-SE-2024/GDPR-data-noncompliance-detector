@@ -13,18 +13,18 @@ configuration = LongformerConfig()
 # configuration = model.config
 
 def process_record(record):
-    text = record['text']
+    text = record['sequence']
     to_string = str(text)
-    first_parse = ' '.join(to_string.split())
+    first_parse = to_string
     second_parse = tokenizer(first_parse, padding='max_length',truncation=True,max_length=512)
 
     label = 0
 
-    if record['class'] == 'positive':
+    if record['class'] == 1:
         label += 1
 
     second_parse['class'] = label
-    second_parse['text'] = first_parse
+    second_parse['sequence'] = first_parse
 
     return second_parse
 
@@ -36,7 +36,7 @@ def test_train(processed):
     return train, valid
 
 def tokenize_function(examples):
-    return tokenizer(examples['text'], padding='max_length', truncation=True, max_length=128)
+    return tokenizer(examples['sequence'], padding='max_length', truncation=True, max_length=128)
 
 def prep_sets(train, valid):
     train_prep = Dataset(pa.Table.from_pandas(train))
@@ -74,14 +74,14 @@ if __name__ == '__main__':
     # a = ({'text':'I hereby consent to the use of my personal data','class':'positive'})
     # print(process_record(a))
     print("Reading data: ")
-    df = pd.read_csv('C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/Model_data/genetic_data_train.csv')
-
+    df = pd.read_csv('genetic_data_train.csv')
+    print("surviving")
     # print(df.head())
 
     first_list = []
 
     print("Processing records: ")
-    for i in range(len(df[:2000])):
+    for i in range(len(df[:609])):
         first_list.append(df.iloc[i])
 
     # print(first_list[0])
