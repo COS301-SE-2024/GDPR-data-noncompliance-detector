@@ -148,7 +148,8 @@ class report_generation_layer:
     
     def EM_report(self, text):
         test = self.classification_layer.run_EM_model(text)
-        return test 
+        report = sum(1 for label in test if label != 'LABEL_2')
+        return report 
     
     def MD_report(self, text):
         result = self.classification_layer.run_MD_model(text)
