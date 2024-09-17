@@ -54,7 +54,7 @@ def prep_sets(train, valid):
     return tokenized_train,tokenized_valid
 
 def model_creation():
-    model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
+    model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=1)
     return model
 
 def train_and_eval(model, train_second_parse, validator, tokenizer):
