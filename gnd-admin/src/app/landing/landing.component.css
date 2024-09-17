@@ -63,8 +63,10 @@
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-
 .feature h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
