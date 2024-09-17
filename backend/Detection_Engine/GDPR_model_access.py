@@ -12,6 +12,17 @@ class GDPR:
     def run_GDPR(self, text):
         return self.predict(text)
 
+
+    def sliding_window(self, text, window_size, overlap):
+        tokens = self.classifier.tokenizer.encode(text, truncation=False)
+        chunks = []
+        for i in range(0, len(tokens), window_size - overlap):
+            chunk = tokens[i:i + window_size]
+            if len(chunk) < window_size:
+                break
+            chunks.append(chunk)
+        return chunks
+
     def predict(self, input_text):
         count  = 0
         tokens = self.classifier.tokenizer.encode(input_text, truncation=True, max_length=self.max_length_)
