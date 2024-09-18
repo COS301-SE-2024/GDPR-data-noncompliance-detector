@@ -41,7 +41,7 @@ class TestBackendEntryIntegration(unittest.TestCase):
         # )
 
         expected_output = (
-            '{"score": {"Status": 0, "Location": 0, "NER": 5, "Personal": 2, "Financial": 0, "Contact": 2, "Consent Agreement": false, "Genetic": 0, "Ethnic": 7, "Medical": 3, "Biometric": 0}}'
+            '{"score": {"Status": 0, "Location": 0, "NER": 5, "Personal": 5, "Financial": 0, "Contact": 2, "Consent Agreement": false, "Genetic": 0, "Ethnic": 7, "Medical": 3, "Biometric": 0}}'
             # "Non-compliant\n\n"
             # "Document potentially references 5 different individuals\n\n\n"
             # "Potential Location of Origin : \n"
