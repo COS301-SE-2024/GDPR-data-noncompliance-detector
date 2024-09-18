@@ -97,39 +97,12 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  // async onRegisterSubmit() {
-  //   if (this.registerForm.valid) {
-  //     const formValues = this.registerForm.value;
-  //
-  //     // Hash and salt the password
-  //     const salt = await bcrypt.genSalt(10);
-  //     const hashedPassword = await bcrypt.hash(formValues.password, salt);
-  //
-  //     // This is the data that will be going to the backend
-  //     console.log('Register submitted', {
-  //       firstName: formValues.firstName,
-  //       lastName: formValues.lastName,
-  //       email: formValues.email,
-  //       password: hashedPassword //The password here is hashed
-  //     });
-  //
-  //     // Reset the form
-  //     this.registerForm.reset();
-  //   } else {
-  //     // Mark all fields as touched to trigger validation messages
-  //     Object.keys(this.registerForm.controls).forEach(key => {
-  //       const control = this.registerForm.get(key);
-  //       control?.markAsTouched();
-  //     });
-  //   }
-  // }
-
   async onRegisterSubmit() {
     if (this.registerForm.valid) {
       const formValues = this.registerForm.value;
 
       try {
-        // Hash the password
+        // Hashing the passwords
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(formValues.password, salt);
 
