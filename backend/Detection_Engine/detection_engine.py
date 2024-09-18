@@ -153,11 +153,11 @@ class detection_engine:
 
         location_report = self.report_generator.location_report_generation(text)
         ner_result_report = self.report_generator.ner_report_generation(text)
-        reg_result_personal_report = self.regex_report_personal(text)
+        reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
         reg_result_financial_report = self.regex_report_financial(text)
         reg_result_contact_report = self.regex_report_contact(text)
         ca_statement_report = self.report_generator.CA_report_generation(text)
-        gi_result_report = self.report_generator.gen_report(text)
+        gi_result_report = 0
         em_result_report = self.report_generator.EM_report(text)
         md_result_report = self.report_generator.MD_report(text)
         image_result_report = self.report_generator.Image_report_generation(path_)
