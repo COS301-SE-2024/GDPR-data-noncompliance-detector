@@ -157,7 +157,7 @@ class detection_engine:
         reg_result_financial_report = self.regex_report_financial(text)
         reg_result_contact_report = self.regex_report_contact(text)
         ca_statement_report = self.report_generator.CA_report_generation(text)
-        gi_result_report = 0
+        gi_result_report = self.report_generator.GF_report(text)
         em_result_report = self.report_generator.EM_report(text)
         md_result_report = self.report_generator.MD_report(text)
         image_result_report = self.report_generator.Image_report_generation(path_)
