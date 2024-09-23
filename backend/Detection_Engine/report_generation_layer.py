@@ -103,6 +103,29 @@ class report_generation_layer:
         else:
             return True
 
+#----------------------------------------------------------REPORT GEN------------------------------------------------------------------#
+
+    def RAG_report(self, ner_result , personal, financial, contact, medical, ca_statement, gi, em, biometric):
+        categories = []
+
+        if ner_result > 0 :
+            categories.append('transparency transgression')
+        
+        if ca_statement = False:
+            categories.append('consent agreement')
+
+        if personal > 0 or financial > 0 or contact > 0:
+            categories.append('personal')
+        
+        if gi > 0 or medical > 0:
+            categories.append('genetic')
+
+        if em > 0:
+            categories.append('Data Revealing Racial and Ethnic Origin')
+
+        if biometric > 0:
+            categories.append('Biometric Data')
+
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
         
     def Image_report(self, path):
