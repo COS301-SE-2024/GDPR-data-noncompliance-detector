@@ -2,6 +2,7 @@ from .text_classification_layer import text_classification_layer
 from .biometric_detection import biometric_detection
 from .lang_detection import location_finder
 from langcodes import Language
+from .RAG import RAG
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
