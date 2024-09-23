@@ -6,6 +6,7 @@ import { ReportComponent } from './report/report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { ViolationsComponent } from './violations/violations.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'upload', component: UploadDocumentComponent},
   { path: 'violations/:fileType', component: ViolationsComponent}, 
   { path: 'violations', component: ViolationsComponent},
-  { path: 'faq-page', component: FaqPageComponent},
+  { path: 'faq-page', component: FaqPageComponent },
+  {path: 'visualization', component: VisualizationComponent}
 ];
 
 @NgModule({

@@ -112,7 +112,7 @@ class report_generation_layer:
         if ner_result > 0 :
             categories.append('transparency transgression')
         
-        if ca_statement = False:
+        if ca_statement == False:
             categories.append('no consent agreement')
 
         if personal > 0 or financial > 0 or contact > 0:

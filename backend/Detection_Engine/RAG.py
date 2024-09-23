@@ -2,13 +2,27 @@ import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from transformers import pipeline
+import os
 
 class RAG:
 
     def __init__(self):
-            
-        self.index = faiss.read_index("gdpr_articles_index.faiss")
-        self.metadata = np.load('gdpr_metadata.npy', allow_pickle=True).item()
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
+        index_path = os.path.join(script_dir, 'gdpr_articles_index.faiss')
+        metadata_path = os.path.join(script_dir, 'gdpr_metadata.npy')
+
+        if not os.path.exists(index_path):
+            raise FileNotFoundError(f"Index file not found: {index_path}")
+
+        self.index = faiss.read_index(index_path)
+
+        if not os.path.exists(metadata_path):
+            raise FileNotFoundError(f"Metadata file not found: {metadata_path}")
+
+        self.metadata = np.load(metadata_path, allow_pickle=True).item()
+
         self.statements = self.metadata['statements']
         # self.articles = self.metadata['articles']
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')

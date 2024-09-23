@@ -44,7 +44,7 @@
         Analysis
       </h2>
       <div class="divider"></div>
-      
+
       <div class="upload-container">
         <div *ngIf="!result && uploadedFileName"
           class="flex items-center justify-center w-full h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
@@ -71,58 +71,66 @@
       </div>
 
       <div class="upload-data" *ngIf="result">
-        
+
         <div class="ner-data">
-          <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{ nerCount }} different individuals</p>
+          <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{
+            nerCount }} different individuals</p>
         </div>
-        
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Location:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ location }}</span>
-        </div>
-        
-        <div class="divider-text"></div>
 
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Personal Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ personalData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Location:</p> <span
+            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ location }}</span>
         </div>
 
         <div class="divider-text"></div>
 
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Financial Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ financialData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Personal Data:</p> <span
+            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ personalData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Contact Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ contactData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Financial Data:</p> <span
+            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ financialData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Medical Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ medicalData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Contact Data:</p> <span
+            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ contactData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Ethnic Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ ethnicData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Medical Data:</p> <span
+            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ medicalData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Biometric Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ biometricData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Ethnic Data:</p> <span
+            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ ethnicData }}</span>
         </div>
 
         <div class="divider-text"></div>
-    
+
+        <div class="result-data">
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Biometric Data:</p> <span
+            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ biometricData }}</span>
+        </div>
+
+        <div class="divider-text"></div>
+
       </div>
 
       <div class="consent-status-container" *ngIf="result">
         <div class="consent-status">
-          <span class="consent-agreement">{{ consentAgreement }}</span>        
+          <span class="consent-agreement">{{ consentAgreement }}</span>
         </div>
       </div>
 
@@ -140,6 +148,8 @@
       Report</button>
     <!-- <button *ngIf="uploadedFileName" [routerLink]="['/violations']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Violations</button> -->
     <!-- <button *ngIf="uploadedFileName" [routerLink]="['/report']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Report</button> -->
+    <button *ngIf="result" [routerLink]="['/visualization']" id="vizButton" type="button"
+      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualize</button>
   </div>
 
 </div>
