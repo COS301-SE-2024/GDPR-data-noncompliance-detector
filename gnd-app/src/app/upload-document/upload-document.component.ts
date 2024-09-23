@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
@@ -15,8 +15,9 @@ import {Subscription} from "rxjs";
 })
 export class UploadDocumentComponent implements OnInit{
   private walkthroughSubscription?: Subscription;
+  response: any;
 
-  constructor(private walkthroughService: WalkthroughService,private http: HttpClient) {}
+  constructor(private walkthroughService: WalkthroughService,private http: HttpClient, private router: Router) {}
 
 
   ngOnInit() {
@@ -128,6 +129,7 @@ export class UploadDocumentComponent implements OnInit{
           this.ethnicData = response.result.score.Ethnic;
           this.biometricData = response.result.score.Biometric;
           this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
+          this.response = response.result;
 
           console.log(this.nerCount);
           this.checkdata();
@@ -187,6 +189,10 @@ export class UploadDocumentComponent implements OnInit{
     }, error => {
       console.error('Download failed', error);
     });
+  }
+
+  onVisualize() {
+    this.router.navigate(['/visualization'], { state: { responseData: this.response } });
   }
 
 }
