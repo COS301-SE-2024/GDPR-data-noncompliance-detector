@@ -126,6 +126,8 @@ class report_generation_layer:
         if biometric > 0:
             categories.append('Biometric Data')
 
+        
+
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
         
     def Image_report(self, path):
