@@ -1,42 +1,72 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Chart } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-visualization',
   standalone: true,
   imports: [],
   templateUrl: './visualization.component.html',
-  styleUrl: './visualization.component.css'
+  styleUrls: ['./visualization.component.css']
 })
 export class VisualizationComponent implements OnInit {
-  responseData: any;
+  nerCount: number = 5;
+  location: string = "";
+  personalData: number = 7;
+  financialData: number =19;
+  contactData: number = 21;
+  medicalData: number = 14;
+  ethnicData: number = 8;
+  biometricData: number = 6;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    // Register Chart.js components
+    Chart.register(...registerables);
+  }
 
   ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
-      this.responseData = navigation.extras.state['responseData'];
+      const state = navigation.extras.state as {
+        nerCount: number,
+        location: string,
+        personalData: number,
+        financialData: number,
+        contactData: number,
+        medicalData: number,
+        ethnicData: number,
+        biometricData: number
+      };
+
+      this.nerCount = state.nerCount;
+      this.location = state.location;
+      this.personalData = state.personalData;
+      this.financialData = state.financialData;
+      this.contactData = state.contactData;
+      this.medicalData = state.medicalData;
+      this.ethnicData = state.ethnicData;
+      this.biometricData = state.biometricData;
+
+      console.log('Received data:', state);  // Debugging log
       this.createCircularBarChart();
     }
   }
 
   createCircularBarChart() {
     const ctx = document.getElementById('circularBarChart') as HTMLCanvasElement;
-    if (this.responseData && ctx) {
+    if (ctx) {
       const data = {
         labels: ['NER', 'Personal', 'Financial', 'Contact', 'Medical', 'Ethnic', 'Biometric'],
         datasets: [{
           label: 'Scores',
           data: [
-            this.responseData.result.score.NER,
-            this.responseData.result.score.Personal,
-            this.responseData.result.score.Financial,
-            this.responseData.result.score.Contact,
-            this.responseData.result.score.Medical,
-            this.responseData.result.score.Ethnic,
-            this.responseData.result.score.Biometric
+            this.nerCount,
+            this.personalData,
+            this.financialData,
+            this.contactData,
+            this.medicalData,
+            this.ethnicData,
+            this.biometricData
           ],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -61,7 +91,6 @@ export class VisualizationComponent implements OnInit {
       };
 
       const options = {
-        indexAxis: 'y' as const,
         scales: {
           r: {
             beginAtZero: true
@@ -74,6 +103,8 @@ export class VisualizationComponent implements OnInit {
         data: data,
         options: options
       });
+    } else {
+      console.error('No canvas context found');  // Debugging log
     }
   }
 }
