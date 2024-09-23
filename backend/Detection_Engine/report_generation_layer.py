@@ -2,7 +2,6 @@ from .text_classification_layer import text_classification_layer
 from .biometric_detection import biometric_detection
 from .lang_detection import location_finder
 from langcodes import Language
-from .RAG import RAG
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -27,6 +26,7 @@ class report_generation_layer:
             'el', 'hu', 'ga', 'it', 'lv', 'lt', 'mt', 'pl', 'pt', 'ro',
             'sk', 'sl', 'es', 'sv'
         ]
+
 
     def location_report(self, text):
         countries = location_finder.detect_country(self, text)
@@ -113,7 +113,7 @@ class report_generation_layer:
             categories.append('transparency transgression')
         
         if ca_statement = False:
-            categories.append('consent agreement')
+            categories.append('no consent agreement')
 
         if personal > 0 or financial > 0 or contact > 0:
             categories.append('personal')
@@ -126,6 +126,8 @@ class report_generation_layer:
 
         if biometric > 0:
             categories.append('Biometric Data')
+
+        return self.classification_layer.run_RAG(categories)
 
         
 
