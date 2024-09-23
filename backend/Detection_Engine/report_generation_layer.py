@@ -180,6 +180,10 @@ class report_generation_layer:
         result = self.classification_layer.run_MD_model(text)
         return len(result)
     
+    def GF_report(self, text):
+        test = self.classification_layer.run_GF_model(text)
+        report = sum(1 for label in test if label != 'LABEL_1')
+        return report 
 
     def generate_pdf(self, violation_data, output_file):
         c = canvas.Canvas(output_file, pagesize = A4)
