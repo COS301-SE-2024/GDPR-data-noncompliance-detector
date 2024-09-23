@@ -9,6 +9,13 @@ import glob
 # below added because of the relative import error
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
+def path_finder(rel_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path,rel_path)
 # from backend.Document_parser.extract_images import extract_images_from_pdf
 # from backend.Document_parser.extract_images import extract_images_from_docx
 # from backend.Document_parser.extract_images import extract_images_from_excel
@@ -52,71 +59,66 @@ class biometric_detection:
 
         return output
 
+    def biometric_detect_all(self, pdf_path):
+        # Clean up folders
+        current_dir = os.path.dirname(os.path.abspath(__file__))
 
-
-    def biometric_detect_all(self,pdf_path):
-        # clean up folders
-        if (pdf_path.endswith('.pdf')):
+        if pdf_path.endswith('.pdf'):
             # extract_images_from_pdf(pdf_path)
 
-            images = [f'./Detection_Engine/extracted_images/pdf_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/pdf_images')  if i.endswith('.png') or i.endswith('.jpg')]
+            target_dir = path_finder('Detection_Engine/extracted_images/pdf_images')
+            os.makedirs(target_dir, exist_ok=True)
+            images = [os.path.join(target_dir, i) for i in os.listdir(target_dir) if i.endswith('.png') or i.endswith('.jpg')]
 
             output = []
             count = 0
             for image in images:
                 count += 1
                 output.append(self.biometric_detect_people(image))
-            
-            png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/pdf_images", '*.png'))
+
+            png_files = glob.glob(os.path.join(target_dir, '*.png'))
             for file in png_files:
                 os.remove(file)
-            
+
             return count
-        
-        elif (pdf_path.endswith('.docx')):
+
+        elif pdf_path.endswith('.docx'):
             # extract_images_from_docx(pdf_path)
-            images = [f'./Detection_Engine/extracted_images/docx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/docx_images')  if i.endswith('.png') or i.endswith('.jpg')]
+
+            target_dir = path_finder('Detection_Engine/extracted_images/docx_images')
+            os.makedirs(target_dir, exist_ok=True)
+            images = [os.path.join(target_dir, i) for i in os.listdir(target_dir) if i.endswith('.png') or i.endswith('.jpg')]
+
             output = []
             count = 0
             for image in images:
                 count += 1
                 output.append(self.biometric_detect_people(image))
-            
-            png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/docx_images", '*.png'))
+
+            png_files = glob.glob(os.path.join(target_dir, '*.png'))
             for file in png_files:
                 os.remove(file)
 
             return count
-        
-        elif (pdf_path.endswith('.xlsx')):
+
+        elif pdf_path.endswith('.xlsx'):
             # extract_images_from_excel(pdf_path)
-            images = [f'./Detection_Engine/extracted_images/xlsx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/xlsx_images')  if i.endswith('.png') or i.endswith('.jpg')]
-            # images = [f'extracted_images/xlsx_images/{i}' for i in os.listdir('extracted_images/xlsx_images')]
+
+            target_dir = path_finder('Detection_Engine/extracted_images/xlsx_images')
+            os.makedirs(target_dir, exist_ok=True)
+            images = [os.path.join(target_dir, i) for i in os.listdir(target_dir) if i.endswith('.png') or i.endswith('.jpg')]
+
             output = []
             count = 0
             for image in images:
                 count += 1
                 output.append(self.biometric_detect_people(image))
-            
-            png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/xlsx_images", '*.png'))
+
+            png_files = glob.glob(os.path.join(target_dir, '*.png'))
             for file in png_files:
                 os.remove(file)
 
             return count
-        
-        directories = [
-            "./Detection_Engine/extracted_images/xlsx_images",
-            "./Detection_Engine/extracted_images/docx_images",
-            "./Detection_Engine/extracted_images/pdf_images"
-        ]
-
-        for directory in directories:
-            all_files = glob.glob(os.path.join(directory, '*'))
-            for file in all_files:
-                os.remove(file)
-
-        return output
-
 
 
 if __name__ == "__main__":

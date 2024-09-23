@@ -1,9 +1,21 @@
-import spacy
 import os
-base_dir = os.path.dirname(__file__)
-model_path = os.path.join(base_dir, 'Entity_builder')
+from transformers import AutoTokenizer, AutoModelForTokenClassification
+from transformers import pipeline
+# base_dir = os.path.dirname(__file__)
+# model_path = os.path.join(base_dir, 'Entity_builder')
 
-model = spacy.load("en_core_web_sm")
+# base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# model_path = os.path.join(base_dir, 'en_core_web_sm/en_core_web_sm-3.7.1')
+
+# model = spacy.load(model_path)
+
+model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForTokenClassification.from_pretrained(model_name)
+
+# Create a pipeline for named entity recognition
+nlp = pipeline("ner", model=model, tokenizer=tokenizer)
 
 class NER:
 
@@ -11,14 +23,17 @@ class NER:
 
     def extract_entities(self, res):
         entities = []
-        for i in res.ents:
-            entities.append((i.text, i.label_))
+        for i in res:
+            if i['entity'] == 'I-PER':
+                entities.append((i['word'], i['entity']))
+        print('\n')
+        # print(entities)
         return entities
 
     def run_NER(self, text):
-        res = model(text)
-        processed = self.extract_entities(res)
-        return processed
+        entities = nlp(text)
+        # print(entities)
+        return self.extract_entities(entities)
     
 if __name__ == '__main__':
     ner_ = NER()

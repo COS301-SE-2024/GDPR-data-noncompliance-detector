@@ -57,12 +57,21 @@ class backend_entry:
 
 
 if __name__ == "__main__":
-    try:
-        backend_entry = backend_entry() 
-        # res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/NCE1.pdf")
-        res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/docxWimages.docx")
-
-        print(res)
-    except SystemExit as e:
-        print("An error occurred: ", e)
+    
+    if len(sys.argv) != 2:
+        print("Usage: python backend_entry.py <path_to_file>")
         sys.exit(1)
+
+    path = sys.argv[1]
+    backend_entry = backend_entry()
+    result = backend_entry.process(path)
+    print(result)
+    # try:
+    #     backend_entry = backend_entry() 
+    #     # res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/NCE1.pdf")
+    #     res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/docxWimages.docx")
+
+    #     print(res)
+    # except SystemExit as e:
+    #     print("An error occurred: ", e)
+    #     sys.exit(1)

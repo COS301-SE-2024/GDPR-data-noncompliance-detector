@@ -59,7 +59,7 @@ class detection_engine:
         
         text = path
         
-        location = self.report_generator.location_report(text)
+        location = 0
         ner_result = self.report_generator.ner_report(text)
         # location = self.determine_country_of_origin(path)
         reg_result_personal = self.regex_report_personal(text)
@@ -78,7 +78,7 @@ class detection_engine:
 
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------# 
         
-        location_report = self.report_generator.location_report_generation(text)
+        location_report = 0
         ner_result_report = self.report_generator.ner_report_generation(text)
         reg_result_personal_report = self.regex_report_personal(text)
         reg_result_financial_report = self.regex_report_financial(text)
@@ -151,7 +151,7 @@ class detection_engine:
 
         text = path
 
-        location_report = self.report_generator.location_report_generation(text)
+        location_report = 0
         ner_result_report = self.report_generator.ner_report_generation(text)
         reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
         reg_result_financial_report = self.regex_report_financial(text)
@@ -199,7 +199,7 @@ class detection_engine:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        self.report_generator.generate_pdf(violation_data, output_file)
+        # self.report_generator.generate_pdf(violation_data, output_file)
         return violation_data
 
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#

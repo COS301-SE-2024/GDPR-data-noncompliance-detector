@@ -10,22 +10,12 @@ CORS(app)
 
 endpoint = backend_entry()
 
-# @app.route("/file-upload", methods=["POST"])
-# def upload_file():
-#     if 'file' not in request.files:
-#         return jsonify({"error": "No file part"}), 400
+# Get the directory of the current script
+base_dir = os.path.dirname(__file__)
 
-#     file = request.files['file']
-#     if file.filename == '':
-#         return jsonify({"error": "No selected file"}), 400
-
-#     file_location = os.path.join("uploads", file.filename)
-#     file.save(file_location)
-
-#     result = endpoint.process(file_location)
-#     os.remove(file_location)
-
-#     return jsonify({"filename": file.filename, "result": result})
+@app.route('/check', methods=["GET"])
+def hello_world():
+    return 'Active'
 
 class FilePath(BaseModel):
     path: str
@@ -40,8 +30,8 @@ def new_file():
 @app.route("/reports", methods=["GET"])
 def list_files():
     try:
-        reports_dir = os.path.abspath('../backend/Reports')
-
+        reports_dir = os.path.join(base_dir, '../Reports')
+        print(reports_dir)
         files = os.listdir(reports_dir)
         return jsonify(files)
     except FileNotFoundError:
@@ -51,8 +41,8 @@ def list_files():
 def get_file_content():
     data = request.get_json()
     path = data.get('path')
-    reports_dir = os.path.abspath('../backend/Reports')
-    file_ = reports_dir + '/' +path
+    reports_dir = os.path.join(base_dir, '../backend/Reports')
+    file_ = os.path.join(reports_dir, path)
     try:
         with open(file_, 'r') as file:
             content = file.read()
@@ -61,12 +51,10 @@ def get_file_content():
         return jsonify({"error": "File not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 @app.route("/get-report", methods=["GET"])
 def get_generated_report():
-
-    reports_folder = "./Generated_Reports"
-
+    reports_folder = os.path.join(base_dir, './Generated_Reports')
     files = [os.path.join(reports_folder, f) for f in os.listdir(reports_folder) if os.path.isfile(os.path.join(reports_folder, f))]
     
     if not files:
@@ -77,7 +65,7 @@ def get_generated_report():
     if not os.path.exists(most_recent_file):
         return jsonify({"error": "File not found"}), 404
 
-    return send_file(most_recent_file, as_attachment=True, download_name = "violations_report.pdf")
+    return send_file(most_recent_file, as_attachment=True, download_name="violations_report.pdf")
 
 @app.route("/file-upload-new", methods=["POST"])
 def upload_file():
@@ -88,7 +76,9 @@ def upload_file():
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
 
-    file_location = os.path.join("uploads", file.filename)
+    uploads_dir = os.path.join(base_dir, 'uploads')
+    os.makedirs(uploads_dir, exist_ok=True)
+    file_location = os.path.join(uploads_dir, file.filename)
     file.save(file_location)
 
     result = endpoint.process(file_location)

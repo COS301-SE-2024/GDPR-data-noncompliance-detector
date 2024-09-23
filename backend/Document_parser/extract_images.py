@@ -6,10 +6,10 @@ from openpyxl.drawing.image import Image
 
 class image_extractor:
     def __init__(self):
-        self.base_dir = os.path.dirname(__file__)
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
 
     def extract_images_from_excel(self, excel_file):
-        output_folder = os.path.join(self.base_dir, "../Detection_Engine/extracted_images/xlsx_images")
+        output_folder = os.path.join(self.base_dir, "Detection_Engine", "extracted_images", "xlsx_images")
         
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
@@ -33,7 +33,7 @@ class image_extractor:
                     f.write(image._data())
 
     def extract_images_from_pdf(self, dir):
-        output_folder = os.path.join(self.base_dir, "../Detection_Engine/extracted_images/pdf_images")
+        output_folder = os.path.join(self.base_dir, "Detection_Engine", "extracted_images", "pdf_images")
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 
@@ -46,7 +46,7 @@ class image_extractor:
                     fp.write(image.data)
 
     def extract_images_from_docx(self, docx_path):
-        output_folder = os.path.join(self.base_dir, "../Detection_Engine/extracted_images/docx_images")
+        output_folder = os.path.join(self.base_dir, "Detection_Engine", "extracted_images", "docx_images")
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 
