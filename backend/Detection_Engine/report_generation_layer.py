@@ -127,7 +127,11 @@ class report_generation_layer:
         if biometric > 0:
             categories.append('Biometric Data')
 
-        return self.classification_layer.run_RAG(categories)
+        rag_res = self.classification_layer.run_RAG(categories)
+        result = "The following articles are potentially violated: " + ", ".join(rag_res)
+        return result, len(rag_res)
+
+
 
         
 

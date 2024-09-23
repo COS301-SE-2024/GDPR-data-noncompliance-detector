@@ -99,15 +99,15 @@ class RAG:
         return articles
 
     def process(self, query):
-        print("Querying DB")
+        # print("Querying DB")
         search_res = self.query_faiss_db(query)
-        print(search_res[0]['statement'])
-        print("Done")
-        print("Using Model")
+        # print(search_res[0]['statement'])
+        # print("Done")
+        # print("Using Model")
         findings = self.generate(search_res)
-        print(findings)
-        print("Done")
-        print("Interpreting Generation")
+        # print(findings)
+        # print("Done")
+        # print("Interpreting Generation")
         
         output = self.interpret_findings(findings)
         return output
