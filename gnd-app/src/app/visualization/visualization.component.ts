@@ -26,24 +26,14 @@ export type ChartOptions = {
   standalone: true,
   imports: [CommonModule, NgApexchartsModule, NgxEchartsModule],
   templateUrl: './visualization.component.html',
-  styleUrls: ['./visualization.component.css'],
-  providers: [
-    {
-      provide: NGX_ECHARTS_CONFIG,
-      useValue: {
-        echarts: () => import('echarts')
-      }
-    }
-  ]
+  styleUrls: ['./visualization.component.css']
 })
 export class VisualizationComponent implements OnInit, AfterViewInit {
 
   @Input() data: any;
   @ViewChild('progressCanvas') progressCanvas!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('chart')
-  chart: ChartComponent = new ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  radarChartOptions: any;
+  @ViewChild('radarChartCanvas') radarChartCanvas!: ElementRef<HTMLCanvasElement>;
+
 
   nerCount: number = 5;
   location: string = "";
@@ -61,21 +51,6 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,private visualizationService: VisualizationService) {
     // Register Chart.js components
     Chart.register(...registerables);
-    this.chartOptions = {
-      series: [
-        {
-          name: 'Normalized Data',
-          data: []
-        }
-      ],
-      chart: {
-        height: 350,
-        type: 'radar'
-      },
-      xaxis: {
-        categories: ['Personal', 'Medical', 'Genetic', 'Ethnic', 'Biometric']
-      }
-    };
   }
 
   ngOnInit() {
@@ -93,9 +68,6 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       this.biometricData = this.data.score.Biometric;
       this.rag_count - this.data.score.lenarts;
       // this.createCircularBarChart();
-      this.calculateMetric();
-
-      
     }
 
     // violation_data = {            
@@ -150,7 +122,8 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   // }
 
   ngAfterViewInit() {
-    this.drawCircularProgressBar(this.rag_count);
+    // this.drawCircularProgressBar(this.rag_count);
+    this.calculateMetric();
   }
 
   createCircularBarChart() {
@@ -278,14 +251,40 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     let N_e_med = e_med/maxExpValue;
     let N_e_gen = e_gen/maxExpValue;
     let N_e_eth = e_eth/maxExpValue;
-    let N_e_bio = e_bio/maxExpValue;
+    let N_e_bio = e_bio / maxExpValue;
+    
+    this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
 
-    this.chartOptions.series = [
-      {
-        name: 'Normalized Data',
-        data: [N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]
-      }
-    ];
   }
  
+  createRadarChart(data: number[]) {
+    const canvas = this.radarChartCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Personal', 'Medical', 'Genetic', 'Ethnic', 'Biometric'],
+        datasets: [{
+          label: 'Normalized Data',
+          data: data,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 1
+          }
+        }
+      }
+    });
+  }
 }
