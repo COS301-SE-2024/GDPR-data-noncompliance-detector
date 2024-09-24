@@ -170,6 +170,52 @@ class report_generation_layer:
         
         return arr_
 
+    def circ_bar_plot(result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report):
+        # Data
+        categories = ['NER', 'Personal', 'Financial', 'Contact', 'Medical', 'Consent Agreement', 'Genetic', 'Ethnic', 'Biometric']
+        values = [result_report, reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report, ca_statement_report, gi_result_report, em_result_report, image_result_report]
+
+        # Calculate angles for each bar
+        num_vars = len(categories)
+        angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+
+        # Repeat the first value to close the circular graph
+        values += values[:1]
+        angles += angles[:1]
+
+        # Create the plot
+        fig = go.Figure()
+
+        fig.add_trace(go.Barpolar(
+            r=values,
+            theta=[angle * 180 / np.pi for angle in angles],
+            width=[360 / num_vars] * num_vars,
+            marker_color=values,
+            marker_line_color="black",
+            marker_line_width=2,
+            opacity=0.8
+        ))
+
+        fig.update_layout(
+            title='Circular Bar Plot',
+            font_size=16,
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[0, max(values)]
+                )
+            ),
+            showlegend=False
+        )
+
+        # Convert the plot to a base64 string
+        buf = BytesIO()
+        fig.write_image(buf, format='png')
+        buf.seek(0)
+        img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+        buf.close()
+
+        return img_base64
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
 
         

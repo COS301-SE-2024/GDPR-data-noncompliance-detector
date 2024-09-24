@@ -193,14 +193,22 @@ export class UploadDocumentComponent implements OnInit{
 
   onVisualize() {
     const dataToSend = {
-      nerCount: this.nerCount,
-      location: this.location,
-      personalData: this.personalData,
-      financialData: this.financialData,
-      contactData: this.contactData,
-      medicalData: this.medicalData,
-      ethnicData: this.ethnicData,
-      biometricData: this.biometricData
+      nerCount: 99,
+      location: 99,
+      personalData: 99,
+      financialData: 99,
+      contactData: 99,
+      medicalData: 99,
+      ethnicData: 99,
+      biometricData: 99
+      // nerCount: this.nerCount,
+      // location: this.location,
+      // personalData: this.personalData,
+      // financialData: this.financialData,
+      // contactData: this.contactData,
+      // medicalData: this.medicalData,
+      // ethnicData: this.ethnicData,
+      // biometricData: this.biometricData
     };
 
     this.router.navigate(['/visualization'], { state: dataToSend });

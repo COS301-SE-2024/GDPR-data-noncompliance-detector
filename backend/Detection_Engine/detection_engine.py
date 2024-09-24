@@ -175,6 +175,7 @@ class detection_engine:
                 status = 0
 
         rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
+        bar_plot = self.report_generator.circ_bar_plot(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
 
         violation_data = {            
             "score": {
@@ -192,6 +193,7 @@ class detection_engine:
                 "RAG Statement":rag_stat,
                 "len(arts)":rag_count
             }
+            "bar_plot":bar_plot
         }
 
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
