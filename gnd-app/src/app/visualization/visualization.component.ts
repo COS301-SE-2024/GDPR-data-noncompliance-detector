@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ElementRef ,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
@@ -14,6 +14,7 @@ import { VisualizationService } from '../services/visualization.service';
 export class VisualizationComponent implements OnInit {
 
   @Input() data: any;
+  @ViewChild('progressCanvas') progressCanvas!: ElementRef<HTMLCanvasElement>;
 
   nerCount: number = 5;
   location: string = "";
@@ -24,6 +25,7 @@ export class VisualizationComponent implements OnInit {
   ethnicData: number = 8;
   biometricData: number = 6;
   geneticData: number = 6;
+  rag_count = 0;
 
   receivedData: any;
 
@@ -45,7 +47,8 @@ export class VisualizationComponent implements OnInit {
       this.geneticData = this.data.score.Genetic;
       this.ethnicData = this.data.score.Ethnic;
       this.biometricData = this.data.score.Biometric;
-      this.createCircularBarChart()
+      this.rag_count - this.data.score.lenarts;
+      // this.createCircularBarChart();
     }
 
     // violation_data = {            
@@ -98,6 +101,10 @@ export class VisualizationComponent implements OnInit {
   //   }
   //   console.log("Starting point")
   // }
+
+  ngAfterViewInit() {
+    this.drawCircularProgressBar(this.rag_count);
+  }
 
   createCircularBarChart() {
     const ctx = document.getElementById('circularBarChart') as HTMLCanvasElement;
@@ -156,5 +163,43 @@ export class VisualizationComponent implements OnInit {
     } else {
       console.error('No canvas context found');  // Debugging log
     }
+  }
+
+  drawCircularProgressBar(value: number) {
+    const canvas = this.progressCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = Math.min(centerX, centerY) - 10;
+    const startAngle = -Math.PI / 2;
+    const endAngle = startAngle + (2 * Math.PI * (value / 99));
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the background circle
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = '#e6e6e6';
+    ctx.fill();
+
+    // Draw the progress circle
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = '#4caf50';
+    ctx.stroke();
+
+    // Draw the text
+    ctx.font = '20px Arial';
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`${value}/99`, centerX, centerY);
   }
 }

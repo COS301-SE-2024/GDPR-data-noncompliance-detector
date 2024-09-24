@@ -190,7 +190,7 @@ class detection_engine:
                 "Medical": md_result_report,
                 "Biometric": image_result_report,
                 "RAG Statement":rag_stat,
-                "len(arts)":rag_count
+                "lenarts":rag_count
             }
         }
 
