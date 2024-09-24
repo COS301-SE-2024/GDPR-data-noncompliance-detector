@@ -1,30 +1,21 @@
-// import { Injectable } from '@angular/core';
-//
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuthService {
-//
-//   constructor() { }
-// }
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
-
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('userToken');
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
-  setToken(token: string): void {
-    localStorage.setItem('userToken', token);
+  login() {
+    this.loggedIn.next(true);
   }
 
-  removeToken(): void {
-    localStorage.removeItem('userToken');
+  logout() {
+    this.loggedIn.next(false);
   }
 }

@@ -5,6 +5,7 @@ import { RouterLink, Router } from "@angular/router";
 import * as bcrypt from 'bcryptjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,11 +27,14 @@ export class LoginComponent implements OnInit {
   showPassword: boolean = false;
   private supabase: SupabaseClient;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     // this.supabase = createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_KEY');
     this.supabase = createClient('https://oadcyxznbhdrzsutusbh.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hZGN5eHpuYmhkcnpzdXR1c2JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU4MTAyNDUsImV4cCI6MjA0MTM4NjI0NX0.DLDq7NyjhmEv9V1bRERp2e5XT0-qFdBjWN3BNed6EfY');
 
   }
+
+  
+
   ngOnInit() {
     this.initForm();
   }
@@ -67,7 +71,9 @@ export class LoginComponent implements OnInit {
           if (isPasswordValid) {
             console.log('Login successful', data);
             // TODO: Implement success actions (e.g., set user session, redirect)
+            this.authService.login();
             this.router.navigate(['/home']);
+            
           } else {
             console.log('Invalid credentials');
             // TODO: Show error message to user
