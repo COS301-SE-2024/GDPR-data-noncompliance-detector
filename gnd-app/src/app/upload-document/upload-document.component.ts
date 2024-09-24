@@ -5,11 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
+import { VisualizationComponent } from "../visualization/visualization.component";
+import { VisualizationService } from '../services/visualization.service';
 
 @Component({
   selector: 'app-upload-document',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule, VisualizationComponent],
   templateUrl: './upload-document.component.html',
   styleUrls: ['./upload-document.component.css']
 })
@@ -18,7 +20,7 @@ export class UploadDocumentComponent implements OnInit{
   response: any;
   bar_plot: any;
 
-  constructor(private walkthroughService: WalkthroughService,private http: HttpClient, private router: Router) {}
+  constructor(private walkthroughService: WalkthroughService,private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) {}
 
 
   ngOnInit() {
@@ -192,26 +194,10 @@ export class UploadDocumentComponent implements OnInit{
   }
 
   onVisualize() {
-    const dataToSend = {
-      nerCount: 99,
-      location: 99,
-      personalData: 99,
-      financialData: 99,
-      contactData: 99,
-      medicalData: 99,
-      ethnicData: 99,
-      biometricData: 99
-      // nerCount: this.nerCount,
-      // location: this.location,
-      // personalData: this.personalData,
-      // financialData: this.financialData,
-      // contactData: this.contactData,
-      // medicalData: this.medicalData,
-      // ethnicData: this.ethnicData,
-      // biometricData: this.biometricData
-    };
-
-    this.router.navigate(['/visualization'], { state: dataToSend });
+    if (this.response) {
+      this.visualizationService.setData(this.response);
+      this.router.navigate(['/visualization']);
+    }
   }
 
 }
