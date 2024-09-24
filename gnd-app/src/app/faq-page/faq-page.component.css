@@ -4,24 +4,25 @@
     align-items: center;
     text-align: center;
     padding-bottom: 2.5em;
-    padding-top: 1.0em;
-}
-
-.header {
+    padding-top: 1em;
+  }
+  
+  .header {
     font-family: "Mediator Narrow Web Extra Bold";
     position: relative;
     display: inline-block;
     font-size: 35px;
-}
-
-.header::after {
+  }
+  
+  .header::after {
     content: '';
     display: inline-block;
     width: 10px;
     height: 10px;
     background-color: #8EBA12;
     border-radius: 50%;
-}
+    transform: translateX(-100%);
+  }
 
 .grid-parent {    
     display: flex;
