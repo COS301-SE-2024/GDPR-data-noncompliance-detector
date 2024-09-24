@@ -16,6 +16,7 @@ import {Subscription} from "rxjs";
 export class UploadDocumentComponent implements OnInit{
   private walkthroughSubscription?: Subscription;
   response: any;
+  bar_plot: any;
 
   constructor(private walkthroughService: WalkthroughService,private http: HttpClient, private router: Router) {}
 
@@ -130,7 +131,6 @@ export class UploadDocumentComponent implements OnInit{
           this.biometricData = response.result.score.Biometric;
           this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
           this.response = response.result;
-
           console.log(this.nerCount);
           this.checkdata();
 
