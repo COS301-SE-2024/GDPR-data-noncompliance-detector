@@ -43,4 +43,3 @@ Thumbs.db
 
 #environmetal variables
 /src/environments/environment.ts
-/src/environments/environment.prod.ts

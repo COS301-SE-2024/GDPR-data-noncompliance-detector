@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit {
 
   }
 
-  
-
   ngOnInit() {
     this.initForm();
   }
@@ -70,7 +68,6 @@ export class LoginComponent implements OnInit {
 
           if (isPasswordValid) {
             console.log('Login successful', data);
-            // TODO: Implement success actions (e.g., set user session, redirect)
             this.authService.login();
             this.router.navigate(['/home']);
             
