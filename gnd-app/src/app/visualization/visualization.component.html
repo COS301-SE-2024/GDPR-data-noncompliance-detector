@@ -11,8 +11,4 @@
 <!-- <pre>{{ data | json }}</pre> -->
 <!-- </div> -->
 <!-- </div> -->
-<div class="visualization-container">
-    <h2>Visualization</h2>
-    <!-- <canvas id="progressCanvas" width="400" height="400"></canvas> -->
-    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"></apx-chart>
-</div>
+<div echarts [options]="radarChartOptions" class="echart"></div>

@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 import { VisualizationService } from '../services/visualization.service';
 // import { BrowserModule } from '@angular/platform-browser';
 // import { AppComponent } from './app.component';
+import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import {
   ApexAxisChartSeries,
-  ApexTitleSubtitle,
   ApexChart,
   ApexXAxis,
   ChartComponent,
@@ -19,24 +19,31 @@ export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
-  // fill: ApexFill;
-  // markers: ApexMarkers;
 };
 
 @Component({
   selector: 'app-visualization',
   standalone: true,
-  imports: [CommonModule, NgApexchartsModule],
+  imports: [CommonModule, NgApexchartsModule, NgxEchartsModule],
   templateUrl: './visualization.component.html',
-  styleUrls: ['./visualization.component.css']
+  styleUrls: ['./visualization.component.css'],
+  providers: [
+    {
+      provide: NGX_ECHARTS_CONFIG,
+      useValue: {
+        echarts: () => import('echarts')
+      }
+    }
+  ]
 })
-export class VisualizationComponent implements OnInit {
+export class VisualizationComponent implements OnInit, AfterViewInit {
 
   @Input() data: any;
   @ViewChild('progressCanvas') progressCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('chart')
   chart: ChartComponent = new ChartComponent;
   public chartOptions: Partial<ChartOptions>;
+  radarChartOptions: any;
 
   nerCount: number = 5;
   location: string = "";
@@ -87,6 +94,8 @@ export class VisualizationComponent implements OnInit {
       this.rag_count - this.data.score.lenarts;
       // this.createCircularBarChart();
       this.calculateMetric();
+
+      
     }
 
     // violation_data = {            
@@ -278,5 +287,5 @@ export class VisualizationComponent implements OnInit {
       }
     ];
   }
-    
+ 
 }
