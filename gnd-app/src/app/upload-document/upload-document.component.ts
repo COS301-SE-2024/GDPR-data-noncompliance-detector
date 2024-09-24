@@ -98,7 +98,7 @@ export class UploadDocumentComponent implements OnInit{
   ethnicData: number = 0;
   biometricData: number = 0;
   consentAgreement: string = "";
-
+  metric_score: number = 0;
 
 
   onFileSelected(event: any) {
@@ -198,6 +198,38 @@ export class UploadDocumentComponent implements OnInit{
       this.visualizationService.setData(this.response);
       this.router.navigate(['/visualization']);
     }
+  }
+
+  calculateMetric() {
+
+    const w_per = 1;
+    const w_med = 0.2;
+    const w_gen = 0.1;
+    const w_eth = 0.2;
+    const w_bio = 0.6;
+
+    let e_personalData  = (Math.exp(this.nerCount) + Math.exp(this.financialData) + Math.exp(this.contactData))*w_per;
+    let e_med = Math.exp(this.medicalData)*w_med;
+    // let e_gen = Math.exp(this.geneticData)*w_gen;
+    let e_gen = 0;
+    let e_eth = Math.exp(this.ethnicData)*w_eth;
+    let e_bio = Math.exp(this.biometricData)*w_bio;
+
+    const expValues = [e_personalData, e_med, e_gen, e_eth, e_bio];
+
+    let maxExpValue = expValues[0];
+
+    for (let i = 1; i < expValues.length; i++) {
+      if (expValues[i] > maxExpValue) {
+        maxExpValue = expValues[i];
+      }
+    }
+
+    let N_e_personalData = e_personalData/maxExpValue;
+    let N_e_med = e_med/maxExpValue;
+    let N_e_gen = e_gen/maxExpValue;
+    let N_e_eth = e_eth/maxExpValue;
+    let N_e_bio = e_bio/maxExpValue;
   }
 
 }
