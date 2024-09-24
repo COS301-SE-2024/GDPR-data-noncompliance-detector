@@ -31,19 +31,21 @@ class GF:
         return chunks
 
     def predict(self, input_text):
-        window_size = 128  
-        overlap = 64       
+        # window_size = 128  
+        # overlap = 64       
 
-        chunks = self.sliding_window(input_text, window_size, overlap)
-        labels = []
+        # chunks = self.sliding_window(input_text, window_size, overlap)
+        # labels = []
 
-        for chunk in chunks:
-            truncated_text = self.classifier.tokenizer.decode(chunk, skip_special_tokens=True)
-            result = self.classifier(truncated_text)
-            label = result[0]['label']
-            labels.append(label)
+        # for chunk in chunks:
+        tokenized_text = self.classifier.tokenizer.encode(input_text, truncation=True, padding=True, return_tensors='pt')
 
-        return labels
+        # Pass the tokenized text to the classifier
+        result = self.classifier(tokenized_text)
+            # label = result[0]['label']
+            # labels.append(label)
+
+        return result
 
 if __name__ == '__main__':
     GF = GF()

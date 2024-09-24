@@ -189,7 +189,10 @@ class report_generation_layer:
     
     def GF_report(self, text):
         test = self.classification_layer.run_GF_model(text)
-        report = sum(1 for label in test if label != 'LABEL_1')
+        report = 0
+        if test == 'LABEL_1':
+            report += 1
+        
         return report 
 
     def generate_pdf(self, violation_data, output_file):

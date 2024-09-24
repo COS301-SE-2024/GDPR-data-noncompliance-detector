@@ -68,6 +68,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       this.biometricData = this.data.score.Biometric;
       this.rag_count - this.data.score.lenarts;
       // this.createCircularBarChart();
+      console.log(this.geneticData);
     }
 
     // violation_data = {            
