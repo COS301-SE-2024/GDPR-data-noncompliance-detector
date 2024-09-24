@@ -4,12 +4,29 @@ import { Chart, registerables } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { VisualizationService } from '../services/visualization.service';
-import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
+// import { AppComponent } from './app.component';
+import {
+  ApexAxisChartSeries,
+  ApexTitleSubtitle,
+  ApexChart,
+  ApexXAxis,
+  ChartComponent,
+  NgApexchartsModule
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  // fill: ApexFill;
+  // markers: ApexMarkers;
+};
 
 @Component({
   selector: 'app-visualization',
   standalone: true,
-  imports: [CommonModule, BrowserModule],
+  imports: [CommonModule, NgApexchartsModule],
   templateUrl: './visualization.component.html',
   styleUrls: ['./visualization.component.css']
 })
@@ -17,6 +34,9 @@ export class VisualizationComponent implements OnInit {
 
   @Input() data: any;
   @ViewChild('progressCanvas') progressCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chart')
+  chart: ChartComponent = new ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
 
   nerCount: number = 5;
   location: string = "";
@@ -34,6 +54,21 @@ export class VisualizationComponent implements OnInit {
   constructor(private router: Router,private visualizationService: VisualizationService) {
     // Register Chart.js components
     Chart.register(...registerables);
+    this.chartOptions = {
+      series: [
+        {
+          name: 'Normalized Data',
+          data: []
+        }
+      ],
+      chart: {
+        height: 350,
+        type: 'radar'
+      },
+      xaxis: {
+        categories: ['Personal', 'Medical', 'Genetic', 'Ethnic', 'Biometric']
+      }
+    };
   }
 
   ngOnInit() {
@@ -51,6 +86,7 @@ export class VisualizationComponent implements OnInit {
       this.biometricData = this.data.score.Biometric;
       this.rag_count - this.data.score.lenarts;
       // this.createCircularBarChart();
+      this.calculateMetric();
     }
 
     // violation_data = {            
@@ -235,6 +271,12 @@ export class VisualizationComponent implements OnInit {
     let N_e_eth = e_eth/maxExpValue;
     let N_e_bio = e_bio/maxExpValue;
 
+    this.chartOptions.series = [
+      {
+        name: 'Normalized Data',
+        data: [N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]
+      }
+    ];
   }
     
 }
