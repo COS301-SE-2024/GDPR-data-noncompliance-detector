@@ -168,3 +168,24 @@ button[type="submit"]:disabled {
     grid-template-columns: 1fr;
   }
 }
+
+/*Password conditions */
+.password-conditions {
+  margin-top: 10px;
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  color: #666;
+  font-size: 14px;
+}
+
+.condition input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.condition.met {
+  color: #38c172;
+}

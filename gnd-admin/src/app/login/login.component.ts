@@ -46,21 +46,6 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  // onLoginSubmit() {
-  //   if (this.loginForm.valid) {
-  //     const formValues = this.loginForm.value;
-  //     console.log('Login submitted', formValues.email, formValues.password);
-  //     // Implement login logic here
-  //   } else {
-  //     // Mark all fields as touched to trigger validation messages
-  //     Object.keys(this.loginForm.controls).forEach(key => {
-  //       const control = this.loginForm.get(key);
-  //       control?.markAsTouched();
-  //     });
-  //   }
-  // }
-
-
   async onLoginSubmit() {
     if (this.loginForm.valid) {
       const formValues = this.loginForm.value;

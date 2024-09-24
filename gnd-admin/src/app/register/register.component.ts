@@ -26,6 +26,13 @@ export class RegisterComponent implements OnInit {
   passwordStrength: string = '';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  passwordConditions = {
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    specialChar: false
+  };
   private supabase: SupabaseClient;
 
   constructor(private formBuilder: FormBuilder, private router: Router) {
@@ -46,7 +53,7 @@ export class RegisterComponent implements OnInit {
       password: ['', [
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+        Validators.pattern(/^(?=(?:.{20,}|(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}))[\w@$!%*?&]{8,}$/)
       ]],
       confirmPassword: ['', Validators.required],
       agreeTerms: [false, Validators.requiredTrue]
@@ -55,8 +62,18 @@ export class RegisterComponent implements OnInit {
     });
 
     this.registerForm.get('password')?.valueChanges.subscribe(
-      (password) => this.checkPasswordStrength(password)
+      (password) =>{
+        this.checkPasswordStrength(password);
+        this.updatePasswordConditions(password);
+      }
     );
+  }
+  updatePasswordConditions(password: string) {
+    this.passwordConditions.length = password.length >= 8;
+    this.passwordConditions.uppercase = /[A-Z]/.test(password);
+    this.passwordConditions.lowercase = /[a-z]/.test(password);
+    this.passwordConditions.number = /\d/.test(password);
+    this.passwordConditions.specialChar = /[@$!%*?&]/.test(password);
   }
 
   mustMatch(controlName: string, matchingControlName: string) {
@@ -121,14 +138,12 @@ export class RegisterComponent implements OnInit {
         if (error) throw error;
 
         console.log('User registered successfully', data);
-        // TODO: Implement success message or redirect to login page
         this.router.navigate(['/login']);
 
         // Reset the form
         this.registerForm.reset();
       } catch (error) {
         console.error('Error registering user:', error);
-        // TODO: Implement error handling, show error message to user
       }
     } else {
       // Mark all fields as touched to trigger validation messages
