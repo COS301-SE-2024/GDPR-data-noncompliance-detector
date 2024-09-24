@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -29,8 +30,7 @@ export class HomeComponent implements OnInit {
   recentReports: any[] = [];
 
   constructor(private authService:AuthService) {
-    // this.supabase = createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_KEY');
-    this.supabase = createClient('https://oadcyxznbhdrzsutusbh.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hZGN5eHpuYmhkcnpzdXR1c2JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU4MTAyNDUsImV4cCI6MjA0MTM4NjI0NX0.DLDq7NyjhmEv9V1bRERp2e5XT0-qFdBjWN3BNed6EfY');
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 
   }
 

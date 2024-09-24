@@ -38,6 +38,19 @@ body {
   margin-right: 10px;
 }
 
+.home-button {
+  color: #f2f2f2;
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 17px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.home-button:hover {
+  color: #ffffff;
+}
+
 .hover-links {
   display: flex;
   align-items: center;
