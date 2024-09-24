@@ -1,0 +1,89 @@
+<div class="fullscreen-image">
+  <div class="login-container">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+      <div class="grid">
+        <div class="form-group">
+          <label for="firstName">First name</label>
+          <input type="text" id="firstName" formControlName="firstName" class="form-control" [ngClass]="{'is-invalid': registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)}">
+          <div class="invalid-feedback" *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)">
+            <div *ngIf="registerForm.get('firstName')?.errors?.['required']">First name is required.</div>
+            <div *ngIf="registerForm.get('firstName')?.errors?.['pattern']">Only letters are allowed.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last name</label>
+          <input type="text" id="lastName" formControlName="lastName" class="form-control" [ngClass]="{'is-invalid': registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)}">
+          <div class="invalid-feedback" *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
+            <div *ngIf="registerForm.get('lastName')?.errors?.['required']">Last name is required.</div>
+            <div *ngIf="registerForm.get('lastName')?.errors?.['pattern']">Only letters are allowed.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)}">
+        <div class="invalid-feedback" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input-wrapper">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-control" [ngClass]="{'is-invalid': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)}">
+          <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+            <span class="eye-icon" [ngClass]="{'visible': showPassword}">👁️</span>
+          </button>
+        </div>
+        <div class="password-conditions">
+          <div class="condition" [ngClass]="{'met': passwordConditions.length}">
+            <input type="checkbox" [checked]="passwordConditions.length" disabled> At least 8 characters
+          </div>
+          <div class="condition" [ngClass]="{'met': passwordConditions.uppercase}">
+            <input type="checkbox" [checked]="passwordConditions.uppercase" disabled> At least one uppercase letter
+          </div>
+          <div class="condition" [ngClass]="{'met': passwordConditions.lowercase}">
+            <input type="checkbox" [checked]="passwordConditions.lowercase" disabled> At least one lowercase letter
+          </div>
+          <div class="condition" [ngClass]="{'met': passwordConditions.number}">
+            <input type="checkbox" [checked]="passwordConditions.number" disabled> At least one number
+          </div>
+          <div class="condition" [ngClass]="{'met': passwordConditions.specialChar}">
+            <input type="checkbox" [checked]="passwordConditions.specialChar" disabled> At least one special character
+          </div>
+        </div>
+        <div class="password-strength" [ngClass]="passwordStrength">
+          Password strength: {{ passwordStrength }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm password</label>
+        <div class="password-input-wrapper">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword" class="form-control" [ngClass]="{'is-invalid': registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)}">
+          <button type="button" class="password-toggle" (click)="toggleConfirmPasswordVisibility()">
+            <span class="eye-icon" [ngClass]="{'visible': showConfirmPassword}">👁️</span>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm password is required.</div>
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['mustMatch']">Passwords must match.</div>
+        </div>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="agreeTerms" formControlName="agreeTerms" class="form-check-input">
+        <label for="agreeTerms" class="form-check-label">I agree with the <a href="#" class="terms-link">terms and conditions</a>.</label>
+      </div>
+
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+
+      <div class="login-link">
+        <a routerLink="/login">Back to Login</a>
+      </div>
+    </form>
+  </div>
+</div>
