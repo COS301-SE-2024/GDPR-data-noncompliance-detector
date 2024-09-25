@@ -186,11 +186,11 @@ class report_generation_layer:
     
     def GF_report(self, text):
         test = self.classification_layer.run_GF_model(text)
-        report = 0
-        if test == 'LABEL_1':
-            report += 1
+        # report = 0
+        # if test == 'LABEL_1':
+        #     report += 1
         
-        return report 
+        return test
 
     def generate_pdf(self, violation_data, output_file):
         c = canvas.Canvas(output_file, pagesize = A4)
