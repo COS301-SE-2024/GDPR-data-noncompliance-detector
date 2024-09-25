@@ -80,14 +80,15 @@ class detection_engine:
         
         location_report = 0
         ner_result_report = self.report_generator.ner_report_generation(text)
-        reg_result_personal_report = self.regex_report_personal(text)
+        reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
         reg_result_financial_report = self.regex_report_financial(text)
         reg_result_contact_report = self.regex_report_contact(text)
         ca_statement_report = self.report_generator.CA_report_generation(text)
-        gi_result_report = self.report_generator.gen_report(text)
+        gi_result_report = 0
         em_result_report = self.report_generator.EM_report(text)
         md_result_report = self.report_generator.MD_report(text)
         image_result_report = self.report_generator.Image_report_generation(path_)
+        rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
 
         violation_data = {
             "score": {
@@ -101,6 +102,8 @@ class detection_engine:
                 "Ethnic": em_result_report,
                 "Medical": md_result_report,
                 "Biometric": image_result_report,
+                "RAG Statement":rag_stat,
+                "lenarts":rag_count
             }
         }
 
@@ -161,6 +164,7 @@ class detection_engine:
         em_result_report = self.report_generator.EM_report(text)
         md_result_report = self.report_generator.MD_report(text)
         image_result_report = self.report_generator.Image_report_generation(path_)
+        rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
 
         status = 1
 
@@ -174,7 +178,6 @@ class detection_engine:
     
                 status = 0
 
-        rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
 
         violation_data = {            
             "score": {
@@ -189,7 +192,7 @@ class detection_engine:
                 "Ethnic": em_result_report,
                 "Medical": md_result_report,
                 "Biometric": image_result_report,
-                "RAG Statement":rag_stat,
+                "RAG_Statement":rag_stat,
                 "lenarts":rag_count
             }
         }
@@ -210,5 +213,5 @@ class detection_engine:
 
 if __name__ == "__main__":
     this_ = detection_engine()
-
-    print(this_.process("Special Categories of Personal Data: Genetic Data: As a fictional character, Harvey Spectre's genetic makeup is not subject to real-world testing. However, within the show's narrative, his ancestry might be explored or referenced, showcasing a mix of backgrounds for storytelling purposes. Biometric Data: In the fictional world of 'Suits,' Harvey Spectre might utilize biometric security measures, such as fingerprint scans or facial recognition, to access his law firm's facilities. These details add depth to the character's portrayal in the show. Health Data: Fictional narratives may include references to characters' health conditions or medical histories for plot development. Any health-related information attributed to Harvey Spectre would be part of the show's storyline and not reflective of real-world data. Data revealing Racial and Ethnic Origin: Within the context of 'Suits,' Harvey Spectre's racial or ethnic background may be depicted or mentioned in the script to provide context to his character's identity and experiences. Political Opinions: Harvey Spectre's political views and affiliations are portrayed within the fictional world of 'Suits' to add depth to his character and drive plotlines involving legal and political matters. Religious or Ideological Convictions: References to Harvey Spectre's religious beliefs or philosophical convictions within the show contribute to character development and storyline progression. Trade Union Membership: As a corporate lawyer in the show, Harvey Spectre's involvement with trade unions or labor organizations might be addressed in specific plotlines but is not a central aspect of his character."))
+    print(this_.report_generation("Special Categories of Personal Data: Genetic Data: As a fictional character, Harvey Spectre's genetic makeup is not subject to real-world testing. However, within the show's narrative, his ancestry might be explored or referenced, showcasing a mix of backgrounds for storytelling purposes. Biometric Data: In the fictional world of 'Suits,' Harvey Spectre might utilize biometric security measures, such as fingerprint scans or facial recognition, to access his law firm's facilities. These details add depth to the character's portrayal in the show. Health Data: Fictional narratives may include references to characters' health conditions or medical histories for plot development. Any health-related information attributed to Harvey Spectre would be part of the show's storyline and not reflective of real-world data. Data revealing Racial and Ethnic Origin: Within the context of 'Suits,' Harvey Spectre's racial or ethnic background may be depicted or mentioned in the script to provide context to his character's identity and experiences. Political Opinions: Harvey Spectre's political views and affiliations are portrayed within the fictional world of 'Suits' to add depth to his character and drive plotlines involving legal and political matters. Religious or Ideological Convictions: References to Harvey Spectre's religious beliefs or philosophical convictions within the show contribute to character development and storyline progression. Trade Union Membership: As a corporate lawyer in the show, Harvey Spectre's involvement with trade unions or labor organizations might be addressed in specific plotlines but is not a central aspect of his character.","../mockData/NCE1.pdf"))
+    # print(this_.process("Special Categories of Personal Data: Genetic Data: As a fictional character, Harvey Spectre's genetic makeup is not subject to real-world testing. However, within the show's narrative, his ancestry might be explored or referenced, showcasing a mix of backgrounds for storytelling purposes. Biometric Data: In the fictional world of 'Suits,' Harvey Spectre might utilize biometric security measures, such as fingerprint scans or facial recognition, to access his law firm's facilities. These details add depth to the character's portrayal in the show. Health Data: Fictional narratives may include references to characters' health conditions or medical histories for plot development. Any health-related information attributed to Harvey Spectre would be part of the show's storyline and not reflective of real-world data. Data revealing Racial and Ethnic Origin: Within the context of 'Suits,' Harvey Spectre's racial or ethnic background may be depicted or mentioned in the script to provide context to his character's identity and experiences. Political Opinions: Harvey Spectre's political views and affiliations are portrayed within the fictional world of 'Suits' to add depth to his character and drive plotlines involving legal and political matters. Religious or Ideological Convictions: References to Harvey Spectre's religious beliefs or philosophical convictions within the show contribute to character development and storyline progression. Trade Union Membership: As a corporate lawyer in the show, Harvey Spectre's involvement with trade unions or labor organizations might be addressed in specific plotlines but is not a central aspect of his character."))

@@ -45,6 +45,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   biometricData: number = 6;
   geneticData: number = 6;
   rag_count = 0;
+  rag_stat: string = "";
 
   receivedData: any;
 
@@ -66,7 +67,8 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       this.geneticData = this.data.score.Genetic;
       this.ethnicData = this.data.score.Ethnic;
       this.biometricData = this.data.score.Biometric;
-      this.rag_count - this.data.score.lenarts;
+      this.rag_count = this.data.score.lenarts;
+      this.rag_stat = this.data.score.RAG_Statement;
       // this.createCircularBarChart();
       console.log(this.rag_count);
     }
