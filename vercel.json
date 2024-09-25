@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "gnd-admin",
+  "builds": [
+    {
+      "src": "gnd-admin/package.json",
+      "use": "@vercel/angular"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
