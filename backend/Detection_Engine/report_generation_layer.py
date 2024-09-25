@@ -1,7 +1,7 @@
 from .text_classification_layer import text_classification_layer
 from .biometric_detection import biometric_detection
 from .lang_detection import location_finder
-from langcodes import Language
+# from langcodes import Language
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -29,17 +29,14 @@ class report_generation_layer:
 
 
     def location_report(self, text):
-        countries = location_finder.detect_country(self, text)
+        res = location_finder.detect_country(self, text)
         # countries = self.detect_country(result)
-
-        if countries:
-            for country in countries:
-                language_code = Language.find(country[0]).to_tag()
-                if language_code in self.eu_languages:
-                    return "EU"
-            return "Not EU"
+        if res == "non-EU":  
+            return 0
+        elif res == "EU":
+            return 1
         else:
-            return "Undefined"
+            return 2
         
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------#           
            

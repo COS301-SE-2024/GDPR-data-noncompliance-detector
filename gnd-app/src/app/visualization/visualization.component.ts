@@ -153,14 +153,14 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
                     this.geneticData
                 ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
                     'rgba(255, 159, 64, 0.2)',
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 99, 132, 0.2)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)',
                     'rgba(255, 99, 132, 1)',
@@ -241,10 +241,10 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
   calculateMetric() {
 
-    const w_per = 1;
-    const w_med = 0.2;
-    const w_gen = 0.1;
-    const w_eth = 0.2;
+    const w_per = 0.8;
+    const w_med = 0.4;
+    const w_gen = 0.4;
+    const w_eth = 0.4;
     const w_bio = 0.6;
 
     let e_personalData  = (Math.exp(this.data.score.Personal) + Math.exp(this.financialData) + Math.exp(this.contactData))*w_per;
@@ -263,13 +263,13 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       }
     }
 
-    let N_e_personalData = e_personalData/maxExpValue;
+    let N_e_personalData = e_personalData/(maxExpValue/2);
     let N_e_med = e_med/maxExpValue;
     let N_e_gen = e_gen/maxExpValue;
     let N_e_eth = e_eth/maxExpValue;
     let N_e_bio = e_bio / maxExpValue;
     
-    this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
+    // this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
 
   }
  
