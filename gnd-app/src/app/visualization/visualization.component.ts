@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 import { VisualizationService } from '../services/visualization.service';
 // import { BrowserModule } from '@angular/platform-browser';
 // import { AppComponent } from './app.component';
+import 'chartjs-chart-geo';
+import * as d3 from 'd3';
+import { feature } from 'topojson-client';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import {
   ApexAxisChartSeries,
@@ -20,6 +23,7 @@ export type ChartOptions = {
   chart: ApexChart;
   xaxis: ApexXAxis;
 };
+import { ChoroplethController, GeoFeature , ProjectionScale, ColorScale} from 'chartjs-chart-geo';
 
 @Component({
   selector: 'app-visualization',
@@ -33,10 +37,10 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   @Input() data: any;
   @ViewChild('progressCanvas') progressCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('radarChartCanvas') radarChartCanvas!: ElementRef<HTMLCanvasElement>;
-
+  @ViewChild('mapCanvas') mapCanvas!: ElementRef<HTMLCanvasElement>;
 
   nerCount: number = 5;
-  location: string = "";
+  location: number = 2;
   personalData: number = 7;
   financialData: number =19;
   contactData: number = 21;
@@ -51,7 +55,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router,private visualizationService: VisualizationService) {
     // Register Chart.js components
-    Chart.register(...registerables);
+    Chart.register(...registerables, ChoroplethController, GeoFeature, ProjectionScale, ColorScale);
   }
 
   ngOnInit() {
@@ -59,7 +63,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     if (this.data) {
       // console.log('Data in child component:', this.data.score.Biometric); // Log data only when available
       this.nerCount = this.data.score.NER;
-      // this.location = "";
+      this.location = this.data.score.location_report;
       this.personalData = this.data.score.Personal;
       this.financialData =this.data.score.Financial;
       this.contactData = this.data.score.Contact;
@@ -136,6 +140,8 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     } else {
       console.error('radarChartCanvas is not defined');
     }
+
+    this.initializeMap();
   }
 
   createCircularBarChart() {
@@ -305,4 +311,74 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
         }
     });
   }
+
+  initializeMap(): void {
+    const canvas = this.mapCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+
+    // Load the world map data
+    d3.json('https://unpkg.com/world-atlas@2.0.2/countries-50m.json').then((data: any) => {
+      const countries = (feature(data, data.objects.countries) as any).features;
+
+      // Determine the colors based on the location value
+      let backgroundColor: (country: any) => string;
+
+      switch (this.location) {
+        case 0: // EU in red, others not highlighted
+          backgroundColor = (country: any) =>
+            this.isEUCountry(country.properties.name) ? 'rgba(200, 0, 0, 0.8)' : 'rgba(200, 200, 200, 0.5)';
+          break;
+        case 1: // Non-EU in green, others not highlighted
+          backgroundColor = (country: any) =>
+            this.isEUCountry(country.properties.name) ? 'rgba(200, 200, 200, 0.5)' : 'rgba(4, 214, 148, 0.8)';
+          break;
+        case 2: // Optional: All in light grey
+        default:
+          backgroundColor = () => 'rgba(200, 200, 200, 0.5)';
+          break;
+      }
+
+      // Create the map chart
+      new Chart(ctx, {
+        type: 'choropleth',
+        data: {
+          labels: countries.map((d: any) => d.properties.name),
+          datasets: [{
+            label: 'Countries',
+            data: countries.map((d: any) => ({ feature: d, value: 1 })),
+            backgroundColor: backgroundColor,
+            borderColor: 'rgba(0, 0, 0, 0.1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          showOutline: true,
+          showGraticule: true,
+          scales: {
+            xy: {
+              projection: 'equalEarth'
+            }
+          }
+        }
+      });
+    }).catch((error: any) => {
+      console.error('Error loading GeoJSON data:', error);
+    });
+  }
+
+
+  isEUCountry(countryName: string): boolean {
+    const euCountries = [
+      'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France',
+      'Germany', 'Greece', 'Hungary', 'Ireland', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands',
+      'Poland', 'Portugal', 'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden'
+    ];
+    return euCountries.includes(countryName);
+  }
+
+
 }

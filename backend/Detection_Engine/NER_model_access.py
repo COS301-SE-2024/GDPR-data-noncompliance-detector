@@ -10,7 +10,7 @@ from transformers import pipeline
 
 # model = spacy.load(model_path)
 
-model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
+model_name = "xlm-roberta-large-finetuned-conll03-english"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForTokenClassification.from_pretrained(model_name)
 
@@ -22,17 +22,15 @@ class NER:
     # def __init__(self):
 
     def extract_entities(self, res):
-        entities = []
+        person_count = 0
         for i in res:
             if i['entity'] == 'I-PER':
-                entities.append((i['word'], i['entity']))
-        print('\n')
-        # print(entities)
-        return entities
+                person_count += 1
+        print(f'Number of persons found: {person_count}')
+        return person_count
 
     def run_NER(self, text):
         entities = nlp(text)
-        # print(entities)
         return self.extract_entities(entities)
     
 if __name__ == '__main__':
