@@ -10,12 +10,7 @@ import 'chartjs-chart-geo';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ChartComponent,
-  NgApexchartsModule
+import {ApexAxisChartSeries,  ApexChart,  ApexXAxis,  ChartComponent,  NgApexchartsModule
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -144,6 +139,87 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     this.initializeMap();
   }
 
+  // createCircularBarChart(): void {
+  //   const width = 500;
+  //   const height = 500;
+  //   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+
+  //   const innerRadius = 90;  // Inner radius of the circular bar chart
+  //   const outerRadius = Math.min(width, height) / 2;  // Outer radius
+
+  //   // Create the SVG element
+  //   const svg = d3.select('#circularBarChart')
+  //     .append('svg')
+  //     .attr('width', width + margin.left + margin.right)
+  //     .attr('height', height + margin.top + margin.bottom)
+  //     .append('g')
+  //     .attr('transform', `translate(${(width + margin.left) / 2}, ${(height + margin.top) / 2})`);
+
+  //   // X scale: categories
+  //   const x = d3.scaleBand()
+  //     .domain(this.data.map(d => d.category))
+  //     .range([0, 2 * Math.PI]);  // Circle layout
+
+  //   // Y scale: values
+  //   const y = d3.scaleLinear()
+  //     .domain([0, d3.max(this.data, d => d.value)!])
+  //     .range([innerRadius, outerRadius]);
+
+  //   // Color scale
+  //   const color = d3.scaleOrdinal()
+  //     .domain(this.data.map(d => d.category))
+  //     .range(['#69b3a2', '#404080', '#f2a12e', '#ff6666', '#b3de69']);
+
+  //   // Create a tooltip element
+  //   const tooltip = d3.select('body').append('div')
+  //     .attr('class', 'tooltip')
+  //     .style('opacity', 0);
+
+  //   // Bars with interactivity
+  //   svg.append('g')
+  //     .selectAll('path')
+  //     .data(this.data)
+  //     .enter()
+  //     .append('path')
+  //     .attr('fill', d => color(d.category) as string)
+  //     .attr('d', d3.arc<any>()
+  //       .innerRadius(innerRadius)
+  //       .outerRadius(d => y(d.value))
+  //       .startAngle(d => x(d.category)!)
+  //       .endAngle(d => x(d.category)! + x.bandwidth())
+  //       .padAngle(0.01)
+  //       .padRadius(innerRadius))
+  //     .on('mouseover', (event, d) => {  // Mouseover event
+  //       tooltip.transition()
+  //         .duration(200)
+  //         .style('opacity', 1);
+  //       tooltip.html(`Category: ${d.category}<br>Value: ${d.value}`)
+  //         .style('left', `${event.pageX + 5}px`)
+  //         .style('top', `${event.pageY - 28}px`);
+  //     })
+  //     .on('mouseout', () => {  // Mouseout event
+  //       tooltip.transition()
+  //         .duration(500)
+  //         .style('opacity', 0);
+  //     })
+  //     .on('click', (event, d) => {  // Click event (optional)
+  //       console.log(`${d.category} clicked!`);
+  //     });
+
+  //   // Add labels
+  //   svg.append('g')
+  //     .selectAll('g')
+  //     .data(this.data)
+  //     .enter()
+  //     .append('g')
+  //     .attr('text-anchor', d => (x(d.category)! + x.bandwidth() / 2 > Math.PI ? 'end' : 'start'))
+  //     .attr('transform', d => `rotate(${((x(d.category)! + x.bandwidth() / 2) * 180 / Math.PI - 90)}) translate(${outerRadius + 10},0)`)
+  //     .append('text')
+  //     .text(d => d.category)
+  //     .attr('transform', d => (x(d.category)! + x.bandwidth() / 2 > Math.PI ? 'rotate(180)' : 'rotate(0)'))
+  //     .style('font-size', '12px')
+  //     .attr('alignment-baseline', 'middle');
+  // }
   createCircularBarChart() {
     const ctx = document.getElementById('circularBarChart') as HTMLCanvasElement;
     if (ctx) {
