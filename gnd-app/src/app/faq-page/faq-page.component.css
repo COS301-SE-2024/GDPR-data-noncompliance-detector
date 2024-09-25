@@ -5,16 +5,16 @@
     text-align: center;
     padding-bottom: 2.5em;
     padding-top: 1em;
-  }
-  
-  .header {
+}
+
+.header {
     font-family: "Mediator Narrow Web Extra Bold";
     position: relative;
     display: inline-block;
     font-size: 35px;
-  }
-  
-  .header::after {
+}
+
+.header::after {
     content: '';
     display: inline-block;
     width: 10px;
@@ -22,25 +22,29 @@
     background-color: #8EBA12;
     border-radius: 50%;
     transform: translateX(-100%);
-  }
+}
 
-.grid-parent {    
+.grid-parent {
     display: flex;
-    /* justify-content: space-around; */
+    justify-content: space-between; /* Ensures GND is on the left and GDPR is on the right */
+    align-items: flex-start; /* Aligns the items at the start of the parent container */
+    padding: 20px;
+    gap: 20px; /* Optional: Adds space between the two sections */
+    width: 100%;
 } 
 
-.grid-gnd { 
-    margin: 10px; 
-    /* border: 1px solid black; */
-    width: 40%;
-    padding: 20px;    
+.grid-gnd {
+    margin: 10px;
+    width: 45%; /* Set the width to 45% for equal sizing */
+    padding: 20px;
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
 }
 
 .grid-gdpr {
-    margin: 10px; 
-    border: 1px solid black;
-    width: 40%;
+    margin: 10px;
+    width: 45%; /* Set the width to 45% for equal sizing */
     padding: 20px;
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
 }
 
 /* Dropdown button */
@@ -84,7 +88,6 @@
 /* Dropdown content styling */
 .dropdown-content p {
   color: black;
-  /* padding: 10px 10px; */
   text-decoration: none;
   display: block;
   word-wrap: break-word; /* Ensures long words break to the next line */
@@ -113,5 +116,3 @@
 .dropbtn .arrow-up::before {
   transform: rotate(0deg); /* Points up */
 }
-
-
