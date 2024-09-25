@@ -68,7 +68,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       this.biometricData = this.data.score.Biometric;
       this.rag_count - this.data.score.lenarts;
       // this.createCircularBarChart();
-      console.log(this.geneticData);
+      console.log(this.rag_count);
     }
 
     // violation_data = {            
@@ -123,8 +123,17 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   // }
 
   ngAfterViewInit() {
-    // this.drawCircularProgressBar(this.rag_count);
-    this.calculateMetric();
+    if (this.progressCanvas && this.progressCanvas.nativeElement) {
+      this.drawCircularProgressBar(this.rag_count);
+    } else {
+      console.error('progressCanvas is not defined');
+    }
+
+    if (this.radarChartCanvas && this.radarChartCanvas.nativeElement) {
+      this.calculateMetric();
+    } else {
+      console.error('radarChartCanvas is not defined');
+    }
   }
 
   createCircularBarChart() {
