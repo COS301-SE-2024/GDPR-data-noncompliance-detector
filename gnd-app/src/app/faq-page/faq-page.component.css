@@ -26,12 +26,12 @@
 
 .grid-parent {    
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
 } 
 
 .grid-gnd { 
     margin: 10px; 
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 40%;
     padding: 20px;    
 }
@@ -45,17 +45,21 @@
 
 /* Dropdown button */
 .dropbtn {
-  background-color: #3498DB;
-  color: white;
-  padding: 16px;
-  margin: 10px;
+  font-family: "Mediator Narrow Web Extra Bold";
+  background-color: transparent; /* No background color */
+  color: black; /* Text color */
+  padding: 5px;
+  margin: 5px;
   font-size: 16px;
   border: none;
   cursor: pointer;
+  text-decoration: none; /* Remove underline */
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
+  color: #8EBA12; /* Change text color on hover */
+  text-decoration: underline; /* Add underline on hover */
+  background-color: transparent; /* Keep the background transparent */
 }
 
 .dropdown {
@@ -63,28 +67,32 @@
   display: inline-block;
 }
 
+/* Increase dropdown-content width */
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
-  overflow: auto;
+  min-width: 500px; /* Increased width for dropdowns */
+  max-width: 500px; /* Ensures no dropdown exceeds this width */
+  overflow: hidden; /* Prevent content from overflowing */
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  padding: 20px; /* Add padding for consistent spacing */
+  box-sizing: border-box; /* Ensure padding and borders are included in the width */
 }
 
+/* Dropdown content styling */
 .dropdown-content p {
   color: black;
-  padding: 12px 16px;
+  padding: 10px 12px;
   text-decoration: none;
   display: block;
+  word-wrap: break-word; /* Ensures long words break to the next line */
 }
 
-.dropdown-content p:hover {background-color: #ddd;}
-
+/* Ensure dropdown content is shown when clicked */
 .show {
   display: block;
 }
 
-/* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
 
