@@ -4,7 +4,10 @@
   "builds": [
     {
       "src": "gnd-admin/package.json",
-      "use": "@vercel/angular"
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "gnd-admin/dist/gnd-admin"
+      }
     }
   ],
   "routes": [
