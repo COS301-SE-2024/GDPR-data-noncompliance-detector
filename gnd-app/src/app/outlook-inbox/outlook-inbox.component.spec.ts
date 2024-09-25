@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { OutlookInboxComponent } from './outlook-inbox.component';
 
 describe('OutlookInboxComponent', () => {
@@ -8,7 +8,9 @@ describe('OutlookInboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OutlookInboxComponent]
+      imports: [OutlookInboxComponent,
+        HttpClientTestingModule,
+      ]
     })
     .compileComponents();
 
