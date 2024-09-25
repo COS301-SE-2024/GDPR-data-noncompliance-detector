@@ -27,10 +27,9 @@
       platform.
     </p>
 
-    <div  class="dropdown">
-      <button onclick="myFunction()"  class="dropbtn">What is GND?</button>
-
-      <div id="myDropdown" class="dropdown-content">
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown1')">What is GND?</button>
+      <div id="dropdown1" [ngClass]="{'show': activeDropdown === 'dropdown1'}" class="dropdown-content">
         <p>
           GND is a GDPR violation detection application designed to help users
           identify potential GDPR compliance issues in their documents. By uploading
@@ -41,10 +40,10 @@
     </div>
     <br>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button onclick="myFunction()" class="dropbtn">How do I upload a file for scanning in GND?</button>
 
-      <div id="myDropdown" class="dropdown-content">
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown2')">How do I upload a file for scanning in GND?</button>
+      <div id="dropdown2" [ngClass]="{'show': activeDropdown === 'dropdown2'}" class="dropdown-content">
         <p>
           To upload a file for scanning: <br>
           1. Open the GND app. <br>
@@ -55,18 +54,17 @@
       </div>
     </div>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">What types of files can I upload to GND?</button>
-
-      <div class="dropdown-content">
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown3')">What types of files can I upload to GND?</button>
+      <div id="dropdown3" [ngClass]="{'show': activeDropdown === 'dropdown3'}" class="dropdown-content">
         <p>GND supports a variety of file types, including: - PDF - Excel - Word</p>
       </div>
     </div>
      
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">How long does it take for GND to scan a file?</button>
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown4')">How long does it take for GND to scan a file?</button>
 
-      <div class="dropdown-content">
+      <div id="dropdown4" [ngClass]="{'show': activeDropdown === 'dropdown4'}" class="dropdown-content">
         <p>
           The scan duration depends on the size and complexity of the file.
           Typically, most files are scanned within a few minutes. Larger files or
@@ -75,10 +73,10 @@
       </div>
     </div>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">How accurate is GND in detecting GDPR violations?</button>
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown5')">How accurate is GND in detecting GDPR violations?</button>
 
-      <div class="dropdown-content">
+      <div id="dropdown5" [ngClass]="{'show': activeDropdown === 'dropdown5'}" class="dropdown-content">
         <p>
           GND utilizes advanced algorithms and up-to-date regulatory information to
           ensure high accuracy in detecting GDPR violations. However, we recommend
@@ -87,10 +85,10 @@
         </p>      </div>
     </div>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">Is there a tutorial on how to use GND?</button>
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown6')">Is there a tutorial on how to use GND?</button>
 
-      <div class="dropdown-content">
+      <div id="dropdown6" [ngClass]="{'show': activeDropdown === 'dropdown6'}" class="dropdown-content">
         <p>
           Yes, GND includes a help button that provides a comprehensive tutorial on
           how to use the app. The tutorial covers everything from uploading files to
@@ -99,10 +97,10 @@
       </div>
     </div>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">How can I get support if I encounter issues with GND?</button>
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown7')" >How can I get support if I encounter issues with GND?</button>
 
-      <div class="dropdown-content">
+      <div id="dropdown7" [ngClass]="{'show': activeDropdown === 'dropdown7'}" class="dropdown-content">
         <p>
           If you encounter any issues or have questions, you can reach out to our
           support team via the "Support" section within the app. Additionally, you
@@ -111,10 +109,10 @@
       </div>
     </div>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">Is my data secure with GND?</button>
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown8')">Is my data secure with GND?</button>
 
-      <div class="dropdown-content">
+      <div id="dropdown8" [ngClass]="{'show': activeDropdown === 'dropdown8'}" class="dropdown-content">
         <p>
           Yes, we take data security very seriously. All uploaded files are
           processed in a secure environment, and we implement strict data protection
@@ -123,10 +121,10 @@
       </div>
     </div>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">How do I interpret the scan results?</button>
+    <div class="dropdown">
+      <button class="dropbtn" (click)="toggleDropdown('dropdown9')">How do I interpret the scan results?</button>
 
-      <div class="dropdown-content">
+      <div id="dropdown9" [ngClass]="{'show': activeDropdown === 'dropdown9'}" class="dropdown-content">
         <p>
           The scan results will highlight any detected GDPR violations and provide
           details on the nature of each violation. The report will include
@@ -136,50 +134,23 @@
       </div>
     </div>
 
-    <div onclick="myFunction()" class="dropdown">
-      <button class="dropbtn">Can I download the scan results?</button>
+    <div class="dropdown" >
+      <button (click)="toggleDropdown('dropdown10')" class="dropbtn">Can I download the scan results?</button>
 
-      <div class="dropdown-content">
+      <div id="dropdown10" [ngClass]="{'show': activeDropdown === 'dropdown10'}"  class="dropdown-content">
         <p>
           No, you cannot download the scan results.
         </p>
       </div>
-    </div>
+    </div>  
+  </div>
+</div> 
 
-  
-    
-
-    
-    
-
-    <!-- <h3>Is GND free to use?</h3>
+ <!-- <h3>Is GND free to use?</h3>
     <p>
       Yes, GND is completely free to use. There are no premium plans or hidden
       costs. You can use all the features of GND without any charges.
     </p> -->
-  </div>
-</div> 
-
-<script>
-
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
-  
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-    }
-  }
-</script>
 
 
 
