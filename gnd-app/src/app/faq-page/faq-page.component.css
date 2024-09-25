@@ -79,7 +79,7 @@
   min-width: 500px; /* Increased width for dropdowns */
   max-width: 500px; /* Ensures no dropdown exceeds this width */
   overflow: hidden; /* Prevent content from overflowing */
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 16px 20px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   padding: 20px; /* Add padding for consistent spacing */
   box-sizing: border-box; /* Ensure padding and borders are included in the width */
