@@ -241,7 +241,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
   calculateMetric() {
 
-    const w_per = 0.8;
+    const w_per = 1;
     const w_med = 0.4;
     const w_gen = 0.4;
     const w_eth = 0.4;
@@ -263,13 +263,13 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       }
     }
 
-    let N_e_personalData = e_personalData/(maxExpValue/2);
+    let N_e_personalData = e_personalData/maxExpValue;
     let N_e_med = e_med/maxExpValue;
     let N_e_gen = e_gen/maxExpValue;
     let N_e_eth = e_eth/maxExpValue;
     let N_e_bio = e_bio / maxExpValue;
     
-    // this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
+    this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
 
   }
  
