@@ -27,43 +27,44 @@
 .grid-parent {
     display: flex;
     justify-content: space-between; /* Ensures GND is on the left and GDPR is on the right */
-    align-items: flex-start; /* Aligns the items at the start of the parent container */
-    padding: 20px;
-    gap: 20px; /* Optional: Adds space between the two sections */
+    align-items: flex-start;
+    padding: 10px;
+    gap: 20px; 
     width: 100%;
 } 
 
 .grid-gnd {
     margin: 10px;
-    width: 45%; /* Set the width to 45% for equal sizing */
+    width: 45%; 
     padding: 20px;
-    box-sizing: border-box; /* Ensure padding doesn't affect the width */
+    box-sizing: border-box; 
 }
 
 .grid-gdpr {
     margin: 10px;
-    width: 45%; /* Set the width to 45% for equal sizing */
+    width: 45%; 
     padding: 20px;
-    box-sizing: border-box; /* Ensure padding doesn't affect the width */
+    box-sizing: border-box; 
 }
 
 /* Dropdown button */
 .dropbtn {
   font-family: "Mediator Narrow Web Extra Bold";
-  background-color: transparent; /* No background color */
-  color: black; /* Text color */
+  background-color: transparent; 
+  color: black; 
   padding: 2px;
   margin: 5px;
   font-size: 16px;
   border: none;
   cursor: pointer;
-  text-decoration: none; /* Remove underline */
+  text-decoration: none; 
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  color: #8EBA12; /* Change text color on hover */
-  text-decoration: underline; /* Add underline on hover */
-  background-color: transparent; /* Keep the background transparent */
+  color: #8EBA12; 
+  text-decoration: underline; 
+  background-color: transparent; 
+  
 }
 
 .dropdown {
@@ -76,43 +77,43 @@
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 500px; /* Increased width for dropdowns */
-  max-width: 500px; /* Ensures no dropdown exceeds this width */
-  overflow: hidden; /* Prevent content from overflowing */
+  min-width: 500px; 
+  max-width: 500px; 
+  overflow: hidden; 
   box-shadow: 16px 20px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  padding: 20px; /* Add padding for consistent spacing */
-  box-sizing: border-box; /* Ensure padding and borders are included in the width */
+  padding: 20px; 
+  box-sizing: border-box; 
 }
 
-/* Dropdown content styling */
+
 .dropdown-content p {
   color: black;
   text-decoration: none;
   display: block;
-  word-wrap: break-word; /* Ensures long words break to the next line */
+  word-wrap: break-word; /
 }
 
-/* Ensure dropdown content is shown when clicked */
+
 .show {
   display: block;
 }
 
-/* Style for the arrow */
+
 .dropbtn .arrow-up::before, 
 .dropbtn .arrow-down::before {
-  content: '▼'; /* Default arrow */
+  content: '▼';
   margin-left: 8px;
   display: inline-block;
-  transition: transform 0.3s ease; /* Smooth transition for the arrow rotation */
+  transition: transform 0.3s ease; 
 }
 
-/* Rotate the arrow to point up when dropdown is open */
+
 .dropbtn .arrow-down::before {
-  transform: rotate(180deg); /* Points down */
+  transform: rotate(180deg); 
 }
 
-/* Default arrow (points up) */
+
 .dropbtn .arrow-up::before {
-  transform: rotate(0deg); /* Points up */
+  transform: rotate(0deg); 
 }

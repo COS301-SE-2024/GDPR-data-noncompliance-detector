@@ -13,7 +13,12 @@ export class FaqPageComponent {
   activeDropdown: string = '';  // To store the currently active dropdown
 
   // Function to toggle the dropdown
-  toggleDropdown(id: string) {
-    this.activeDropdown = this.activeDropdown === id ? '' : id;  // Toggle logic
-  }
+  toggleDropdown(dropdownId: string) {
+    if (this.activeDropdown === dropdownId) {
+        this.activeDropdown = ''; // Close dropdown
+    } else {
+        this.activeDropdown = dropdownId; // Open new dropdown
+    }
+}
+
 }
