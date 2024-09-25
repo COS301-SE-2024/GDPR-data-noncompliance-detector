@@ -8,7 +8,7 @@ import { VisualizationService } from '../services/visualization.service';
 // import { AppComponent } from './app.component';
 import 'chartjs-chart-geo';
 import * as d3 from 'd3';
-import { feature } from 'topojson-client';
+import * as topojson from 'topojson-client';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import {
   ApexAxisChartSeries,
@@ -23,7 +23,7 @@ export type ChartOptions = {
   chart: ApexChart;
   xaxis: ApexXAxis;
 };
-import { ChoroplethController, GeoFeature , ProjectionScale, ColorScale} from 'chartjs-chart-geo';
+import { ChoroplethController, GeoFeature , ProjectionScale, ColorScale } from 'chartjs-chart-geo';
 
 @Component({
   selector: 'app-visualization',
@@ -313,72 +313,94 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   }
 
   initializeMap(): void {
-    const canvas = this.mapCanvas.nativeElement;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      console.error('Failed to get 2D context');
-      return;
-    }
+    const width = 960;
+    const height = 600;
 
-    // Load the world map data
-    d3.json('https://unpkg.com/world-atlas@2.0.2/countries-50m.json').then((data: any) => {
-      const countries = (feature(data, data.objects.countries) as any).features;
+    const svg = d3.select('#map')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
 
-      // Determine the colors based on the location value
-      let backgroundColor: (country: any) => string;
+    const projection = d3.geoMercator()
+      .scale(150)
+      .translate([width / 2, height / 2]);
 
-      switch (this.location) {
-        case 0: // EU in red, others not highlighted
-          backgroundColor = (country: any) =>
-            this.isEUCountry(country.properties.name) ? 'rgba(200, 0, 0, 0.8)' : 'rgba(200, 200, 200, 0.5)';
-          break;
-        case 1: // Non-EU in green, others not highlighted
-          backgroundColor = (country: any) =>
-            this.isEUCountry(country.properties.name) ? 'rgba(200, 200, 200, 0.5)' : 'rgba(4, 214, 148, 0.8)';
-          break;
-        case 2: // Optional: All in light grey
-        default:
-          backgroundColor = () => 'rgba(200, 200, 200, 0.5)';
-          break;
-      }
+    const path = d3.geoPath().projection(projection);
 
-      // Create the map chart
-      new Chart(ctx, {
-        type: 'choropleth',
-        data: {
-          labels: countries.map((d: any) => d.properties.name),
-          datasets: [{
-            label: 'Countries',
-            data: countries.map((d: any) => ({ feature: d, value: 1 })),
-            backgroundColor: backgroundColor,
-            borderColor: 'rgba(0, 0, 0, 0.1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          showOutline: true,
-          showGraticule: true,
-          scales: {
-            xy: {
-              projection: 'equalEarth'
-            }
-          }
-        }
-      });
-    }).catch((error: any) => {
-      console.error('Error loading GeoJSON data:', error);
+    // Use a valid map data URL
+    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json').then((worldData: any) => {
+      const countries = (topojson.feature(worldData, worldData.objects.countries) as any).features;
+
+      svg.selectAll('path')
+        .data(countries)
+        .enter().append('path')
+        .attr('d', path as unknown as string)
+        .attr('fill', (d: any) => this.getCountryColor(d.id))
+        .attr('stroke', '#ffffff')
+        .attr('stroke-width', 0.5);
+
+    }).catch((error) => {
+      console.error('Error loading map data:', error);
     });
   }
 
-
-  isEUCountry(countryName: string): boolean {
+  getCountryColor(countryId: string): string {
     const euCountries = [
-      'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France',
-      'Germany', 'Greece', 'Hungary', 'Ireland', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands',
-      'Poland', 'Portugal', 'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden'
+      '008', '040', '056', '100', '191', '196', '203', '208', '233', '246', '250', '276', 
+      '300', '348', '352', '372', '380', '428', '440', '442', '470', '528', '616', '620', 
+      '703', '705', '724', '752', '826' // List of EU countries by ISO 3166-1 numeric codes
     ];
-    return euCountries.includes(countryName);
+
+    const nonEuCountries = [
+      '840', '156', '643', '356', '392', '484', '036', '124', '410', '608' // Add more Non-EU countries by ISO 3166-1 numeric codes
+    ];
+
+    switch (this.location) {
+      case 0: // EU in red, others not highlighted
+        return euCountries.includes(countryId) ? 'red' : '#d3d3d3';
+      case 1: // Non-EU in green, others not highlighted
+        return nonEuCountries.includes(countryId) ? 'green' : '#d3d3d3';
+      case 2: // Optional: All in light grey
+      default:
+        return euCountries.includes(countryId) ? 'green' : '#d3d3d3';
+    }
   }
 
+  isEU(countryId: number): boolean {
+    const euCountryIds = [
+      56,   // Belgium
+      250,  // France
+      276,  // Germany
+      300,  // Greece
+      372,  // Ireland
+      380,  // Italy
+      528,  // Netherlands
+      620,  // Portugal
+      724,  // Spain
+      826,  // United Kingdom (historically in EU, but removed after Brexit)
+      208,  // Denmark
+      246,  // Finland
+      348,  // Hungary
+      352,  // Iceland
+      196,  // Cyprus
+      40,   // Austria
+      578,  // Norway
+      642,  // Romania
+      703,  // Slovakia
+      705,  // Slovenia
+      100,  // Bulgaria
+      191,  // Croatia
+      203,  // Czech Republic
+      348,  // Hungary
+      233,  // Estonia
+      428,  // Latvia
+      440,  // Lithuania
+      616,  // Poland
+      703,  // Slovakia
+      752,  // Sweden
+      792   // Turkey (negotiating EU membership, not officially in the EU)
+    ];
+    return euCountryIds.includes(countryId);
+  }
 
 }
