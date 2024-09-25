@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-bottom: 2.5em;
+    padding-bottom: 0.5em;
     padding-top: 1em;
 }
 
@@ -54,7 +54,7 @@
   color: black; 
   padding: 2px;
   margin: 5px;
-  font-size: 16px;
+  font-size: 19px;
   border: none;
   cursor: pointer;
   text-decoration: none; 
