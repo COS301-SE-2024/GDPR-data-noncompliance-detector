@@ -1,15 +1,4 @@
 {
-  "version": 2,
-  "name": "gnd-admin",
-  "builds": [
-    {
-      "src": "and-admin/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "gnd-admin/dist/gnd-admin"
-      }
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
