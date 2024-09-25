@@ -28,7 +28,7 @@
     </p>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown1')"> <span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown1', 'arrow-down': activeDropdown === 'dropdown1'}"></span>What is GND?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown1')"> <span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown1', 'arrow-down': activeDropdown === 'dropdown1'}"></span> What is GND?</button>
       <div id="dropdown1" [ngClass]="{'show': activeDropdown === 'dropdown1'}" class="dropdown-content">
         <p>
           GND is a GDPR violation detection application designed to help users
@@ -135,11 +135,11 @@
     </div>
 
     <div class="dropdown" >
-      <button (click)="toggleDropdown('dropdown10')" class="dropbtn"><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown10', 'arrow-down': activeDropdown === 'dropdown10'}"></span> Can I download the scan results?</button>
+      <button (click)="toggleDropdown('dropdown10')" class="dropbtn"><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown10', 'arrow-down': activeDropdown === 'dropdown10'}"></span> Can I download the scanned results?</button>
 
       <div id="dropdown10" [ngClass]="{'show': activeDropdown === 'dropdown10'}"  class="dropdown-content">
         <p>
-          No, you cannot download the scan results.
+          No, you cannot download the scanned results.
         </p>
       </div>
     </div>  
