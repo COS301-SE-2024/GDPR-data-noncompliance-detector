@@ -362,7 +362,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
         return nonEuCountries.includes(countryId) ? 'green' : '#d3d3d3';
       case 2: // Optional: All in light grey
       default:
-        return euCountries.includes(countryId) ? 'green' : '#d3d3d3';
+        return '#d3d3d3';
     }
   }
 
