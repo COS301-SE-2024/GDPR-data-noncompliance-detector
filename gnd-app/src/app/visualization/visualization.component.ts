@@ -141,59 +141,61 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   createCircularBarChart() {
     const ctx = document.getElementById('circularBarChart') as HTMLCanvasElement;
     if (ctx) {
-      const data = {
-        labels: ['NER', 'Personal', 'Financial', 'Contact', 'Medical', 'Ethnic', 'Biometric','Genetic'],
-        datasets: [{
-          label: 'Scores',
-          data: [
-            this.nerCount,
-            this.personalData,
-            this.financialData,
-            this.contactData,
-            this.medicalData,
-            this.ethnicData,
-            this.biometricData,
-            this.geneticData
-          ],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 99, 132, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 99, 132, 1)',
-            'rgba(255, 99, 132, 1)'
-          ],
-          borderWidth: 1
-        }]
-      };
+        const data = {
+            labels: ['NER', 'Personal', 'Financial', 'Contact', 'Medical', 'Ethnic', 'Biometric','Genetic'],
+            datasets: [{
+                label: 'Scores',
+                data: [
+                    this.nerCount,
+                    this.personalData,
+                    this.financialData,
+                    this.contactData,
+                    this.medicalData,
+                    this.ethnicData,
+                    this.biometricData,
+                    this.geneticData
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
 
-      const options = {
-        scales: {
-          r: {
-            beginAtZero: true
-          }
-        }
-      };
+        const options = {
+            responsive: true,
+            maintainAspectRatio: false,  // Allow the chart to resize freely within its container
+            scales: {
+                r: {
+                    beginAtZero: true
+                }
+            }
+        };
 
-      new Chart(ctx, {
-        type: 'polarArea',
-        data: data,
-        options: options
-      });
+        new Chart(ctx, {
+            type: 'polarArea',
+            data: data,
+            options: options
+        });
     } else {
-      console.error('No canvas context found');  // Debugging log
+        console.error('No canvas context found');
     }
   }
 
@@ -204,29 +206,40 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       console.error('Failed to get 2D context');
       return;
     }
-
+  
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = Math.min(centerX, centerY) - 10;
     const startAngle = -Math.PI / 2;
-    const endAngle = startAngle + (2 * Math.PI * (value / 99));
-
+    const endAngle = startAngle - (2 * Math.PI * (value / 99)); // Counter-clockwise
+  
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  
     // Draw the background circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = '#e6e6e6';
     ctx.fill();
-
+  
+    // Draw the inner white circle
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+  
+    // Create gradient for the progress circle
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    gradient.addColorStop(0, '#ff9800'); // Start color (orange)
+    gradient.addColorStop(1, '#ff5722'); // End color (darker orange)
+  
     // Draw the progress circle
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle, true); // Counter-clockwise
     ctx.lineWidth = 10;
-    ctx.strokeStyle = '#4caf50';
+    ctx.strokeStyle = gradient;
     ctx.stroke();
-
+  
     // Draw the text
     ctx.font = '20px Arial';
     ctx.fillStyle = '#000';
@@ -273,30 +286,32 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const canvas = this.radarChartCanvas.nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) {
-      console.error('Failed to get 2D context');
-      return;
+        console.error('Failed to get 2D context');
+        return;
     }
 
     new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: ['Personal', 'Medical', 'Genetic', 'Ethnic', 'Biometric'],
-        datasets: [{
-          label: 'Normalized Data',
-          data: data,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          r: {
-            beginAtZero: true,
-            max: 1
-          }
+        type: 'radar',
+        data: {
+            labels: ['Personal', 'Medical', 'Genetic', 'Ethnic', 'Biometric'],
+            datasets: [{
+                label: 'Normalized Data',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Allow resizing
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 1
+                }
+            }
         }
-      }
     });
   }
 }

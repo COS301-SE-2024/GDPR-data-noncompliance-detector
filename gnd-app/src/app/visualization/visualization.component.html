@@ -1,11 +1,14 @@
-<div>
+<div class="chart-container">
     <h2>Visualization</h2>
-    <canvas id="circularBarChart"></canvas>
-    <canvas #progressCanvas width="400" height="400"></canvas>
-
-    <canvas #radarChartCanvas width="400" height="400"></canvas>
-
-    <!-- <button (click)="createCircularBarChart()">create bar chart</button> -->
+    <div class="canvas-wrapper">
+        <canvas id="circularBarChart"></canvas>
+    </div>
+    <div>
+        <canvas #progressCanvas width="200" height="200"></canvas>
+    </div>
+    <div class="canvas-wrapper">
+        <canvas #radarChartCanvas width="200" height="200"></canvas>
+    </div>
 </div>
 
 <!-- <div> -->
