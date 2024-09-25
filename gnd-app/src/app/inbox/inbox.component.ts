@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 // import { FileService } from '../services/file.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -34,7 +34,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   ca_statement: string = '';
   // currentAnalysis: any = {};
 
-  constructor(private http: HttpClient, private walkthroughService: WalkthroughService) { }
+  constructor(private http: HttpClient, private walkthroughService: WalkthroughService, private router: Router) { }
 
   ngOnInit(): void {
     this.getReports();
@@ -52,6 +52,10 @@ export class InboxComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if(this.walkthroughSubscription)
       this.walkthroughSubscription.unsubscribe();
+  }
+
+  navigateToInbox(): void {
+    this.router.navigate(['/outlook-inbox'])
   }
 
   getReports(): void{

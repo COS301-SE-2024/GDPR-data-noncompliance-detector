@@ -6,6 +6,7 @@ import { ReportComponent } from './report/report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { ViolationsComponent } from './violations/violations.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
+import { OutlookInboxComponent } from './outlook-inbox/outlook-inbox.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'violations/:fileType', component: ViolationsComponent}, 
   { path: 'violations', component: ViolationsComponent},
   { path: 'faq-page', component: FaqPageComponent},
+  { path: 'outlook-inbox', component: OutlookInboxComponent}
 ];
 
 @NgModule({
