@@ -28,7 +28,7 @@
     </p>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown1')">What is GND?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown1')"> <span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown1', 'arrow-down': activeDropdown === 'dropdown1'}"></span>What is GND?</button>
       <div id="dropdown1" [ngClass]="{'show': activeDropdown === 'dropdown1'}" class="dropdown-content">
         <p>
           GND is a GDPR violation detection application designed to help users
@@ -42,7 +42,7 @@
 
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown2')">How do I upload a file for scanning in GND?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown2')"> <span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown2', 'arrow-down': activeDropdown === 'dropdown2'}"></span> How do I upload a file for scanning in GND?</button>
       <div id="dropdown2" [ngClass]="{'show': activeDropdown === 'dropdown2'}" class="dropdown-content">
         <p>
           To upload a file for scanning: <br>
@@ -55,14 +55,14 @@
     </div>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown3')">What types of files can I upload to GND?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown3')"> <span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown3', 'arrow-down': activeDropdown === 'dropdown3'}"></span> What types of files can I upload to GND?</button>
       <div id="dropdown3" [ngClass]="{'show': activeDropdown === 'dropdown3'}" class="dropdown-content">
         <p>GND supports a variety of file types, including PDF, Excel, and Word.</p>
       </div>
     </div>
      
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown4')">How long does it take for GND to scan a file?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown4')"> <span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown4', 'arrow-down': activeDropdown === 'dropdown4'}"></span> How long does it take for GND to scan a file?</button>
 
       <div id="dropdown4" [ngClass]="{'show': activeDropdown === 'dropdown4'}" class="dropdown-content">
         <p>
@@ -74,7 +74,7 @@
     </div>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown5')">How accurate is GND in detecting GDPR violations?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown5')"><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown5', 'arrow-down': activeDropdown === 'dropdown5'}"></span> How accurate is GND in detecting GDPR violations?</button>
 
       <div id="dropdown5" [ngClass]="{'show': activeDropdown === 'dropdown5'}" class="dropdown-content">
         <p>
@@ -86,7 +86,7 @@
     </div>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown6')">Is there a tutorial on how to use GND?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown6')"><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown6', 'arrow-down': activeDropdown === 'dropdown6'}"></span> Is there a tutorial on how to use GND?</button>
 
       <div id="dropdown6" [ngClass]="{'show': activeDropdown === 'dropdown6'}" class="dropdown-content">
         <p>
@@ -98,7 +98,7 @@
     </div>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown7')" >How can I get support if I encounter issues with GND?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown7')" ><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown7', 'arrow-down': activeDropdown === 'dropdown7'}"></span> How can I get support if I encounter issues with GND?</button>
 
       <div id="dropdown7" [ngClass]="{'show': activeDropdown === 'dropdown7'}" class="dropdown-content">
         <p>
@@ -110,7 +110,7 @@
     </div>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown8')">Is my data secure with GND?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown8')"><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown8', 'arrow-down': activeDropdown === 'dropdown8'}"></span> Is my data secure with GND?</button>
 
       <div id="dropdown8" [ngClass]="{'show': activeDropdown === 'dropdown8'}" class="dropdown-content">
         <p>
@@ -122,7 +122,7 @@
     </div>
 
     <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown('dropdown9')">How do I interpret the scan results?</button>
+      <button class="dropbtn" (click)="toggleDropdown('dropdown9')"><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown9', 'arrow-down': activeDropdown === 'dropdown9'}"></span> How do I interpret the scan results?</button>
 
       <div id="dropdown9" [ngClass]="{'show': activeDropdown === 'dropdown9'}" class="dropdown-content">
         <p>
@@ -135,7 +135,7 @@
     </div>
 
     <div class="dropdown" >
-      <button (click)="toggleDropdown('dropdown10')" class="dropbtn">Can I download the scan results?</button>
+      <button (click)="toggleDropdown('dropdown10')" class="dropbtn"><span [ngClass]="{'arrow-up': activeDropdown !== 'dropdown10', 'arrow-down': activeDropdown === 'dropdown10'}"></span> Can I download the scan results?</button>
 
       <div id="dropdown10" [ngClass]="{'show': activeDropdown === 'dropdown10'}"  class="dropdown-content">
         <p>

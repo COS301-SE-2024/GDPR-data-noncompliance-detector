@@ -48,7 +48,7 @@
   font-family: "Mediator Narrow Web Extra Bold";
   background-color: transparent; /* No background color */
   color: black; /* Text color */
-  padding: 5px;
+  padding: 2px;
   margin: 5px;
   font-size: 16px;
   border: none;
@@ -84,7 +84,7 @@
 /* Dropdown content styling */
 .dropdown-content p {
   color: black;
-  padding: 10px 12px;
+  /* padding: 10px 10px; */
   text-decoration: none;
   display: block;
   word-wrap: break-word; /* Ensures long words break to the next line */
@@ -93,6 +93,25 @@
 /* Ensure dropdown content is shown when clicked */
 .show {
   display: block;
+}
+
+/* Style for the arrow */
+.dropbtn .arrow-up::before, 
+.dropbtn .arrow-down::before {
+  content: '▼'; /* Default arrow */
+  margin-left: 8px;
+  display: inline-block;
+  transition: transform 0.3s ease; /* Smooth transition for the arrow rotation */
+}
+
+/* Rotate the arrow to point up when dropdown is open */
+.dropbtn .arrow-down::before {
+  transform: rotate(180deg); /* Points down */
+}
+
+/* Default arrow (points up) */
+.dropbtn .arrow-up::before {
+  transform: rotate(0deg); /* Points up */
 }
 
 
