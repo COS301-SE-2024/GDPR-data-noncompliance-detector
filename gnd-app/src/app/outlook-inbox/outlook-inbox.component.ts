@@ -21,7 +21,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   private walkthroughSubscription?: Subscription;
 
 
-  reports: string[] = [];
+  // reports: string[] = [];
+  reports: { name: string, modified: Date }[] = [];
   path: string = '../backend/Reports';
   private apiUrl = 'http://127.0.0.1:8000/outlook-results';
   private iUrl = 'http://127.0.0.1:8000/read-outlook-results';
@@ -66,18 +67,57 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     this.router.navigate(['/inbox'])
   }
 
-  getReports(): void{
-    this.fetchFiles(this.path).subscribe(r => {
-      this.reports = r;
-    });
+  // getReports(): void{
+  //   this.fetchFiles(this.path).subscribe(r => {
+  //     this.reports = r;
+  //   });
     
-    console.log('---------------------------------')
-    console.log(this.reports)
-  }
+  //   console.log('---------------------------------')
+  //   console.log(this.reports)
+  // }
 
-  fetchFiles(directory: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}`);
+  getReports(): void {
+    this.fetchFiles(this.path).subscribe(r => {
+      this.reports = r.map(file => {
+        return {
+          name: file.name,
+          modified: new Date(file.modified * 1000)
+        };
+      });
+    });
+  
+    console.log('---------------------------------');
+    console.log(this.reports);
   }
+  
+  formatDate(date: Date): string {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+  
+    const isToday = date.getDate() === today.getDate() && 
+                    date.getMonth() === today.getMonth() && 
+                    date.getFullYear() === today.getFullYear();
+  
+    if (isToday) {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    }
+    
+    else {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+  }
+  
+  
+  fetchFiles(directory: string): Observable<{ name: string, modified: number }[]> {
+    return this.http.get<{ name: string, modified: number }[]>(`${this.apiUrl}`);
+  }
+  
 
   documentStatus: string = "";
   nerCount: number = 0;

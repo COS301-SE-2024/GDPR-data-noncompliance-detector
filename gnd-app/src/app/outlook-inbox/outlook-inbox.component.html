@@ -16,9 +16,12 @@
         <h2 class="inbox-header">Inbox</h2>
         <div class="divider"></div>
         <ul>
-            <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
-                <li>{{ getFileNameWithoutCountry(i) }}
-                </li>
+            <div class="card" *ngFor="let report of reports" (click)="getReportContent(report.name)">
+                <!-- <li>{{ getFileNameWithoutCountry(report.name) }} {{ formatDate(report.modified) }}</li> -->
+              <li class="file-info">
+                <span>{{ getFileNameWithoutCountry(report.name) }}</span>
+                <span>{{ formatDate(report.modified) }}</span>
+              </li>
             </div>
         </ul>
     </div>

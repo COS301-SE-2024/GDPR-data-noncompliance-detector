@@ -73,8 +73,13 @@ def outlook_results():
         if not os.path.exists(uploads_data_folder):
             return jsonify({"error": "Directory not found"}), 404
         
-        files = os.listdir(uploads_data_folder)
-        return jsonify(files)
+        # files = os.listdir(uploads_data_folder)
+        files = [os.path.join(uploads_data_folder, f) for f in os.listdir(uploads_data_folder) if os.path.isfile(os.path.join(uploads_data_folder, f))]
+        files.sort(key=os.path.getmtime, reverse=True)
+        # file_names = [os.path.basename(f) for f in files]
+        file_info = [{"name": os.path.basename(f), "modified": os.path.getmtime(f)} for f in files]
+
+        return jsonify(file_info)
     
     except Exception as e:
         logging.error(f"Error retrieving Outlook reports: {e}")
