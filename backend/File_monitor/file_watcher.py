@@ -260,6 +260,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     
     start_watcher_thread_downloads("pdf,xlsx,docx", 1)  # default is 3 seconds
+    
 
 
 

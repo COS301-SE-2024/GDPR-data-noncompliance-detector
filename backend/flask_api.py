@@ -8,6 +8,7 @@ from backend_entry import backend_entry
 from typing import List
 import threading
 from backend.GND_Email_Monitor.main import start_monitors
+from backend.File_monitor.file_watcher import start_watcher_thread_downloads
 
 app = Flask(__name__)
 CORS(app)
@@ -30,6 +31,11 @@ def start_monitors_in_background():
     # monitor_thread.daemon = False
     monitor_thread.start()
     return monitor_thread
+
+def start_download_monitor():
+    downloads_thread = threading.Thread(target=start_watcher_thread_downloads,  args=("pdf,xlsx,docx", 1) daemon=True)
+    downloads_thread.start()
+    return downloads_thread
 
 def resource_path(relative_path):
     try:
@@ -191,7 +197,8 @@ if __name__ == "__main__":
     # monitor_thread = start_monitors_in_background()
 
     try:
-        monitor_thread = start_monitors_in_background()
+        # monitor_thread = start_monitors_in_background()
+        downloads_thread = start_download_monitor()
         app.run(host="0.0.0.0", port=8000)
 
     except KeyboardInterrupt:
