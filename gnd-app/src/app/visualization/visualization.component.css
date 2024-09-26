@@ -1,33 +1,34 @@
-/* Container for the grid layout */
+/* Grid container */
 .grid-container {
   display: grid;
-  grid-template-areas:
-    "violations risk articles"
-    "location location articles"
-    "location location articles";
-  grid-gap: 20px; /* Space between grid items */
-  padding: 20px;
+  grid-template-areas: 
+            "a b c" 
+            "d d c" 
+            "d d c";
+  grid-gap: 20px; /* Adds space between the grid items */
+  margin: 0 20px; /* Adds 20px margin to the left and right of the grid */
+  height: calc(100vh - 40px); /* Adjust height to fill the viewport while accounting for top and bottom padding */
+  padding-bottom: 20px; /* Add padding to the bottom of the grid */
 }
 
-/* Define each area */
+/* Grid items */
 #violations {
-  grid-area: violations;
+  grid-area: a;
 }
 
-#risk {
-  grid-area: risk;
+#risk-score {
+  grid-area: b;
 }
 
 #articles {
-  grid-area: articles;
+  grid-area: c;
 }
 
 #location {
-  grid-area: location;
+  grid-area: d;
 }
 
 /* General styling for the canvas wrapper */
-
 .canvas-wrapper {
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -37,41 +38,50 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  /* Add fixed height and width */
-  height: 400px;
-  width: 400px;
+  justify-content: flex-start;
+  height: 100%; /* Take up the entire grid cell's height */
+  width: 100%;  /* Ensure it fits the grid space */
 }
 
-/* Fixed canvas size */
-canvas {
-  width: 100% !important;  /* Full width within the wrapper */
-  height: 100% !important; /* Full height within the wrapper */
-  max-width: 400px;        /* Ensure max width matches container */
-  max-height: 400px;       /* Ensure max height matches container */
-}
-
-
-/* General header styling */
-.header {
-  font-size: 24px;
-  margin-bottom: 10px;
+/* Styling for the header inside the canvas wrapper */
+.canvas-wrapper .header1 {
+  font-family: "Mediator Narrow Web Extra Bold";
+  font-size: 20px;
+  margin-bottom: 15px; /* Space between header and canvas */
   text-align: center;
+  width: 100%; /* Ensure header spans full width of the container */
+}
+
+/* Canvas styling */
+canvas {
+  max-width: 100% !important;
+  height: auto; /* Let height be adjusted based on aspect ratio */
+}
+
+/* Specific styling for radar and circular graphs */
+#violations canvas, /* Assuming this is where the radar graph is */
+#risk-score canvas { /* Assuming this is where the circular graph is */
+  max-height: 400px; /* Set a max height for radar and circular graphs */
+  width: auto; /* Allow width to adjust automatically */
 }
 
 /* Text box styling */
 .text-box {
   margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
+  width: 100%; /* Adjust width to match container */
+  height: 100%; /* Maintain height for text box */
+  border: 2px solid #ccc;
   border-radius: 8px;
-  background-color: #f0f0f0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Map container */
+/* Location map styling */
 #map {
-  width: 100%;
-  height: 400px; /* Adjust this to your preferred height */
+  width: 100%; 
+  height: 100%; 
+  background-color: lightgrey; /* Placeholder background */
 }
 
 .mock {
@@ -113,11 +123,4 @@ canvas {
   background-color: #8EBA12;
   border-radius: 50%;
   transform: translateX(-100%);
-}
-
-.header1 {
-  font-family: "Mediator Narrow Web Extra Bold";
-  position: relative;
-  display: inline-block;
-  font-size: 25px;
 }
