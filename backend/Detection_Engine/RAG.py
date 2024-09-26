@@ -3,30 +3,59 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from transformers import pipeline
 import os
+from huggingface_hub import hf_hub_download
 
 class RAG:
 
     def __init__(self):
+        index_path = hf_hub_download(repo_id="rdhinaz/GDPR-RAG-DB", filename="gdpr_articles_index.faiss")
 
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-
-        index_path = os.path.join(script_dir, 'gdpr_articles_index.faiss')
-        metadata_path = os.path.join(script_dir, 'gdpr_metadata.npy')
-
-        if not os.path.exists(index_path):
-            raise FileNotFoundError(f"Index file not found: {index_path}")
-
+        # Load FAISS index
         self.index = faiss.read_index(index_path)
 
-        if not os.path.exists(metadata_path):
-            raise FileNotFoundError(f"Metadata file not found: {metadata_path}")
+        # Download .npy file
+        npy_path = hf_hub_download(repo_id="rdhinaz/GDPR-RAG-DB", filename="gdpr_metadata.npy")
 
-        self.metadata = np.load(metadata_path, allow_pickle=True).item()
+        # Load numpy array
+        self.metadata = np.load(npy_path, allow_pickle=True).item()  
+        # script_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # index_path = os.path.join(script_dir, 'gdpr_articles_index.faiss')
+        # metadata_path = os.path.join(script_dir, 'gdpr_metadata.npy')
+
+        # if not os.path.exists(index_path):
+        #     raise FileNotFoundError(f"Index file not found: {index_path}")
+
+        # self.index = faiss.read_index(index_path)
+
+        # if not os.path.exists(metadata_path):
+        #     raise FileNotFoundError(f"Metadata file not found: {metadata_path}")
+
+        # self.metadata = np.load(metadata_path, allow_pickle=True).item()
 
         self.statements = self.metadata['statements']
         # self.articles = self.metadata['articles']
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         self.classifier = pipeline('text-classification',model='rdhinaz/GDPR-RAG')
+        # script_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # index_path = os.path.join(script_dir, 'gdpr_articles_index.faiss')
+        # metadata_path = os.path.join(script_dir, 'gdpr_metadata.npy')
+
+        # if not os.path.exists(index_path):
+        #     raise FileNotFoundError(f"Index file not found: {index_path}")
+
+        # self.index = faiss.read_index(index_path)
+
+        # if not os.path.exists(metadata_path):
+        #     raise FileNotFoundError(f"Metadata file not found: {metadata_path}")
+
+        # self.metadata = np.load(metadata_path, allow_pickle=True).item()
+
+        # self.statements = self.metadata['statements']
+        # # self.articles = self.metadata['articles']
+        # self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+        # self.classifier = pipeline('text-classification',model='rdhinaz/GDPR-RAG')
 
     def query_faiss_db(self, query_texts):
         # Ensure query_texts is a list

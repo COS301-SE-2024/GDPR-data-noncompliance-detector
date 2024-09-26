@@ -1,6 +1,6 @@
 # from langdetect import detect_langs
 # from langcodes import Language
-from guess_language import guess_language
+# from guess_language import guess_language
 
 class location_finder:
     EU_LANGUAGES = [
@@ -27,8 +27,9 @@ class location_finder:
             return "undefined"
 
     def detect_country(self, file):
-        res = guess_language(text)
-        return self.classify_language(res)
+        # res = guess_language(text)
+        # return self.classify_language(res)
+        return 0
         # with open(file, 'r', encoding='utf-8') as file:
         #     data = file.read()
         # data = file
