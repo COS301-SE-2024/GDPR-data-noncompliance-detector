@@ -150,6 +150,7 @@ class handle(FileSystemEventHandler):
         try:
             time.sleep(2)
             
+            
             with open(file_path, 'rb') as file:
                 files = {'file': file}
                 response = requests.post(API_URL, files=files)
