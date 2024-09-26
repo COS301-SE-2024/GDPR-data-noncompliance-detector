@@ -1,3 +1,28 @@
+class NER:
+    def __init__(self):
+        self.init()
+        
+    def init(self):
+        self.model = load_spacy_model()
+
+
+    def extract_entities(self, res):
+        entities = []
+        for i in res.ents:
+            entities.append((i.text, i.label))
+        return entities
+
+    def run_NER(self, text):
+        res = self.model(text)
+        processed = self.extract_entities(res)
+        return processed
+
+if __name__ == '_main_':
+    ner_ = NER()
+    x = input("Enter a sentence: ")
+    res = ner_.run_NER(x)
+    print(res)
+#
 import spacy
 import os, sys
 
@@ -20,27 +45,27 @@ def load_spacy_model():
         model = spacy.load("en_core_web_sm")
     return model
 
-class NER:
+# class NER:
 
-    def __init__(self):
-        self.model = load_spacy_model()
+#     def __init__(self):
+#         self.model = load_spacy_model()
 
 
-    def extract_entities(self, res):
-        person_count = 0
-        for i in res:
-            if i['entity'] == 'I-PER':
-                person_count += 1
-        print(f'Number of persons found: {person_count}')
-        return person_count
+#     def extract_entities(self, res):
+#         person_count = 0
+#         for i in res:
+#             if i['entity'] == 'I-PER':
+#                 person_count += 1
+#         print(f'Number of persons found: {person_count}')
+#         return person_count
 
-    def run_NER(self, text):
-        res = self.model(text)
-        processed = self.extract_entities(res)
-        return processed
+#     def run_NER(self, text):
+#         res = self.model(text)
+#         processed = self.extract_entities(res)
+#         return processed
     
-if __name__ == '__main__':
-    ner_ = NER()
-    x = input("Enter a sentence: ")
-    res = ner_.run_NER(x)
-    print(res)
+# if __name__ == '__main__':
+#     ner_ = NER()
+#     x = input("Enter a sentence: ")
+#     res = ner_.run_NER(x)
+#     print(res)

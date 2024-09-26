@@ -124,30 +124,30 @@ def get_file_content():
         
         return jsonify({"error": str(e)}), 500
     
-@app.route("/read-outlook-results", methods=["POST"])
-def read_outlook_results():
-    try:
-        data = request.get_json()
-        path = data.get('path')
+# @app.route("/read-outlook-results", methods=["POST"])
+# def read_outlook_results():
+#     try:
+#         data = request.get_json()
+#         path = data.get('path')
         
-        if not path:
-            return jsonify({"error": "No file path provided"}), 400
+#         if not path:
+#             return jsonify({"error": "No file path provided"}), 400
 
-        uploads_data_folder = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
-        file_ = os.path.join(uploads_data_folder, path)
+#         uploads_data_folder = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
+#         file_ = os.path.join(uploads_data_folder, path)
         
-        if not os.path.exists(file_):
-            return jsonify({"error": "File not found"}), 404
+#         if not os.path.exists(file_):
+#             return jsonify({"error": "File not found"}), 404
         
-        with open(file_, 'r') as file:
-            content = file.read()
+#         with open(file_, 'r') as file:
+#             content = file.read()
 
-        return jsonify({"content": content})
+#         return jsonify({"content": content})
     
-    except Exception as e:
-        logging.error(f"Error reading Outlook result: {e}")
+#     except Exception as e:
+#         logging.error(f"Error reading Outlook result: {e}")
         
-        return jsonify({"error": str(e)}), 500
+#         return jsonify({"error": str(e)}), 500
 
 
     
@@ -179,12 +179,12 @@ def read_outlook_results():
 
 @app.route("/get-report", methods=["GET"])
 def get_generated_report():
-    try:
-        reports_folder = resource_path(GENERATED_REPORTS_FOLDER)
-        files = [os.path.join(reports_folder, f) for f in os.listdir(reports_folder) if os.path.isfile(os.path.join(reports_folder, f))]
+    # try:
+    #     reports_folder = resource_path(GENERATED_REPORTS_FOLDER)
+    #     files = [os.path.join(reports_folder, f) for f in os.listdir(reports_folder) if os.path.isfile(os.path.join(reports_folder, f))]
 
-        if not files:
-            return jsonify({"error": "No files found"}), 404
+    #     if not files:
+    #         return jsonify({"error": "No files found"}), 404
     try:
         reports_folder = resource_path(GENERATED_REPORTS_FOLDER)
         files = [os.path.join(reports_folder, f) for f in os.listdir(reports_folder) if os.path.isfile(os.path.join(reports_folder, f))]
@@ -206,17 +206,17 @@ def get_generated_report():
         
         return jsonify({"error": str(e)}), 500
     
-@app.route("/get-data-folder", methods=["GET"])
-def get_data_folder():
-    GND_OUTLOOK_DATA_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
+# @app.route("/get-data-folder", methods=["GET"])
+# def get_data_folder():
+#     GND_OUTLOOK_DATA_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
     
-    return jsonify({"outlook_data_folder": GND_OUTLOOK_DATA_FOLDER})
-        return send_file(most_recent_file, as_attachment=True, download_name="violations_report.pdf")
+#     return jsonify({"outlook_data_folder": GND_OUTLOOK_DATA_FOLDER})
+    #     return send_file(most_recent_file, as_attachment=True, download_name="violations_report.pdf")
     
-    except Exception as e:
-        logging.error(f"Error getting report: {e}")
+    # except Exception as e:
+    #     logging.error(f"Error getting report: {e}")
         
-        return jsonify({"error": str(e)}), 500
+    #     return jsonify({"error": str(e)}), 500
     
 @app.route("/get-data-folder", methods=["GET"])
 def get_data_folder():
