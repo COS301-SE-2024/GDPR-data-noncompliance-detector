@@ -24,38 +24,6 @@
   transform: translateX(-100%);
 }
 
-.chart-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start; /* Align items to the left */
-  align-items: flex-start; /* Align items at the top */
-  gap: 20px; /* Space between blocks */
-}
-
-.canvas-wrapper {
-  max-width: 500px; /* Set a max width */
-  max-height: 500px; /* Set a max height */
-  width: 400px; /* Fixed width for consistency */
-  height: 400px; /* Fixed height for consistency */
-  border: 2px solid #3498db; /* Outline color */
-  display: flex; /* Use flexbox for centering */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  margin-left: 20px; /* Add left margin */
-  
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 45vw;
-  flex-grow: 1;
-  max-width: calc(50% - 1em);
-}
-
-canvas {
-  max-width: 100% !important; /* Prevent canvas from exceeding max width */
-}
-
 .mock {
   background-color: red;
   color: white;
@@ -70,6 +38,30 @@ canvas {
 
 .mock:hover {
   background-color: darkred;
+}
+
+.canvas-wrapper {
+  max-width: 500px; /* Set a max width */
+  max-height: 500px; /* Set a max height */
+  width: 400px; /* Fixed width for consistency */
+  height: 400px; /* Fixed height for consistency */
+  border: 2px solid #3498db; /* Outline color */
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  margin-left: 20px; /* Add left margin */
+    
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 45vw;
+  flex-grow: 1;
+  max-width: calc(50% - 1em);
+}
+
+canvas {
+  max-width: 100% !important; /* Prevent canvas from exceeding max width */
 }
 
 .visualization-container {
@@ -110,6 +102,7 @@ canvas {
   justify-content: center; /* Center items vertically */
   margin-top: 10px; /* Space above the progress circle */
   margin-bottom: 20px;
+  margin-right: 20px;
   border: 2px solid #ccc;
   border-radius: 8px;
   padding: 20px;
@@ -121,7 +114,7 @@ canvas {
 
 .text-box{
   margin-top: 20px;
-  width: 100%;
+  width: 500px;
   height: 260px;
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -129,8 +122,6 @@ canvas {
   background-color: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   flex-grow: 1;
-  max-width: calc(50% - 1em);
-
 }
 
 

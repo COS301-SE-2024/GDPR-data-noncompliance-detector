@@ -1,58 +1,55 @@
 <div class="header-container">
   <header class="header">
     <!-- Visualized -->
-    Visualization </header>
+    Visualization
+  </header>
 </div>
 
 <button class="mock" (click)="populateWithMockData()">Mock</button>
 
-<div class="chart-container">
-
-  <div class="canvas-wrapper">
-    <div class="header-container">
-      <header class="header">Violations per Category </header>
-    </div>
-    <canvas id="circularBarChart"></canvas>
+<div class="canvas-wrapper">
+  <div class="header-container">
+    <header class="header">Violations per Category </header>
+    <div class="divider"></div>
   </div>
+  <canvas id="circularBarChart"></canvas>
+</div>
 
-  <div class="canvas-wrapper">
-    <div class="header-container">
-      <header class="header">Risk Score </header>
-    </div>
-    <canvas #radarChartCanvas width="200" height="200"></canvas>
+<div class="canvas-wrapper">
+  <div class="header-container">
+    <header class="header">Risk Score </header>
+    <div class="divider"></div>
   </div>
+  <canvas #radarChartCanvas width="200" height="200"></canvas>
+</div>
 
-    <div class="visualization-container">
-        <div class="header-container">
-            <header class="header">
-                Location </header>
-        </div>
-    <div id="map"></div>
-    </div>
+<div class="visualization-container">
+  <div class="header-container">
+    <header class="header">Location </header>
+    <div class="divider"></div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<div class="progress-circle-container">
+  <div class="header-container">
+    <header class="header">Articles Violated </header>
+    <div class="divider"></div>
+  </div>
+  <canvas #progressCanvas width="200" height="200"></canvas>
+
+  <div class="text-box">Some random text</div>
+</div>
 
 
-    <div class="progress-circle-container">
-        <div class="header-container">
-            <header class="header">
-                Articles Violated </header>
-        </div>
-        <canvas #progressCanvas width="200" height="200"></canvas>
-
-        <div class="text-box">
-          Some random text
-        </div>
-        
-    </div>
-    
-
-<!-- <div> -->
-<!-- <h2>Visualization</h2> -->
-<!-- <div *ngIf="data"> -->
-<!-- Display the data or plot here -->
-<!-- <pre>{{ data | json }}</pre> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- <div class="visualization-container">
+  <!-- <div> -->
+  <!-- <h2>Visualization</h2> -->
+  <!-- <div *ngIf="data"> -->
+  <!-- Display the data or plot here -->
+  <!-- <pre>{{ data | json }}</pre> -->
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- <div class="visualization-container">
     <h2>Visualization</h2>
     <canvas id="progressCanvas" width="400" height="400"></canvas>
   </div> -->
