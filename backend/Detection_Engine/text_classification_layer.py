@@ -1,8 +1,8 @@
-from .NER_model_access import NER
-from .CA_model_access import CA
-from .GDPR_model_access import GDPR
-from .EM_model_access import EM
-from .MD_model_access import MD
+from Detection_Engine.NER_model_access import NER
+from Detection_Engine.CA_model_access import CA
+from Detection_Engine.GDPR_model_access import GDPR
+from Detection_Engine.EM_model_access import EM
+from Detection_Engine.MD_model_access import MD
 
 # from NER_model_access import NER
 # from CA_model_access import CA

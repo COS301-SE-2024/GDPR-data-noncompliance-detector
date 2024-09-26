@@ -1,17 +1,23 @@
+import os, sys
 from langdetect import detect_langs
 from langcodes import Language
 
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 class location_finder:
     def detect_country(self, file):
-        # with open(file, 'r', encoding='utf-8') as file:
-        #     data = file.read()
         data = file
 
         try:
             languages = detect_langs(data)
-            # primary_language = str(languages[0]).split(':')[0]
-            # return primary_language
 
             possible_languages = []
 
