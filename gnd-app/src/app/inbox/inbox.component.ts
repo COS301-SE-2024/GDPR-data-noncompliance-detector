@@ -21,11 +21,12 @@ export class InboxComponent implements OnInit, OnDestroy {
   private walkthroughSubscription?: Subscription;
 
 
-  reports: string[] = [];
+  reports: { name: string, modified: Date }[] = [];
+
   // path: string = '../backend/Reports';
   path: string = '../backend/Reports';
-  private apiUrl = 'http://127.0.0.1:8000/reports';
-  private iUrl = 'http://127.0.0.1:8000/read-report';
+  private apiUrl = 'http://127.0.0.1:8000/downloads-results';
+  private iUrl = 'http://127.0.0.1:8000/read-downloads-results';
   public currentAnalysis: any = {};
   public currentEmail: string = "";  
   public currentEmailType: string = ""; // Add this line to track file type
@@ -37,7 +38,13 @@ export class InboxComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private walkthroughService: WalkthroughService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getReports();
+
+    this.getDataFolder().subscribe(response => {
+      this.path = response.outlook_data_folder;
+      this.getReports();
+    });
+
+
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       this.startIntro();
@@ -49,6 +56,11 @@ export class InboxComponent implements OnInit, OnDestroy {
     })
   }
 
+  getDataFolder(): Observable<{ outlook_data_folder: string }> {
+    return this.http.get<{ outlook_data_folder: string }>('http://127.0.0.1:8000/get-data-downloads-folder');
+  }
+
+
   ngOnDestroy() {
     if(this.walkthroughSubscription)
       this.walkthroughSubscription.unsubscribe();
@@ -58,18 +70,24 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.router.navigate(['/outlook-inbox'])
   }
 
-  getReports(): void{
+  getReports(): void {
     this.fetchFiles(this.path).subscribe(r => {
-      this.reports = r;
+      this.reports = r.map(file => {
+        return {
+          name: file.name,
+          modified: new Date(file.modified * 1000)
+        };
+      });
     });
-    
-    console.log('---------------------------------')
-    console.log(this.reports)
+  
+    console.log('---------------------------------');
+    console.log(this.reports);
   }
 
-  fetchFiles(directory: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}`);
+  fetchFiles(directory: string): Observable<{ name: string, modified: number }[]> {
+    return this.http.get<{ name: string, modified: number }[]>(`${this.apiUrl}`);
   }
+
 
   documentStatus: string = "";
   nerCount: number = 0;
@@ -111,28 +129,38 @@ export class InboxComponent implements OnInit, OnDestroy {
 
   getReportContent(filePath: string) {
     console.log(filePath);
+    
+    const fileName = filePath.split('/').pop() || filePath;
+    // const country = this.extractCountryFromFileName(fileName);
+  
+    this.location = "N/A";
+
     const payload = { path: filePath };
     axios.post(this.iUrl, payload)
       .then(response => {
         // this.currentAnalysis.content = response.data.content;
         // this.result = this.processResult(this.currentAnalysis.content)
-
-        // console.log("datp = " + response.data.content);
-        let dat = JSON.parse(response.data.content);
-        // console.log("logger" + dat.score.Biometric);
+        // const correctedData = response.data.content.replace(/'/g, '"');
+        const correctedData = response.data.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
         
-        this.documentStatus = this.docStatus(dat.score.Status);
+        // console.log('Corrected JSON Data:', correctedData);
+    
+        let dat = JSON.parse(correctedData);
+        
+        const score = dat.result.score;
 
-        this.nerCount = dat.score.NER;
-        this.location = this.locationStatus(dat.score.Location);
+        this.documentStatus = this.docStatus(score.Status);
 
-        this.personalData = dat.score.Personal;
-        this.financialData = dat.score.Financial;
-        this.contactData = dat.score.Contact;
-        this.medicalData = dat.score.Medical;
-        this.ethnicData = dat.score.Ethnic;
-        this.biometricData = dat.score.Biometric;
-        this.consentAgreement = this.consentAgreementStatus(dat.score["Consent Agreement"]);
+        this.nerCount = score.NER;
+        // this.location = this.locationStatus(score.Location);
+
+        this.personalData = score.Personal;
+        this.financialData = score.Financial;
+        this.contactData = score.Contact;
+        this.medicalData = score.Medical;
+        this.ethnicData = score.Ethnic;
+        this.biometricData = score.Biometric;
+        this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
 
         // this.checkdata();
 
@@ -146,7 +174,36 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.currentEmailType = 'txt';
   }
 
-  // processResult(result: string): string {
+  getFileNameWithoutCountry(fileName: string): string {
+    const parts = fileName.split(' - ');
+
+    return parts[0];
+  }
+
+  formatDate(date: Date): string {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+  
+    const isToday = date.getDate() === today.getDate() && 
+                    date.getMonth() === today.getMonth() && 
+                    date.getFullYear() === today.getFullYear();
+  
+    if (isToday) {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    }
+
+    else {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+  }
+
+  // processResu  lt(result: string): string {
   //   result = result.replace(/\n/g, "<br>");
   //   this.status = this.searchComplianceStatus(result);
   //   this.result = this.cleanComplianceStatus(result);
