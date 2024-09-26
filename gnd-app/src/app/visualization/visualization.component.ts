@@ -479,4 +479,54 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     return euCountryIds.includes(countryId);
   }
 
+  populateWithMockData(): void {
+    // Populate data with mock structure
+    this.data = {
+      score: {
+        NER: Math.floor(Math.random() * 10),
+        location_report: Math.floor(Math.random() * 3), // 0, 1, or 2
+        Personal: Math.floor(Math.random() * 10),
+        Financial: Math.floor(Math.random() * 10),
+        Contact: Math.floor(Math.random() * 10),
+        Medical: Math.floor(Math.random() * 10),
+        Ethnic: Math.floor(Math.random() * 10),
+        Biometric: Math.floor(Math.random() * 10),
+        Genetic: Math.floor(Math.random() * 10),
+        lenarts: Math.floor(Math.random() * 100),
+        RAG_Statement: "Mock RAG Statement"
+      }
+    };
+
+    // Assign values from data.score
+    this.nerCount = this.data.score.NER;
+    this.location = this.data.score.location_report;
+    this.personalData = this.data.score.Personal;
+    this.financialData = this.data.score.Financial;
+    this.contactData = this.data.score.Contact;
+    this.medicalData = this.data.score.Medical;
+    this.ethnicData = this.data.score.Ethnic;
+    this.biometricData = this.data.score.Biometric;
+    this.geneticData = this.data.score.Genetic;
+    this.rag_count = this.data.score.lenarts;
+    this.rag_stat = this.data.score.RAG_Statement;
+
+    // Create all graphs
+    this.createAllGraphs();
+  }
+
+  createAllGraphs(): void {
+    this.destroyOldGraphs();
+    this.createCircularBarChart();
+    this.drawCircularProgressBar(this.rag_count);
+    this.calculateMetric();
+    this.initializeMap();
+  }
+
+  destroyOldGraphs(): void {
+    // Remove old SVG elements
+    d3.select('#circularBarChart').selectAll('svg').remove();
+    d3.select('#progressCanvas').selectAll('svg').remove();
+    d3.select('#radarChartCanvas').selectAll('svg').remove();
+    d3.select('#map').selectAll('svg').remove();
+  }
 }
