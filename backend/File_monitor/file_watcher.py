@@ -71,20 +71,21 @@ def verifyFromTeams(ext):
 
     try:
         if platform.system() == 'Darwin':
-            downloads_path = str(Path.home() / "Downloads")
-        #     # print(downloads_path)
-        #     attributes = xattr.xattr(f"{ext}")
+            return True
+            # downloads_path = str(Path.home() / "Downloads")
+            # # print(downloads_path)
+            # attributes = xattr.xattr(f"{ext}")
             
-        #     where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
-        #     raw_metadata = xattr.getxattr(ext, where_from_key)
-        #     plist_data = readPlistFromString(raw_metadata)
-        #     for item in plist_data:
-        #         for domain in domains:
-        #             if domain in item:
-        #                 # print("teams")
-        #                 return True
+            # where_from_key = 'com.apple.metadata:kMDItemWhereFroms'
+            # raw_metadata = xattr.getxattr(ext, where_from_key)
+            # plist_data = readPlistFromString(raw_metadata)
+            # for item in plist_data:
+            #     for domain in domains:
+            #         if domain in item:
+            #             # print("teams")
+            #             return True
 
-        #     return False
+            # return False
         
         elif platform.system() == 'Windows':
             zone_identifier_path = ext + ':Zone.Identifier'
@@ -126,6 +127,7 @@ class handle(FileSystemEventHandler):
         try:
             global watcher_timer
             current_time = time.time()
+            # print(event.src_path)
             # print("mov")
             if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
                 self.prev_output = current_time
@@ -156,7 +158,7 @@ class handle(FileSystemEventHandler):
                 api_response = response.json()
                 print(f"File {file_path} uploaded successfully. Server response: {api_response}")      #For Logging
                 
-                self.delete_file(file_path)
+                # self.delete_file(file_path)
                 
                 self.save_response_as_txt(file_path, api_response)
             

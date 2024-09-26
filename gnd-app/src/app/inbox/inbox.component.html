@@ -11,18 +11,22 @@
 
 
 
-<div class="containers">
-    <div class="inbox-rectangle" id="InboxAttachments">
-        <h2 class="inbox-header">Downloads</h2>
-        <div class="divider"></div>
-        <ul>
-            <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
-                <li>{{ i }}
+    <div class="containers">
+      <div class="inbox-rectangle" id="InboxAttachments">
+          <h2 class="inbox-header">Inbox</h2>
+          <div class="divider"></div>
+          <ul>
+              <div class="card" *ngFor="let report of reports" (click)="getReportContent(report.name)">
+                  <!-- <li>{{ getFileNameWithoutCountry(report.name) }} {{ formatDate(report.modified) }}</li> -->
+                <li class="file-info">
+                  <span>{{ getFileNameWithoutCountry(report.name) }}</span>
+                  <span>{{ formatDate(report.modified) }}</span>
                 </li>
-            </div>
-        </ul>
-    </div>
-
+              </div>
+          </ul>
+      </div>
+  
+  
     <div class="analysis-rectangle">
         <h2 class="analysis-header">Analysis</h2>
         <div class="divider"></div>

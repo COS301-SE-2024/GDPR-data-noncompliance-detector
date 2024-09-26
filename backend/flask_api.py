@@ -33,7 +33,7 @@ def start_monitors_in_background():
     return monitor_thread
 
 def start_download_monitor():
-    downloads_thread = threading.Thread(target=start_watcher_thread_downloads,  args=("pdf,xlsx,docx", 1) daemon=True)
+    downloads_thread = threading.Thread(target=start_watcher_thread_downloads,  args=("pdf,xlsx,docx", 1), daemon=True)
     downloads_thread.start()
     return downloads_thread
 
@@ -90,6 +90,28 @@ def outlook_results():
     except Exception as e:
         logging.error(f"Error retrieving Outlook reports: {e}")
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route("/downloads-results", methods=["GET"])
+def downloads_results():
+    try:
+        downloads_data = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
+    
+        if not os.path.exists(downloads_data):
+            return jsonify({"error": "Directory not found"}), 404
+        
+        # files = os.listdir(uploads_data_folder)
+        files = [os.path.join(downloads_data, f) for f in os.listdir(downloads_data) if os.path.isfile(os.path.join(downloads_data, f))]
+        files.sort(key=os.path.getmtime, reverse=True)
+        # file_names = [os.path.basename(f) for f in files]
+        file_info = [{"name": os.path.basename(f), "modified": os.path.getmtime(f)} for f in files]
+
+        return jsonify(file_info)
+    
+    except Exception as e:
+        logging.error(f"Error retrieving Downloads reports: {e}")
+        return jsonify({"error": str(e)}), 500
+
 
 
 @app.route("/read-report", methods=["POST"])
@@ -140,6 +162,33 @@ def read_outlook_results():
         logging.error(f"Error reading Outlook result: {e}")
         
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route("/read-downloads-results", methods=["POST"])
+def read_downloads_results():
+    try:
+        data = request.get_json()
+        path = data.get('path')
+        print(path)
+        if not path:
+            return jsonify({"error": "No file path provided"}), 400
+
+        downloads_data = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
+        file_ = os.path.join(downloads_data, path)
+        
+        if not os.path.exists(file_):
+            return jsonify({"error": "File not found"}), 404
+        
+        with open(file_, 'r') as file:
+            content = file.read()
+        
+        print(content)
+        return jsonify({"content": content})
+    
+    except Exception as e:
+        logging.error(f"Error reading Outlook result: {e}")
+        
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/get-report", methods=["GET"])
@@ -167,6 +216,13 @@ def get_data_folder():
     GND_OUTLOOK_DATA_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
     
     return jsonify({"outlook_data_folder": GND_OUTLOOK_DATA_FOLDER})
+
+
+@app.route("/get-data-downloads-folder", methods=["GET"])
+def get_data_downloads_folder():
+    GND_DOWNLOADS_DATA_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
+    
+    return jsonify({"outlook_data_folder": GND_DOWNLOADS_DATA_FOLDER})
 
 @app.route("/file-upload-new", methods=["POST"])
 def upload_file():
