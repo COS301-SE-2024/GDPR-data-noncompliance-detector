@@ -44,6 +44,7 @@ def resource_path(relative_path):
     
     return os.path.join(base_path, relative_path)
 
+
 class FilePath(BaseModel):
     path: str
 
@@ -236,7 +237,8 @@ def upload_file():
     file_location = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_location)
 
-    result = endpoint.process(file_location)
+    # result = endpoint.process(file_location)
+    result = endpoint.process(file_location, file.filename)
 
     try:
         os.remove(file_location)
