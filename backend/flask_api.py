@@ -65,7 +65,7 @@ def new_file():
     if not file_path_:
         return jsonify({"error": "No file path provided"}), 400
 
-    result = endpoint.process(file_path_)
+    result = endpoint.process(file_path_,os.path.basename(file_path_))
     if result is None:
         return jsonify({"error": "Processing failed"}), 500
 
