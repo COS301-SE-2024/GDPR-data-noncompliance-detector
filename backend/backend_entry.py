@@ -66,7 +66,7 @@ class backend_entry:
         # Here we getting the document name dynamically
         document_name = filename
         # result_json = json.loads(result_new)
-        # print(result_new)
+        print(result_new)
 
         print("This is the file name of the uploaded document", document_name)
         status_score = result_new['score']['Status']
@@ -101,20 +101,28 @@ class backend_entry:
             "personal_data_violations": personal_score,
             "medical_data_violations": Medical_score,
             "biometric_data_violations": Biometric_score,
-            "ethnic_data_violations": Ethnic_score
+            "ethnic_data_violations": Ethnic_score,
+            "ner_data_violations": NER_score,
+            "genetic_data_violations": Genetic_score,
+            "financial_data_violations": financial_score,
+            "location_data_violations": location,
+            "consent_agreement_data_violations": Consent_agreement_score,
+            "status_data": status_score,
+            "contact_data_violations": Contact_score
         }
 
-        # try:
-        #     response = supabase.table('violation_reports').insert(data).execute()
-        #     print("Report successfully saved to the database", response)
-        #     # return response
-        # except Exception as e:
-        #     print("An error occured while saving the report to the database", e)
+        try:
+            response = supabase.table('violations_reports').insert(data).execute()
+            print("Report successfully saved to the database", response)
+            # return response
+        except Exception as e:
+            print("An error occured while saving the report to the database", e)
 
 
         return result_new #This is the json object I want to be saved to the supabase database
 
 if __name__ == "__main__":
+
     try:
         backend_entry = backend_entry() 
         res = backend_entry.process("C:/Users/User/Documents/Academics/2024/S2/COS 301 SOFTWARE ENGINEERING/Demo 4/GDPR-data-noncompliance-detector/backend/mockdata/NCEX1.xlsx")
