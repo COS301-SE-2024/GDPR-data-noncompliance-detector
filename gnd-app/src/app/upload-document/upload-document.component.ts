@@ -98,6 +98,7 @@ export class UploadDocumentComponent implements OnInit{
   ethnicData: number = 0;
   biometricData: number = 0;
   consentAgreement: string = "";
+  genetic_data: number = 0;
   metric_score: number = 0;
 
 
@@ -131,6 +132,7 @@ export class UploadDocumentComponent implements OnInit{
           this.medicalData = response.result.score.Medical;
           this.ethnicData = response.result.score.Ethnic;
           this.biometricData = response.result.score.Biometric;
+          this.genetic_data = response.result.score.Genetic;
           this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
           this.response = response.result;
           console.log(this.nerCount);
@@ -203,17 +205,18 @@ export class UploadDocumentComponent implements OnInit{
   calculateMetric() {
 
     const w_per = 1;
-    const w_med = 0.2;
-    const w_gen = 0.1;
-    const w_eth = 0.2;
-    const w_bio = 0.6;
+    const w_med = 0.4;
+    const w_gen = 0.2;
+    const w_eth = 0.4;
+    const w_bio = 0.8;
 
-    let e_personalData  = (Math.exp(this.nerCount) + Math.exp(this.financialData) + Math.exp(this.contactData))*w_per;
-    let e_med = Math.exp(this.medicalData)*w_med;
+    let e_personalData = (Math.exp(this.nerCount) + Math.exp(this.financialData) + Math.exp(this.contactData)) + Math.exp(this.personalData);
+    let e_med = Math.exp(this.medicalData);
     // let e_gen = Math.exp(this.geneticData)*w_gen;
-    let e_gen = 0;
-    let e_eth = Math.exp(this.ethnicData)*w_eth;
-    let e_bio = Math.exp(this.biometricData)*w_bio;
+    let e_gen = Math.exp(this.genetic_data);
+    let e_eth = Math.exp(this.ethnicData);
+    let e_bio = Math.exp(this.biometricData);
+
 
     const expValues = [e_personalData, e_med, e_gen, e_eth, e_bio];
 
@@ -225,11 +228,12 @@ export class UploadDocumentComponent implements OnInit{
       }
     }
 
-    let N_e_personalData = e_personalData/maxExpValue;
-    let N_e_med = e_med/maxExpValue;
-    let N_e_gen = e_gen/maxExpValue;
-    let N_e_eth = e_eth/maxExpValue;
-    let N_e_bio = e_bio/maxExpValue;
-  }
+    let N_e_personalData = (e_personalData / maxExpValue) * w_per;
+    let N_e_med = (e_med / maxExpValue) * w_med;
+    let N_e_gen = (e_gen / maxExpValue) * w_gen;
+    let N_e_eth = (e_eth / maxExpValue) * w_eth;
+    let N_e_bio = (e_bio / maxExpValue) * w_bio;
 
+    this.metric_score = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio;
+  }
 }

@@ -329,7 +329,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const w_eth = 0.4;
     const w_bio = 0.8;
 
-    let e_personalData  = (Math.exp(this.data.score.Personal) + Math.exp(this.financialData) + Math.exp(this.contactData));
+    let e_personalData  = (Math.exp(this.data.score.Personal) + Math.exp(this.financialData) + Math.exp(this.contactData) + Math.exp(this.personalData));
     let e_med = Math.exp(this.medicalData);
     let e_gen = Math.exp(this.geneticData);
     let e_eth = Math.exp(this.ethnicData);
