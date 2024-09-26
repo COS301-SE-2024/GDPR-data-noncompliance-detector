@@ -64,17 +64,33 @@ class backend_entry:
         # print(result)
 
         # result_json = json.loads(result_new)
-        # print(result_new)
+        print(result_new)
         # print("This is the file name being scanned",file)
+        status_score = result_new['score']['Status']
+        print("Status", status_score)
+        location = result_new['score']['Location']
+        print("Location", location)
+        NER_score = result_new['score']['NER']
+        print("NER", NER_score)
         personal_score = result_new['score']['Personal']
-        # print("Personal data", personal_score)
+        print("Personal data", personal_score)
+        financial_score = result_new['score']['Financial']
+        print("Financial data", financial_score)
+        Contact_score = result_new['score']['Contact']
+        print("Contact data", Contact_score)
+        Consent_agreement_score = result_new['score']['Consent Agreement']
+        print("Consent data", Consent_agreement_score)
+        Genetic_score = result_new['score']['Genetic']
+        print("Genetic data", Genetic_score)
         Medical_score = result_new['score']['Medical']
+        print("Medical data", Medical_score)
         Ethnic_score = result_new['score']['Ethnic']
-        # print("Ethnic data",Ethnic_score)
+        print("Ethnic data",Ethnic_score)
         Biometric_score = result_new['score']['Biometric']
-        # print("Biometric data",Biometric_score)
-
+        print("Biometric data",Biometric_score)
         total_violations = personal_score + Medical_score + Biometric_score + Ethnic_score
+        print("Total violations", total_violations)
+
         # Here I am just inserting the data into the supabase database
         data ={
             "document_name": "NCX1.xlsx", #This is mock data needs to be properly fetched from upload component
@@ -85,12 +101,12 @@ class backend_entry:
             "ethnic_data_violations": Ethnic_score
         }
 
-        try:
-            response = supabase.table('violation_reports').insert(data).execute()
-            print("Report successfully saved to the database", response)
-            # return response
-        except Exception as e:
-            print("An error occured while saving the report to the database", e)
+        # try:
+        #     response = supabase.table('violation_reports').insert(data).execute()
+        #     print("Report successfully saved to the database", response)
+        #     # return response
+        # except Exception as e:
+        #     print("An error occured while saving the report to the database", e)
 
 
         return result_new #This is the json object I want to be saved to the supabase database
