@@ -1,9 +1,9 @@
 from pathlib import Path
 import os
-# import win32com.client
-# from email2country import email2country
-# import time
-# import pythoncom
+import win32com.client
+from email2country import email2country
+import time
+import pythoncom
 
 inbox = None
 namespace = None
