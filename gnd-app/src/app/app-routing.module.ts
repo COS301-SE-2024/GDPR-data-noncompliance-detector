@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'violations/:fileType', component: ViolationsComponent}, 
   { path: 'violations', component: ViolationsComponent},
   { path: 'faq-page', component: FaqPageComponent },
-  {path: 'visualization', component: VisualizationComponent}
+  {path: 'visualization', component: VisualizationComponent},
   { path: 'outlook-inbox', component: OutlookInboxComponent}
 ];
 
