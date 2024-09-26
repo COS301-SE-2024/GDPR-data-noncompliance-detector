@@ -32,20 +32,22 @@
 }
 
 .canvas-wrapper {
-  max-width: 400px; /* Set a max width */
-  max-height: 400px; /* Set a max height */
+  max-width: 500px; /* Set a max width */
+  max-height: 500px; /* Set a max height */
   width: 400px; /* Fixed width for consistency */
   height: 400px; /* Fixed height for consistency */
   border: 2px solid #3498db; /* Outline color */
-  border-radius: 8px; /* Rounded corners */
-  padding: 10px; /* Space inside the block */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-  background-color: #ffffff; /* Optional background color */
   display: flex; /* Use flexbox for centering */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  margin-left: 5px; /* Add left margin */
+  margin-left: 20px; /* Add left margin */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 45vw;
+  flex-grow: 1;
+  max-width: calc(50% - 1em);
 }
 
 canvas {
@@ -70,17 +72,30 @@ canvas {
 }
 
 .visualization-container {
-  max-width: 800px; /* Set a max width for the visualization container */
+  max-width: 850px; /* Set a max width for the visualization container */
   max-height: 600px; /* Set a max height for the visualization container */
   width: 100%; /* Allow full width within constraints */
   height: auto; /* Allow height to adjust based on content */
-  border: 2px solid #3498db; /* Outline color */
-  border-radius: 8px; /* Rounded corners */
-  padding: 10px; /* Space inside the block */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-  background-color: #ffffff; /* Optional background color */
   overflow: hidden; /* Prevent overflow of content */
-  margin-top: 20px; /* Space above the visualization container */
+  margin-top: 10px; /* Space above the visualization container */
+  margin-left: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 45vw;
+  flex-grow: 1;
+  max-width: calc(50% - 1em);
+}
+
+#map {
+  width: 800px; /* Set a fixed width */
+  height: 600px; /* Set a fixed height */
+  display: flex; /* Optional: if you want to center content within */
+  align-items: center; /* Optional: center vertically */
+  justify-content: center; /* Optional: center horizontally */
 }
 
 .progress-circle-container {
@@ -100,14 +115,4 @@ canvas {
   margin-top: 20px; /* Space above the progress circle */
 }
 
-.map-container {
-  margin-left: 5px; /* Add left margin for the map container */
-}
 
-#map {
-  width: 800px; /* Set a fixed width */
-  height: 600px; /* Set a fixed height */
-  display: flex; /* Optional: if you want to center content within */
-  align-items: center; /* Optional: center vertically */
-  justify-content: center; /* Optional: center horizontally */
-}
