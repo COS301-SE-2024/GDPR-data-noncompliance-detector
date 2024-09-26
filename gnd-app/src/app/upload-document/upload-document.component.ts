@@ -152,7 +152,7 @@ export class UploadDocumentComponent implements OnInit{
   }
 
   docStatus(status: number): string {
-    if(status == 1){
+    if(status <= 0.6){
       return "Compliant"
     }
     return "Non-Compliant"
