@@ -5,19 +5,19 @@
 
 <div class="main-content">
     <div class="header-container">
-      <header class="header active-header">Downloads</header>
-      <header class="header clickable-header" (click)="navigateToInbox()">Inbox</header>
+      <header class="header clickable-header" (click)="navigateToDownloads()">Downloads</header>
+      <header class="header active-header">Inbox</header>
     </div>
 
 
 
 <div class="containers">
     <div class="inbox-rectangle" id="InboxAttachments">
-        <h2 class="inbox-header">Downloads</h2>
+        <h2 class="inbox-header">Inbox</h2>
         <div class="divider"></div>
         <ul>
             <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
-                <li>{{ i }}
+                <li>{{ getFileNameWithoutCountry(i) }}
                 </li>
             </div>
         </ul>
