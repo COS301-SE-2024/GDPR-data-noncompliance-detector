@@ -6,7 +6,7 @@ class storage_and_submission:
         self.timestamp_str = now.strftime("%Y%m%d_%H%M%S")
         self.filename = f'{self.timestamp_str}_o.txt'
 
-    import codecs
+    # import codecs
 
     def codec_handler(self, filename):
         with codecs.open(filename, 'r', encoding='ISO-8859-1') as f:

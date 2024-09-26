@@ -1,25 +1,30 @@
-import os
-from transformers import AutoTokenizer, AutoModelForTokenClassification
-from transformers import pipeline
-# base_dir = os.path.dirname(__file__)
-# model_path = os.path.join(base_dir, 'Entity_builder')
+import spacy
+import os, sys
 
-# base_dir = os.path.dirname(os.path.abspath(__file__))
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    
+    except Exception:
+        base_path = os.path.abspath(".")
 
-# model_path = os.path.join(base_dir, 'en_core_web_sm/en_core_web_sm-3.7.1')
+    return os.path.join(base_path, relative_path)
 
-# model = spacy.load(model_path)
-
-model_name = "xlm-roberta-large-finetuned-conll03-english"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForTokenClassification.from_pretrained(model_name)
-
-# Create a pipeline for named entity recognition
-nlp = pipeline("ner", model=model, tokenizer=tokenizer)
+def load_spacy_model():
+    try:
+        model = spacy.load("en_core_web_sm")
+    
+    except OSError:
+        from spacy.cli import download
+        download("en_core_web_sm")
+        model = spacy.load("en_core_web_sm")
+    return model
 
 class NER:
 
-    # def __init__(self):
+    def __init__(self):
+        self.model = load_spacy_model()
+
 
     def extract_entities(self, res):
         person_count = 0
@@ -30,12 +35,12 @@ class NER:
         return person_count
 
     def run_NER(self, text):
-        entities = nlp(text)
-        return self.extract_entities(entities)
+        res = self.model(text)
+        processed = self.extract_entities(res)
+        return processed
     
 if __name__ == '__main__':
     ner_ = NER()
     x = input("Enter a sentence: ")
     res = ner_.run_NER(x)
     print(res)
-    

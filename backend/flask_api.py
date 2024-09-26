@@ -1,11 +1,15 @@
 import os
 import sys
 import logging
+import sys
+import logging
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from pydantic import BaseModel
 from backend_entry import backend_entry
 from typing import List
+import threading
+from backend.GND_Email_Monitor.main import start_monitors
 import threading
 from backend.GND_Email_Monitor.main import start_monitors
 
@@ -14,20 +18,20 @@ CORS(app)
 
 logging.basicConfig(level=logging.INFO)
 
-UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER', './uploads')
-UPLOAD_FOLDER = os.path.abspath(UPLOAD_FOLDER)
+UPLOAD_FOLDER = os.path.expanduser("~/Documents/GND/uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-REPORTS_FOLDER = os.getenv('REPORTS_FOLDER', './backend/Reports')
-REPORTS_FOLDER = os.path.abspath(REPORTS_FOLDER)
+REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/teams-upload-data")
+os.makedirs(REPORTS_FOLDER, exist_ok=True)
 
-GENERATED_REPORTS_FOLDER = os.getenv('GENERATED_REPORTS_FOLDER', './Generated_Reports')
-GENERATED_REPORTS_FOLDER = os.path.abspath(GENERATED_REPORTS_FOLDER)
+GENERATED_REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/generated-reports")
+os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
 
 def start_monitors_in_background():
-    monitor_thread = threading.Thread(target=start_monitors)
-    monitor_thread.daemon = False
+    monitor_thread = threading.Thread(target=start_monitors, daemon=True)
+    # monitor_thread.daemon = False
     monitor_thread.start()
     return monitor_thread
 
@@ -50,7 +54,13 @@ def new_file():
     if not file_path_:
         return jsonify({"error": "No file path provided"}), 400
 
+    if not file_path_:
+        return jsonify({"error": "No file path provided"}), 400
+
     result = endpoint.process(file_path_)
+    if result is None:
+        return jsonify({"error": "Processing failed"}), 500
+
     if result is None:
         return jsonify({"error": "Processing failed"}), 500
 
@@ -73,8 +83,13 @@ def outlook_results():
         if not os.path.exists(uploads_data_folder):
             return jsonify({"error": "Directory not found"}), 404
         
-        files = os.listdir(uploads_data_folder)
-        return jsonify(files)
+        # files = os.listdir(uploads_data_folder)
+        files = [os.path.join(uploads_data_folder, f) for f in os.listdir(uploads_data_folder) if os.path.isfile(os.path.join(uploads_data_folder, f))]
+        files.sort(key=os.path.getmtime, reverse=True)
+        # file_names = [os.path.basename(f) for f in files]
+        file_info = [{"name": os.path.basename(f), "modified": os.path.getmtime(f)} for f in files]
+
+        return jsonify(file_info)
     
     except Exception as e:
         logging.error(f"Error retrieving Outlook reports: {e}")
@@ -98,12 +113,43 @@ def get_file_content():
         with open(file_, 'r') as file:
             content = file.read()
         
+        
         return jsonify({"content": content})
+    
     
     except Exception as e:
         logging.error(f"Error reading file: {e}")
         
+        logging.error(f"Error reading file: {e}")
+        
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/read-outlook-results", methods=["POST"])
+def read_outlook_results():
+    try:
+        data = request.get_json()
+        path = data.get('path')
+        
+        if not path:
+            return jsonify({"error": "No file path provided"}), 400
+
+        uploads_data_folder = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
+        file_ = os.path.join(uploads_data_folder, path)
+        
+        if not os.path.exists(file_):
+            return jsonify({"error": "File not found"}), 404
+        
+        with open(file_, 'r') as file:
+            content = file.read()
+
+        return jsonify({"content": content})
+    
+    except Exception as e:
+        logging.error(f"Error reading Outlook result: {e}")
+        
+        return jsonify({"error": str(e)}), 500
+
+
     
 @app.route("/read-outlook-results", methods=["POST"])
 def read_outlook_results():
@@ -139,11 +185,32 @@ def get_generated_report():
 
         if not files:
             return jsonify({"error": "No files found"}), 404
+    try:
+        reports_folder = resource_path(GENERATED_REPORTS_FOLDER)
+        files = [os.path.join(reports_folder, f) for f in os.listdir(reports_folder) if os.path.isfile(os.path.join(reports_folder, f))]
+
+        if not files:
+            return jsonify({"error": "No files found"}), 404
 
         most_recent_file = max(files, key=os.path.getmtime)
         if not os.path.exists(most_recent_file):
             return jsonify({"error": "File not found"}), 404
+        most_recent_file = max(files, key=os.path.getmtime)
+        if not os.path.exists(most_recent_file):
+            return jsonify({"error": "File not found"}), 404
 
+        return send_file(most_recent_file, as_attachment=True, download_name="violations_report.pdf")
+    
+    except Exception as e:
+        logging.error(f"Error getting report: {e}")
+        
+        return jsonify({"error": str(e)}), 500
+    
+@app.route("/get-data-folder", methods=["GET"])
+def get_data_folder():
+    GND_OUTLOOK_DATA_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
+    
+    return jsonify({"outlook_data_folder": GND_OUTLOOK_DATA_FOLDER})
         return send_file(most_recent_file, as_attachment=True, download_name="violations_report.pdf")
     
     except Exception as e:
@@ -179,18 +246,27 @@ def upload_file():
     if result is None:
         return jsonify({"error": "Processing failed"}), 500
 
+    try:
+        os.remove(file_location)
+    except Exception as e:
+        logging.error(f"Error deleting file: {e}")
+
+    if result is None:
+        return jsonify({"error": "Processing failed"}), 500
+
     return jsonify({"filename": file.filename, "result": result})
 
 if __name__ == "__main__":
     # app.run(host="0.0.0.0", port=8000)
-    monitor_thread = start_monitors_in_background()
+    # monitor_thread = start_monitors_in_background()
 
     try:
+        monitor_thread = start_monitors_in_background()
         app.run(host="0.0.0.0", port=8000)
 
     except KeyboardInterrupt:
         print("Shutting down Flask API")
     
     finally:
-        monitor_thread.join()
+        # monitor_thread.join()
         print("Monitors stopped.")

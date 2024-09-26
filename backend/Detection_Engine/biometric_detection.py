@@ -9,42 +9,52 @@ import glob
 # below added because of the relative import error
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-def path_finder(rel_path):
-        try:
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath(".")
-
-        return os.path.join(base_path,rel_path)
-# from backend.Document_parser.extract_images import extract_images_from_pdf
-# from backend.Document_parser.extract_images import extract_images_from_docx
-# from backend.Document_parser.extract_images import extract_images_from_excel
-
-# from ..Document_parser.extract_images import extract_images_from_pdf
-# from ..Document_parser.extract_images import extract_images_from_docx
-# from ..Document_parser.extract_images import extract_images_from_excel
-
-
-# from tensorflow.python.framework.ops import disable_eager_execution
-# disable_eager_execution()
+def resource_path(relative_path):                                                       #Uses hasttr here, just checking difference
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    
+    else:
+        return os.path.join(os.path.abspath("."), relative_path)
+    
+def create_directories():
+    directories = [
+        resource_path('./local_model'),
+        resource_path('./Detection_Engine/extracted_images/pdf_images'),
+        resource_path('./Detection_Engine/extracted_images/docx_images'),
+        resource_path('./Detection_Engine/extracted_images/xlsx_images')
+    ]
+    
+    for directory in directories:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
 class biometric_detection:
+    
+    def __init__(self):
+        create_directories()
+
     def save_model_local():
         processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
         model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
 
-        processor.save_pretrained('./local_model/detr_image_processor')
-        model.save_pretrained('./local_model/detr_for_object_detection')
+        # processor.save_pretrained('./local_model/detr_image_processor')
+        # model.save_pretrained('./local_model/detr_for_object_detection')
 
+        local_model_path = resource_path('./local_model/detr_image_processor')
+        local_model_model_path = resource_path('./local_model/detr_for_object_detection')
+    
+        processor.save_pretrained(local_model_path)
+        model.save_pretrained(local_model_model_path)
 
     def biometric_detect_people(self, source):
         image = Image.open(source)
         if image.mode != 'RGB':
             image = image.convert('RGB')
-        # image.show()
 
-        processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
-        model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+        # processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+        # model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+        processor = DetrImageProcessor.from_pretrained(resource_path('local_model/detr_image_processor'), revision="no_timm")
+        model = DetrForObjectDetection.from_pretrained(resource_path('local_model/detr_for_object_detection'), revision="no_timm")
             
         inputs = processor(images=image, return_tensors="pt")
         outputs = model(**inputs)
@@ -59,24 +69,23 @@ class biometric_detection:
 
         return output
 
-    def biometric_detect_all(self, pdf_path):
-        # Clean up folders
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-
-        if pdf_path.endswith('.pdf'):
+    def biometric_detect_all(self,pdf_path):
+        # clean up folders
+        if (pdf_path.endswith('.pdf')):
             # extract_images_from_pdf(pdf_path)
 
-            target_dir = path_finder('Detection_Engine/extracted_images/pdf_images')
-            os.makedirs(target_dir, exist_ok=True)
-            images = [os.path.join(target_dir, i) for i in os.listdir(target_dir) if i.endswith('.png') or i.endswith('.jpg')]
-
+            # images = [f'./Detection_Engine/extracted_images/pdf_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/pdf_images')  if i.endswith('.png') or i.endswith('.jpg')]
+            images_dir = resource_path('./Detection_Engine/extracted_images/pdf_images')
+            images = [os.path.join(images_dir, i) for i in os.listdir(images_dir) if i.endswith('.png') or i.endswith('.jpg')]
+            
             output = []
             count = 0
             for image in images:
                 count += 1
                 output.append(self.biometric_detect_people(image))
-
-            png_files = glob.glob(os.path.join(target_dir, '*.png'))
+            
+            # png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/pdf_images", '*.png'))
+            png_files = glob.glob(os.path.join(resource_path('./Detection_Engine/extracted_images/pdf_images'), '*.png'))
             for file in png_files:
                 os.remove(file)
 
@@ -84,18 +93,19 @@ class biometric_detection:
 
         elif pdf_path.endswith('.docx'):
             # extract_images_from_docx(pdf_path)
-
-            target_dir = path_finder('Detection_Engine/extracted_images/docx_images')
-            os.makedirs(target_dir, exist_ok=True)
-            images = [os.path.join(target_dir, i) for i in os.listdir(target_dir) if i.endswith('.png') or i.endswith('.jpg')]
-
+            
+            # images = [f'./Detection_Engine/extracted_images/docx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/docx_images')  if i.endswith('.png') or i.endswith('.jpg')]
+            images_dir = resource_path('./Detection_Engine/extracted_images/docx_images')
+            images = [os.path.join(images_dir, i) for i in os.listdir(images_dir) if i.endswith('.png') or i.endswith('.jpg')]
+            
             output = []
             count = 0
             for image in images:
                 count += 1
                 output.append(self.biometric_detect_people(image))
-
-            png_files = glob.glob(os.path.join(target_dir, '*.png'))
+            
+            # png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/docx_images", '*.png'))
+            png_files = glob.glob(os.path.join(resource_path('./Detection_Engine/extracted_images/docx_images'), '*.png'))
             for file in png_files:
                 os.remove(file)
 
@@ -103,22 +113,38 @@ class biometric_detection:
 
         elif pdf_path.endswith('.xlsx'):
             # extract_images_from_excel(pdf_path)
-
-            target_dir = path_finder('Detection_Engine/extracted_images/xlsx_images')
-            os.makedirs(target_dir, exist_ok=True)
-            images = [os.path.join(target_dir, i) for i in os.listdir(target_dir) if i.endswith('.png') or i.endswith('.jpg')]
+            # images = [f'./Detection_Engine/extracted_images/xlsx_images/{i}' for i in os.listdir('./Detection_Engine/extracted_images/xlsx_images')  if i.endswith('.png') or i.endswith('.jpg')]
+            # images = [f'extracted_images/xlsx_images/{i}' for i in os.listdir('extracted_images/xlsx_images')]
+            
+            images_dir = resource_path('./Detection_Engine/extracted_images/xlsx_images')
+            images = [os.path.join(images_dir, i) for i in os.listdir(images_dir) if i.endswith('.png') or i.endswith('.jpg')]
 
             output = []
             count = 0
             for image in images:
                 count += 1
                 output.append(self.biometric_detect_people(image))
-
-            png_files = glob.glob(os.path.join(target_dir, '*.png'))
+            
+            # png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/xlsx_images", '*.png'))
+            png_files = glob.glob(os.path.join(resource_path('./Detection_Engine/extracted_images/xlsx_images'), '*.png'))
             for file in png_files:
                 os.remove(file)
 
             return count
+        
+        # directories = [
+        #     "./Detection_Engine/extracted_images/xlsx_images",
+        #     "./Detection_Engine/extracted_images/docx_images",
+        #     "./Detection_Engine/extracted_images/pdf_images"
+        # ]
+
+        # for directory in directories:
+        #     all_files = glob.glob(os.path.join(directory, '*'))
+        #     for file in all_files:
+        #         os.remove(file)
+
+        return output
+
 
 
 if __name__ == "__main__":
@@ -129,5 +155,7 @@ if __name__ == "__main__":
     # save_model_local()
 
     # extract_images()
-    print(biometric_detect_all("../mockdata/excelWimages.xlsx"))
+    # print(biometric_detect_all("../mockdata/excelWimages.xlsx"))
+    # Example for accessing mock data if it's bundled with PyInstaller
+    print(biometric_detect_all(resource_path("../mockdata/excelWimages.xlsx")))
     # extract_images_from_excel("../mockdata/excelWimages.xlsx")

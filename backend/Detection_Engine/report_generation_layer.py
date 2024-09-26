@@ -1,7 +1,7 @@
-from .text_classification_layer import text_classification_layer
-from .biometric_detection import biometric_detection
-from .lang_detection import location_finder
-# from langcodes import Language
+from Detection_Engine.text_classification_layer import text_classification_layer
+from Detection_Engine.biometric_detection import biometric_detection
+from Detection_Engine.lang_detection import location_finder
+from langcodes import Language
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -11,7 +11,7 @@ from reportlab.lib.units import mm
 from reportlab.lib import colors
 from reportlab.lib.colors import HexColor
 
-import os
+import os, sys
 
 # from text_classification_layer import text_classification_layer
 # from biometric_detection import biometric_detection
@@ -27,6 +27,13 @@ class report_generation_layer:
             'sk', 'sl', 'es', 'sv'
         ]
 
+    def get_resource_path(self, relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.abspath(".")
+        
+        return os.path.join(base_path, relative_path)
 
     def location_report(self, text):
         res = location_finder.detect_country(self, text)
@@ -196,7 +203,8 @@ class report_generation_layer:
         c = canvas.Canvas(output_file, pagesize = A4)
         width, height = A4
 
-        font_path = os.path.join(os.path.dirname(__file__), 'Mediator Narrow Web Extra Bold.ttf')
+        # font_path = os.path.join(os.path.dirname(__file__), 'Mediator Narrow Web Extra Bold.ttf')
+        font_path = self.get_resource_path('assets/report_generation/Mediator Narrow Web Extra Bold.ttf')
         pdfmetrics.registerFont(TTFont('MediatorNarrowExtraBold', font_path))
 
         c.setFillColor(colors.lightseagreen)
@@ -212,7 +220,8 @@ class report_generation_layer:
         c.drawString(20 * mm, height - 32 * mm, "Email: aprilfour301@gmail.com")
 
     
-        logo_path = os.path.join(os.path.dirname(__file__), 'GND_LSG.jpg')
+        # logo_path = os.path.join(os.path.dirname(__file__), 'GND_LSG.jpg')
+        logo_path = self.get_resource_path('assets/report_generation/GND_LSG.jpg')
         logo_width = 35 * mm
         logo_height = 30 * mm
         c.drawImage(logo_path, width - logo_width - 25 * mm, height - logo_height - 5 * mm, width = logo_width, height = logo_height)
@@ -234,6 +243,7 @@ class report_generation_layer:
         if (violation_data['score']['Status'] == 1):
             c.setFillColor(colors.green)
             c.setStrokeColor(colors.black)
+            rect_width = 130 * mm
             c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
             
             text = "This document does not appear to contain GDPR violations"
@@ -284,7 +294,8 @@ class report_generation_layer:
 
         y_position = height - 100 * mm
 
-        icon_path = os.path.join(os.path.dirname(__file__), 'circle-question-regular.jpg')
+        # icon_path = os.path.join(os.path.dirname(__file__), 'circle-question-regular.jpg')
+        icon_path = self.get_resource_path('assets/report_generation/circle-question-regular.jpg')
         icon_width = 3 * mm 
         icon_height = 3 * mm
 

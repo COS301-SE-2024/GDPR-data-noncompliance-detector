@@ -10,8 +10,8 @@ def start_monitors():
     outlook_thread.start()
     folder_thread.start()
     
-    outlook_thread.join()
-    folder_thread.join()
+    # outlook_thread.join()
+    # folder_thread.join()
 
 if __name__ == "__main__":
     start_monitors()
