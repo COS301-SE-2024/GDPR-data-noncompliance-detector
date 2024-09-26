@@ -193,11 +193,13 @@ class detection_engine:
 
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         # output_file = f"violation_report_{timestamp}.pdf"
-        output_dir = os.path.join(".", "Generated_Reports")
-        output_file = os.path.join(output_dir, f"violation_report_{timestamp}.pdf")
+        # output_dir = os.path.join(".", "Generated_Reports")
+        GENERATED_REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/generated-reports")
+        os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
+        output_file = os.path.join(GENERATED_REPORTS_FOLDER, f"violation_report_{timestamp}.pdf")
 
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+        # if not os.path.exists(output_dir):
+            # os.makedirs(output_dir)
 
         self.report_generator.generate_pdf(violation_data, output_file)
         return violation_data

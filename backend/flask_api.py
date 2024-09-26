@@ -14,14 +14,14 @@ CORS(app)
 
 logging.basicConfig(level=logging.INFO)
 
-UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER', './uploads')
-UPLOAD_FOLDER = os.path.abspath(UPLOAD_FOLDER)
+UPLOAD_FOLDER = os.path.expanduser("~/Documents/GND/uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-REPORTS_FOLDER = os.getenv('REPORTS_FOLDER', './backend/Reports')
-REPORTS_FOLDER = os.path.abspath(REPORTS_FOLDER)
+REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/teams-upload-data")
+os.makedirs(REPORTS_FOLDER, exist_ok=True)
 
-GENERATED_REPORTS_FOLDER = os.getenv('GENERATED_REPORTS_FOLDER', './Generated_Reports')
-GENERATED_REPORTS_FOLDER = os.path.abspath(GENERATED_REPORTS_FOLDER)
+GENERATED_REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/generated-reports")
+os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
 
@@ -90,6 +90,7 @@ def outlook_results():
 def get_file_content():
     data = request.get_json()
     path = data.get('path')
+    
     if not path:
         return jsonify({"error": "No file path provided"}), 400
 

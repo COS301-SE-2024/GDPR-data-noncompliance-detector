@@ -208,6 +208,7 @@ class report_generation_layer:
         if (violation_data['score']['Status'] == 1):
             c.setFillColor(colors.green)
             c.setStrokeColor(colors.black)
+            rect_width = 130 * mm
             c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
             
             text = "This document does not appear to contain GDPR violations"
