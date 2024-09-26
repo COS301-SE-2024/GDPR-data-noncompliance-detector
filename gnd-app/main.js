@@ -26,7 +26,7 @@ app.whenReady().then(() => {
   // startAPI();
   startFlaskAPI();
   createWindow();
-  setTimeout(setupWatcher, 100);
+  // setTimeout(setupWatcher, 100);
 });
 
 function startFlaskAPI() {
