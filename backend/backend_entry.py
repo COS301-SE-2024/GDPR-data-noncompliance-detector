@@ -3,6 +3,17 @@ import threading
 from Document_parser.document_parser import document_parser
 from Detection_Engine.detection_engine import detection_engine
 import sys
+from supabase import create_client, Client
+from dotenv import load_dotenv
+import os
+import json
+
+load_dotenv()
+# Create a Supabase client
+url: str = os.environ.get("SUPABASE_URL")
+key: str = os.environ.get("SUPABASE_KEY")
+supabase: Client = create_client(url, key)
+
 
 file_queue = queue.Queue()
 result_holder = queue.Queue()
@@ -52,17 +63,46 @@ class backend_entry:
         result_new = engine.report_generation(file, path)
         # print(result)
 
-        # print(file)
-        return result_new
+        # result_json = json.loads(result_new)
+        # print(result_new)
+        # print("This is the file name being scanned",file)
+        personal_score = result_new['score']['Personal']
+        # print("Personal data", personal_score)
+        Medical_score = result_new['score']['Medical']
+        Ethnic_score = result_new['score']['Ethnic']
+        # print("Ethnic data",Ethnic_score)
+        Biometric_score = result_new['score']['Biometric']
+        # print("Biometric data",Biometric_score)
 
+        total_violations = personal_score + Medical_score + Biometric_score + Ethnic_score
+        # Here I am just inserting the data into the supabase database
+        data ={
+            "document_name": "NCX1.xlsx", #This is mock data needs to be properly fetched from upload component
+            "total_violations": total_violations,
+            "personal_data_violations": personal_score,
+            "medical_data_violations": Medical_score,
+            "biometric_data_violations": Biometric_score,
+            "ethnic_data_violations": Ethnic_score
+        }
+
+        try:
+            response = supabase.table('violation_reports').insert(data).execute()
+            print("Report successfully saved to the database", response)
+            # return response
+        except Exception as e:
+            print("An error occured while saving the report to the database", e)
+
+
+        return result_new #This is the json object I want to be saved to the supabase database
 
 if __name__ == "__main__":
     try:
         backend_entry = backend_entry() 
-        # res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/NCE1.pdf")
-        res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/docxWimages.docx")
+        res = backend_entry.process("C:/Users/User/Documents/Academics/2024/S2/COS 301 SOFTWARE ENGINEERING/Demo 4/GDPR-data-noncompliance-detector/backend/mockdata/NCEX1.xlsx")
+        
+        # res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/docxWimages.docx")
 
-        print(res)
+        # print(res)
     except SystemExit as e:
         print("An error occurred: ", e)
         sys.exit(1)
