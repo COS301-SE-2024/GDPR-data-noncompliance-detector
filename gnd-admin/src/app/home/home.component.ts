@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
 
     // Fetching violation reports
     const { data: reports, error } = await this.supabase
-      .from('violation_reports')
+      .from('violations_reports')
       .select('*')
       .gte('report_date', startDate.toISOString())
       .order('report_date', { ascending: false });
