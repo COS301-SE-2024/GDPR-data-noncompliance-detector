@@ -12,6 +12,7 @@ import platform
 from pathlib import Path
 from biplist import readPlistFromString
 import requests
+import errno
 
 
 GND_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads")
@@ -169,6 +170,35 @@ class handle(FileSystemEventHandler):
             print(f"Error processing file {file_path}: {e}")
 
 
+    def delete_file(self, file_path):
+        try:
+            os.remove(file_path)
+            print(f"File {file_path} deleted successfully.")
+        
+        except PermissionError as e:
+            print(f"Permission denied while trying to delete {file_path}: {e}")
+        
+        except OSError as e:
+            if e.errno == errno.ENOENT:
+                print(f"File {file_path} not found.")
+            
+            else:
+                print(f"Error deleting file {file_path}: {e}")
+
+
+    def save_response_as_txt(self, original_file_path, api_response):
+        file_name_without_ext = os.path.splitext(os.path.basename(original_file_path))[0]
+
+        txt_file_path = os.path.join(GND_DATA_FOLDER, f"{file_name_without_ext}.txt")
+        
+        try:
+            with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
+                txt_file.write(str(api_response))
+            
+            print(f"API response saved to {txt_file_path}")                     #For Logging
+        
+        except Exception as e:
+            print(f"Error saving API response to {txt_file_path}: {e}")
 
     # def on_deleted(self, event):
     #     print(f'{event.event_type}  path : {event.src_path}')
@@ -228,13 +258,9 @@ def stop_watcher_thread(thread):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    # if (len(sys.argv) < 3):
-    #     logging.error("Please provide the path and file extension")
-    #     sys.exit(1)
-
-    # start_watcher_thread(sys.argv[1], sys.argv[2], 1)
-    # verifyFromTeams('sf')
+    
     start_watcher_thread_downloads("pdf,xlsx,docx", 1)  # default is 3 seconds
+
 
 
     # define 2 functions. one which watches a folder. one wich watches downloads
