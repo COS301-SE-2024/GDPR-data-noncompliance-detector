@@ -61,42 +61,28 @@ class backend_entry:
         file = parser.process(path)
         # result = engine.process(file,path)
         result_new = engine.report_generation(file, path)
-        # print(result)
+        
 
         # Here we getting the document name dynamically
         document_name = filename
-        # result_json = json.loads(result_new)
-        print(result_new)
+        # print(result_new)
 
-        print("This is the file name of the uploaded document", document_name)
         status_score = result_new['score']['Status']
-        print("Status", status_score)
         location = result_new['score']['Location']
-        print("Location", location)
         NER_score = result_new['score']['NER']
-        print("NER", NER_score)
         personal_score = result_new['score']['Personal']
-        print("Personal data", personal_score)
         financial_score = result_new['score']['Financial']
-        print("Financial data", financial_score)
         Contact_score = result_new['score']['Contact']
-        print("Contact data", Contact_score)
         Consent_agreement_score = result_new['score']['Consent Agreement']
-        print("Consent data", Consent_agreement_score)
         Genetic_score = result_new['score']['Genetic']
-        print("Genetic data", Genetic_score)
         Medical_score = result_new['score']['Medical']
-        print("Medical data", Medical_score)
         Ethnic_score = result_new['score']['Ethnic']
-        print("Ethnic data",Ethnic_score)
         Biometric_score = result_new['score']['Biometric']
-        print("Biometric data",Biometric_score)
         total_violations = personal_score + Medical_score + Biometric_score + Ethnic_score
-        print("Total violations", total_violations)
 
         # Here I am just inserting the data into the supabase database
         data ={
-            "document_name": document_name, #This is mock data needs to be properly fetched from upload component
+            "document_name": document_name, 
             "total_violations": total_violations,
             "personal_data_violations": personal_score,
             "medical_data_violations": Medical_score,
@@ -111,6 +97,7 @@ class backend_entry:
             "contact_data_violations": Contact_score
         }
 
+        # Here I am sending the data to supabase as soon as the report is generated
         try:
             response = supabase.table('violations_reports').insert(data).execute()
             print("Report successfully saved to the database", response)
@@ -119,7 +106,7 @@ class backend_entry:
             print("An error occured while saving the report to the database", e)
 
 
-        return result_new #This is the json object I want to be saved to the supabase database
+        return result_new
 
 if __name__ == "__main__":
 
@@ -127,8 +114,6 @@ if __name__ == "__main__":
         backend_entry = backend_entry() 
         res = backend_entry.process("C:/Users/User/Documents/Academics/2024/S2/COS 301 SOFTWARE ENGINEERING/Demo 4/GDPR-data-noncompliance-detector/backend/mockdata/NCEX1.xlsx")
         
-        # res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/docxWimages.docx")
-
         # print(res)
     except SystemExit as e:
         print("An error occurred: ", e)
