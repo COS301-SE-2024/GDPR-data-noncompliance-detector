@@ -7,39 +7,29 @@
 
 <button class="mock" (click)="populateWithMockData()">Mock</button>
 
-<div class="canvas-wrapper">
-  <div class="header-container">
-    <header class="header">Violations per Category </header>
-    <div class="divider"></div>
+<div class="grid-container">
+  <div id="violations" class="grid-item canvas-wrapper">
+    <header class="header1">Violations per Category</header>
+    <canvas id="circularBarChart"></canvas>
   </div>
-  <canvas id="circularBarChart"></canvas>
+
+  <div id="risk" class="grid-item canvas-wrapper">
+    <header class="header1">Risk Score</header>
+    <canvas #radarChartCanvas width="200" height="200"></canvas>
+  </div>
+
+  <div id="articles" class="grid-item canvas-wrapper">
+    <header class="header1">Articles Violated</header>
+    <canvas #progressCanvas width="200" height="200"></canvas>
+    <div class="text-box">Some random text</div>
+  </div>
+
+  <div id="location" class="grid-item canvas-wrapper">
+    <header class="header1">Location</header>
+    <div id="map"></div>
+  </div>
 </div>
 
-<div class="canvas-wrapper">
-  <div class="header-container">
-    <header class="header">Risk Score </header>
-    <div class="divider"></div>
-  </div>
-  <canvas #radarChartCanvas width="200" height="200"></canvas>
-</div>
-
-<div class="visualization-container">
-  <div class="header-container">
-    <header class="header">Location </header>
-    <div class="divider"></div>
-  </div>
-  <div id="map"></div>
-</div>
-
-<div class="progress-circle-container">
-  <div class="header-container">
-    <header class="header">Articles Violated </header>
-    <div class="divider"></div>
-  </div>
-  <canvas #progressCanvas width="200" height="200"></canvas>
-
-  <div class="text-box">Some random text</div>
-</div>
 
 
   <!-- <div> -->

@@ -1,10 +1,101 @@
+/* Container for the grid layout */
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "violations risk articles"
+    "location location articles"
+    "location location articles";
+  grid-gap: 20px; /* Space between grid items */
+  padding: 20px;
+}
+
+/* Define each area */
+#violations {
+  grid-area: violations;
+}
+
+#risk {
+  grid-area: risk;
+}
+
+#articles {
+  grid-area: articles;
+}
+
+#location {
+  grid-area: location;
+}
+
+/* General styling for the canvas wrapper */
+
+.canvas-wrapper {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Add fixed height and width */
+  height: 400px;
+  width: 400px;
+}
+
+/* Fixed canvas size */
+canvas {
+  width: 100% !important;  /* Full width within the wrapper */
+  height: 100% !important; /* Full height within the wrapper */
+  max-width: 400px;        /* Ensure max width matches container */
+  max-height: 400px;       /* Ensure max height matches container */
+}
+
+
+/* General header styling */
+.header {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Text box styling */
+.text-box {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+/* Map container */
+#map {
+  width: 100%;
+  height: 400px; /* Adjust this to your preferred height */
+}
+
+.mock {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 20px 10px; /* Consolidated margins */
+}
+
+.mock:hover {
+  background-color: darkred;
+}
+
 .header-container {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding-bottom: 2.5em;
-  padding-top: 1.0em;
+  padding-top: 1em;
 }
 
 .header {
@@ -24,104 +115,9 @@
   transform: translateX(-100%);
 }
 
-.mock {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-bottom: 10px; /* Space below the button */
-  margin-left: 20px;
+.header1 {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 25px;
 }
-
-.mock:hover {
-  background-color: darkred;
-}
-
-.canvas-wrapper {
-  max-width: 500px; /* Set a max width */
-  max-height: 500px; /* Set a max height */
-  width: 400px; /* Fixed width for consistency */
-  height: 400px; /* Fixed height for consistency */
-  border: 2px solid #3498db; /* Outline color */
-  display: flex; /* Use flexbox for centering */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  margin-left: 20px; /* Add left margin */
-    
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 45vw;
-  flex-grow: 1;
-  max-width: calc(50% - 1em);
-}
-
-canvas {
-  max-width: 100% !important; /* Prevent canvas from exceeding max width */
-}
-
-.visualization-container {
-  max-width: 850px; /* Set a max width for the visualization container */
-  max-height: 600px; /* Set a max height for the visualization container */
-  width: 100%; /* Allow full width within constraints */
-  height: auto; /* Allow height to adjust based on content */
-  overflow: hidden; /* Prevent overflow of content */
-  margin-top: 10px; /* Space above the visualization container */
-  margin-left: 20px;
-  margin-bottom: 20px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 45vw;
-  flex-grow: 1;
-  max-width: calc(50% - 1em);
-}
-
-#map {
-  width: 800px; /* Set a fixed width */
-  height: 600px; /* Set a fixed height */
-  display: flex; /* Optional: if you want to center content within */
-  align-items: center; /* Optional: center vertically */
-  justify-content: center; /* Optional: center horizontally */
-}
-
-.progress-circle-container {
-  max-width: 220px; /* Set a max width for the progress circle container */
-  max-height: 820px; /* Set a max height for the progress circle container */
-  width: 100%; /* Allow full width within constraints */
-  height: auto; /* Allow height to adjust based on content */
-  display: flex; /* Use flexbox to center content */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  margin-top: 10px; /* Space above the progress circle */
-  margin-bottom: 20px;
-  margin-right: 20px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  flex-grow: 1;
-  max-width: calc(50% - 1em);
-}
-
-.text-box{
-  margin-top: 20px;
-  width: 500px;
-  height: 260px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  flex-grow: 1;
-}
-
-
