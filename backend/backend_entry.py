@@ -54,7 +54,7 @@ class backend_entry:
         result = result_holder.get()
         return result
     
-    def process(self, path):
+    def process(self, path, filename):
         parser = document_parser()
         engine = detection_engine()
         # path = input("File Name:  ")
@@ -63,9 +63,12 @@ class backend_entry:
         result_new = engine.report_generation(file, path)
         # print(result)
 
+        # Here we getting the document name dynamically
+        document_name = filename
         # result_json = json.loads(result_new)
-        print(result_new)
-        # print("This is the file name being scanned",file)
+        # print(result_new)
+
+        print("This is the file name of the uploaded document", document_name)
         status_score = result_new['score']['Status']
         print("Status", status_score)
         location = result_new['score']['Location']
@@ -93,7 +96,7 @@ class backend_entry:
 
         # Here I am just inserting the data into the supabase database
         data ={
-            "document_name": "NCX1.xlsx", #This is mock data needs to be properly fetched from upload component
+            "document_name": document_name, #This is mock data needs to be properly fetched from upload component
             "total_violations": total_violations,
             "personal_data_violations": personal_score,
             "medical_data_violations": Medical_score,

@@ -27,6 +27,7 @@ endpoint = backend_entry()
 
 #     return jsonify({"filename": file.filename, "result": result})
 
+
 class FilePath(BaseModel):
     path: str
 
@@ -91,10 +92,12 @@ def upload_file():
     file_location = os.path.join("uploads", file.filename)
     file.save(file_location)
 
-    result = endpoint.process(file_location)
+    # result = endpoint.process(file_location)
+    result = endpoint.process(file_location, file.filename)
     os.remove(file_location)
 
     return jsonify({"filename": file.filename, "result": result})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
+    
