@@ -62,7 +62,6 @@ class backend_entry:
         # result = engine.process(file,path)
         result_new = engine.report_generation(file, path)
         
-
         # Here we getting the document name dynamically
         document_name = filename
         # print(result_new)
@@ -78,6 +77,8 @@ class backend_entry:
         Medical_score = result_new['score']['Medical']
         Ethnic_score = result_new['score']['Ethnic']
         Biometric_score = result_new['score']['Biometric']
+        # RAG_statement_score = result_new['score']['RAG_Statement']
+        # lenarts_score = result_new['score']['Lenarts']
         total_violations = personal_score + Medical_score + Biometric_score + Ethnic_score
 
         # Here I am just inserting the data into the supabase database
@@ -94,7 +95,10 @@ class backend_entry:
             "location_data_violations": location,
             "consent_agreement_data_violations": Consent_agreement_score,
             "status_data": status_score,
-            "contact_data_violations": Contact_score
+            "contact_data_violations": Contact_score,
+            # "rag_statement_data_violations": RAG_statement_score,
+            # "lenarts_data_violations": lenarts_score,
+            
         }
 
         # Here I am sending the data to supabase as soon as the report is generated
@@ -104,7 +108,6 @@ class backend_entry:
             # return response
         except Exception as e:
             print("An error occured while saving the report to the database", e)
-
 
         return result_new
 
