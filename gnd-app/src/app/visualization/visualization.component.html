@@ -1,29 +1,49 @@
-<div class="chart-container">
-    <button class="mock" (click)="populateWithMockData()">Mock</button>
-    <div class="canvas-wrapper">
-        <canvas id="circularBarChart"></canvas>
-    </div>
-    <div>
-        <canvas #progressCanvas width="200" height="200"></canvas>
-    </div>
-    <div class="canvas-wrapper">
-        <canvas #radarChartCanvas width="200" height="200"></canvas>
-    </div>
-    <div class="visualization-container">
-        <!-- <h2>Visualization</h2>
-        <canvas #mapCanvas class="canvas" width="800" height="600"></canvas>
-      </div> -->
-        <div id="map"></div>
-    </div>
+<div class="header-container">
+    <header class="header">
+      <!-- Visualized -->
+      Visualization
+    </header>
+  </div>
 
-    <!-- <div> -->
-    <!-- <h2>Visualization</h2> -->
-    <!-- <div *ngIf="data"> -->
-    <!-- Display the data or plot here -->
-    <!-- <pre>{{ data | json }}</pre> -->
-    <!-- </div> -->
-    <!-- </div> -->
-    <!-- <div class="visualization-container">
+  <button class="mock" (click)="populateWithMockData()">Mock</button>
+
+<div class="chart-container">
+    
+  <div class="canvas-wrapper">
+    <canvas id="circularBarChart"></canvas>
+    This is the circular Graph
+  </div>
+
+  <div class="canvas-wrapper">
+    <canvas #radarChartCanvas width="200" height="200"></canvas>
+    This is the radar chart
+  </div>
+
+  <div class="visualization-container">
+    <!-- <h2>Visualization</h2>
+        <canvas #mapCanvas class="canvas" width="800" height="600"></canvas>
+    -->
+    <div id="map">This is the map</div>
+</div>
+
+
+  <div class="progress-circle-container">
+    <canvas #progressCanvas width="200" height="200"></canvas>
+    This is the progress Circle
+</div>
+
+</div>
+
+
+
+<!-- <div> -->
+  <!-- <h2>Visualization</h2> -->
+  <!-- <div *ngIf="data"> -->
+  <!-- Display the data or plot here -->
+  <!-- <pre>{{ data | json }}</pre> -->
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- <div class="visualization-container">
     <h2>Visualization</h2>
     <canvas id="progressCanvas" width="400" height="400"></canvas>
   </div> -->
