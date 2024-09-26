@@ -26,8 +26,8 @@ GENERATED_REPORTS_FOLDER = os.path.abspath(GENERATED_REPORTS_FOLDER)
 endpoint = backend_entry()
 
 def start_monitors_in_background():
-    monitor_thread = threading.Thread(target=start_monitors)
-    monitor_thread.daemon = False
+    monitor_thread = threading.Thread(target=start_monitors, daemon=True)
+    # monitor_thread.daemon = False
     monitor_thread.start()
     return monitor_thread
 
@@ -183,14 +183,15 @@ def upload_file():
 
 if __name__ == "__main__":
     # app.run(host="0.0.0.0", port=8000)
-    monitor_thread = start_monitors_in_background()
+    # monitor_thread = start_monitors_in_background()
 
     try:
+        monitor_thread = start_monitors_in_background()
         app.run(host="0.0.0.0", port=8000)
 
     except KeyboardInterrupt:
         print("Shutting down Flask API")
     
     finally:
-        monitor_thread.join()
+        # monitor_thread.join()
         print("Monitors stopped.")
