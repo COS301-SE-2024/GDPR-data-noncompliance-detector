@@ -72,16 +72,16 @@ class report_generation_layer:
 
     def ner_report_generation(self, text):
         res1 = self.classification_layer.run_NER_model(text)
-        entities = 0
-        names = []
+        # entities = 0
+        # names = []
 
-        for text,label in res1:
-            if label == 'PERSON':
-                if text not in names:
-                    names.append(text)
-                    entities += 1
+        # for text,label in res1:
+        #     if label == 'PERSON':
+        #         if text not in names:
+        #             names.append(text)
+        #             entities += 1
     
-        return entities
+        return res1
     
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
     
