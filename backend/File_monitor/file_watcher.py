@@ -11,7 +11,15 @@ import plistlib
 import platform
 from pathlib import Path
 from biplist import readPlistFromString
+import requests
 
+
+GND_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads")
+GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
+
+os.makedirs(GND_DATA_FOLDER, exist_ok=True)
+
+API_URL = "http://localhost:8000/file-upload-new"
 
 
 
@@ -126,38 +134,39 @@ class handle(FileSystemEventHandler):
 
                 if (verifyFromTeams(event.src_path)):
                     print(event.src_path)
+                    #is from teams and
+                    self.upload_file(event.src_path)
+
                     sys.stdout.flush()
 
                     # return event.src_path
         except Exception as e:
             print(f"error in file_watcher-on_any_event : {e}")
 
-    # def on_modified(self, event):
-    #     global watcher_timer
-    #     current_time = time.time()
+    def upload_file(self, file_path):
+        try:
+            time.sleep(2)
+            
+            with open(file_path, 'rb') as file:
+                files = {'file': file}
+                response = requests.post(API_URL, files=files)
+                
+            if response.status_code == 200:
+                api_response = response.json()
+                print(f"File {file_path} uploaded successfully. Server response: {api_response}")      #For Logging
+                
+                self.delete_file(file_path)
+                
+                self.save_response_as_txt(file_path, api_response)
+            
+            else:
+                print(f"Failed to upload file {file_path}. Server response: {response.text}")
         
-    #     if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer): # watching every 3 seconds
-    #         self.prev_output = current_time
-    #         # print("mod")
-    #         if (event.src_path.find("\\") != -1):
-    #             event.src_path = event.src_path.replace("\\", "/")
-
-    #         if (verifyFromTeams(event.src_path)):
-    #             return event.src_path
-
-    # def on_created(self, event):
-    #     global watcher_timer
-    #     current_time = time.time()
+        except PermissionError as e:
+            print(f"Permission error while accessing the file {file_path}: {e}")
         
-
-    #     if (check_file_extension(event.src_path, self.file_extension) and current_time - self.prev_output >= watcher_timer):
-    #         self.prev_output = current_time
-    #         # print("cre")
-    #         if (event.src_path.find("\\") != -1):
-    #             event.src_path = event.src_path.replace("\\", "/")
-
-    #         if (verifyFromTeams(event.src_path)):
-    #             return event.src_path
+        except Exception as e:
+            print(f"Error processing file {file_path}: {e}")
 
 
 
