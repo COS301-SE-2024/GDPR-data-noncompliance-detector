@@ -55,14 +55,14 @@
 /* Canvas styling */
 canvas {
   max-width: 100% !important;
-  height: auto; /* Let height be adjusted based on aspect ratio */
+  height: auto; 
 }
 
 /* Specific styling for radar and circular graphs */
-#violations canvas, /* Assuming this is where the radar graph is */
-#risk-score canvas { /* Assuming this is where the circular graph is */
-  max-height: 400px; /* Set a max height for radar and circular graphs */
-  width: auto; /* Allow width to adjust automatically */
+#violations canvas, 
+#risk-score canvas { 
+  max-height: 400px; 
+  width: auto; 
 }
 
 /* Text box styling */
