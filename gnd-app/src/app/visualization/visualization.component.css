@@ -21,6 +21,7 @@
   height: 10px;
   background-color: #8EBA12;
   border-radius: 50%;
+  transform: translateX(-100%);
 }
 
 .chart-container {
@@ -41,6 +42,7 @@
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
   margin-left: 20px; /* Add left margin */
+  
   border: 2px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
@@ -52,8 +54,6 @@
 
 canvas {
   max-width: 100% !important; /* Prevent canvas from exceeding max width */
-  max-height: 100% !important; /* Prevent canvas from exceeding max height */
-  height: auto !important; /* Remove fixed height */
 }
 
 .mock {
@@ -65,6 +65,7 @@ canvas {
   cursor: pointer;
   border-radius: 5px;
   margin-bottom: 10px; /* Space below the button */
+  margin-left: 20px;
 }
 
 .mock:hover {
@@ -100,19 +101,36 @@ canvas {
 
 .progress-circle-container {
   max-width: 220px; /* Set a max width for the progress circle container */
-  max-height: 220px; /* Set a max height for the progress circle container */
+  max-height: 820px; /* Set a max height for the progress circle container */
   width: 100%; /* Allow full width within constraints */
   height: auto; /* Allow height to adjust based on content */
-  border: 3px solid #3498db; /* Make outline color more prominent */
-  border-radius: 8px; /* Rounded corners */
-  padding: 10px; /* Space inside the block */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Optional shadow for depth */
-  background-color: #ffffff; /* Optional background color */
   display: flex; /* Use flexbox to center content */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
   justify-content: center; /* Center items vertically */
-  margin-top: 20px; /* Space above the progress circle */
+  margin-top: 10px; /* Space above the progress circle */
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  max-width: calc(50% - 1em);
+}
+
+.text-box{
+  margin-top: 20px;
+  width: 100%;
+  height: 260px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  max-width: calc(50% - 1em);
+
 }
 
 
