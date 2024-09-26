@@ -5,6 +5,7 @@ from .report_generation_layer import report_generation_layer
 
 import datetime
 import os
+import math
 
 class detection_engine:
 
@@ -149,31 +150,31 @@ class detection_engine:
         return result
     
     def get_status(self, ner_count, personal_data,financial_data, contact_data, medical_data, genetic_data, ethnic_data, biometric_data):
-    w_per = 1
-    w_med = 0.4
-    w_gen = 0.2
-    w_eth = 0.4
-    w_bio = 0.8
+        w_per = 1
+        w_med = 0.4
+        w_gen = 0.2
+        w_eth = 0.4
+        w_bio = 0.8
 
-    e_personal_data = (math.exp(ner_count) + math.exp(financial_data) + math.exp(contact_data) + math.exp(personal_data))
-    e_med = math.exp(medical_data)
-    e_gen = math.exp(genetic_data)
-    e_eth = math.exp(ethnic_data)
-    e_bio = math.exp(biometric_data)
+        e_personal_data = (math.exp(ner_count) + math.exp(financial_data) + math.exp(contact_data) + math.exp(personal_data))
+        e_med = math.exp(medical_data)
+        e_gen = math.exp(genetic_data)
+        e_eth = math.exp(ethnic_data)
+        e_bio = math.exp(biometric_data)
 
-    exp_values = [e_personal_data, e_med, e_gen, e_eth, e_bio]
+        exp_values = [e_personal_data, e_med, e_gen, e_eth, e_bio]
 
-    max_exp_value = max(exp_values)
+        max_exp_value = max(exp_values)
 
-    N_e_personal_data = (e_personal_data / max_exp_value) * w_per
-    N_e_med = (e_med / max_exp_value) * w_med
-    N_e_gen = (e_gen / max_exp_value) * w_gen
-    N_e_eth = (e_eth / max_exp_value) * w_eth
-    N_e_bio = (e_bio / max_exp_value) * w_bio
+        N_e_personal_data = (e_personal_data / max_exp_value) * w_per
+        N_e_med = (e_med / max_exp_value) * w_med
+        N_e_gen = (e_gen / max_exp_value) * w_gen
+        N_e_eth = (e_eth / max_exp_value) * w_eth
+        N_e_bio = (e_bio / max_exp_value) * w_bio
 
-    metric_score = N_e_personal_data + N_e_med + N_e_gen + N_e_eth + N_e_bio
+        metric_score = N_e_personal_data + N_e_med + N_e_gen + N_e_eth + N_e_bio
 
-    return metric_score
+        return metric_score
 
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------# 
     
