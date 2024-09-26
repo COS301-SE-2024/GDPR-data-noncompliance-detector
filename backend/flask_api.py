@@ -56,6 +56,9 @@ class FilePath(BaseModel):
 def new_file():
     data = request.get_json()
     file_path_ = data.get('path')
+    print(file_path_)
+    # files = [os.path.join(file_path_, f) for f in os.listdir(file_path_) if os.path.isfile(os.path.join(file_path_, f))]
+
     if not file_path_:
         return jsonify({"error": "No file path provided"}), 400
 
@@ -323,7 +326,7 @@ if __name__ == "__main__":
     # monitor_thread = start_monitors_in_background()
 
     try:
-        # monitor_thread = start_monitors_in_background()
+        monitor_thread = start_monitors_in_background()
         downloads_thread = start_download_monitor()
         app.run(host="0.0.0.0", port=8000)
 

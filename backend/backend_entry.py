@@ -54,6 +54,7 @@ class backend_entry:
         result = result_holder.get()
         return result
     
+    
     def process(self, path, filename):
         parser = document_parser()
         engine = detection_engine()
