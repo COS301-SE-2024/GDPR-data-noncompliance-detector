@@ -79,7 +79,7 @@ class backend_entry:
         Biometric_score = result_new['score']['Biometric']
         RAG_statement_score = result_new['score']['RAG_Statement']
         lenarts_score = result_new['score']['lenarts']
-        total_violations = personal_score + Medical_score + Biometric_score + Ethnic_score
+        total_violations = NER_score + personal_score+ financial_score + Contact_score+Genetic_score + Medical_score + Biometric_score + Ethnic_score
 
         # Here I am just inserting the data into the supabase database
         data ={
