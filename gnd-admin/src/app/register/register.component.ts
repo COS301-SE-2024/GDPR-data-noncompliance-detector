@@ -46,6 +46,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+        // Reset error message when form changes
+        this.registerForm.valueChanges.subscribe(() => {
+          this.showError = false;
+        });
   }
 
   private initForm(): void {
@@ -147,8 +151,8 @@ export class RegisterComponent implements OnInit {
         // Reset the form
         this.registerForm.reset();
       } catch (error) {
-
-        console.error('Error registering user:', error);
+        this.showError = true;
+        // console.error('Error registering user:', error);
       }
     } else {
       // Mark all fields as touched to trigger validation messages

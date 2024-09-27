@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
 
       } catch (error) {
         this.showError = true; 
-        console.error('Error during login:', error);
+        // console.error('Error during login:', error);
       }
     } else {
       // Trigger validation error messages
