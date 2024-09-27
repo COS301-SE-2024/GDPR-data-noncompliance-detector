@@ -28,6 +28,8 @@ export class RegisterComponent implements OnInit {
   passwordStrength: string = '';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  showError: boolean = false;
+  errorRegistering: boolean = false;
   passwordConditions = {
     length: false,
     uppercase: false,
@@ -44,6 +46,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+        // Reset error message when form changes
+        this.registerForm.valueChanges.subscribe(() => {
+          this.showError = false;
+        });
   }
 
   private initForm(): void {
@@ -132,20 +138,21 @@ export class RegisterComponent implements OnInit {
               first_name: formValues.firstName,
               last_name: formValues.lastName,
               email_address: formValues.email,
-              password: hashedPassword // Store the hashed password
+              password: hashedPassword 
             }
           ]);
 
         if (error) throw error;
 
-        console.log('User registered successfully', data);
+        // console.log('User registered successfully', data);
         this.authService.login();
         this.router.navigate(['/login']);
 
         // Reset the form
         this.registerForm.reset();
       } catch (error) {
-        console.error('Error registering user:', error);
+        this.showError = true;
+        // console.error('Error registering user:', error);
       }
     } else {
       // Mark all fields as touched to trigger validation messages

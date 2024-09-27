@@ -11,11 +11,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/gnd-admin",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -29,6 +29,9 @@
             "styles": [
               "src/styles.css"
             ],
+            "customWebpackConfig": {
+              "path": "./webpack.config.js"
+            },
             "scripts": []
           },
           "configurations": {
@@ -56,7 +59,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "gnd-admin:build:production"
@@ -64,6 +67,9 @@
             "development": {
               "buildTarget": "gnd-admin:build:development"
             }
+          },
+          "options": {
+            "buildTarget": "gnd-admin:build"
           },
           "defaultConfiguration": "development"
         },
