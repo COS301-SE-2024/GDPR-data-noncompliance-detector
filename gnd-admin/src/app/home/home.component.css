@@ -67,11 +67,6 @@
     height: auto !important;
   }
 
-  /* .violations-type-trend h3 {
-    margin-bottom: 20px;
-    margin-top: 20px;
-  } */
-
  #personalDataTrendChart{
   background-color: white;
   margin-bottom: 20px;
@@ -127,18 +122,6 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
  }
- /*    <div class="trend-chart">
-        <h4>Genetic Data Violations</h4>
-        <canvas id="geneticDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Financial Data Violations</h4>
-        <canvas id="financialDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Contact Data Violations</h4>
-        <canvas id="contactDataTrendChart"></canvas>
-      </div> */
 
   /* Table styling */
   .recent-reports {
