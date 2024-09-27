@@ -8,6 +8,7 @@ export class VisualizationService {
   constructor() { }
 
   private visualizationData: any;
+  private uploadState: any;
 
   setData(data: any) {
     this.visualizationData = data;
@@ -15,5 +16,13 @@ export class VisualizationService {
 
   getData(): any {
     return this.visualizationData;
+  }
+
+  setUploadState(state: any) {
+    this.uploadState = state;
+  }
+
+  getUploadState() {
+    return this.uploadState;
   }
 }

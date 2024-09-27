@@ -19,9 +19,21 @@ export class UploadDocumentComponent implements OnInit{
   private walkthroughSubscription?: Subscription;
   response: any;
   bar_plot: any;
+  uploadState: any;
+  documentStatus: string = "";
+  nerCount: number = 0;
+  location: string = "";
+  personalData: number = 0;
+  financialData: number = 0;
+  contactData: number = 0;
+  medicalData: number = 0;
+  ethnicData: number = 0;
+  biometricData: number = 0;
+  consentAgreement: string = "";
+  genetic_data: number = 0;
+  metric_score: number = 0;
 
-  constructor(private walkthroughService: WalkthroughService,private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) {}
-
+  constructor(private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 
   ngOnInit() {
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
@@ -32,6 +44,31 @@ export class UploadDocumentComponent implements OnInit{
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
       this.startIntro();
     })
+    this.uploadState = this.visualizationService.getUploadState();
+    console.log("------------------------------------------------------------");
+    console.log(this.uploadState);
+    if (this.uploadState) {
+      this.uploadedFileName = this.uploadState.fileName;
+          // this.result = this.processResult(response.result);
+          // console.log(response.result.score.Biometric)
+
+          this.documentStatus = this.docStatus(this.uploadState.score.Status);
+          this.nerCount = this.uploadState.score.NER;
+          this.location = this.locationStatus(this.uploadState.score.location);
+          this.personalData = this.uploadState.score.Personal;
+          this.financialData = this.uploadState.score.Financial;
+          this.contactData = this.uploadState.score.Contact;
+          this.medicalData = this.uploadState.score.Medical;
+          this.ethnicData = this.uploadState.score.Ethnic;
+          this.biometricData = this.uploadState.score.Biometric;
+          this.genetic_data = this.uploadState.score.Genetic;
+          this.consentAgreement = this.consentAgreementStatus(this.uploadState.score["Consent Agreement"]);
+          this.response = this.uploadState.result;
+          console.log(this.nerCount);
+          this.checkdata();
+
+          this.result = "Y";
+    }
   }
   ngOnDestroy() {
     if(this.walkthroughSubscription)
@@ -87,20 +124,6 @@ export class UploadDocumentComponent implements OnInit{
     event.preventDefault();
     this.isDragActive = false;
   }
-
-  documentStatus: string = "";
-  nerCount: number = 0;
-  location: string = "";
-  personalData: number = 0;
-  financialData: number = 0;
-  contactData: number = 0;
-  medicalData: number = 0;
-  ethnicData: number = 0;
-  biometricData: number = 0;
-  consentAgreement: string = "";
-  genetic_data: number = 0;
-  metric_score: number = 0;
-
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -200,6 +223,7 @@ export class UploadDocumentComponent implements OnInit{
   }
 
   onVisualize() {
+    this.visualizationService.setUploadState(this.response);
     if (this.response) {
       this.visualizationService.setData(this.response);
       this.router.navigate(['/visualization']);

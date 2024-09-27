@@ -56,7 +56,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.data = this.visualizationService.getData(); // Get data from the service
     if (this.data) {
-      // console.log('Data in child component:', this.data.score.Biometric); // Log data only when available
+      console.log('Data in child component:', this.data.score); // Log data only when available
       this.nerCount = this.data.score.NER;
       this.location = this.data.score.location_report;
       this.personalData = this.data.score.Personal;
@@ -139,6 +139,9 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     this.initializeMap();
   }
 
+  onBack() {
+    this.router.navigate(['/upload']);
+  }
   // createCircularBarChart(): void {
   //   const width = 500;
   //   const height = 500;
@@ -235,19 +238,22 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
                     this.geneticData
                 ],
                 backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
+                    'rgba(75, 192, 192, 0.5)',    // Dark teal
+                    'rgba(153, 102, 255, 0.5)',   // Dark purple
+                    'rgba(255, 159, 64, 0.5)',     // Dark orange
+                    'rgba(255, 99, 132, 0.5)',     // Dark pink
+                    'rgba(0, 0, 139, 0.5)',        // Dark blue for Ethnic
+                    'rgba(139, 0, 0, 0.5)'         // Dark red for Biometric
                 ],
                 borderColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
+                    'rgba(75, 192, 192, 1)',      // Dark teal
+                    'rgba(153, 102, 255, 1)',     // Dark purple
+                    'rgba(255, 159, 64, 1)',      // Dark orange
+                    'rgba(255, 99, 132, 1)',      // Dark pink
+                    'rgba(0, 0, 139, 1)',         // Dark blue for Ethnic
+                    'rgba(139, 0, 0, 1)'          // Dark red for Biometric
                 ],
+
                 borderWidth: 1
             }]
         };
@@ -301,10 +307,11 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     ctx.fillStyle = '#ffffff';
     ctx.fill();
   
-    // Create gradient for the progress circle
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    gradient.addColorStop(0, '#ff9800'); // Start color (orange)
-    gradient.addColorStop(1, '#ff5722'); // End color (darker orange)
+  // Create gradient for the progress circle
+  const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+  gradient.addColorStop(0, '#f44336'); // Start color (red)
+  gradient.addColorStop(1, '#d32f2f'); // End color (darker red)
+
   
     // Draw the progress circle
     ctx.beginPath();
