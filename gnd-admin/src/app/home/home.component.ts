@@ -40,26 +40,6 @@ export class HomeComponent implements OnInit {
     this.createCharts();
   }
 
-  // async fetchData() {
-  //   const endDate = new Date();
-  //   const startDate = new Date(endDate);
-  //   startDate.setDate(endDate.getDate() - parseInt(this.timeRange));
-
-  //   // Fetching violation reports
-  //   const { data: reports, error } = await this.supabase
-  //     .from('violations_reports')
-  //     .select('*')
-  //     .gte('report_date', startDate.toISOString())
-  //     .order('report_date', { ascending: false });
-
-  //   if (error) {
-  //     console.error('Error fetching data:', error);
-  //     return;
-  //   }
-
-  //   // Processing data for dashboard
-  //   this.processReports(reports);
-  // }
   async fetchData() {
     const endDate = new Date();
     const startDate = new Date(endDate);
@@ -92,61 +72,37 @@ export class HomeComponent implements OnInit {
       return;
     }
   
-    // Process current reports and calculate trends
+    // Processing current reports and calculate trends
     this.processReports(currentReports, previousReports);
   }
   
-
-  // processReports(reports: any[]) {
-  //   this.recentReports = reports.slice(0, 30);  // Get 10 most recent reports
-
-  //   // Calculating the total violations and documents scanned
-  //   this.totalViolations = reports.reduce((sum, report) => sum + report.total_violations, 0);
-  //   this.documentsScanned = reports.length;
-
-  //   // Calculating the trends
-  //   this.totalViolationsTrend = 5;  // Placeholder value
-  //   this.documentsScannedTrend = 3;  // Placeholder value
-
-  //   // Finding the highest violation category
-  //   const categories = ['personal_data_violations', 'medical_data_violations', 'biometric_data_violations', 'ethnic_data_violations'];
-  //   const totals = categories.map(cat => reports.reduce((sum, report) => sum + report[cat], 0));
-  //   const maxIndex = totals.indexOf(Math.max(...totals));
-  //   this.highestViolationCategory = categories[maxIndex].split('_')[0];
-  //   this.highestViolationCategoryDiff = 2;  // Placeholder value
-
-  //   this.lastScan = reports[0]?.report_date || 'N/A';
-
-  //   // Preparing the data for charts
-  //   this.prepareChartData(reports);
-  // }
   processReports(currentReports: any[], previousReports: any[]) {
-    this.recentReports = currentReports.slice(0, 30);  // Get most recent reports
+    this.recentReports = currentReports.slice(0, 30);  
   
-    // Calculate total violations and documents scanned for the current period
+    // Calculating total violations and documents scanned for the current period
     const currentTotalViolations = currentReports.reduce((sum, report) => sum + report.total_violations, 0);
     this.totalViolations = currentTotalViolations;
     this.documentsScanned = currentReports.length;
   
-    // Calculate total violations for the previous period
+    // Calculating total violations for the previous period
     const previousTotalViolations = previousReports.reduce((sum, report) => sum + report.total_violations, 0);
     const previousDocumentsScanned = previousReports.length;
   
-    // Calculate the percentage trend for violations
+    // Calculating the percentage trend for violations
     if (previousTotalViolations > 0) {
       this.totalViolationsTrend = ((currentTotalViolations - previousTotalViolations) / previousTotalViolations) * 100;
     } else {
-      this.totalViolationsTrend = currentTotalViolations > 0 ? 100 : 0;  // Handle cases with no previous violations
+      this.totalViolationsTrend = currentTotalViolations > 0 ? 100 : 0; 
     }
   
-    // Calculate the percentage trend for documents scanned
+    // Calculating the percentage trend for documents scanned
     if (previousDocumentsScanned > 0) {
       this.documentsScannedTrend = ((this.documentsScanned - previousDocumentsScanned) / previousDocumentsScanned) * 100;
     } else {
       this.documentsScannedTrend = this.documentsScanned > 0 ? 100 : 0;
     }
   
-    // Calculate the highest violation category difference
+    // Calculating the highest violation category difference
     const categories = ['personal_data_violations', 'medical_data_violations', 'biometric_data_violations', 'ethnic_data_violations'];
     const currentTotals = categories.map(cat => currentReports.reduce((sum, report) => sum + report[cat], 0));
     const previousTotals = categories.map(cat => previousReports.reduce((sum, report) => sum + report[cat], 0));
@@ -162,7 +118,7 @@ export class HomeComponent implements OnInit {
   
     this.lastScan = currentReports[0]?.report_date || 'N/A';
   
-    // Prepare chart data
+    // Preparing chart data
     this.prepareChartData(currentReports);
   }
   
