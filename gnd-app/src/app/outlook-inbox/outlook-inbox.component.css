@@ -1,4 +1,18 @@
-body {
+  @font-face {
+    font-family: 'Mediator Narrow Web Extra Bold';
+    src: url('../../assets/fonts/Mediator Narrow Web Extra Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roboto Bold';
+    src: url('../../assets/fonts/Roboto Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -39,7 +53,7 @@ body {
   }
   .active-header {
     color: black; /* Highlights the active section (Inbox) */
-}
+  }
 
   .clickable-header {
     color: gray; /* Grays out the inactive section (Downloads) */
@@ -228,11 +242,11 @@ body {
   align-items: center;
   padding-bottom: 20px;
   margin-top: 50px;
-}
+  }
 
 .comp-status {
   text-align: center;
-}
+  }
 
 .status-compliant {
   background-color: #d4edda;
@@ -240,7 +254,7 @@ body {
   font-size: 1.5em;
   padding: 0.5em;
   border-radius: 0.25em;
-}
+  }
 
 .status-non-compliant {
   background-color: #f8d7da;
@@ -248,7 +262,7 @@ body {
   font-size: 1.5em;
   padding: 0.5em;
   border-radius: 0.25em;
-}
+  }
 
  .ner-data {
   display: flex;
@@ -257,7 +271,7 @@ body {
   height: 100%;
   text-align: center;
   font-family: "Roboto Bold";
-}
+  }
 
 .result-data {
   display: flex;
@@ -265,18 +279,18 @@ body {
   align-items: center;
   padding: 15px 0;
   font-family: "Roboto Bold";
-}
+  }
 
 .result-data p {
   flex-shrink: 0;
   padding-left: 44px;
-}
+  }
 
 .result-data span {
   flex-grow: 1;
   text-align: right;
   padding-right: 44px;
-}
+  }
 
 .divider-text {
   height: 1px;
@@ -284,18 +298,18 @@ body {
   margin-bottom: 1em;
   width: 90%;
   margin: 0 auto 1em;
-}
+  }
 
 .consent-status-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 20px;
-}
+  }
 
 .consent-status {
   text-align: center;
-}
+  }
 
 .consent-agreement {
   background-color: #0875e2;;
@@ -304,4 +318,4 @@ body {
   padding: 0.5em;
   border-radius: 0.25em;
   padding-top: 15px;
-}
+  }

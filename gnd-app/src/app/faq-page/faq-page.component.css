@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Mediator Narrow Web Extra Bold';
+  src: url('../../assets/fonts/Mediator Narrow Web Extra Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('../../assets/fonts/Roboto Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 .header-container {
     display: flex;
     justify-content: center;

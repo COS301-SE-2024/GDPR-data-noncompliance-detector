@@ -1,3 +1,26 @@
+import spacy
+import os, sys
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+def load_spacy_model():
+    try:
+        import en_core_web_sm
+        model = en_core_web_sm.load()
+    except ImportError:
+        from spacy.cli import download
+        download("en_core_web_sm")
+        import en_core_web_sm
+        model = en_core_web_sm.load()
+    return model
+
 class NER:
     def __init__(self):
         self.init()
@@ -22,29 +45,6 @@ if __name__ == '_main_':
     x = input("Enter a sentence: ")
     res = ner_.run_NER(x)
     print(res)
-#
-import spacy
-import os, sys
-
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
-def load_spacy_model():
-    try:
-        import en_core_web_sm
-        model = en_core_web_sm.load()
-    except ImportError:
-        from spacy.cli import download
-        download("en_core_web_sm")
-        import en_core_web_sm
-        model = en_core_web_sm.load()
-    return model
 
 # class NER:
 
