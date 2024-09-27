@@ -200,7 +200,7 @@ export class HomeComponent implements OnInit {
   }
 
   createViolationTypeTrendCharts() {
-    const types = ['personal', 'medical', 'biometric', 'ethnic'];
+    const types = ['personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact' ];
     types.forEach(type => {
       const ctx = document.getElementById(`${type}DataTrendChart`) as HTMLCanvasElement;
       new Chart(ctx, {
