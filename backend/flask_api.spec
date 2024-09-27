@@ -2,12 +2,14 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
+assets_path = os.path.join('backend', 'assets')
+
 
 a = Analysis(
     ['flask_api.py'],
     pathex=['.'],
     binaries=[],
-    datas=[],
+    datas=[ (assets_path, 'assets')],
     hiddenimports=[],
     hookspath=['.'],
     runtime_hooks=[],
