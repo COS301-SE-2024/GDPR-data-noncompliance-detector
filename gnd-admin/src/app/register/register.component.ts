@@ -28,6 +28,8 @@ export class RegisterComponent implements OnInit {
   passwordStrength: string = '';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  showError: boolean = false;
+  errorRegistering: boolean = false;
   passwordConditions = {
     length: false,
     uppercase: false,
@@ -138,13 +140,14 @@ export class RegisterComponent implements OnInit {
 
         if (error) throw error;
 
-        console.log('User registered successfully', data);
+        // console.log('User registered successfully', data);
         this.authService.login();
         this.router.navigate(['/login']);
 
         // Reset the form
         this.registerForm.reset();
       } catch (error) {
+
         console.error('Error registering user:', error);
       }
     } else {
