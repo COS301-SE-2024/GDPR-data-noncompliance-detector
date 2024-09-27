@@ -32,7 +32,7 @@ class NER:
     def extract_entities(self, res):
         entities = []
         for i in res.ents:
-            entities.append((i.text, i.label))
+            entities.append((i.text, i.label_))
         return entities
 
     def run_NER(self, text):
