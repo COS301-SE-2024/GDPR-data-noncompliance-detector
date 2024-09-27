@@ -60,10 +60,10 @@ class biometric_detection:
         if image.mode != 'RGB':
             image = image.convert('RGB')
 
-        # processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
-        # model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
-        processor = DetrImageProcessor.from_pretrained(resource_path('local_model/detr_image_processor'), revision="no_timm")
-        model = DetrForObjectDetection.from_pretrained(resource_path('local_model/detr_for_object_detection'), revision="no_timm")
+        processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+        model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+        # processor = DetrImageProcessor.from_pretrained(resource_path('local_model/detr_image_processor'), revision="no_timm")
+        # model = DetrForObjectDetection.from_pretrained(resource_path('local_model/detr_for_object_detection'), revision="no_timm")
             
         inputs = processor(images=image, return_tensors="pt")
         outputs = model(**inputs)
@@ -76,6 +76,7 @@ class biometric_detection:
             box = [round(i, 2) for i in box.tolist()]
             output.append({"label": model.config.id2label[label.item()], "confidence": round(score.item(), 3)})
 
+        print(output)
         return output
 
     def biometric_detect_all(self,pdf_path):

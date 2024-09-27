@@ -18,7 +18,7 @@ class image_extractor:
 
     def extract_images_from_excel(self, excel_file):
         # output_folder = os.path.join(self.base_dir, "../Detection_Engine/extracted_images/xlsx_images")
-        output_folder = resource_path("../Detection_Engine/extracted_images/xlsx_images")
+        output_folder = os.path.expanduser("~/Documents/GND/extracted_images/xlsx_images")
         
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
@@ -43,7 +43,7 @@ class image_extractor:
 
     def extract_images_from_pdf(self, dir):
         # output_folder = os.path.join(self.base_dir, "../Detection_Engine/extracted_images/pdf_images")
-        output_folder = resource_path("../Detection_Engine/extracted_images/pdf_images")
+        output_folder = os.path.expanduser("~/Documents/GND/extracted_images/pdf_images")
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 
@@ -57,7 +57,7 @@ class image_extractor:
 
     def extract_images_from_docx(self, docx_path):
         # output_folder = os.path.join(self.base_dir, "../Detection_Engine/extracted_images/docx_images")
-        output_folder = resource_path("../Detection_Engine/extracted_images/docx_images")
+        output_folder = os.path.expanduser("~/Documents/GND/extracted_images/docx_images")
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 

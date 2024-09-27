@@ -1,8 +1,11 @@
 # flask_api.spec
 # -*- mode: python ; coding: utf-8 -*-
 
+import os
+from PyInstaller.utils.hooks import collect_data_files
+
 block_cipher = None
-assets_path = os.path.join('backend', 'assets')
+assets_path = os.path.abspath(os.path.join(os.getcwd(), 'assets'))
 
 
 a = Analysis(

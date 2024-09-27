@@ -48,6 +48,7 @@ export class UploadDocumentComponent implements OnInit{
     console.log("------------------------------------------------------------");
     console.log(this.uploadState);
     if (this.uploadState) {
+      this.response = this.uploadState;
       this.uploadedFileName = this.uploadState.fileName;
           // this.result = this.processResult(response.result);
           // console.log(response.result.score.Biometric)
@@ -227,6 +228,12 @@ export class UploadDocumentComponent implements OnInit{
     if (this.response) {
       this.visualizationService.setData(this.response);
       this.router.navigate(['/visualization']);
+    }
+    else {
+      if (this.uploadState) {
+        this.visualizationService.setData(this.uploadState);
+        this.router.navigate(['/visualization']);
+      }
     }
   }
 
