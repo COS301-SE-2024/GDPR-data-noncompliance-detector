@@ -138,7 +138,7 @@ export class RegisterComponent implements OnInit {
               first_name: formValues.firstName,
               last_name: formValues.lastName,
               email_address: formValues.email,
-              password: hashedPassword // Store the hashed password
+              password: hashedPassword 
             }
           ]);
 

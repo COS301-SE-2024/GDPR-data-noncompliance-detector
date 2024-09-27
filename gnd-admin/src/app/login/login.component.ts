@@ -72,8 +72,8 @@ export class LoginComponent implements OnInit {
           if (isPasswordValid) {
             this.authService.login();
             // Show success toast and hide it after 3 seconds
-            this.showSuccessToast = true;
-            setTimeout(() => this.showSuccessToast = false, 3000);
+            // this.showSuccessToast = true;
+            // setTimeout(() => this.showSuccessToast = false, 3000);
             
             this.router.navigate(['/home']);
             
