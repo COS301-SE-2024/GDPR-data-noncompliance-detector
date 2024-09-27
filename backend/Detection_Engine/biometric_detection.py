@@ -24,7 +24,7 @@ os.makedirs(EXTRACTED_DOCX_FOLDER, exist_ok=True)
 
 EXTRACTED_XLSX_FOLDER = os.path.expanduser("~/Documents/GND/extracted_images/xlsx_images")
 os.makedirs(EXTRACTED_XLSX_FOLDER, exist_ok=True)
-    
+
 # def create_directories():
 #     directories = [
 #         resource_path('./local_model'),
@@ -60,10 +60,10 @@ class biometric_detection:
         if image.mode != 'RGB':
             image = image.convert('RGB')
 
-        # processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
-        # model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
-        processor = DetrImageProcessor.from_pretrained(resource_path('local_model/detr_image_processor'), revision="no_timm")
-        model = DetrForObjectDetection.from_pretrained(resource_path('local_model/detr_for_object_detection'), revision="no_timm")
+        processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+        model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+        # processor = DetrImageProcessor.from_pretrained(resource_path('local_model/detr_image_processor'), revision="no_timm")
+        # model = DetrForObjectDetection.from_pretrained(resource_path('local_model/detr_for_object_detection'), revision="no_timm")
             
         inputs = processor(images=image, return_tensors="pt")
         outputs = model(**inputs)
