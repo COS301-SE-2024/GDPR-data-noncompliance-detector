@@ -235,6 +235,11 @@ export class HomeComponent implements OnInit {
     Chart.getChart('medicalDataTrendChart')?.destroy();
     Chart.getChart('biometricDataTrendChart')?.destroy();
     Chart.getChart('ethnicDataTrendChart')?.destroy();
+    Chart.getChart('geneticDataTrendChart')?.destroy();
+    Chart.getChart('financialDataTrendChart')?.destroy();
+    Chart.getChart('contactDataTrendChart')?.destroy();
+    // Chart.getChart('consentAgreementTrendChart')?.destroy();
+
     // Recreating charts with new data
     this.createCharts();
   }
