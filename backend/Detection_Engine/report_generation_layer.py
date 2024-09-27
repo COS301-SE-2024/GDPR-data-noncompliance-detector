@@ -162,17 +162,17 @@ class report_generation_layer:
 
     def Image_report_generation(self, path):
         arr_ = self.image_classification_layer.biometric_detect_all(path)
-        # # return arr_
-        # if arr_ is None:
-        #     return 0
+        # return arr_
+        if arr_ is None:
+            return 0
         
-        # count = 0
-        # for detection_list in arr_:
-        #     for detection in detection_list:
-        #         if detection.get('label') == 'person':
-        #             count += 1
+        count = 0
+        for detection_list in arr_:
+            for detection in detection_list:
+                if detection.get('label') == 'person':
+                    count += 1
         
-        return arr_
+        return count
 
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
 
