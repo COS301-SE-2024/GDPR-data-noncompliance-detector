@@ -40,6 +40,11 @@
     color: #666;
   }
 
+  .last-scan {
+    color: #1c1d1e; 
+    margin-top: 0.5rem;
+  }
+
   .charts-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
