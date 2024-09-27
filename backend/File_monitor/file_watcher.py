@@ -13,6 +13,7 @@ from pathlib import Path
 from biplist import readPlistFromString
 import requests
 import errno
+from winotify import Notification, audio
 
 
 GND_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads")
@@ -22,7 +23,13 @@ os.makedirs(GND_DATA_FOLDER, exist_ok=True)
 
 API_URL = "http://localhost:8000/file-upload-new"
 
-
+def get_resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+        
+    return os.path.join(base_path, relative_path)
 
 # run with start_watcher_thread(paths, extensions, time to wait between checks)
 
@@ -158,6 +165,16 @@ class handle(FileSystemEventHandler):
             if response.status_code == 200:
                 api_response = response.json()
                 print(f"File {file_path} uploaded successfully. Server response: {api_response}")      #For Logging
+
+                toast = Notification(app_id="GND",
+                     title="New GND Report",
+                     msg="A new GND report is available",
+                     duration="short",
+                     icon=get_resource_path('assets/toast_logo.png'))
+
+                toast.set_audio(audio.Default, loop=False)
+
+                toast.show()
                 
                 # self.delete_file(file_path)
                 
