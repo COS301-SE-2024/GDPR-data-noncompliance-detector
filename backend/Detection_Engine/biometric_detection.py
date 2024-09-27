@@ -24,7 +24,7 @@ os.makedirs(EXTRACTED_DOCX_FOLDER, exist_ok=True)
 
 EXTRACTED_XLSX_FOLDER = os.path.expanduser("~/Documents/GND/extracted_images/xlsx_images")
 os.makedirs(EXTRACTED_XLSX_FOLDER, exist_ok=True)
-    
+
 # def create_directories():
 #     directories = [
 #         resource_path('./local_model'),

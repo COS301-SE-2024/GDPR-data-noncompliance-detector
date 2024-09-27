@@ -1,14 +1,23 @@
-import os
+import os, sys
 import time
 import requests
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import errno
+from winotify import Notification, audio
 
 GND_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads")
 GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
 
 os.makedirs(GND_DATA_FOLDER, exist_ok=True)
+
+def get_resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+        
+    return os.path.join(base_path, relative_path)
 
 API_URL = "http://localhost:8000/file-upload-new"
 
@@ -80,6 +89,16 @@ class FileUploadHandler(FileSystemEventHandler):
                 txt_file.write(str(api_response))
             
             print(f"API response saved to {txt_file_path}")                     #For Logging
+
+            toast = Notification(app_id="GND",
+                     title="New GND Report",
+                     msg="A new GND report is available",
+                     duration="short",
+                     icon=get_resource_path('assets/toast_logo.png'))
+
+            toast.set_audio(audio.Default, loop=False)
+
+            toast.show()
         
         except Exception as e:
             print(f"Error saving API response to {txt_file_path}: {e}")
