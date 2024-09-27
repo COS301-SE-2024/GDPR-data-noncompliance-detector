@@ -1,8 +1,9 @@
 <nav class="topnav">
-  <a class="navbar-brand" routerLink="/">
+  <a class="navbar-brand">
     <img src="/logo.png" alt="Logo" width="30" height="30">
     <a class="home-button" *ngIf="!isLoggedIn" routerLink="/landing">Home</a>
   </a>
+  
   <div class="hover-links">
     <a id="dashboard" *ngIf="isLoggedIn" routerLink="/home">Dashboard</a>
     <a id="login"  *ngIf="!isLoggedIn" routerLink="/login">Login</a>
