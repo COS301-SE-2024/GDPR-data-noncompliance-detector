@@ -9,7 +9,7 @@ a = Analysis(
     binaries=[],
     datas=[],
     hiddenimports=[],
-    hookspath=[],
+    hookspath=['.'],
     runtime_hooks=[],
     excludes=[],
     win_no_prefer_redirects=False,
@@ -31,6 +31,7 @@ exe = EXE(
     strip=False,
     upx=True,
     console=True,  # Ensure the application runs in a console
+    onefile=True
 )
 
 coll = COLLECT(

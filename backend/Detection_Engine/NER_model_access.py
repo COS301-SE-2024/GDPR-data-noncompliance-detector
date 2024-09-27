@@ -37,12 +37,13 @@ def resource_path(relative_path):
 
 def load_spacy_model():
     try:
-        model = spacy.load("en_core_web_sm")
-    
-    except OSError:
+        import en_core_web_sm
+        model = en_core_web_sm.load()
+    except ImportError:
         from spacy.cli import download
         download("en_core_web_sm")
-        model = spacy.load("en_core_web_sm")
+        import en_core_web_sm
+        model = en_core_web_sm.load()
     return model
 
 # class NER:
