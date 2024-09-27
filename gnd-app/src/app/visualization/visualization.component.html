@@ -6,6 +6,8 @@
 </div>
 
 <button class="mock" (click)="populateWithMockData()">Mock</button>
+<button (click)="onBack()" id="vizButton" type="button"
+      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Back</button>
 
 <div class="grid-container">
   <div id="violations" class="grid-item canvas-wrapper">
@@ -41,6 +43,4 @@
     <h2>Visualization</h2>
     <canvas id="progressCanvas" width="400" height="400"></canvas>
   </div> -->
-</div>
-<button (click)="onBack()" id="vizButton" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Back</button>
+

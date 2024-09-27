@@ -11,6 +11,7 @@
   padding-bottom: 20px; /* Add padding to the bottom of the grid */
 }
 
+
 /* Grid items */
 #violations {
   grid-area: a;
