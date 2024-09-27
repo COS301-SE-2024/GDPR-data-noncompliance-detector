@@ -10,28 +10,6 @@
     </select>
   </div>
 
-  <!-- <div class="overview-cards">
-    <div class="card">
-      <h3>Total Violations</h3>
-      <p class="large-number">{{ totalViolations }}</p>
-      <p class="trend">{{ totalViolationsTrend | number:'1.0-2' }}% from last period</p>
-    </div>
-    <div class="card">
-      <h3>Documents Scanned</h3>
-      <p class="large-number">{{ documentsScanned }}</p>
-      <p class="trend">{{ documentsScannedTrend | number:'1.0-2' }}% from last period</p>
-    </div>
-    <div class="card">
-      <h3>Highest Violation Category</h3>
-      <p class="large-number">{{ highestViolationCategory }}</p>
-      <p class="trend">{{ highestViolationCategoryDiff | number:'1.0-2' }}% from last period</p>
-    </div>
-    <div class="card">
-      <h3>Last Scan</h3>
-      <p class="large-number">{{ lastScan }}</p>
-      <p>Updated every 3 hours</p>
-    </div>
-  </div> -->
   <div class="overview-cards">
     <div class="card">
       <h3>Total Violations</h3>
@@ -50,7 +28,6 @@
     </div>
     <div class="card">
       <h3>Last Scan</h3>
-      <!-- <p class="large-number last-scan">{{ lastScan }}</p> -->
       <p class="large-number last-scan">{{ lastScan | date:'medium' }}</p>
       <p class="small-text">Updated every 3 hours</p>
     </div>
@@ -99,10 +76,6 @@
         <h4>Contact Data Violations</h4>
         <canvas id="contactDataTrendChart"></canvas>
       </div>
-      <!-- <div class="trend-chart">
-        <h4>Consent Agreement Data Violations</h4>
-        <canvas id="consentDataTrendChart"></canvas>
-      </div> -->
     </div>
   </div>
 
