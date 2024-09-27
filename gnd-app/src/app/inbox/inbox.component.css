@@ -256,6 +256,24 @@
   font-family: "Roboto Bold";
 }
 
+.file-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.file-info span:first-child {
+  text-align: left;
+}
+
+.file-info span:last-child {
+  text-align: right;
+  color: gray;
+  padding-left: 20px;
+}
+
+
 .result-data {
   display: flex;
   justify-content: space-between;
