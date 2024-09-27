@@ -144,14 +144,14 @@ export class HomeComponent implements OnInit {
         datasets: [{
           data: this.violationTypes.map(item => item.value),
           backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(153, 102, 255)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
+            'rgb(255, 99, 132)', //Personal data
+            'rgb(54, 162, 235)', //Medical Data
+            'rgb(255, 205, 86)', //Biometric data
+            'rgb(75, 192, 192)', //Ethnic data
+            'rgb(153, 102, 255)',//Genetic data
+            'rgb(255, 159, 64)', //Financial data
+            'rgb(128,128,0)', //Contact data
+            'rgb(0,255,255)', //Consent agreement
           ]
         }]
       },
