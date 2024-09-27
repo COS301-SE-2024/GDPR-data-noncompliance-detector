@@ -94,17 +94,31 @@ body {
 
 .footer-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; 
   align-items: center;
   flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px; 
+  margin: 0 auto; 
   padding: 0 20px;
 }
 
 .footer-text {
   font-size: 14px;
   color: #ffffff;
+  text-align: center; 
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column; 
+    text-align: center; 
+  }
+
+  .footer-links {
+    margin-top: 10px;
+    justify-content: center;
+  }
 }
 
 /* Hamburger menu for mobile view */
