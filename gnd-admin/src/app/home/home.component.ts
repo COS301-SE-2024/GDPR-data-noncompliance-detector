@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
   }
 
   processReports(reports: any[]) {
-    this.recentReports = reports.slice(0, 10);  // Get 10 most recent reports
+    this.recentReports = reports.slice(0, 30);  // Get 10 most recent reports
 
     // Calculating the total violations and documents scanned
     this.totalViolations = reports.reduce((sum, report) => sum + report.total_violations, 0);
@@ -97,7 +97,11 @@ export class HomeComponent implements OnInit {
       { name: 'Personal Data', value: reports.reduce((sum, report) => sum + report.personal_data_violations, 0) },
       { name: 'Medical Data', value: reports.reduce((sum, report) => sum + report.medical_data_violations, 0) },
       { name: 'Biometric Data', value: reports.reduce((sum, report) => sum + report.biometric_data_violations, 0) },
-      { name: 'Ethnic Data', value: reports.reduce((sum, report) => sum + report.ethnic_data_violations, 0) }
+      { name: 'Ethnic Data', value: reports.reduce((sum, report) => sum + report.ethnic_data_violations, 0) },
+      { name: 'Genetic Data', value: reports.reduce((sum, report) => sum + report.genetic_data_violations, 0) },
+      { name: 'Financial Data', value: reports.reduce((sum, report) => sum + report.financial_data_violations, 0) },
+      { name: 'Contact Data', value: reports.reduce((sum, report) => sum + report.contact_data_violations, 0) },
+      { name: 'Consent Agreement', value: reports.reduce((sum, report) => sum + report.consent_agreement_violations, 0) }
     ];
   }
 
@@ -143,7 +147,11 @@ export class HomeComponent implements OnInit {
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
             'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)'
+            'rgb(75, 192, 192)',
+            'rgb(153, 102, 255)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
           ]
         }]
       },
