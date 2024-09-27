@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
     }
   
     // Calculating the highest violation category difference
-    const categories = ['personal_data_violations', 'medical_data_violations', 'biometric_data_violations', 'ethnic_data_violations'];
+    const categories = ['personal_data_violations', 'medical_data_violations', 'biometric_data_violations', 'ethnic_data_violations', 'genetic_data_violations','financial_data_violations', 'contact_data_violations'];
     const currentTotals = categories.map(cat => currentReports.reduce((sum, report) => sum + report[cat], 0));
     const previousTotals = categories.map(cat => previousReports.reduce((sum, report) => sum + report[cat], 0));
   
@@ -188,7 +188,7 @@ export class HomeComponent implements OnInit {
             'rgb(75, 192, 192)', //Ethnic data
             'rgb(153, 102, 255)',//Genetic data
             'rgb(255, 159, 64)', //Financial data
-            'rgb(128,128,0)', //Contact data
+            'rgb(0,128,0)', //Contact data
             'rgb(0,255,255)', //Consent agreement
           ]
         }]
