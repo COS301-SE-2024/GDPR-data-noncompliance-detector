@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <div class="upload-data" *ngIf="result">
+      <div class="upload-data" *ngIf="result || uploadState">
 
         <div class="ner-data">
           <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{
@@ -135,7 +135,7 @@
       </div>
 
       <div class="upload-container">
-        <div class="analysis-data" *ngIf="!result && !uploadedFileName">
+        <div class="analysis-data" *ngIf="!result && !uploadedFileName && !uploadState">
           <p class="analysis-text" id="Report">Upload a file to view results</p>
         </div>
       </div>

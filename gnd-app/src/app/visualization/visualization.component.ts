@@ -56,7 +56,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.data = this.visualizationService.getData(); // Get data from the service
     if (this.data) {
-      // console.log('Data in child component:', this.data.score.Biometric); // Log data only when available
+      console.log('Data in child component:', this.data.score); // Log data only when available
       this.nerCount = this.data.score.NER;
       this.location = this.data.score.location_report;
       this.personalData = this.data.score.Personal;
@@ -139,6 +139,9 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     this.initializeMap();
   }
 
+  onBack() {
+    this.router.navigate(['/upload']);
+  }
   // createCircularBarChart(): void {
   //   const width = 500;
   //   const height = 500;
