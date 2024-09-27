@@ -149,8 +149,9 @@ export class UploadDocumentComponent implements OnInit{
           this.uploadedFileName = response.fileName;
           // this.result = this.processResult(response.result);
           // console.log(response.result.score.Biometric)
-          this.fileName = response.fileName;          console.log(response)
-
+          this.fileName = response.fileName;
+          console.log(response);
+          
           this.documentStatus = this.docStatus(response.result.score.Status);
           this.nerCount = response.result.score.NER;
           this.location = this.locationStatus(response.result.score.Location);

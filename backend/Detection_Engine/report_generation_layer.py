@@ -132,7 +132,7 @@ class report_generation_layer:
             categories.append('Biometric Data')
 
         rag_res = self.classification_layer.run_RAG(categories)
-        result = "The following articles are potentially violated: " + ", ".join(rag_res)
+        result = "The following GDPR articles are potentially violated: " + ", ".join(rag_res)
         return result, len(rag_res)
 
 
