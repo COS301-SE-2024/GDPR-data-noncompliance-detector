@@ -1,89 +1,3 @@
-/* Grid container */
-.grid-container {
-  display: grid;
-  grid-template-areas: 
-            "a b c" 
-            "d d c" 
-            "d d c";
-  grid-gap: 20px; /* Adds space between the grid items */
-  margin: 0 20px; /* Adds 20px margin to the left and right of the grid */
-  height: calc(100vh - 40px); /* Adjust height to fill the viewport while accounting for top and bottom padding */
-  padding-bottom: 20px; /* Add padding to the bottom of the grid */
-}
-
-
-/* Grid items */
-#violations {
-  grid-area: a;
-}
-
-#risk-score {
-  grid-area: b;
-}
-
-#articles {
-  grid-area: c;
-}
-
-#location {
-  grid-area: d;
-}
-
-/* General styling for the canvas wrapper */
-.canvas-wrapper {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%; /* Take up the entire grid cell's height */
-  width: 100%;  /* Ensure it fits the grid space */
-}
-
-/* Styling for the header inside the canvas wrapper */
-.canvas-wrapper .header1 {
-  font-family: "Mediator Narrow Web Extra Bold";
-  font-size: 20px;
-  margin-bottom: 15px; /* Space between header and canvas */
-  text-align: center;
-  width: 100%; /* Ensure header spans full width of the container */
-}
-
-/* Canvas styling */
-canvas {
-  max-width: 100% !important;
-  height: auto; 
-}
-
-/* Specific styling for radar and circular graphs */
-#violations canvas, 
-#risk-score canvas { 
-  max-height: 400px; 
-  width: auto; 
-}
-
-/* Text box styling */
-.text-box {
-  margin-top: 20px;
-  width: 100%; /* Adjust width to match container */
-  height: 100%; /* Maintain height for text box */
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Location map styling */
-#map {
-  width: 100%; 
-  height: 100%; 
-  background-color: lightgrey; /* Placeholder background */
-}
 
 .mock {
   background-color: red;
@@ -125,3 +39,95 @@ canvas {
   border-radius: 50%;
   transform: translateX(-100%);
 }
+
+/* Grid container */
+.grid-container {
+  display: grid;
+  grid-template-areas: 
+            "a b c" 
+            "d d c" 
+            "d d c";
+  grid-gap: 20px; 
+  margin: 0px 20px; 
+  /* height: calc(100vh - 40px);  */
+  padding-bottom: 20px; 
+}
+
+/* Grid items */
+#violations {
+  grid-area: a;
+}
+
+#risk-score {
+  grid-area: b;
+}
+
+#articles {
+  grid-area: c;
+}
+
+#location {
+  grid-area: d;
+}
+
+/* General styling for the canvas wrapper */
+.canvas-wrapper {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%; /* Take up the entire grid cell's height */
+  width: 100%;  /* Ensure it fits the grid space */
+}
+
+/* Styling for the header inside the canvas wrapper */
+.canvas-wrapper .header1 {
+  font-family: "Mediator Narrow Web Extra Bold";
+  font-size: 20px;
+  margin-bottom: 15px; /* Space between header and canvas */
+  text-align: center;
+  width: 100%; /* Ensure header spans full width of the container */
+}
+
+/* Canvas styling */
+canvas {
+  max-width: 100% !important;
+  height: auto; 
+}
+
+/* Specific styling for radar and circular graphs */
+#violations canvas, 
+#risk-score canvas { 
+  max-height: 400px; 
+  width: auto; 
+}
+
+/* Text box styling */
+.text-box {
+  margin-top: 10px;
+  width: 400px; /* Adjust width to match container */
+  height: auto; /* Maintain height for text box */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  word-wrap: break-word; 
+  white-space: normal; 
+  overflow: auto; 
+}
+
+/* Location map styling */
+#map {
+  width: 100%; 
+  height: 100%; 
+  background-color: lightgrey; 
+}
+
+
