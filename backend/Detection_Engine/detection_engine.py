@@ -2,7 +2,7 @@ import re
 from .lang_detection import location_finder
 from .regex_layer import regex_layer
 from .report_generation_layer import report_generation_layer
-
+import math
 import datetime
 import os
 
@@ -148,6 +148,33 @@ class detection_engine:
         # print(self.report_generator.Image_report(path_))
         return result
     
+    def get_status(self, ner_count, personal_data,financial_data, contact_data, medical_data, genetic_data, ethnic_data, biometric_data):
+        w_per = 1
+        w_med = 0.4
+        w_gen = 0.2
+        w_eth = 0.4
+        w_bio = 0.8
+
+        e_personal_data = (math.exp(ner_count) + math.exp(financial_data) + math.exp(contact_data) + math.exp(personal_data))
+        e_med = math.exp(medical_data)
+        e_gen = math.exp(genetic_data)
+        e_eth = math.exp(ethnic_data)
+        e_bio = math.exp(biometric_data)
+
+        exp_values = [e_personal_data, e_med, e_gen, e_eth, e_bio]
+
+        max_exp_value = max(exp_values)
+
+        N_e_personal_data = (e_personal_data / max_exp_value) * w_per
+        N_e_med = (e_med / max_exp_value) * w_med
+        N_e_gen = (e_gen / max_exp_value) * w_gen
+        N_e_eth = (e_eth / max_exp_value) * w_eth
+        N_e_bio = (e_bio / max_exp_value) * w_bio
+
+        metric_score = N_e_personal_data + N_e_med + N_e_gen + N_e_eth + N_e_bio
+
+        return metric_score
+
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------# 
     
     def report_generation(self, path, path_):
@@ -166,17 +193,19 @@ class detection_engine:
         image_result_report = self.report_generator.Image_report_generation(path_)
         rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
 
-        status = 1
+        # status = 1
 
-        if (reg_result_personal_report > 0 or 
-            reg_result_financial_report > 0 or 
-            reg_result_contact_report > 0 or  
-            gi_result_report > 0 or 
-            em_result_report > 0 or 
-            md_result_report > 0 or 
-            image_result_report > 0):
+        status = self.get_status(ner_result_report,reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report, gi_result_report,em_result_report,image_result_report)
+        # ner_count, financial_data, contact_data, medical_data, genetic_data, ethnic_data, biometric_data
+        # if (reg_result_personal_report > 0 or 
+        #     reg_result_financial_report > 0 or 
+        #     reg_result_contact_report > 0 or  
+        #     gi_result_report > 0 or 
+        #     em_result_report > 0 or 
+        #     md_result_report > 0 or 
+        #     image_result_report > 0):
     
-                status = 0
+        #         status = 0
 
 
         violation_data = {            
