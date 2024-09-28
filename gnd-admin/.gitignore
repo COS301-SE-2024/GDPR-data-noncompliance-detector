@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # ignore the .env file
-# .env
+.env
