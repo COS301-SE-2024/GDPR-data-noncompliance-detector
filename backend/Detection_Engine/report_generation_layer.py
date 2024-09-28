@@ -146,8 +146,8 @@ class report_generation_layer:
             categories.append('Biometric Data')
 
         rag_res = self.classification_layer.run_RAG(categories)
-        result = "The following articles are potentially violated: " + ", ".join(rag_res)
-        return result, self.count_unique_articles(result)
+        result = "The following GDPR articles are potentially violated: " + ", ".join(rag_res)
+        return result, len(rag_res)
 
 
 
@@ -176,17 +176,17 @@ class report_generation_layer:
 
     def Image_report_generation(self, path):
         arr_ = self.image_classification_layer.biometric_detect_all(path)
-        # return arr_
-        if arr_ is None:
-            return 0
+        return arr_
+        # if arr_ is None:
+        #     return 0
         
-        count = 0
-        for detection_list in arr_:
-            for detection in detection_list:
-                if detection.get('label') == 'person':
-                    count += 1
+        # count = 0
+        # for detection_list in arr_:
+        #     for detection in detection_list:
+        #         if detection.get('label') == 'person':
+        #             count += 1
         
-        return count
+        # return count
 
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
 

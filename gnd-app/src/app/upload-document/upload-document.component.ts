@@ -32,6 +32,7 @@ export class UploadDocumentComponent implements OnInit{
   consentAgreement: string = "";
   genetic_data: number = 0;
   metric_score: number = 0;
+  isUploading: boolean = false;
 
   constructor(private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 
@@ -110,7 +111,50 @@ export class UploadDocumentComponent implements OnInit{
     event.preventDefault();
     if (event.dataTransfer) {
       const file = event.dataTransfer.files[0];
-      console.log(file);
+      console.log("File Dropped:", file);
+
+      
+      if (file) {                                                     //Uses same logic as onFileSelected - API access etc..
+        this.fileName = file.name;
+        console.log("File Name: ", this.fileName);
+        this.uploadedFileName = file.name;
+        console.log("Uploaded File Name: ", this.uploadedFileName);
+        this.result = '';
+        this.isUploading = true;
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("fileName", file.name);
+
+        this.http.post<any>("http://127.0.0.1:8000/file-upload-new", formData).subscribe(
+          (response) => {
+            this.uploadedFileName = response.fileName;
+            this.fileName = response.fileName;
+            console.log(response);
+
+            this.documentStatus = this.docStatus(response.result.score.Status);
+            this.nerCount = response.result.score.NER;
+            this.location = this.locationStatus(response.result.score.Location);
+            this.personalData = response.result.score.Personal;
+            this.financialData = response.result.score.Financial;
+            this.contactData = response.result.score.Contact;
+            this.medicalData = response.result.score.Medical;
+            this.ethnicData = response.result.score.Ethnic;
+            this.biometricData = response.result.score.Biometric;
+            this.genetic_data = response.result.score.Genetic;
+            this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
+            this.response = response.result;
+            console.log(this.nerCount);
+            this.checkdata();
+
+            this.result = "Y";
+            this.isUploading = false;
+          },
+          (error) => {
+            console.error("Upload failed:", error);
+            this.isUploading = false;  
+          }
+        );
+      }
     }
   }
 
@@ -135,6 +179,7 @@ export class UploadDocumentComponent implements OnInit{
       this.uploadedFileName = file.name;
       console.log("Uploaded File Name: ", this.uploadedFileName);
       this.result = '';
+      this.isUploading = true;
 
       const formData = new FormData();
       formData.append("file", file);
@@ -149,8 +194,9 @@ export class UploadDocumentComponent implements OnInit{
           this.uploadedFileName = response.fileName;
           // this.result = this.processResult(response.result);
           // console.log(response.result.score.Biometric)
-          this.fileName = response.fileName;          console.log(response)
-
+          this.fileName = response.fileName;
+          console.log(response);
+          
           this.documentStatus = this.docStatus(response.result.score.Status);
           this.nerCount = response.result.score.NER;
           this.location = this.locationStatus(response.result.score.Location);
@@ -167,7 +213,12 @@ export class UploadDocumentComponent implements OnInit{
           this.checkdata();
 
           this.result = "Y";
-        }
+          this.isUploading = false;
+        },
+        (error) => {
+          console.error("Upload failed:", error);
+          this.isUploading = false;
+        },  
       )
     }
   }
