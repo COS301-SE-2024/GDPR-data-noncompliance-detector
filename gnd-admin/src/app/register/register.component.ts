@@ -59,6 +59,14 @@ export class RegisterComponent implements OnInit {
       modal.style.display = 'block';
     }
   }
+  // openTermsModal(event: Event) {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   const modal = document.getElementById('termsModal');
+  //   if (modal) {
+  //     modal.style.display = 'block';
+  //   }
+  // }
 
   private initForm(): void {
     this.registerForm = this.formBuilder.group({
