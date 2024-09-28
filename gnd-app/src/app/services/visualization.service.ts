@@ -9,6 +9,7 @@ export class VisualizationService {
 
   private visualizationData: any;
   private uploadState: any;
+  private pdfData: any;
 
   setData(data: any) {
     this.visualizationData = data;
@@ -24,5 +25,13 @@ export class VisualizationService {
 
   getUploadState() {
     return this.uploadState;
+  }
+
+  setPDFState(state: any) {
+    this.pdfData = state;
+  }
+
+  getPDFState() {
+    return this.pdfData;
   }
 }
