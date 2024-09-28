@@ -7,12 +7,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './faq-page.component.html',
-  styleUrls: ['./faq-page.component.css'] // Fixed styleUrl to styleUrls
+  styleUrls: ['./faq-page.component.css']
 })
 export class FaqPageComponent {
-  activeDropdown: string = ''; // To store the currently active dropdown
+  activeDropdown: string = '';
 
-  // Function to toggle the dropdown
   toggleDropdown(dropdownId: string) {
     if (this.activeDropdown === dropdownId) {
       this.activeDropdown = ''; // Close dropdown
@@ -21,7 +20,6 @@ export class FaqPageComponent {
     }
   }
 
-  // HostListener to detect clicks outside the dropdown
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;

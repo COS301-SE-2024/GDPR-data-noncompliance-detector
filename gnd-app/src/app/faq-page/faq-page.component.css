@@ -40,7 +40,7 @@
 
 .grid-parent {
     display: flex;
-    justify-content: space-between; /* Ensures GND is on the left and GDPR is on the right */
+    justify-content: space-between;
     align-items: flex-start;
     padding: 10px;
     gap: 20px; 
@@ -61,7 +61,6 @@
     box-sizing: border-box; 
 }
 
-/* Dropdown button */
 .dropbtn {
   font-family: "Mediator Narrow Web Extra Bold";
   background-color: transparent; 

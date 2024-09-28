@@ -21,8 +21,8 @@
 
       <div class="upload-container">
         <div class="flex items-center justify-center w-full" [class.dropzone-active]="isDragActive"
-          (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onFileDropped($event)"
-          id="uploadFile">
+          [class.dropzone-disabled]="isUploading" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onFileDropped($event)"
+          id="uploadFile" [style.pointer-events]="isUploading ? 'none' : 'auto'">
           <label for="dropzone-file"
             class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
             <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -34,7 +34,9 @@
               <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload a
                   file</span> or drag and drop</p>
             </div>
-            <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)" />
+            <!-- <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)" /> -->
+            <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)" 
+            [disabled]="isUploading" />
           </label>
         </div>
       </div>
@@ -158,7 +160,7 @@
     <!-- <button *ngIf="uploadedFileName" [routerLink]="['/violations']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Violations</button> -->
     <!-- <button *ngIf="uploadedFileName" [routerLink]="['/report']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Report</button> -->
     <button *ngIf="result" (click)="onVisualize()" id="vizButton" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualize</button>
+      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualise</button>
   </div>
 
 </div>

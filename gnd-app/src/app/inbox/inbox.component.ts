@@ -98,6 +98,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   medicalData: number = 0;
   ethnicData: number = 0;
   biometricData: number = 0;
+  geneticData: number = 0;
   consentAgreement: string = "";
 
   docStatus(status: number): string {
@@ -160,6 +161,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.medicalData = score.Medical;
         this.ethnicData = score.Ethnic;
         this.biometricData = score.Biometric;
+        this.biometricData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
 
         // this.checkdata();
