@@ -16,7 +16,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   background-attachment: fixed;
   background-position: center; }
 
-/* Custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;

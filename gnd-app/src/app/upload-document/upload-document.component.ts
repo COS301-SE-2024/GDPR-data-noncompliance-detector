@@ -31,6 +31,7 @@ export class UploadDocumentComponent implements OnInit{
   biometricData: number = 0;
   consentAgreement: string = "";
   genetic_data: number = 0;
+  ragScore: string = "";
   metric_score: number = 0;
   isUploading: boolean = false;
 
@@ -142,6 +143,7 @@ export class UploadDocumentComponent implements OnInit{
             this.biometricData = response.result.score.Biometric;
             this.genetic_data = response.result.score.Genetic;
             this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
+            this.ragScore = response.result.score.RAG_Statement;
             this.response = response.result;
             console.log(this.nerCount);
             this.checkdata();
@@ -208,6 +210,7 @@ export class UploadDocumentComponent implements OnInit{
           this.biometricData = response.result.score.Biometric;
           this.genetic_data = response.result.score.Genetic;
           this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
+          this.ragScore = response.result.score.RAG_Statement;
           this.response = response.result;
           console.log(this.nerCount);
           this.checkdata();
