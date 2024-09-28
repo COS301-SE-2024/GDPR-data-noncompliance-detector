@@ -13,6 +13,9 @@ from reportlab.lib.colors import HexColor
 
 import os, sys
 
+from backend.display.display import highlight_pdf_violations
+import pypandoc
+
 # from text_classification_layer import text_classification_layer
 # from biometric_detection import biometric_detection
 
@@ -50,15 +53,7 @@ class report_generation_layer:
     def location_report_generation(self, text):
         countries = location_finder.detect_country(self, text)
         # countries = self.detect_country(result)
-
-        if countries:
-            for country in countries:
-                language_code = Language.find(country[0]).to_tag()
-                if language_code in self.eu_languages:
-                    return 1
-            return 0
-        else:
-            return 2
+        return countries
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#           
            
         
@@ -110,6 +105,19 @@ class report_generation_layer:
 
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------#
 
+    def count_unique_articles(self, label_to_articles):
+        if not isinstance(label_to_articles, list):
+            raise TypeError("label_to_articles must be a list")
+
+        unique_articles = set()
+
+        for article in label_to_articles:
+            # Extract the main article number before any sub-articles
+            main_article = article.split('(')[0]
+            unique_articles.add(main_article)
+
+        return len(unique_articles)
+
     def RAG_report(self, ner_result , personal, financial, contact, medical, ca_statement, gi, em, biometric):
         categories = []
 
@@ -131,9 +139,9 @@ class report_generation_layer:
         if biometric > 0:
             categories.append('Biometric Data')
 
-        rag_res = self.classification_layer.run_RAG(categories)
+        rag_res, rag_count = self.classification_layer.run_RAG(categories)
         result = "The following GDPR articles are potentially violated: " + ", ".join(rag_res)
-        return result, len(rag_res)
+        return result, rag_count
 
 
 
@@ -461,6 +469,39 @@ class report_generation_layer:
             return "The document does not appear to originate from within the EU"
         
         return "The document appears to originate from within the EU"
+    
+#----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
+
+    def ner_report_text(self, text, path_):
+        res1 = self.classification_layer.run_NER_model_return_strings(text)
+        pdfbytes = self.process_pdf(res1, path_)
+        return pdfbytes
+    
+    def process_pdf(self, text, path_):
+        file_location = path_
+        nerstrings = text
+
+        dou = [nerstrings]
+
+        #xlsx and docx conversions to pdf
+        if '.docx' in file_location:
+            pdf_path = file_location.replace('.docx', '.pdf')
+            try:
+                # pypandoc.download_pandoc()
+                pypandoc.convert_file(file_location, 'pdf', outputfile=pdf_path)
+            except Exception as e:
+                print(f"Failed to convert docx to pdf: {e}")
+
+        elif '.xlsx' in file_location:
+            pdf_path = file_location.replace('.xlsx', '.pdf')
+
+
+        highlighted_pdf = highlight_pdf_violations(file_location, dou , ".")
+        
+
+        # this will return highlighted_pdf as a bytestream and then can be printed whenver in frontend
+        return highlighted_pdf
+
 
 
 if __name__ == "__main__":

@@ -39,6 +39,10 @@ class NER:
         res = self.model(text)
         processed = self.extract_entities(res)
         return processed
+    
+    def run_NER_raw(self, text):
+        res = self.model(text)
+        return res
 
 if __name__ == '_main_':
     ner_ = NER()

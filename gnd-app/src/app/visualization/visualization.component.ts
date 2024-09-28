@@ -330,11 +330,11 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
   calculateMetric() {
 
-    const w_per = 1;
+    const w_per = 5;
     const w_med = 0.4;
     const w_gen = 0.2;
     const w_eth = 0.4;
-    const w_bio = 0.8;
+    const w_bio = 2;
 
     let e_personalData  = (Math.exp(this.data.score.Personal) + Math.exp(this.financialData) + Math.exp(this.contactData) + Math.exp(this.personalData));
     let e_med = Math.exp(this.medicalData);
@@ -450,11 +450,11 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     ];
     
     switch (this.location) {
-      case 2: // EU in red, others not highlighted
+      case 0: // EU in red, others not highlighted
         return euCountries.includes(countryId) ? 'red' : '#d3d3d3';
       case 1: // Non-EU in green, others not highlighted
         return nonEuCountries.includes(countryId) ? 'green' : '#d3d3d3';
-      case 0: // Optional: All in light grey
+      case 2: // Optional: All in light grey
       default:
         return '#d3d3d3';
      }

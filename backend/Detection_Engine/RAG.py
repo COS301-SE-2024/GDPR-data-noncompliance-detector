@@ -131,15 +131,27 @@ class RAG:
             'LABEL_2': '6',
             'LABEL_3': ['9','9(1)','9(2)(b)','9(2)(g)'],
             'LABEL_4': ['6','7(1)','7(2)','7(3)'],
-            'LABEL_5': '12'
+            'LABEL_5': ['12']
             }
-        
+
+        unique_labels = set()
+        count = 0
+
+        for label in labels:
+            if label == 'LABEL_4':
+                if label not in unique_labels:
+                    unique_labels.add(label)
+                count += 2
+            elif label not in unique_labels:
+                unique_labels.add(label)
+                count += 1
+
         articles = []
         for label in label_to_articles:
             if label in labels:
                 articles.extend(label_to_articles[label])
-        
-        return articles
+
+        return articles, count
 
     def process(self, query):
         # print("Querying DB")

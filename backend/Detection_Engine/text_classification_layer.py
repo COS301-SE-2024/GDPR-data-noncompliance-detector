@@ -23,6 +23,13 @@ class text_classification_layer:
         res = self.NER_model_.run_NER(text)
         return res
     
+    def run_NER_model_return_strings(self, text):
+        res = self.NER_model_.run_NER(text)
+        ext = [res[i][0] for i in range(len(res))]
+        ext = [e.replace("\n", " ") for e in ext]
+        ext = [e.replace("\t", " ") for e in ext]
+        return ext
+
     def run_CA_model(self, text):
         res = self.CA_model_.run_CA(text)
         return res
