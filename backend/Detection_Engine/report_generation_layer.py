@@ -110,6 +110,20 @@ class report_generation_layer:
 
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------#
 
+    def count_unique_articles(self, label_to_articles):
+        unique_articles = set()
+        
+        for articles in label_to_articles.values():
+            if isinstance(articles, list):
+                for article in articles:
+                    # Extract the main article number before any sub-articles
+                    main_article = article.split('(')[0]
+                    unique_articles.add(main_article)
+            else:
+                unique_articles.add(articles)
+        
+        return len(unique_articles)
+
     def RAG_report(self, ner_result , personal, financial, contact, medical, ca_statement, gi, em, biometric):
         categories = []
 
@@ -133,7 +147,7 @@ class report_generation_layer:
 
         rag_res = self.classification_layer.run_RAG(categories)
         result = "The following articles are potentially violated: " + ", ".join(rag_res)
-        return result, len(rag_res)
+        return result, self.count_unique_articles(result)
 
 
 
