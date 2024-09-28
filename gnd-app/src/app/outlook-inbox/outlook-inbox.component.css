@@ -19,7 +19,7 @@ body {
 }
 
 .main-content {
-  padding-top: 60px;
+  padding-top: 20px;
   min-height: calc(100vh - 60px);
   box-sizing: border-box;
 }
