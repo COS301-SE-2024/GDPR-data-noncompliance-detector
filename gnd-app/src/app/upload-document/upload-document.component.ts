@@ -238,11 +238,11 @@ export class UploadDocumentComponent implements OnInit{
   }
 
   locationStatus(location: number): string {
-    if(location == 0 ) {
+    if(location == 1 ) {
       return "Not EU"
     }
 
-    else if(location == 1) {
+    else if(location == 0) {
       return "EU"
     }
 

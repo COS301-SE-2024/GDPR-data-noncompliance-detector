@@ -150,7 +150,7 @@ class detection_engine:
         return result
     
     def get_status(self, ner_count, personal_data,financial_data, contact_data, medical_data, genetic_data, ethnic_data, biometric_data):
-        w_per = 1
+        w_per = 5
         w_med = 0.4
         w_gen = 0.2
         w_eth = 0.4
@@ -182,7 +182,7 @@ class detection_engine:
 
         text = path
 
-        location_report = 0
+        location_report = self.report_generator.location_report_generation(text)
         ner_result_report = self.report_generator.ner_report_generation(text)
         reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
         reg_result_financial_report = self.regex_report_financial(text)
@@ -198,15 +198,16 @@ class detection_engine:
 
         status = self.get_status(ner_result_report,reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report, gi_result_report,em_result_report,image_result_report)
         # ner_count, financial_data, contact_data, medical_data, genetic_data, ethnic_data, biometric_data
-        # if (reg_result_personal_report > 0 or 
-        #     reg_result_financial_report > 0 or 
-        #     reg_result_contact_report > 0 or  
-        #     gi_result_report > 0 or 
-        #     em_result_report > 0 or 
-        #     md_result_report > 0 or 
-        #     image_result_report > 0):
+        if (reg_result_personal_report + 
+            reg_result_financial_report + 
+            reg_result_contact_report +  
+            gi_result_report + 
+            em_result_report + 
+            md_result_report + 
+            image_result_report):
     
-        #         status = 0
+            rag_stat = "This document does not violate any GDPR articles"
+            rag_count = 0
 
 
         violation_data = {            

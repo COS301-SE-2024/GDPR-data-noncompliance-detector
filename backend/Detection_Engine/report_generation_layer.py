@@ -50,15 +50,7 @@ class report_generation_layer:
     def location_report_generation(self, text):
         countries = location_finder.detect_country(self, text)
         # countries = self.detect_country(result)
-
-        if countries:
-            for country in countries:
-                language_code = Language.find(country[0]).to_tag()
-                if language_code in self.eu_languages:
-                    return 1
-            return 0
-        else:
-            return 2
+        return countries
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#           
            
         
@@ -111,17 +103,16 @@ class report_generation_layer:
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------#
 
     def count_unique_articles(self, label_to_articles):
+        if not isinstance(label_to_articles, list):
+            raise TypeError("label_to_articles must be a list")
+
         unique_articles = set()
-        
-        for articles in label_to_articles.values():
-            if isinstance(articles, list):
-                for article in articles:
-                    # Extract the main article number before any sub-articles
-                    main_article = article.split('(')[0]
-                    unique_articles.add(main_article)
-            else:
-                unique_articles.add(articles)
-        
+
+        for article in label_to_articles:
+            # Extract the main article number before any sub-articles
+            main_article = article.split('(')[0]
+            unique_articles.add(main_article)
+
         return len(unique_articles)
 
     def RAG_report(self, ner_result , personal, financial, contact, medical, ca_statement, gi, em, biometric):
@@ -145,9 +136,9 @@ class report_generation_layer:
         if biometric > 0:
             categories.append('Biometric Data')
 
-        rag_res = self.classification_layer.run_RAG(categories)
+        rag_res, rag_count = self.classification_layer.run_RAG(categories)
         result = "The following GDPR articles are potentially violated: " + ", ".join(rag_res)
-        return result, len(rag_res)
+        return result, rag_count
 
 
 
