@@ -11,6 +11,9 @@ from typing import List
 import threading
 from backend.GND_Email_Monitor.main import start_monitors
 from backend.File_monitor.file_watcher import start_watcher_thread_downloads
+from Crypto.Cipher import AES
+import base64
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -27,6 +30,15 @@ GENERATED_REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/generated-reports
 os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
+
+encryption_key = 'GNDEncryptionKEY28092024'
+
+def encrypt(data, key):
+    # Convert the dictionary to a JSON string
+    json_data = json.dumps(data)
+    cipher = AES.new(key.encode('utf-8'), AES.MODE_EAX)
+    ciphertext, tag = cipher.encrypt_and_digest(json_data.encode('utf-8'))
+    return base64.b64encode(cipher.nonce + tag + ciphertext).decode('utf-8')
 
 def start_monitors_in_background():
     monitor_thread = threading.Thread(target=start_monitors, daemon=True)
@@ -311,15 +323,10 @@ def upload_file():
     if result is None:
         return jsonify({"error": "Processing failed"}), 500
 
-    try:
-        os.remove(file_location)
-    except Exception as e:
-        logging.error(f"Error deleting file: {e}")
+    # Encrypt the result before sending
+    encrypted_result = encrypt(result, encryption_key)
 
-    if result is None:
-        return jsonify({"error": "Processing failed"}), 500
-
-    return jsonify({"filename": file.filename, "result": result})
+    return jsonify({"filename": file.filename, "result": encrypted_result})
 
 if __name__ == "__main__":
     # app.run(host="0.0.0.0", port=8000)

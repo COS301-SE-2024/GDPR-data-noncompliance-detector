@@ -7,6 +7,7 @@ import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
 import { VisualizationComponent } from "../visualization/visualization.component";
 import { VisualizationService } from '../services/visualization.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-upload-document',
@@ -17,6 +18,7 @@ import { VisualizationService } from '../services/visualization.service';
 })
 export class UploadDocumentComponent implements OnInit{
   private walkthroughSubscription?: Subscription;
+  private encryptionKey = 'GNDEncryptionKEY28092024';
   response: any;
   bar_plot: any;
   uploadState: any;
@@ -177,7 +179,7 @@ export class UploadDocumentComponent implements OnInit{
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
-    if(file) {
+    if (file) {
       this.fileName = file.name;
       console.log("File Name: ", this.fileName);
       this.uploadedFileName = file.name;
@@ -189,42 +191,46 @@ export class UploadDocumentComponent implements OnInit{
       formData.append("file", file);
       formData.append("fileName", file.name);
 
-      // const upload$ = this.http.post("http://127.0.0.1:8000/file-upload", formData);
-
-      // upload$.subscribe();
       this.http.post<any>("http://127.0.0.1:8000/file-upload-new", formData).subscribe(
         (response) => {
-          // console.log("Server Response: ", response);
-          this.uploadedFileName = response.fileName;
-          // this.result = this.processResult(response.result);
-          // console.log(response.result.score.Biometric)
-          this.fileName = response.fileName;
-          console.log(response);
-          
-          this.documentStatus = this.docStatus(response.result.score.Status);
-          this.nerCount = response.result.score.NER;
-          this.location = this.locationStatus(response.result.score.Location);
-          this.personalData = response.result.score.Personal;
-          this.financialData = response.result.score.Financial;
-          this.contactData = response.result.score.Contact;
-          this.medicalData = response.result.score.Medical;
-          this.ethnicData = response.result.score.Ethnic;
-          this.biometricData = response.result.score.Biometric;
-          this.genetic_data = response.result.score.Genetic;
-          this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
-          this.ragScore = response.result.score.RAG_Statement;
-          this.response = response.result;
-          console.log(this.nerCount);
-          this.checkdata();
+          try {
+            // Decrypt the response
+            const decryptedBytes = CryptoJS.AES.decrypt(response.result, this.encryptionKey);
+            const decryptedResult = decryptedBytes.toString(CryptoJS.enc.Utf8);
+            const res = JSON.parse(decryptedResult);
 
-          this.result = "Y";
-          this.isUploading = false;
+            this.uploadedFileName = res.fileName;
+            this.fileName = res.fileName;
+            console.log(res);
+
+            this.documentStatus = this.docStatus(res.score.Status);
+            this.nerCount = res.score.NER;
+            this.location = this.locationStatus(res.score.Location);
+            this.personalData = res.score.Personal;
+            this.financialData = res.score.Financial;
+            this.contactData = res.score.Contact;
+            this.medicalData = res.score.Medical;
+            this.ethnicData = res.score.Ethnic;
+            this.biometricData = res.score.Biometric;
+            this.genetic_data = res.score.Genetic;
+            this.consentAgreement = this.consentAgreementStatus(res.score["Consent Agreement"]);
+            this.ragScore = res.score.RAG_Statement;
+            this.response = res;
+            console.log(this.nerCount);
+            this.checkdata();
+
+            this.result = "Y";
+            this.isUploading = false;
+          } catch (error) {
+            console.error("Decryption failed:", error);
+            this.isUploading = false;
+          }
         },
         (error) => {
           console.error("Upload failed:", error);
           this.isUploading = false;
-        },  
-      )
+        }
+      );
     }
   }
 
