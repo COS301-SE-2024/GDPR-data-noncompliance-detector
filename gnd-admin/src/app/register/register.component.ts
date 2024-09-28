@@ -7,11 +7,12 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
+import { TermsComponent } from '../terms/terms.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TermsComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   animations: [
@@ -50,6 +51,13 @@ export class RegisterComponent implements OnInit {
         this.registerForm.valueChanges.subscribe(() => {
           this.showError = false;
         });
+  }
+
+  openTermsModal() {
+    const modal = document.getElementById('termsModal');
+    if (modal) {
+      modal.style.display = 'block';
+    }
   }
 
   private initForm(): void {

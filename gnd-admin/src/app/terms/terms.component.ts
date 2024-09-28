@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './terms.component.css'
 })
 export class TermsComponent {
-
+  closeModal() {
+    const modal = document.getElementById('termsModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
 }
