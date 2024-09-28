@@ -107,6 +107,7 @@ export class UploadDocumentComponent implements OnInit{
   result: string = '';
   status: string = '';
   ca_statement: string = '';
+  pdf_data: string = '';
 
   onFileDropped(event: DragEvent) {
     event.preventDefault();
@@ -147,7 +148,8 @@ export class UploadDocumentComponent implements OnInit{
             this.response = response.result;
             console.log(this.nerCount);
             this.checkdata();
-
+            console.log(response.result.score.ner_result_text)
+            this.pdf_data = response.result.score.ner_result_text;
             this.result = "Y";
             this.isUploading = false;
           },
@@ -324,5 +326,15 @@ export class UploadDocumentComponent implements OnInit{
     let N_e_bio = (e_bio / maxExpValue) * w_bio;
 
     this.metric_score = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio;
+  }
+
+  onAnnotate() {
+    this.visualizationService.setPDFState(this.pdf_data);
+    this.visualizationService.setUploadState(this.response);
+    if (this.response) {
+      this.visualizationService.setPDFState(this.pdf_data);
+      this.visualizationService.setUploadState(this.response);
+      this.router.navigate(['/annotate']);
+    }
   }
 }

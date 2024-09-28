@@ -13,6 +13,9 @@ from reportlab.lib.colors import HexColor
 
 import os, sys
 
+from backend.display.display import highlight_pdf_violations
+import pypandoc
+
 # from text_classification_layer import text_classification_layer
 # from biometric_detection import biometric_detection
 
@@ -466,6 +469,39 @@ class report_generation_layer:
             return "The document does not appear to originate from within the EU"
         
         return "The document appears to originate from within the EU"
+    
+#----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
+
+    def ner_report_text(self, text, path_):
+        res1 = self.classification_layer.run_NER_model_return_strings(text)
+        pdfbytes = self.process_pdf(res1, path_)
+        return pdfbytes
+    
+    def process_pdf(self, text, path_):
+        file_location = path_
+        nerstrings = text
+
+        dou = [nerstrings]
+
+        #xlsx and docx conversions to pdf
+        if '.docx' in file_location:
+            pdf_path = file_location.replace('.docx', '.pdf')
+            try:
+                # pypandoc.download_pandoc()
+                pypandoc.convert_file(file_location, 'pdf', outputfile=pdf_path)
+            except Exception as e:
+                print(f"Failed to convert docx to pdf: {e}")
+
+        elif '.xlsx' in file_location:
+            pdf_path = file_location.replace('.xlsx', '.pdf')
+
+
+        highlighted_pdf = highlight_pdf_violations(file_location, dou , ".")
+        
+
+        # this will return highlighted_pdf as a bytestream and then can be printed whenver in frontend
+        return highlighted_pdf
+
 
 
 if __name__ == "__main__":

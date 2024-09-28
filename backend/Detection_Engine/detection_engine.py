@@ -1,3 +1,4 @@
+import base64
 import re
 from Detection_Engine.lang_detection import location_finder
 from Detection_Engine.regex_layer import regex_layer
@@ -198,18 +199,21 @@ class detection_engine:
 
         status = self.get_status(ner_result_report,reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report, gi_result_report,em_result_report,image_result_report)
         # ner_count, financial_data, contact_data, medical_data, genetic_data, ethnic_data, biometric_data
+        
         if (reg_result_personal_report + 
             reg_result_financial_report + 
             reg_result_contact_report +  
             gi_result_report + 
             em_result_report + 
             md_result_report + 
-            image_result_report):
+            image_result_report) == 0:
     
             rag_stat = "This document does not violate any GDPR articles"
             rag_count = 0
 
-
+        ner_pdf_bytes = self.report_generator.ner_report_text(text, path_)
+        pdf_base64 = base64.b64encode(ner_pdf_bytes.read()).decode('utf-8')
+        
         violation_data = {            
             "score": {
                 "Status": status,
@@ -224,7 +228,8 @@ class detection_engine:
                 "Medical": md_result_report,
                 "Biometric": image_result_report,
                 "RAG_Statement":rag_stat,
-                "lenarts":rag_count
+                "lenarts":rag_count,
+                "ner_result_text": pdf_base64
             }
         }
 
