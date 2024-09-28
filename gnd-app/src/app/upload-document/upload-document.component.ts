@@ -330,6 +330,7 @@ export class UploadDocumentComponent implements OnInit{
 
   onAnnotate() {
     this.visualizationService.setPDFState(this.pdf_data);
+    console.log(this.pdf_data);
     this.visualizationService.setUploadState(this.response);
     if (this.response) {
       this.visualizationService.setPDFState(this.pdf_data);
