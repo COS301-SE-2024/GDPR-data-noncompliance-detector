@@ -128,6 +128,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   medicalData: number = 0;
   ethnicData: number = 0;
   biometricData: number = 0;
+  geneticData: number = 0;
   consentAgreement: string = "";
 
   docStatus(status: number): string {
@@ -189,7 +190,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         // const correctedData = response.data.content.replace(/'/g, '"');
         const correctedData = response.data.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
         
-        // console.log('Corrected JSON Data:', correctedData);
+        console.log('Corrected JSON Data:', correctedData);
     
         let dat = JSON.parse(correctedData);
         
@@ -206,6 +207,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         this.medicalData = score.Medical;
         this.ethnicData = score.Ethnic;
         this.biometricData = score.Biometric;
+        this.geneticData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
 
         // this.checkdata();
@@ -223,13 +225,13 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   mock(){
     this.currentAnalysis.content = 'sandwich spread ';
     this.currentEmail = 'NA';
-    this.currentEmailType = 'txt'; // Set file type
+    this.currentEmailType = 'txt';
   }
 
   smock(filePath: string){
     this.currentAnalysis.content = filePath;
     this.currentEmail = 'NA';
-    this.currentEmailType = 'txt'; // Set file type
+    this.currentEmailType = 'txt';
   }
 
   mockData: any = {
@@ -244,7 +246,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   showAnalysis(data: string) {
     this.currentAnalysis = this.mockData[data];
     this.currentEmail = data;
-    this.currentEmailType = this.mockData[data].fileType; // Set file type
+    this.currentEmailType = this.mockData[data].fileType;
   }
 
   isObjectEmpty(obj: any) {
@@ -254,7 +256,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   clearAnalysis() {
     this.currentAnalysis = {};
     this.currentEmail = "";
-    this.currentEmailType = ""; // Clear file type
+    this.currentEmailType = "";
   }
 
   startIntro() {
