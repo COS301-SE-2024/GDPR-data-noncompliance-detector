@@ -145,6 +145,12 @@
         </div>
       </div>
 
+      <div class="rag-status-container" *ngIf="result">
+        <div class="rag-status">
+          <span class="rag-agreement">{{ ragScore }}</span>        
+        </div>
+      </div>
+
       <div class="upload-container">
         <div class="analysis-data" *ngIf="!result && !uploadedFileName && !uploadState">
           <p class="analysis-text" id="Report">Upload a file to view results</p>

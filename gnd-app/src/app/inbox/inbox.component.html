@@ -120,6 +120,11 @@
             </div>
           </div>
 
+          <div class="rag-status-container" *ngIf="result">
+            <div class="rag-status">
+              <span class="rag-agreement">{{ ragScore }}</span>        
+            </div>
+          </div>
     </div>
 
     <!-- <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)"> -->

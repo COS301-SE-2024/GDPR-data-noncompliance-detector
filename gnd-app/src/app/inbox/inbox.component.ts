@@ -100,6 +100,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   biometricData: number = 0;
   geneticData: number = 0;
   consentAgreement: string = "";
+  ragScore: string = "";
 
   docStatus(status: number): string {
     if(status == 1){
@@ -163,6 +164,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.biometricData = score.Biometric;
         this.biometricData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
+        this.ragScore = score.RAG_Statement;
 
         // this.checkdata();
 
