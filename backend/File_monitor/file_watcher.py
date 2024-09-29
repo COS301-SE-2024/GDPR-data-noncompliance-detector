@@ -82,18 +82,32 @@ def verifyFromTeams(ext):
                     with open(zone_identifier_path, 'r') as f:
                         content = f.read()
 
+                        # urls = []                             #Get all the urls from content
+                        # for line in content.splitlines():
+                        #     if line.startswith('ReferrerUrl=') or line.startswith('HostUrl='):
+                        #         url = line.split('=', 1)[1]
+                        #         urls.append(url)
+                        
+                        # for url in urls:                      #Check if urls match domains
+                        #     domain = get_domain(url)
+                        #     if domain:
+                        #         for d in domains:
+                        #             if domain == d or domain.endswith('.' + d):
+                        #                 return True
                         urls = []                             #Get all the urls from content
                         for line in content.splitlines():
-                            if line.startswith('ReferrerUrl=') or line.startswith('HostUrl='):
-                                url = line.split('=', 1)[1]
-                                urls.append(url)
+                            print("ln " + line)
+                            for dom in domains:
+                                print("dom " + dom)
+                                if dom in line:
+                                    return True
                         
-                        for url in urls:                      #Check if urls match domains
-                            domain = get_domain(url)
-                            if domain:
-                                for d in domains:
-                                    if domain == d or domain.endswith('.' + d):
-                                        return True
+                        # for url in urls:                      #Check if urls match domains
+                        #     domain = get_domain(url)
+                        #     if domain:
+                        #         for d in domains:
+                        #             if domain == d or domain.endswith('.' + d):
+                        #                 return True
                         return False
                 
                 except FileNotFoundError:
