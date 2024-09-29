@@ -1,9 +1,10 @@
-import sys, os
+import sys
 import time
 import logging
 import json
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
+import os
 import threading
 import platform
 from pathlib import Path
@@ -12,44 +13,47 @@ import errno
 from winotify import Notification, audio
 from urllib.parse import urlparse
 
-API_URL = "http://localhost:8000/file-upload-new"
-
 GND_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads")
 GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
 
 os.makedirs(GND_DATA_FOLDER, exist_ok=True)
 
+API_URL = "http://localhost:8000/file-upload-new"
+
 def get_domain(url):
     try:
         parsed_url = urlparse(url)
+        
         return parsed_url.hostname
-    
     except Exception as e:
         print(f"Error parsing URL {url}: {e}")
         return None
-    
 
 def get_resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
-
+    
     except AttributeError:
         base_path = os.path.abspath(".")
+        
+    return os.path.join(base_path, relative_path)
 
 def check_file_extension(filename, reg):
     try:
-        for str in reg:
-            if(filename.endswith(f".{str}") and ".download" not in filename):
+        for str_ext in reg:
+            if (filename.endswith(f".{str_ext}") and ".download" not in filename):
                 return True
-    except Exception as e:
-        print(f"Error in file_watcher-checkfileextension : {e}")
-        
-        return False
     
+    except Exception as e:
+        print(f"error in check_file_extension: {e}")
+
+    return False
+
 def verifyFromTeams(ext):
     if isinstance(ext, bytes):
         ext = ext.decode('utf-8')
 
+    #Domains to check
     domains = [
         'my.sharepoint.com',
         'teams.microsoft.com',
@@ -71,10 +75,11 @@ def verifyFromTeams(ext):
     ]
 
     try:
-        if platform.system == 'Windows':
+        if platform.system() == 'Windows':
             zone_identifier_path = ext + ':Zone.Identifier'
 
-            retries = 3
+            
+            retries = 3  #Retries for Zone.Identifier
             delay = 1
 
             for i in range(retries):
@@ -82,119 +87,110 @@ def verifyFromTeams(ext):
                     with open(zone_identifier_path, 'r') as f:
                         content = f.read()
 
-                        # urls = []                             #Get all the urls from content
-                        # for line in content.splitlines():
-                        #     if line.startswith('ReferrerUrl=') or line.startswith('HostUrl='):
-                        #         url = line.split('=', 1)[1]
-                        #         urls.append(url)
-                        
-                        # for url in urls:                      #Check if urls match domains
-                        #     domain = get_domain(url)
-                        #     if domain:
-                        #         for d in domains:
-                        #             if domain == d or domain.endswith('.' + d):
-                        #                 return True
-                        urls = []                             #Get all the urls from content
+                        urls = []       #Get all urls from content
                         for line in content.splitlines():
-                            print("ln " + line)
-                            for dom in domains:
-                                print("dom " + dom)
-                                if dom in line:
-                                    return True
-                        
-                        # for url in urls:                      #Check if urls match domains
-                        #     domain = get_domain(url)
-                        #     if domain:
-                        #         for d in domains:
-                        #             if domain == d or domain.endswith('.' + d):
-                        #                 return True
+                            if line.startswith('ReferrerUrl=') or line.startswith('HostUrl='):
+                                url = line.split('=', 1)[1]
+                                urls.append(url)
+
+                        for url in urls:        #Check if urls match domain
+                            domain = get_domain(url)
+                            if domain:
+                                for d in domains:
+                                    if domain == d or domain.endswith('.' + d):
+                                        return True
+
                         return False
-                
+                    
                 except FileNotFoundError:
                     if i < retries - 1:
                         time.sleep(delay)
                         continue
-                    
+
                     else:
                         return False
-                
+                    
                 except Exception as e:
-                    print(f"Error reading Zone.Identifier for {ext}: {e}")
+                    print(f"[ERROR] Error reading Zone.Identifier for {ext}: {e}")
                     return False
                 
-        elif platform.system == "Darwin":
+        elif platform.system() == 'Darwin':
             return True
 
     except Exception as e:
-        print(f"Error in verifyFromTeams: {e}")
+        print(f"[ERROR] Error in verifyFromTeams: {e}")
         return False
 
-class handle(FileSystemEventHandler):
+class Handle(FileSystemEventHandler):
     # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
     # problem, its not identifying .pdf as normal. only .download.pdf and verify from teams running after that but .downlload.pdf doesnt exist
     
     def __init__(self, file_extension):
         self.file_extension = file_extension
 
-    def on_download(self, event):
+    def on_created(self, event):
         self.process(event)
 
     def process(self, event):
         if event.is_directory:
             return None
-        
+
         try:
             if check_file_extension(event.src_path, self.file_extension):
-                time.sleep(2)           #Wait for Zone.Identifier
+        
+                time.sleep(2)
 
-                if(event.src_path.find("\\") != -1):
-                    event.src_path = event.src_path.replace("\\", "/")
+                normalized_path = event.src_path
 
-                if verifyFromTeams(event.src_path):
-                    print(event.src_path)
-                    # is from teams
-                    self.upload_file(event.src_path)
-
+                if verifyFromTeams(normalized_path):
+                    print(normalized_path)
+                    #is from teams
+                    self.upload_file(normalized_path)
+                    
                     sys.stdout.flush()
-
+                
+                else:
+                    print(f"File {normalized_path} is not from teams")
+        
         except Exception as e:
-            print(f"error in file_watcher-on_any_event : {e}")
+            print(f" Error in detecting_events: {e}")
 
     def upload_file(self, file_path):
         try:
-            time.sleep(2)       #to make sure file can be sent
-
+            time.sleep(2)                               #to make sure file can be sent
+            
             with open(file_path, 'rb') as file:
                 files = {'file': file}
                 response = requests.post(API_URL, files=files)
 
             if response.status_code == 200:
                 api_response = response.json()
-                print(f"File {file_path} uploaded successfully. Server response: {api_response}")      #For Logging
+                print(f"[INFO] File {file_path} uploaded successfully. Server response: {api_response}")    #For logging
 
                 toast = Notification(app_id="GND",
-                     title="New GND Report",
-                     msg="A new GND report is available",
-                     duration="short",
-                     icon=get_resource_path('assets/toast_logo.png'))
+                                     title="New GND Report",
+                                     msg="A new GND report is available",
+                                     duration="short",
+                                     icon=get_resource_path('assets/toast_logo.png'))
 
                 toast.set_audio(audio.Default, loop=False)
                 toast.show()
 
-                self.save_reponse_as_txt(file_path, api_response)
+                self.save_response_as_txt(file_path, api_response)
+            
             else:
                 print(f"Failed to upload file {file_path}. Server response: {response.text}")
-        
+
         except PermissionError as e:
             print(f"Permission error while accessing the file {file_path}: {e}")
-        
+
         except Exception as e:
             print(f"Error processing file {file_path}: {e}")
 
     def save_response_as_txt(self, original_file_path, api_response):
         file_name_without_ext = os.path.splitext(os.path.basename(original_file_path))[0]
         txt_file_path = os.path.join(GND_DATA_FOLDER, f"{file_name_without_ext}.txt")
-        
+
         try:
             with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
                 txt_file.write(str(api_response))
@@ -215,21 +211,22 @@ def startWatcher(paths, ext):
 
     for path in paths:
         logging.info(f'Start watching directory {path!r}')
-        event_handler = handle(ext)
+        event_handler = Handle(ext)
         observer = Observer()
         observer.schedule(event_handler, path, recursive=True)
         observers.append(observer)
         observer.start()
-    
+        print(f"Observer started for path: {path}")
+
     try:
         while not stop_watcher:
+            
             time.sleep(1)
-    
     except KeyboardInterrupt:
-        pass
+        print("[INFO] KeyboardInterrupt received. Stopping watchers...")
     
     except Exception as e:
-        print(f"Error in startWatcher: {e}")
+        print(f"[ERROR] Error in startWatcher: {e}")
     
     finally:
         for observer in observers:
@@ -237,9 +234,6 @@ def startWatcher(paths, ext):
             observer.join()
 
 def start_watcher_thread_downloads(ext, wt=3):
-    # This function will watch the downloads dir and will first check
-    # if the file is from teams then it will log it
-    
     downloads_path = str(Path.home() / "Downloads")
     global watcher_timer
     watcher_timer = wt
@@ -256,7 +250,8 @@ def stop_watcher_thread(thread):
     thread.join()
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    print("[INFO] Starting file watcher...")
     start_watcher_thread_downloads("pdf,xlsx,docx", 1)
 
 # define 2 functions. one which watches a folder. one wich watches downloads

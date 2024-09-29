@@ -24,7 +24,7 @@ function createWindow () {
 
 app.whenReady().then(() => {
   // startAPI();
-  startFlaskAPI();
+  // startFlaskAPI();
   createWindow();
   // setTimeout(setupWatcher, 100);
 });
