@@ -25,6 +25,7 @@ class CA:
         truncated_text = self.classifier.tokenizer.decode(tokens, skip_special_tokens=True)
         
         result = self.classifier(truncated_text)
+        # print(result)
         return result[0]['label']
 
 if __name__ == '__main__':

@@ -11,6 +11,14 @@ from typing import List
 import threading
 from backend.GND_Email_Monitor.main import start_monitors
 from backend.File_monitor.file_watcher import start_watcher_thread_downloads
+from io import BytesIO
+from backend.display.disp import highlight_pdf_violations
+import fitz
+import time
+import json
+import pypandoc
+# from plyer import notification
+# import comtypes.client
 
 app = Flask(__name__)
 CORS(app)
@@ -300,6 +308,7 @@ def upload_file():
     file_location = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_location)
 
+
     # result = endpoint.process(file_location)
     result = endpoint.process(file_location, file.filename)
 
@@ -320,6 +329,83 @@ def upload_file():
         return jsonify({"error": "Processing failed"}), 500
 
     return jsonify({"filename": file.filename, "result": result})
+
+
+# @app.route('/process-pdf', methods=['POST'])
+# def process_pdf():
+#     DISPLAY_FOLDER_FILE = os.path.expanduser("~/Documents/GND/display/file")
+#     os.makedirs(DISPLAY_FOLDER_FILE, exist_ok=True)
+
+#     DISPLAY_FOLDER_MARKED = os.path.expanduser("~/Documents/GND/display/marked")
+#     os.makedirs(DISPLAY_FOLDER_MARKED, exist_ok=True)
+
+#     if 'file' not in request.files:
+#         return jsonify({"error": "No file part"}), 400
+
+#     file = request.files['file']
+#     if file.filename == '':
+#         return jsonify({"error": "No selected file"}), 400
+
+#     file_location = os.path.join(DISPLAY_FOLDER_FILE, file.filename)
+#     file.save(file_location)
+
+
+#     #temp violations for testing
+#     # violations = [["blood pressure", "African-American"], ["Harvey spectre", "July 18, 1972", "Caucasian"]]
+
+#     nerstrings_raw = request.form.get('nerstrings') 
+    
+#     if not nerstrings_raw:
+#         return "No NER strings provided", 400
+
+#     try:
+#         nerstrings = json.loads(nerstrings_raw)
+#     except json.JSONDecodeError:
+#         return "Invalid JSON for NER strings", 400
+
+#     dou = [nerstrings]
+#     # print(json.loads(request.form.get('nerstrings')))
+
+#     #xlsx and docx conversions to pdf
+#     if '.docx' in file_location:
+#         pdf_path = file_location.replace('.docx', '.pdf')
+#         try:
+#             # pypandoc.download_pandoc()
+#             pypandoc.convert_file(file_location, 'pdf', outputfile=pdf_path)
+#         except Exception as e:
+#             print(f"Failed to convert docx to pdf: {e}")
+
+#     elif '.xlsx' in  file_location:
+#         pdf_path = file_location.replace('.xlsx', '.pdf')
+
+#     elif '.xls' in  file_location:
+#         pdf_path = file_location.replace('.xls', '.pdf')
+#         # try:
+#         #     excel = comtypes.client.CreateObject('Excel.Application')
+#         #     excel.Visible = False
+#         #     wb = excel.Workbooks.Open(os.path.abspath(file_location))
+            
+#         #     wb.ExportAsFixedFormat(0, os.path.abspath(pdf_path))
+#         #     wb.Close()
+#         #     excel.Quit()
+#         # except Exception as e:
+#         #     print(f"Failed to convert xlsx to pdf: {e}")
+
+
+#     highlighted_pdf = highlight_pdf_violations(file_location, dou , DISPLAY_FOLDER_MARKED)
+    
+#     response = send_file(highlighted_pdf, mimetype='application/pdf', as_attachment=False)
+
+#     time.sleep(3)
+#     # try:
+#     #     if os.path.exists(file_location):
+#     #         os.remove(file_location)
+#     # except Exception as e:
+#     #     print(f"Error deleting files: {e}")
+
+#     return response
+
+
 
 if __name__ == "__main__":
     # app.run(host="0.0.0.0", port=8000)

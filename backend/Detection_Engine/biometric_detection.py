@@ -76,11 +76,14 @@ class biometric_detection:
             box = [round(i, 2) for i in box.tolist()]
             output.append({"label": model.config.id2label[label.item()], "confidence": round(score.item(), 3)})
 
-        print(output)
+        for item in output[:]:
+            if item['label'] != 'person':
+                output.remove(item)
         return output
 
     def biometric_detect_all(self,pdf_path):
         # clean up folders
+        
         if (pdf_path.endswith('.pdf')):
             # extract_images_from_pdf(pdf_path)
 
@@ -159,7 +162,7 @@ class biometric_detection:
         #     for file in all_files:
         #         os.remove(file)
 
-        return output
+        # return output
 
 
 
@@ -173,5 +176,6 @@ if __name__ == "__main__":
     # extract_images()
     # print(biometric_detect_all("../mockdata/excelWimages.xlsx"))
     # Example for accessing mock data if it's bundled with PyInstaller
-    print(biometric_detect_all(resource_path("../mockdata/excelWimages.xlsx")))
+    bm = biometric_detection()
+    print(bm.biometric_detect_people("../mockdata/p7.png"))
     # extract_images_from_excel("../mockdata/excelWimages.xlsx")

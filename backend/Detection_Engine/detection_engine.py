@@ -7,6 +7,7 @@ import math
 import datetime
 import os
 import math
+import base64
 
 class detection_engine:
 
@@ -194,6 +195,11 @@ class detection_engine:
         md_result_report = self.report_generator.MD_report(text)
         image_result_report = self.report_generator.Image_report_generation(path_)
         rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
+
+        # ner_result_text = self.report_generator.ner_report_text(text)
+        ner_pdf_bytes = self.report_generator.ner_report_text(text, path_)
+        pdf_base64 = base64.b64encode(ner_pdf_bytes.read()).decode('utf-8')
+
 
         # status = 1
 
