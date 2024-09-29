@@ -92,11 +92,14 @@ class biometric_detection:
             images_dir = EXTRACTED_PDF_FOLDER
             images = [os.path.join(images_dir, i) for i in os.listdir(images_dir) if i.endswith('.png') or i.endswith('.jpg')]
             
-            output = []
+            # output = []
             count = 0
             for image in images:
-                count += 1
-                output.append(self.biometric_detect_people(image))
+                people = self.biometric_detect_people(image)
+                for person in people:
+                    count += 1
+
+                
             
             # png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/pdf_images", '*.png'))
             # png_files = glob.glob(os.path.join(resource_path('./Detection_Engine/extracted_images/pdf_images'), '*.png'))
@@ -114,11 +117,11 @@ class biometric_detection:
             images_dir = EXTRACTED_DOCX_FOLDER
             images = [os.path.join(images_dir, i) for i in os.listdir(images_dir) if i.endswith('.png') or i.endswith('.jpg')]
             
-            output = []
             count = 0
             for image in images:
-                count += 1
-                output.append(self.biometric_detect_people(image))
+                people = self.biometric_detect_people(image)
+                for person in people:
+                    count += 1
             
             # png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/docx_images", '*.png'))
             # png_files = glob.glob(os.path.join(resource_path('./Detection_Engine/extracted_images/docx_images'), '*.png'))
@@ -137,11 +140,11 @@ class biometric_detection:
             images_dir = EXTRACTED_XLSX_FOLDER
             images = [os.path.join(images_dir, i) for i in os.listdir(images_dir) if i.endswith('.png') or i.endswith('.jpg')]
 
-            output = []
             count = 0
             for image in images:
-                count += 1
-                output.append(self.biometric_detect_people(image))
+                people = self.biometric_detect_people(image)
+                for person in people:
+                    count += 1
             
             # png_files = glob.glob(os.path.join("./Detection_Engine/extracted_images/xlsx_images", '*.png'))
             # png_files = glob.glob(os.path.join(resource_path('./Detection_Engine/extracted_images/xlsx_images'), '*.png'))
