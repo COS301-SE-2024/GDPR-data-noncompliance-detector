@@ -65,12 +65,17 @@ def encrypt(data, key):
 def decrypt(encrypted_data, key):
     try:
         raw_data = base64.b64decode(encrypted_data)
-        nonce, tag, ciphertext = raw_data[:16], raw_data[16:32], raw_data[32:]
-        cipher = AES.new(key.encode('utf-8'), AES.MODE_EAX, nonce=nonce)
-        decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
+        
+        iv = raw_data[:16]  # AES block size is 16 bytes
+        ciphertext = raw_data[16:]
+
+        cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv)
+        
+        decrypted_data = unpad(cipher.decrypt(ciphertext), AES.block_size)
+        
         return json.loads(decrypted_data.decode('utf-8'))
-    except (ValueError, KeyError):
-        raise ValueError("Decryption failed")
+    except (ValueError, KeyError) as e:
+        raise ValueError(f"Decryption failed: {str(e)}")
 
 class FilePath(BaseModel):
     path: str
@@ -338,6 +343,34 @@ def upload_file():
     encrypted_result = encrypt(result, encryption_key)
 
     return jsonify({"filename": file.filename, "result": encrypted_result})
+
+@app.route("/file-upload-new-monitor", methods=["POST"])
+def upload_file_monitor():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    file_location = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(file_location)
+
+    # Process the file and get the result
+    result = endpoint.process(file_location, file.filename)
+
+    try:
+        os.remove(file_location)
+    except Exception as e:
+        logging.error(f"Error deleting file: {e}")
+
+    if result is None:
+        return jsonify({"error": "Processing failed"}), 500
+
+    # Encrypt the result
+    # encrypted_result = encrypt(result, encryption_key)
+
+    return jsonify({"filename": file.filename, "result": result})
 
 if __name__ == "__main__":
     # app.run(host="0.0.0.0", port=8000)

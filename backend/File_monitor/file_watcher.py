@@ -11,13 +11,31 @@ import requests
 import errno
 from winotify import Notification, audio
 from urllib.parse import urlparse
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+import base64
+import json
 
-API_URL = "http://localhost:8000/file-upload-new"
+encryption_key = 'IWIllreplacethislaterIWIllreplac'
+
+API_URL = "http://localhost:8000/file-upload-new-monitor"
 
 GND_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads")
 GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
 
 os.makedirs(GND_DATA_FOLDER, exist_ok=True)
+
+def decrypt(encrypted_data, key):
+    encrypted_data_bytes = base64.b64decode(encrypted_data)
+    
+    iv = encrypted_data_bytes[:32]
+    ciphertext = encrypted_data_bytes[32:]
+    
+    cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv)
+    
+    decrypted_data = unpad(cipher.decrypt(ciphertext), AES.block_size)
+    
+    return json.loads(decrypted_data.decode('utf-8'))
 
 def get_domain(url):
     try:
@@ -155,6 +173,7 @@ class handle(FileSystemEventHandler):
                 response = requests.post(API_URL, files=files)
 
             if response.status_code == 200:
+
                 api_response = response.json()
                 print(f"File {file_path} uploaded successfully. Server response: {api_response}")      #For Logging
 
