@@ -64,7 +64,7 @@ class backend_entry:
         
         # Here we getting the document name dynamically
         document_name = filename
-        print(result_new)
+        # print(result_new) uncomment this line to see the result_new
 
         status_score = result_new['score']['Status']
         location = result_new['score']['Location']
@@ -105,7 +105,7 @@ class backend_entry:
         # Here I am sending the data to supabase as soon as the report is generated
         try:
             response = supabase.table('violations_reports').insert(data).execute()
-            print("Report successfully saved to the database", response)
+            # print("Report successfully saved to the database", response)
             # return response
         except Exception as e:
             print("An error occured while saving the report to the database", e)
