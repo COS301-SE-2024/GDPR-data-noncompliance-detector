@@ -74,11 +74,19 @@
         </div>
       </div>
 
+      <!-- <app-terms></app-terms>
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="agreeTerms" formControlName="agreeTerms" class="form-check-input">
+        <label for="agreeTerms" class="form-check-label">I agree with the <a class="terms-link" (click)="openTermsModal($event)">terms and conditions</a>.</label>
+      </div> -->
       <app-terms></app-terms>
       <div class="form-group checkbox-group">
         <input type="checkbox" id="agreeTerms" formControlName="agreeTerms" class="form-check-input">
-        <label for="agreeTerms" class="form-check-label">I agree with the <a href="javascript:void(0);" class="terms-link" (click)="openTermsModal($event)">terms and conditions</a>.</label>
+        <label for="agreeTerms" class="form-check-label">
+          I agree with the <a class="terms-link" data-modal-target="termsModal" data-modal-toggle="termsModal">terms and conditions</a>.
+        </label>
       </div>
+
 
        <!-- Error Alert -->
        <div *ngIf="showError" class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
