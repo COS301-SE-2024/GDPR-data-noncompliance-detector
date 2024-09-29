@@ -10,11 +10,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./faq-page.component.css']
 })
 export class FaqPageComponent {
-  activeDropdown: string = '';
+  activeDropdown: string | undefined; // Change this to undefined
 
   toggleDropdown(dropdownId: string) {
     if (this.activeDropdown === dropdownId) {
-      this.activeDropdown = ''; // Close dropdown
+      this.activeDropdown = undefined; // Close dropdown
     } else {
       this.activeDropdown = dropdownId; // Open new dropdown
     }
@@ -26,7 +26,7 @@ export class FaqPageComponent {
 
     // Check if the click was outside the dropdown button or content
     if (!target.closest('.dropdown')) {
-      this.activeDropdown = ''; // Close dropdown if clicked outside
+      this.activeDropdown = undefined; // Close dropdown if clicked outside
     }
   }
 }
