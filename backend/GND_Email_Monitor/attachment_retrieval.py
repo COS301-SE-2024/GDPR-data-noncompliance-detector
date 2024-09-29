@@ -72,7 +72,8 @@ def download_attachments(email, output_dir, country_info):
             stem, suffix = os.path.splitext(file_name)
             
             country_suffix = f" - {country_info}" if country_info else ""
-            attachment_filename = output_dir / f"{stem}{country_suffix}{suffix}"
+            # attachment_filename = output_dir / f"{stem}{country_suffix}{suffix}"
+            attachment_filename = os.path.join(output_dir, f"{stem}{country_suffix}{suffix}")
         
             attachment.SaveAsFile(str(attachment_filename))
             print(f"Attachment saved to {attachment_filename}")
