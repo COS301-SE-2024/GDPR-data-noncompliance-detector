@@ -10,7 +10,9 @@ import platform
 from pathlib import Path
 import requests
 import errno
-from winotify import Notification, audio
+if platform.system() == 'Windows':
+    from winotify import Notification, audio
+# from winotify import Notification, audio
 from urllib.parse import urlparse
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
@@ -189,14 +191,15 @@ class Handle(FileSystemEventHandler):
                 api_response = response.json()
                 print(f"[INFO] File {file_path} uploaded successfully. Server response: {api_response}")
 
-                toast = Notification(app_id="GND",
-                                     title="New GND Report",
-                                     msg="A new GND report is available",
-                                     duration="short",
-                                     icon=get_resource_path('assets/toast_logo.png'))
+                if platform.system() == 'Windows':
+                    toast = Notification(app_id="GND",
+                                        title="New GND Report",
+                                        msg="A new GND report is available",
+                                        duration="short",
+                                        icon=get_resource_path('assets/toast_logo.png'))
 
-                toast.set_audio(audio.Default, loop=False)
-                toast.show()
+                    toast.set_audio(audio.Default, loop=False)
+                    toast.show()
 
                 self.save_response_as_txt(file_path, api_response)
             else:

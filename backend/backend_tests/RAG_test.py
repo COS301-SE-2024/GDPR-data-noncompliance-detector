@@ -12,16 +12,14 @@ class TestRAG(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # Initialize RAG once for all tests
         cls.rag = RAG()
         cls.sample_query = ["personal data", "consent", "biometric data"]
         cls.sample_metadata = {
             'statements': ["This is a sample statement on consent", "Biometric data detected here"],
         }
-        cls.rag.metadata = cls.sample_metadata  # Mock the metadata
+        cls.rag.metadata = cls.sample_metadata
 
     def test_query_faiss_db(self):
-        # Mock the FAISS index search and embedding model
         self.rag.index = MagicMock()
         self.rag.index.search = MagicMock(return_value=(np.array([[0.9]]), np.array([[0]])))
         self.rag.embedding_model.encode = MagicMock(return_value=np.array([[0.1, 0.2, 0.3]]))
@@ -32,14 +30,12 @@ class TestRAG(unittest.TestCase):
         self.assertEqual(result[0]['statement'], "consent")
 
     def test_sliding_window(self):
-        # Mock the classifier tokenizer
         self.rag.classifier.tokenizer.encode = MagicMock(return_value=[1, 2, 3, 4, 5, 6, 7])
         chunks = self.rag.sliding_window("Sample text", 3, 1)
         self.assertEqual(len(chunks), 3)
         self.assertEqual(chunks, [[1, 2, 3], [3, 4, 5], [5, 6, 7]])
 
     def test_predict(self):
-        # Mock the classifier output
         self.rag.classifier = MagicMock()
         self.rag.classifier.return_value = [{'label': 'LABEL_1'}]
         self.rag.classifier.tokenizer.encode = MagicMock(return_value=[1, 2, 3])
@@ -49,7 +45,6 @@ class TestRAG(unittest.TestCase):
         self.assertEqual(result, 'LABEL_1')
 
     def test_generate(self):
-        # Mock the predict function
         self.rag.predict = MagicMock(return_value='LABEL_1')
         sample_results = [{"statement": "Some statement about consent"}]
         labels = self.rag.generate(sample_results)
