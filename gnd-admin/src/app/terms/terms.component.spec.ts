@@ -21,25 +21,20 @@ describe('TermsComponent', () => {
   });
 
   it('should close the modal when closeModal is called', () => {
-    // Set up a mock modal element in the document
+    // Mock the document.getElementById method
     const modal = document.createElement('div');
     modal.id = 'termsModal';
-    modal.style.display = 'block'; // Initially, the modal is visible
-    document.body.appendChild(modal);
+    modal.style.display = 'block'; // Initially visible
+    spyOn(document, 'getElementById').and.returnValue(modal);
   
-    // Call the closeModal function
+    // Calling the closeModal function from the component
     component.closeModal();
   
-    // Detect changes to ensure the DOM updates are processed
-    fixture.detectChanges();
-  
-    // Check that the modal's display is set to 'none'
+    // Asserting that the modal's display is now 'none'
     expect(modal.style.display).toBe('none');
-  
-    // Clean up after the test
-    document.body.removeChild(modal);
   });
-
+  
+  
   it('should not throw an error if modal is not found', () => {
     // No modal is present in the DOM
     expect(() => component.closeModal()).not.toThrow();
