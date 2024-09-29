@@ -32,7 +32,7 @@ class NER:
     def extract_entities(self, res):
         entities = []
         for i in res.ents:
-            if i.label_ == "PERSON":
+            if i.label_ == 'PERSON':
                 entities.append((i.text, i.label_))
         return entities
 

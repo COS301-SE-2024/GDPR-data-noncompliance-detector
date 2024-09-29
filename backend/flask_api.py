@@ -19,6 +19,10 @@ import json
 import pypandoc
 # from plyer import notification
 # import comtypes.client
+import json
+import base64
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
 
 app = Flask(__name__)
 CORS(app)
@@ -35,6 +39,8 @@ GENERATED_REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/generated-reports
 os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
+
+encryption_key = 'IWIllreplacethislaterIWIllreplac'
 
 def start_monitors_in_background():
     monitor_thread = threading.Thread(target=start_monitors, daemon=True)
@@ -56,6 +62,28 @@ def resource_path(relative_path):
     
     return os.path.join(base_path, relative_path)
 
+
+def encrypt(data, key):
+    json_data = json.dumps(data)
+    cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC)
+    iv = cipher.iv
+    ciphertext = cipher.encrypt(pad(json_data.encode('utf-8'), AES.block_size))
+    return base64.b64encode(iv + ciphertext).decode('utf-8')
+
+def decrypt(encrypted_data, key):
+    try:
+        raw_data = base64.b64decode(encrypted_data)
+        
+        iv = raw_data[:16]  # AES block size is 16 bytes
+        ciphertext = raw_data[16:]
+
+        cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv)
+        
+        decrypted_data = unpad(cipher.decrypt(ciphertext), AES.block_size)
+        
+        return json.loads(decrypted_data.decode('utf-8'))
+    except (ValueError, KeyError) as e:
+        raise ValueError(f"Decryption failed: {str(e)}")
 
 class FilePath(BaseModel):
     path: str
@@ -320,6 +348,26 @@ def upload_file():
     if result is None:
         return jsonify({"error": "Processing failed"}), 500
 
+    # Encrypt the result
+    encrypted_result = encrypt(result, encryption_key)
+
+    return jsonify({"filename": file.filename, "result": encrypted_result})
+
+@app.route("/file-upload-new-monitor", methods=["POST"])
+def upload_file_monitor():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    file_location = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(file_location)
+
+    # Process the file and get the result
+    result = endpoint.process(file_location, file.filename)
+
     try:
         os.remove(file_location)
     except Exception as e:
@@ -327,6 +375,9 @@ def upload_file():
 
     if result is None:
         return jsonify({"error": "Processing failed"}), 500
+
+    # Encrypt the result
+    # encrypted_result = encrypt(result, encryption_key)
 
     return jsonify({"filename": file.filename, "result": result})
 

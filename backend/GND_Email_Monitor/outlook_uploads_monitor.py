@@ -5,11 +5,37 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import errno
 from winotify import Notification, audio
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+import base64
+import json
+
+encryption_key = 'IWIllreplacethislaterIWIllreplac'
 
 GND_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads")
 GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/outlook-uploads-data")
 
 os.makedirs(GND_DATA_FOLDER, exist_ok=True)
+
+def decrypt(encrypted_data, key):
+    try:
+        # Decode the base64 encoded string
+        raw_data = base64.b64decode(encrypted_data)
+        
+        # Split the data into iv and ciphertext (since it's CBC mode)
+        iv = raw_data[:16]  # AES block size is 16 bytes
+        ciphertext = raw_data[16:]
+
+        # Create the AES cipher with the same key and IV
+        cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv)
+        
+        # Decrypt the ciphertext
+        decrypted_data = unpad(cipher.decrypt(ciphertext), AES.block_size)
+        
+        # Convert from bytes back to JSON
+        return json.loads(decrypted_data.decode('utf-8'))
+    except (ValueError, KeyError) as e:
+        raise ValueError(f"Decryption failed: {str(e)}")
 
 def get_resource_path(relative_path):
     try:
@@ -19,7 +45,7 @@ def get_resource_path(relative_path):
         
     return os.path.join(base_path, relative_path)
 
-API_URL = "http://localhost:8000/file-upload-new"
+API_URL = "http://localhost:8000/file-upload-new-monitor"
 
 ALLOWED_EXTENSIONS = {'.docx', '.xlsx', '.pdf'}
 
