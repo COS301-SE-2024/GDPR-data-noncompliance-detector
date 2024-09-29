@@ -151,7 +151,7 @@ class detection_engine:
         return result
     
     def get_status(self, ner_count, personal_data,financial_data, contact_data, medical_data, genetic_data, ethnic_data, biometric_data):
-        w_per = 5
+        w_per = 1
         w_med = 0.4
         w_gen = 0.2
         w_eth = 0.4

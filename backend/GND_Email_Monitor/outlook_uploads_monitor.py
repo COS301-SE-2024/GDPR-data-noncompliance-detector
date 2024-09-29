@@ -21,7 +21,7 @@ def get_resource_path(relative_path):
 
 API_URL = "http://localhost:8000/file-upload-new"
 
-ALLOWED_EXTENSIONS = {'.docx', '.xls', '.xlsx', '.pdf'}
+ALLOWED_EXTENSIONS = {'.docx', '.xlsx', '.pdf'}
 
 class FileUploadHandler(FileSystemEventHandler):
     """Handler to process files when a new file is created."""
