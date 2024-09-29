@@ -330,13 +330,13 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
   calculateMetric() {
 
-    const w_per = 5;
+    const w_per = 1;
     const w_med = 0.4;
     const w_gen = 0.2;
     const w_eth = 0.4;
     const w_bio = 2;
 
-    let e_personalData  = (Math.exp(this.data.score.Personal) + Math.exp(this.financialData) + Math.exp(this.contactData) + Math.exp(this.personalData));
+    let e_personalData  = Math.exp(this.data.score.Personal + this.financialData + this.contactData + this.personalData);
     let e_med = Math.exp(this.medicalData);
     let e_gen = Math.exp(this.geneticData);
     let e_eth = Math.exp(this.ethnicData);
@@ -428,7 +428,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   }
 
   getCountryColor(countryId: string): string {
-    const euCountries = [ '008',  '040',  '056',  '100', '191', '196', '203', '208', '233', '246', '250',  '276',  '300', '348', '352',  '372', '380', '428', '440','442', '470', '528', '616',  '620', '703', '705','724','752', '826'];
+    const euCountries = ['008', '040', '056', '100', '191', '196', '203', '208', '233', '246', '250', '276', '300', '348', '352', '372', '380', '428', '440', '442', '470', '528', '616', '620', '703', '705', '724', '752', '826'];
 
     const nonEuCountries = [
       '004', '012', '020', '024', '028', '032', '036', '044', '048', '050', '051', '052', '060', 
@@ -448,7 +448,14 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       '788', '792', '795', '796', '798', '800', '804', '807', '818', '834', '840', '850', '854', 
       '858', '860', '862', '876', '882', '887', '894'
     ];
-    
+
+    // Add specific IDs for US and UK
+    const specialCountries: { [key: string]: string } = {
+        '826': 'purple', // UK
+        '840': 'purple'  // US
+    };
+
+    // Existing switch logic for other locations
     switch (this.location) {
       case 0: // EU in red, others not highlighted
         return euCountries.includes(countryId) ? 'red' : '#d3d3d3';
@@ -456,9 +463,13 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
         return nonEuCountries.includes(countryId) ? 'green' : '#d3d3d3';
       case 2: // Optional: All in light grey
       default:
-        return '#d3d3d3';
+        // Check for US and UK before returning light grey
+        if (specialCountries[countryId]) {
+            return specialCountries[countryId];  // Return purple for US and UK
+        }
+        return '#d3d3d3';  // Light grey for all other countries
      }
-  }
+    }
 
   isEU(countryId: number): boolean {
     const euCountryIds = [

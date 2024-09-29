@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 type DataTypeName = 'General Personal' | 'Financial' | 'Contact' | 'Medical' | 'Biometric' | 'Ethnic' | 'Genetic';
 
 export interface ViolationData {
-  documentStatus: 'Compliant' | 'Non-Compliant';
+  documentStatus: string;
   nerCount: number;
   location: string;
   personalData: number;

@@ -93,7 +93,7 @@ export class InboxComponent implements OnInit, OnDestroy {
 
 
   // documentStatus: string = "";
-  documentStatus: 'Compliant' | 'Non-Compliant' = "Compliant";
+  documentStatus: string = "";
   nerCount: number = 0;
   location: string = "";
   personalData: number = 0;
@@ -106,11 +106,11 @@ export class InboxComponent implements OnInit, OnDestroy {
   consentAgreement: string = "";
   ragScore: string = "";
 
-  docStatus(status: number): 'Compliant' | 'Non-Compliant' {
-    if(status == 1){
-      return "Compliant";
+  docStatus(status: number): string {
+    if(status <= 0.6){
+      return "Compliant"
     }
-    return "Non-Compliant";
+    return "Non-Compliant"
   }
 
   locationStatus(location: number): string {

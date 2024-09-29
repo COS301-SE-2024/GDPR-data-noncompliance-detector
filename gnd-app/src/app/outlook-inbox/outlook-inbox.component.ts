@@ -30,7 +30,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   ca_statement: string = '';
 
   // Define your data properties
-  documentStatus: 'Compliant' | 'Non-Compliant' = "Compliant";
+  documentStatus: string = "";
   nerCount: number = 0;
   location: string = "";
   personalData: number = 0;
@@ -122,11 +122,11 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     return this.http.get<{ name: string, modified: number }[]>(`${this.apiUrl}`);
   }
 
-  docStatus(status: number): 'Compliant' | 'Non-Compliant' {
-    if(status == 1){
-      return "Compliant";
+  docStatus(status: number): string {
+    if(status <= 0.6){
+      return "Compliant"
     }
-    return "Non-Compliant";
+    return "Non-Compliant"
   }
 
   locationStatus(location: number): string {
