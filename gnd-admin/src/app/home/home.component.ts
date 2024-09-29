@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink, Router } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
@@ -29,16 +30,20 @@ export class HomeComponent implements OnInit {
   violationTypes: any[] = [];
   recentReports: any[] = [];
 
-  constructor(private authService:AuthService) {
+  constructor(private authService:AuthService, private router: Router) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 
   }
 
   async ngOnInit() {
-    this.authService.login();
-    await this.fetchData();
-    this.createCharts();
+    if (!this.authService.isLoggedIn.getValue()) {
+      this.router.navigate(['/login']);
+    } else {
+      await this.fetchData();
+      this.createCharts();
+    }
   }
+
 
   async fetchData() {
     const endDate = new Date();
