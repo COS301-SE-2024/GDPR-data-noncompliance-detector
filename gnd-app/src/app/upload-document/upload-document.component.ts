@@ -218,6 +218,7 @@ export class UploadDocumentComponent implements OnInit{
       this.fileName = file.name;
       console.log("File Name: ", this.fileName);
       this.uploadedFileName = file.name;
+      console.log("Uploaded File Name: ", this.uploadedFileName);
       this.result = '';
       this.isUploading = true;
   

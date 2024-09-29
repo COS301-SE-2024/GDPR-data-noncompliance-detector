@@ -26,15 +26,21 @@ import { environment } from '../../environments/environment';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   showPassword: boolean = false;
+  showSuccessToast: boolean = false; 
+  showError: boolean = false;
   private supabase: SupabaseClient;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-
   }
 
   ngOnInit() {
     this.initForm();
+    
+    // Reset error message when form changes
+    this.loginForm.valueChanges.subscribe(() => {
+      this.showError = false;
+    });
   }
 
   private initForm(): void {
@@ -53,7 +59,6 @@ export class LoginComponent implements OnInit {
       const formValues = this.loginForm.value;
 
       try {
-        // Query the admin_user table for the given email
         const { data, error } = await this.supabase
           .from('admin_user')
           .select('*')
@@ -63,29 +68,29 @@ export class LoginComponent implements OnInit {
         if (error) throw error;
 
         if (data) {
-          // Compare the provided password with the stored hash
           const isPasswordValid = await bcrypt.compare(formValues.password, data.password);
-
           if (isPasswordValid) {
-            console.log('Login successful', data);
             this.authService.login();
+            // Show success toast and hide it after 3 seconds
+            // this.showSuccessToast = true;
+            // setTimeout(() => this.showSuccessToast = false, 3000);
+            
             this.router.navigate(['/home']);
             
+            
           } else {
-            console.log('Invalid credentials');
-            // TODO: Show error message to user
+            this.showError = true; 
           }
         } else {
-          console.log('User not found');
-          // TODO: Show error message to user
+          this.showError = true; 
         }
 
       } catch (error) {
-        console.error('Error during login:', error);
-        // TODO: Implement error handling, show error message to user
+        this.showError = true; 
+        // console.error('Error during login:', error);
       }
     } else {
-      // Mark all fields as touched to trigger validation messages
+      // Trigger validation error messages
       Object.keys(this.loginForm.controls).forEach(key => {
         const control = this.loginForm.get(key);
         control?.markAsTouched();
@@ -93,3 +98,4 @@ export class LoginComponent implements OnInit {
     }
   }
 }
+

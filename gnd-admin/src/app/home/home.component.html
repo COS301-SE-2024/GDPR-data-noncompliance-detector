@@ -2,7 +2,7 @@
   <h1>GDPR Violations Dashboard</h1>
 
   <div class="time-range-selector">
-    <label for="timeRange">Select the duration:</label>
+    <label for="timeRange">Select the duration: </label>
     <select id="timeRange" [(ngModel)]="timeRange" (change)="updateDashboard()">
       <option value="7d">Last 7 days</option>
       <option value="30d">Last 30 days</option>
@@ -14,24 +14,25 @@
     <div class="card">
       <h3>Total Violations</h3>
       <p class="large-number">{{ totalViolations }}</p>
-      <p class="trend">{{ totalViolationsTrend }}% from last period</p>
+      <p class="trend">{{ totalViolationsTrend | number:'1.0-2' }}% from last period</p>
     </div>
     <div class="card">
       <h3>Documents Scanned</h3>
       <p class="large-number">{{ documentsScanned }}</p>
-      <p class="trend">{{ documentsScannedTrend }}% from last period</p>
+      <p class="trend">{{ documentsScannedTrend | number:'1.0-2' }}% from last period</p>
     </div>
     <div class="card">
       <h3>Highest Violation Category</h3>
       <p class="large-number">{{ highestViolationCategory }}</p>
-      <p class="trend">{{ highestViolationCategoryDiff }} from last period</p>
+      <p class="trend">{{ highestViolationCategoryDiff | number:'1.0-2' }}% from last period</p>
     </div>
     <div class="card">
       <h3>Last Scan</h3>
-      <p class="large-number">{{ lastScan }}</p>
-      <p>Updated every 3 hours</p>
+      <p class="large-number last-scan">{{ lastScan | date:'medium' }}</p>
+      <p class="small-text">Updated every 3 hours</p>
     </div>
   </div>
+  
 
   <div class="charts-container">
     <div class="chart">
@@ -63,6 +64,18 @@
         <h4>Ethnic Data Violations</h4>
         <canvas id="ethnicDataTrendChart"></canvas>
       </div>
+      <div class="trend-chart">
+        <h4>Genetic Data Violations</h4>
+        <canvas id="geneticDataTrendChart"></canvas>
+      </div>
+      <div class="trend-chart">
+        <h4>Financial Data Violations</h4>
+        <canvas id="financialDataTrendChart"></canvas>
+      </div>
+      <div class="trend-chart">
+        <h4>Contact Data Violations</h4>
+        <canvas id="contactDataTrendChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -78,6 +91,10 @@
         <th>Medical</th>
         <th>Biometric</th>
         <th>Ethnic</th>
+        <th>Genetic</th>
+        <th>Financial</th>
+        <th>Contact</th>
+        <!-- <th>Consent Agreement</th> -->
       </tr>
       </thead>
       <tbody>
@@ -89,6 +106,10 @@
         <td>{{ report.medical_data_violations }}</td>
         <td>{{ report.biometric_data_violations }}</td>
         <td>{{ report.ethnic_data_violations }}</td>
+        <td>{{ report.genetic_data_violations }}</td>
+        <td>{{ report.financial_data_violations }}</td>
+        <td>{{ report.contact_data_violations }}</td>
+        <!-- <td>{{ report.consent_agreement }}</td> -->
       </tr>
       </tbody>
     </table>
