@@ -65,18 +65,9 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
           ls -a
-          cd backend/Detection_Engine
+          cd backend/backend_tests
           pytest --cov=. --cov-report=xml
 
-          cd ../Document_parser
-          pytest --cov=. --cov-report=xml
-
-          cd ../File_monitor
-          pytest --cov=. --cov-report=xml
-
-          cd ../display
-          pytest --cov=. --cov-report=xml
-          
         # continue-on-error: true
       
       - name: Integration test
