@@ -363,3 +363,11 @@ body {
   white-space: normal;
   font-family: "Roboto Bold";
 }
+
+.center-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+}

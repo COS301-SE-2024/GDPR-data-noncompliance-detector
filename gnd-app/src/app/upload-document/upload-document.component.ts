@@ -159,7 +159,7 @@ export class UploadDocumentComponent implements OnInit{
             console.error("Upload failed:", error);
             this.isUploading = false;
             this.clearAnalysis();
-            alert("Cannot process File. Please try again.");
+            alert("Cannot process File. Please try again.\nEnsure the file type meets the required format.");
           }
         );
       }
@@ -228,7 +228,7 @@ export class UploadDocumentComponent implements OnInit{
           console.error("Upload failed:", error);
           this.isUploading = false;
           this.clearAnalysis();
-          alert("Cannot process File. Please try again.");
+          alert("Cannot process File. Please try again.\nEnsure the file type meets the required format.");
         },  
       )
     }
