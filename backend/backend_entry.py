@@ -54,7 +54,6 @@ class backend_entry:
         result = result_holder.get()
         return result
     
-    
     def process(self, path, filename):
         parser = document_parser()
         engine = detection_engine()
@@ -82,6 +81,7 @@ class backend_entry:
         lenarts_score = result_new['score']['lenarts']
         total_violations = NER_score + personal_score+ financial_score + Contact_score+Genetic_score + Medical_score + Biometric_score + Ethnic_score
 
+
         # Here I am just inserting the data into the supabase database
         data ={
             "document_name": document_name, 
@@ -99,6 +99,7 @@ class backend_entry:
             "contact_data_violations": Contact_score,
             "rag_statements_stats": RAG_statement_score,
             "lenarts_data_violations": lenarts_score,
+
         }
 
         # Here I am sending the data to supabase as soon as the report is generated
@@ -130,3 +131,4 @@ if __name__ == "__main__":
     # except SystemExit as e:
     #     print("An error occurred: ", e)
     #     sys.exit(1)
+

@@ -1,11 +1,19 @@
+
 <nav class="topnav">
-  <a class="navbar-brand" routerLink="/">
+  <div class="navbar-brand">
     <img src="/logo.png" alt="Logo" width="30" height="30">
     <a class="home-button" *ngIf="!isLoggedIn" routerLink="/landing">Home</a>
-  </a>
-  <div class="hover-links">
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="hover-links" [ngClass]="{'active': isMenuOpen}">
     <a id="dashboard" *ngIf="isLoggedIn" routerLink="/home">Dashboard</a>
-    <a id="login"  *ngIf="!isLoggedIn" routerLink="/login">Login</a>
+    <a id="login" *ngIf="!isLoggedIn" routerLink="/login">Login</a>
     <a id="logout" *ngIf="isLoggedIn" (click)="logout()">Logout</a>
   </div>
 </nav>
@@ -17,13 +25,7 @@
 <footer class="footer">
   <div class="footer-content">
     <div class="footer-text">
-      © 2024 <a href="#" class="hover:underline">AprilFour™</a>. All Rights Reserved.
+      © 2024 <a class="hover:underline">AprilFour™</a>. All Rights Reserved.
     </div>
-<!--    <div class="footer-links">-->
-<!--      <a href="#">About</a>-->
-<!--      <a href="#">Privacy Policy</a>-->
-<!--      <a href="#">Licensing</a>-->
-<!--      <a href="#">Contact</a>-->
-<!--    </div>-->
   </div>
 </footer>

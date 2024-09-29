@@ -7,11 +7,12 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
+import { TermsComponent } from '../terms/terms.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TermsComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   animations: [
@@ -28,6 +29,8 @@ export class RegisterComponent implements OnInit {
   passwordStrength: string = '';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  showError: boolean = false;
+  errorRegistering: boolean = false;
   passwordConditions = {
     length: false,
     uppercase: false,
@@ -44,7 +47,20 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+        // Reset error message when form changes
+        this.registerForm.valueChanges.subscribe(() => {
+          this.showError = false;
+        });
   }
+  openTermsModal(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const modal = document.getElementById('termsModal');
+    if (modal) {
+      modal.style.display = 'block';
+    }
+  }
+  
 
   private initForm(): void {
     this.registerForm = this.formBuilder.group({
@@ -132,20 +148,21 @@ export class RegisterComponent implements OnInit {
               first_name: formValues.firstName,
               last_name: formValues.lastName,
               email_address: formValues.email,
-              password: hashedPassword // Store the hashed password
+              password: hashedPassword 
             }
           ]);
 
         if (error) throw error;
 
-        console.log('User registered successfully', data);
+        // console.log('User registered successfully', data);
         this.authService.login();
         this.router.navigate(['/login']);
 
         // Reset the form
         this.registerForm.reset();
       } catch (error) {
-        console.error('Error registering user:', error);
+        this.showError = true;
+        // console.error('Error registering user:', error);
       }
     } else {
       // Mark all fields as touched to trigger validation messages

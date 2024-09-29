@@ -5,17 +5,14 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
-
-  get isLoggedIn() {
-    return this.loggedIn.asObservable();
-  }
+  isLoggedIn = new BehaviorSubject<boolean>(false);
 
   login() {
-    this.loggedIn.next(true);
+    this.isLoggedIn.next(true);
   }
 
   logout() {
-    this.loggedIn.next(false);
+    this.isLoggedIn.next(false);
+    localStorage.removeItem('token');
   }
 }

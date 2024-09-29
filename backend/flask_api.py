@@ -85,6 +85,7 @@ def decrypt(encrypted_data, key):
     except (ValueError, KeyError) as e:
         raise ValueError(f"Decryption failed: {str(e)}")
 
+
 class FilePath(BaseModel):
     path: str
 
@@ -473,3 +474,4 @@ if __name__ == "__main__":
     finally:
         # monitor_thread.join()
         print("Monitors stopped.")
+

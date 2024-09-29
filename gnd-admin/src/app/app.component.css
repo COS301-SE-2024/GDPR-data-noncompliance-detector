@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 /* Main content area */
@@ -43,14 +43,13 @@ body {
   text-decoration: none;
   padding: 10px 15px;
   font-size: 17px;
-  position: relative;
-  transition: color 0.3s ease;
 }
 
 .home-button:hover {
   color: #ffffff;
 }
 
+/* Hover links */
 .hover-links {
   display: flex;
   align-items: center;
@@ -69,6 +68,7 @@ body {
   color: #ffffff;
 }
 
+/* Hover underline effect */
 .hover-links a::after {
   content: '';
   position: absolute;
@@ -89,55 +89,73 @@ body {
 .footer {
   background-color: #333;
   padding: 20px 0;
-  position: relative;
-  bottom: 0;
   width: 100%;
 }
 
 .footer-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; 
   align-items: center;
   flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px; 
+  margin: 0 auto; 
   padding: 0 20px;
 }
 
 .footer-text {
   font-size: 14px;
   color: #ffffff;
-}
-
-.footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-links a {
-  color: #6c757d;
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-  color: #343a40;
-  text-decoration: underline;
+  text-align: center; 
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .topnav {
-    flex-direction: column;
-    align-items: flex-start;
+  .footer-content {
+    flex-direction: column; 
+    text-align: center; 
   }
 
-  .hover-links {
+  .footer-links {
     margin-top: 10px;
+    justify-content: center;
+  }
+}
+
+/* Hamburger menu for mobile view */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  background-color: #f2f2f2;
+  height: 3px;
+  width: 25px;
+  margin: 4px 0;
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hover-links {
+    display: none;
+    flex-direction: column;
     width: 100%;
+    background-color: #333;
   }
 
+  .hover-links.active {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* Footer - responsive */
+@media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
     text-align: center;

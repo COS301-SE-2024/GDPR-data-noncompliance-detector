@@ -13,21 +13,30 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'gnd-admin';
-  isLoggedIn =false;
+  isLoggedIn = false;
+  isMenuOpen = false; 
+
   constructor(private authService: AuthService, private router: Router) {
+    // Subscribing to the isLoggedIn status from AuthService
     this.authService.isLoggedIn.subscribe(status => {
       this.isLoggedIn = status;
     });
   }
 
-  logout(){
-    this.authService.logout();
-    this.router.navigate(['/landing']);
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen; 
+  }
 
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/landing']).then(() => {
+      window.location.reload();
+    });
   }
 
   ngOnInit(): void {
     initFlowbite();
   }
+
   
 }
