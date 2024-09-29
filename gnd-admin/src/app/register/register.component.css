@@ -189,3 +189,9 @@ button[type="submit"]:disabled {
 .condition.met {
   color: #38c172;
 }
+
+a{
+  cursor: pointer;
+  color: #3490dc;
+
+}

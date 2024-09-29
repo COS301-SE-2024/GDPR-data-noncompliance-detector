@@ -52,27 +52,12 @@ export class RegisterComponent implements OnInit {
           this.showError = false;
         });
   }
-
-  // openTermsModal() {
-  //   const modal = document.getElementById('termsModal');
-  //   if (modal) {
-  //     modal.style.display = 'block';
-  //   }
-  // }
-  // openTermsModal(event: Event) {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   const modal = document.getElementById('termsModal');
-  //   if (modal) {
-  //     modal.style.display = 'block';
-  //   }
-  // }
   openTermsModal(event: Event) {
     event.preventDefault();
     event.stopPropagation();
     const modal = document.getElementById('termsModal');
     if (modal) {
-      modal.classList.remove('hidden');
+      modal.style.display = 'block';
     }
   }
   
