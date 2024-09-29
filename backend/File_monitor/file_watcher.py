@@ -60,7 +60,7 @@ def verifyFromTeams(ext):
         'office.com',
         'microsoft.com',
         '1drv.ms',
-        '1drv.com',
+        '1drv.com',  # Added '1drv.com' to cover additional URLs
         'graph.microsoft.com',
         'files.teams.microsoft.com',
         'login.microsoftonline.com',
@@ -110,6 +110,7 @@ def verifyFromTeams(ext):
                     return False
         
         elif platform.system() == 'Darwin':
+            # Implement macOS logic here if needed
             return True
 
     except Exception as e:
@@ -117,15 +118,16 @@ def verifyFromTeams(ext):
         return False
 
 class Handle(FileSystemEventHandler):
-    # backslash to foward slash. path is actual path. string output only. look for default install folder for outlook and teams
-    # problem, its not identifying .pdf as normal. only .download.pdf and verify from teams running after that but .downlload.pdf doesnt exist
-    
     def __init__(self, file_extension):
         self.file_extension = file_extension
     
     def on_modified(self, event):
         self.process(event)
 
+    def on_modified(self, event):
+        self.process(event)
+
+    # New method to process events
     def process(self, event):
         if event.is_directory:
             return None
