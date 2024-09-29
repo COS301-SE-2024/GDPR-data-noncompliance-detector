@@ -72,11 +72,11 @@ export class ReportGenerationService {
   private async loadImages(): Promise<void> {
     try {
       if (!this.logoDataUrl) {
-        this.logoDataUrl = await this.getImageDataUrl('/assets/GND_LSG.jpg');
+        this.logoDataUrl = await this.getImageDataUrl('assets/GND_LSG.jpg');
         console.log('Logo image loaded successfully.');
       }
       if (!this.iconDataUrl) {
-        this.iconDataUrl = await this.getImageDataUrl('/assets/circle-question-regular.jpg');
+        this.iconDataUrl = await this.getImageDataUrl('assets/circle-question-regular.jpg');
         console.log('Icon image loaded successfully.');
       }
     } catch (error) {
@@ -87,7 +87,7 @@ export class ReportGenerationService {
 
   private async loadCustomFont(doc: jsPDF): Promise<void> {
     try {
-      const fontUrl = '/assets/fonts/MediatorNarrowWebExtraBold.ttf';
+      const fontUrl = 'assets/fonts/MediatorNarrowWebExtraBold.ttf';
       const fontArrayBuffer = await firstValueFrom(
         this.http.get(fontUrl, { responseType: 'arraybuffer' })
       );

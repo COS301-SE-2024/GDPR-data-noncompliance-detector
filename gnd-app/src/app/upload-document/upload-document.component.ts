@@ -71,6 +71,7 @@ export class UploadDocumentComponent implements OnInit{
           this.checkdata();
 
           this.result = "Y";
+          this.visualizationService.setUploadState(this.response.result);
     }
   }
   ngOnDestroy() {
@@ -152,6 +153,7 @@ export class UploadDocumentComponent implements OnInit{
             this.pdf_data = response.result.score.ner_result_text;
             this.result = "Y";
             this.isUploading = false;
+            this.visualizationService.setUploadState(response.result);
           },
           (error) => {
             console.error("Upload failed:", error);
@@ -338,4 +340,39 @@ export class UploadDocumentComponent implements OnInit{
       this.router.navigate(['/annotate']);
     }
   }
+
+  clearAnalysis() {
+    this.response = null;
+    this.bar_plot = null;
+    this.uploadState = null;
+    this.documentStatus = "";
+    this.nerCount = 0;
+    this.location = "";
+    this.personalData = 0;
+    this.financialData = 0;
+    this.contactData = 0;
+    this.medicalData = 0;
+    this.ethnicData = 0;
+    this.biometricData = 0;
+    this.consentAgreement = "";
+    this.genetic_data = 0;
+    this.ragScore = "";
+    this.metric_score = 0;
+    this.isUploading = false;
+    this.fileName = '';
+    this.uploadedFileName = '';
+    this.fileContent = '';
+    this.styledReportContent = '';
+    this.result = '';
+
+    const fileInput = document.getElementById('dropzone-file') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+
+    this.visualizationService.setUploadState(null);
+    this.visualizationService.setData(null);
+    this.visualizationService.setPDFState(null);
+  }
+
 }

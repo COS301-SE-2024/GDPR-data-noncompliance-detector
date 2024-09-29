@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Subscription } from 'rxjs';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
+import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
 
 @Component({
   selector: 'app-inbox',
@@ -35,7 +36,9 @@ export class InboxComponent implements OnInit, OnDestroy {
   ca_statement: string = '';
   // currentAnalysis: any = {};
 
-  constructor(private http: HttpClient, private walkthroughService: WalkthroughService, private router: Router) { }
+  constructor(private http: HttpClient, private walkthroughService: WalkthroughService, private router: Router,
+    private reportGenerationService: ReportGenerationService
+  ) { }
 
   ngOnInit(): void {
 
@@ -89,7 +92,8 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
 
 
-  documentStatus: string = "";
+  // documentStatus: string = "";
+  documentStatus: 'Compliant' | 'Non-Compliant' = "Compliant";
   nerCount: number = 0;
   location: string = "";
   personalData: number = 0;
@@ -102,11 +106,11 @@ export class InboxComponent implements OnInit, OnDestroy {
   consentAgreement: string = "";
   ragScore: string = "";
 
-  docStatus(status: number): string {
+  docStatus(status: number): 'Compliant' | 'Non-Compliant' {
     if(status == 1){
-      return "Compliant"
+      return "Compliant";
     }
-    return "Non-Compliant"
+    return "Non-Compliant";
   }
 
   locationStatus(location: number): string {
@@ -415,5 +419,28 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
   toggleWalkthrough() {
     this.startIntro();
+  }
+
+  async generatePDFReport() {
+    const data: ViolationData = {
+      documentStatus: this.documentStatus,
+      nerCount: this.nerCount,
+      location: this.location,
+      personalData: this.personalData,
+      financialData: this.financialData,
+      contactData: this.contactData,
+      medicalData: this.medicalData,
+      ethnicData: this.ethnicData,
+      biometricData: this.biometricData,
+      geneticData: this.geneticData,
+      consentAgreement: this.consentAgreement,
+      ragScore: this.ragScore
+    };
+    try {
+      await this.reportGenerationService.generatePDF(data);
+    }
+    catch (error) {
+      console.error('Error generating PDF:', error);
+    }
   }
 }
