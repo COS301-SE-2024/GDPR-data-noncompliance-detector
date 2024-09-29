@@ -164,8 +164,8 @@ python-docx==1.1.2
 python-dotenv==1.0.1
 python-multipart==0.0.9
 pytz==2024.1
-pywin32==306
-pywin32-ctypes==0.2.3
+pywin32==306; sys_platform == 'win32'
+pywin32-ctypes==0.2.3; sys_platform == 'win32'
 pyxnat==1.6.2
 PyYAML==6.0.1
 rdflib==6.3.2
@@ -232,7 +232,7 @@ webencodings==0.5.1
 websockets==12.0
 Werkzeug==3.0.3
 whichcraft==0.6.1
-winotify==1.1.0
+winotify==1.1.0; sys_platform == 'win32'
 wrapt==1.16.0
 xxhash==3.4.1
 yarl==1.12.1
