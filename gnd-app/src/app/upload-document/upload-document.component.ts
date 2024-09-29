@@ -7,6 +7,9 @@ import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
 import { VisualizationComponent } from "../visualization/visualization.component";
 import { VisualizationService } from '../services/visualization.service';
+import * as CryptoJS from 'crypto-js';
+import { mode } from 'crypto-js';
+import 'crypto-js/mode-ctr';
 
 @Component({
   selector: 'app-upload-document',
@@ -34,6 +37,7 @@ export class UploadDocumentComponent implements OnInit{
   ragScore: string = "";
   metric_score: number = 0;
   isUploading: boolean = false;
+  encryption_key = 'IWIllreplacethislaterIWIllreplac';
 
   constructor(private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 
@@ -129,29 +133,58 @@ export class UploadDocumentComponent implements OnInit{
 
         this.http.post<any>("http://127.0.0.1:8000/file-upload-new", formData).subscribe(
           (response) => {
-            this.uploadedFileName = response.fileName;
-            this.fileName = response.fileName;
-            console.log(response);
+            try {
+              const encryptedData = CryptoJS.enc.Base64.parse(response.result);
 
-            this.documentStatus = this.docStatus(response.result.score.Status);
-            this.nerCount = response.result.score.NER;
-            this.location = this.locationStatus(response.result.score.Location);
-            this.personalData = response.result.score.Personal;
-            this.financialData = response.result.score.Financial;
-            this.contactData = response.result.score.Contact;
-            this.medicalData = response.result.score.Medical;
-            this.ethnicData = response.result.score.Ethnic;
-            this.biometricData = response.result.score.Biometric;
-            this.genetic_data = response.result.score.Genetic;
-            this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
-            this.ragScore = response.result.score.RAG_Statement;
-            this.response = response.result;
-            console.log(this.nerCount);
-            this.checkdata();
-            console.log(response.result.score.ner_result_text)
-            this.pdf_data = response.result.score.ner_result_text;
-            this.result = "Y";
-            this.isUploading = false;
+              // Separate IV (first 16 bytes) and ciphertext (remaining bytes)
+              const iv = CryptoJS.lib.WordArray.create(encryptedData.words.slice(0, 4));
+              const ciphertext = CryptoJS.lib.WordArray.create(encryptedData.words.slice(4));
+    
+              // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
+              const decryptedBytes = CryptoJS.AES.decrypt(
+                CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
+                CryptoJS.enc.Utf8.parse(this.encryption_key),
+                {
+                  iv: iv,
+                  mode: CryptoJS.mode.CBC,
+                  padding: CryptoJS.pad.Pkcs7
+                }
+              );
+    
+              // Convert decrypted bytes to a UTF-8 string
+              const decryptedResult = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    
+              // Parse the decrypted result as JSON
+              const res = JSON.parse(decryptedResult);
+
+              this.uploadedFileName = res.fileName;
+              this.fileName = res.fileName;
+              console.log(res);
+
+              // Process the result data as before
+              this.documentStatus = this.docStatus(res.score.Status);
+              this.nerCount = res.score.NER;
+              this.location = this.locationStatus(res.score.Location);
+              this.personalData = res.score.Personal;
+              this.financialData = res.score.Financial;
+              this.contactData = res.score.Contact;
+              this.medicalData = res.score.Medical;
+              this.ethnicData = res.score.Ethnic;
+              this.biometricData = res.score.Biometric;
+              this.genetic_data = res.score.Genetic;
+              this.consentAgreement = this.consentAgreementStatus(res.score["Consent Agreement"]);
+              this.ragScore = res.score.RAG_Statement;
+              this.response = res;
+
+              console.log(this.nerCount);
+              this.checkdata();
+              this.result = "Y";
+              this.isUploading = false;
+
+            } catch (error) {
+              console.error("Decryption failed:", error);
+              this.isUploading = false;
+            }
           },
           (error) => {
             console.error("Upload failed:", error);
@@ -176,58 +209,80 @@ export class UploadDocumentComponent implements OnInit{
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-
-    if(file) {
+  
+    if (file) {
       this.fileName = file.name;
       console.log("File Name: ", this.fileName);
       this.uploadedFileName = file.name;
-      console.log("Uploaded File Name: ", this.uploadedFileName);
       this.result = '';
       this.isUploading = true;
-
+  
       const formData = new FormData();
       formData.append("file", file);
       formData.append("fileName", file.name);
 
-      // const upload$ = this.http.post("http://127.0.0.1:8000/file-upload", formData);
-
-      // upload$.subscribe();
       this.http.post<any>("http://127.0.0.1:8000/file-upload-new", formData).subscribe(
-        (response) => {
-          // console.log("Server Response: ", response);
-          this.uploadedFileName = response.fileName;
-          // this.result = this.processResult(response.result);
-          // console.log(response.result.score.Biometric)
-          this.fileName = response.fileName;
-          console.log(response);
-          
-          this.documentStatus = this.docStatus(response.result.score.Status);
-          this.nerCount = response.result.score.NER;
-          this.location = this.locationStatus(response.result.score.Location);
-          this.personalData = response.result.score.Personal;
-          this.financialData = response.result.score.Financial;
-          this.contactData = response.result.score.Contact;
-          this.medicalData = response.result.score.Medical;
-          this.ethnicData = response.result.score.Ethnic;
-          this.biometricData = response.result.score.Biometric;
-          this.genetic_data = response.result.score.Genetic;
-          this.consentAgreement = this.consentAgreementStatus(response.result.score["Consent Agreement"]);
-          this.ragScore = response.result.score.RAG_Statement;
-          this.response = response.result;
-          console.log(this.nerCount);
-          this.checkdata();
+      (response) => {
+              try {
+                const encryptedData = CryptoJS.enc.Base64.parse(response.result);
 
-          this.result = "Y";
-          this.isUploading = false;
-        },
-        (error) => {
-          console.error("Upload failed:", error);
-          this.isUploading = false;
-        },  
-      )
-    }
-  }
+                // Separate IV (first 16 bytes) and ciphertext (remaining bytes)
+                const iv = CryptoJS.lib.WordArray.create(encryptedData.words.slice(0, 4));
+                const ciphertext = CryptoJS.lib.WordArray.create(encryptedData.words.slice(4));
+      
+                // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
+                const decryptedBytes = CryptoJS.AES.decrypt(
+                  CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
+                  CryptoJS.enc.Utf8.parse(this.encryption_key),
+                  {
+                    iv: iv,
+                    mode: CryptoJS.mode.CBC,
+                    padding: CryptoJS.pad.Pkcs7
+                  }
+                );
+      
+                // Convert decrypted bytes to a UTF-8 string
+                const decryptedResult = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      
+                // Parse the decrypted result as JSON
+                const res = JSON.parse(decryptedResult);
 
+                this.uploadedFileName = res.fileName;
+                this.fileName = res.fileName;
+                console.log(res);
+
+                // Process the result data as before
+                this.documentStatus = this.docStatus(res.score.Status);
+                this.nerCount = res.score.NER;
+                this.location = this.locationStatus(res.score.Location);
+                this.personalData = res.score.Personal;
+                this.financialData = res.score.Financial;
+                this.contactData = res.score.Contact;
+                this.medicalData = res.score.Medical;
+                this.ethnicData = res.score.Ethnic;
+                this.biometricData = res.score.Biometric;
+                this.genetic_data = res.score.Genetic;
+                this.consentAgreement = this.consentAgreementStatus(res.score["Consent Agreement"]);
+                this.ragScore = res.score.RAG_Statement;
+                this.response = res;
+
+                console.log(this.nerCount);
+                this.checkdata();
+                this.result = "Y";
+                this.isUploading = false;
+
+              } catch (error) {
+                console.error("Decryption failed:", error);
+                this.isUploading = false;
+              }
+            },
+            (error) => {
+              console.error("Upload failed:", error);
+              this.isUploading = false;
+            }
+          );
+        }
+      }
   checkdata() {
     if(this.nerCount > 0)
       console.log("Yes")

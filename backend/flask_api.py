@@ -11,6 +11,10 @@ from typing import List
 import threading
 from backend.GND_Email_Monitor.main import start_monitors
 from backend.File_monitor.file_watcher import start_watcher_thread_downloads
+import json
+import base64
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
 
 app = Flask(__name__)
 CORS(app)
@@ -27,6 +31,8 @@ GENERATED_REPORTS_FOLDER = os.path.expanduser("~/Documents/GND/generated-reports
 os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
+
+encryption_key = 'IWIllreplacethislaterIWIllreplac'
 
 def start_monitors_in_background():
     monitor_thread = threading.Thread(target=start_monitors, daemon=True)
@@ -48,6 +54,23 @@ def resource_path(relative_path):
     
     return os.path.join(base_path, relative_path)
 
+
+def encrypt(data, key):
+    json_data = json.dumps(data)
+    cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC)
+    iv = cipher.iv
+    ciphertext = cipher.encrypt(pad(json_data.encode('utf-8'), AES.block_size))
+    return base64.b64encode(iv + ciphertext).decode('utf-8')
+
+def decrypt(encrypted_data, key):
+    try:
+        raw_data = base64.b64decode(encrypted_data)
+        nonce, tag, ciphertext = raw_data[:16], raw_data[16:32], raw_data[32:]
+        cipher = AES.new(key.encode('utf-8'), AES.MODE_EAX, nonce=nonce)
+        decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
+        return json.loads(decrypted_data.decode('utf-8'))
+    except (ValueError, KeyError):
+        raise ValueError("Decryption failed")
 
 class FilePath(BaseModel):
     path: str
@@ -300,7 +323,7 @@ def upload_file():
     file_location = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_location)
 
-    # result = endpoint.process(file_location)
+    # Process the file and get the result
     result = endpoint.process(file_location, file.filename)
 
     try:
@@ -311,15 +334,10 @@ def upload_file():
     if result is None:
         return jsonify({"error": "Processing failed"}), 500
 
-    try:
-        os.remove(file_location)
-    except Exception as e:
-        logging.error(f"Error deleting file: {e}")
+    # Encrypt the result
+    encrypted_result = encrypt(result, encryption_key)
 
-    if result is None:
-        return jsonify({"error": "Processing failed"}), 500
-
-    return jsonify({"filename": file.filename, "result": result})
+    return jsonify({"filename": file.filename, "result": encrypted_result})
 
 if __name__ == "__main__":
     # app.run(host="0.0.0.0", port=8000)
