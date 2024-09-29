@@ -158,7 +158,7 @@ class detection_engine:
         w_eth = 0.4
         w_bio = 0.8
 
-        e_personal_data = (math.exp(ner_count) + math.exp(financial_data) + math.exp(contact_data) + math.exp(personal_data))
+        e_personal_data = math.exp((ner_count) + financial_data + contact_data + personal_data)
         e_med = math.exp(medical_data)
         e_gen = math.exp(genetic_data)
         e_eth = math.exp(ethnic_data)
