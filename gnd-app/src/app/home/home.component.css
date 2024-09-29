@@ -1,9 +1,24 @@
+@font-face {
+  font-family: 'Mediator Narrow Web Extra Bold';
+  src: url('../../assets/fonts/MediatorNarrowWebExtraBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('../../assets/fonts/Roboto Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 60px);
+  box-sizing: border-box;
 }
 
 .logo {

@@ -1,6 +1,6 @@
 import unittest
 import os
-from validator import validator
+from .validator import validator
 
 
 class TestValidator(unittest.TestCase):

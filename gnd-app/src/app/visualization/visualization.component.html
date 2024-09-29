@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="visualization.component.css">
+
+<div class="header-container">
+  <header class="header">
+    <!-- Visualized -->
+    Visualization
+  </header>
+</div>
+
+<button class="mock" (click)="populateWithMockData()">Mock</button>
+<button
+  (click)="onBack()"
+  id="vizButton"
+  type="button"
+  class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+>
+  Back
+</button>
+
+<div class="grid-container">
+  <div id="violations" class="grid-item canvas-wrapper">
+    <header class="header1">Violations per Category</header>
+    <canvas id="circularBarChart"></canvas>
+  </div>
+
+  <div id="risk-score" class="grid-item canvas-wrapper">
+    <header class="header1">Risk Score</header>
+    <canvas #radarChartCanvas width="300" height="300"></canvas>
+  </div>
+
+  <div id="articles" class="grid-item canvas-wrapper">
+    <header class="header1">Articles Violated</header>
+    <canvas #progressCanvas width="200" height="200"></canvas>
+    <div class="text-box">
+      <p>{{rag_stat}}</p>
+      <p>{{rag_count}}</p>
+    </div>
+  </div>
+
+  <div id="location" class="grid-item canvas-wrapper">
+    <header class="header1">Location</header>
+    <div id="map"></div>
+  </div>
+</div>
+
+<!-- <div> -->
+<!-- <h2>Visualization</h2> -->
+<!-- <div *ngIf="data"> -->
+<!-- Display the data or plot here -->
+<!-- <pre>{{ data | json }}</pre> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- <div class="visualization-container">
+    <h2>Visualization</h2>
+    <canvas id="progressCanvas" width="400" height="400"></canvas>
+  </div> -->

@@ -1,8 +1,13 @@
 const { app, BrowserWindow } = require('electron')
 const { spawn } = require('child_process');
+const notifier = require('node-notifier');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
+
+const os = require('os');
+
+let apiProcess;
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -20,10 +25,33 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  startAPI();
+  // startAPI();
+  startFlaskAPI();
   createWindow();
-  setTimeout(setupWatcher, 1000);  // Increased delay to ensure API is ready
+  // setTimeout(setupWatcher, 100);
 });
+
+function startFlaskAPI() {
+  const apiPath = path.join(__dirname, '..', 'backend');
+  apiProcess = spawn('python', ['flask_api.py'], { cwd: apiPath });
+
+  apiProcess.stdout.on('data', (data) => {
+    console.log(`Flask API stdout: ${data}`);
+  });
+
+  apiProcess.stderr.on('data', (data) => {
+    console.error(`Flask API stderr: ${data}`);
+  });
+
+  apiProcess.on('error', (error) => {
+    console.error(`Failed to start Flask API: ${error}`);
+  });
+
+  apiProcess.on('close', (code) => {
+    console.log(`Flask API process exited with code ${code}`);
+  });
+}
+
 
 function startAPI() {
   const apiPath = path.join(__dirname, '..', 'backend');
@@ -42,26 +70,49 @@ function startAPI() {
   });
 
   api.on('close', (code) => {
-    console.log(`API process exited with code ${code}`);
+    console.log(`child process exited with code ${code}`);
+  });
+}
+
+function getReceiverPath() {
+  return new Promise((resolve, reject) => {
+    const pythonProcess = spawn('python', ['get_absolute_path.py']);
+    
+    pythonProcess.stdout.on('data', (data) => {
+      resolve(data.toString().trim());
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      reject(data.toString());
+    });
+
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        reject(`Python script exited with code ${code}`);
+      }
+    });
   });
 }
 
 function setupWatcher() {
-  const watcherPath = path.join(__dirname, '..', 'backend', 'File_monitor', 'file_watcher.py');
-  const receiverPath = path.join(__dirname, '..', 'backend', 'Receiver');
-  const watcher = spawn('python', [watcherPath, receiverPath, 'pdf,docx,xlsx,xls']);
+
+  // const receiver_path = getReceiverPath();
+  const watcher = spawn('python', ['../backend/File_monitor/file_watcher.py', '../backend/Receiver', 'pdf,docx,xlsx,xls']);
 
   watcher.stdout.on('data', (data) => {
     let output = data.toString().trim();
     console.log(`Watcher stdout: ${output}`);
     const postData = { path: output };
 
-    const segments = output.split(path.sep);
-    const fileNameWithExtension = segments[segments.length - 1];
-    const parts = fileNameWithExtension.split('.');
+    const fileName = path.basename(output);
+    console.log(`Extracted file name: ${fileName}`);
+
+    const parts = fileName.split('.');
     const name = parts[0] + '_report.txt';
-    const extension = parts.slice(1).join('.');
-    const newFileName = extension ? `${name}` : name;
+    const newFileName = name;
+
+    const outputDir = path.join('../backend/Reports', newFileName);
+
 
     axios.post('http://127.0.0.1:8000/new-file', postData, {
       headers: {
@@ -69,26 +120,44 @@ function setupWatcher() {
       },
     })
       .then((res) => {
-        console.log("Report successfully created");
-        const outputDir = path.join(__dirname, '..', 'backend', 'Reports', newFileName);
-        fs.writeFile(outputDir, JSON.stringify(res.data), 'utf8', (err) => {
-          if (err) console.error(`Failed to write report: ${err}`);
+        console.log("Alive--------------------------");
+      output = JSON.stringify(res.data);
+      console.log("Report successfully created")
+      const outputDir = path.join('../backend/Reports', newFileName);
+        fs.writeFileSync(outputDir, output, 'utf8');
+        notifier.notify({
+          title: 'GND Notification',
+          message: `GND has created a new report`,
+          sound: true,
+          wait: false,
+          icon: 'src/assets/logo.png'
         });
-      })
-      .catch((error) => {
-        console.error(`Problem with request: ${error.message}`);
-      });
+    })
+    .catch((error) => {
+      console.error(`problem with request: ${error.message}`);
+    });
   });
-
-  watcher.stderr.on('data', (data) => {
-    console.error(`Watcher stderr: ${data}`);
-  });
-
-  watcher.on('error', (error) => {
-    console.error(`Failed to start watcher: ${error}`);
-  });
-
-  watcher.on('close', (code) => {
-    console.log(`Watcher process exited with code ${code}`);
-  });
+  
 }
+
+app.on('before-quit', () => {
+  if (apiProcess) {
+    apiProcess.kill();
+  }
+
+  const homeDir = os.homedir();
+
+  const documentsDir = path.join(homeDir, 'Documents', 'GND', 'uploads');
+
+  fs.readdir(documentsDir, (err, files) => {
+    if (err) throw err;
+
+    for (const file of files) {
+      const filePath = path.join(documentsDir, file);
+      fs.unlink(filePath, err => {
+        if (err) throw err;
+      });
+    }
+  });
+
+});

@@ -60,9 +60,13 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Test with pytest
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
           ls -a
           cd backend/Detection_Engine
+
           pytest --cov=. --cov-report=xml
           cd ../Document_parser
           pytest --cov=. --cov-report=xml
@@ -72,6 +76,9 @@ jobs:
         # continue-on-error: true
       
       - name: Integration test
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
           ls -a
           cd backend

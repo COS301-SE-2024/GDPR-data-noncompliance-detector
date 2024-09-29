@@ -1,38 +1,81 @@
-// import { Component } from '@angular/core';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
-
-
+import { VisualizationComponent } from "../visualization/visualization.component";
+import { VisualizationService } from '../services/visualization.service';
+import * as CryptoJS from 'crypto-js';
+import { mode } from 'crypto-js';
+import 'crypto-js/mode-ctr';
 
 @Component({
   selector: 'app-upload-document',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule, VisualizationComponent],
   templateUrl: './upload-document.component.html',
   styleUrls: ['./upload-document.component.css']
 })
 export class UploadDocumentComponent implements OnInit{
   private walkthroughSubscription?: Subscription;
+  response: any;
+  bar_plot: any;
+  uploadState: any;
+  documentStatus: string = "";
+  nerCount: number = 0;
+  location: string = "";
+  personalData: number = 0;
+  financialData: number = 0;
+  contactData: number = 0;
+  medicalData: number = 0;
+  ethnicData: number = 0;
+  biometricData: number = 0;
+  consentAgreement: string = "";
+  genetic_data: number = 0;
+  ragScore: string = "";
+  metric_score: number = 0;
+  isUploading: boolean = false;
+  encryption_key = 'IWIllreplacethislaterIWIllreplac';
 
-  constructor(private walkthroughService: WalkthroughService,private http: HttpClient) {}
-
+  constructor(private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 
   ngOnInit() {
-    // Check if the user has seen the intro before
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       this.startIntro();
-      // Mark that the user has seen the intro
       localStorage.setItem('hasSeenIntro', 'true');
     }
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
       this.startIntro();
     })
+    this.uploadState = this.visualizationService.getUploadState();
+    console.log("------------------------------------------------------------");
+    console.log(this.uploadState);
+    if (this.uploadState) {
+      this.response = this.uploadState;
+      this.uploadedFileName = this.uploadState.fileName;
+          // this.result = this.processResult(response.result);
+          // console.log(response.result.score.Biometric)
+
+          this.documentStatus = this.docStatus(this.uploadState.score.Status);
+          this.nerCount = this.uploadState.score.NER;
+          this.location = this.locationStatus(this.uploadState.score.location);
+          this.personalData = this.uploadState.score.Personal;
+          this.financialData = this.uploadState.score.Financial;
+          this.contactData = this.uploadState.score.Contact;
+          this.medicalData = this.uploadState.score.Medical;
+          this.ethnicData = this.uploadState.score.Ethnic;
+          this.biometricData = this.uploadState.score.Biometric;
+          this.genetic_data = this.uploadState.score.Genetic;
+          this.consentAgreement = this.consentAgreementStatus(this.uploadState.score["Consent Agreement"]);
+          this.response = this.uploadState.result;
+          console.log(this.nerCount);
+          this.checkdata();
+
+          this.result = "Y";
+    }
   }
   ngOnDestroy() {
     if(this.walkthroughSubscription)
@@ -63,60 +106,92 @@ export class UploadDocumentComponent implements OnInit{
   currentAnalysis: any = {};
   uploadedFileName: string = '';
   fileContent: string = '';
-
+  styledReportContent: string = '';
   fileName = '';
-  result: string = ''
-
-
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-
-    if(file) {
-      this.fileName = file.name;
-
-      const formData = new FormData();
-      formData.append("file", file);
-
-      // const upload$ = this.http.post("http://127.0.0.1:8000/file-upload", formData);
-
-      // upload$.subscribe();
-      this.http.post<any>("http://127.0.0.1:8000/file-upload", formData).subscribe(
-        (response) => {
-          console.log("Server Response: ", response);
-          this.uploadedFileName = response.fileName,
-          this.result = this.processResult(response.result);
-        }
-      )
-    }
-  }
-
-  processResult(result: string): string {
-    return result.replace(/\n/g, "<br>");
-  }
-
-  isObjectEmpty(obj: any) {
-    return Object.keys(obj).length === 0;
-  }
-
-  // onFileSelected(event:any) {
-  //   const file: File = event.target.files[0];
-  //   if (file) {
-  //     this.uploadedFileName = file.name;
-  //     const reader = new FileReader();
-  //     reader.readAsText(file);
-  //     reader.onload = () => {
-  //       if (reader.result) {
-  //         this.fileContent = reader.result.toString();
-  //       }
-  //     };
-  //   }
-  // }
+  result: string = '';
+  status: string = '';
+  ca_statement: string = '';
+  pdf_data: string = '';
 
   onFileDropped(event: DragEvent) {
     event.preventDefault();
     if (event.dataTransfer) {
       const file = event.dataTransfer.files[0];
-      console.log(file);
+      console.log("File Dropped:", file);
+
+      
+      if (file) {                                                     //Uses same logic as onFileSelected - API access etc..
+        this.fileName = file.name;
+        console.log("File Name: ", this.fileName);
+        this.uploadedFileName = file.name;
+        console.log("Uploaded File Name: ", this.uploadedFileName);
+        this.result = '';
+        this.isUploading = true;
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("fileName", file.name);
+
+        this.http.post<any>("http://127.0.0.1:8000/file-upload-new", formData).subscribe(
+          (response) => {
+            try {
+              const encryptedData = CryptoJS.enc.Base64.parse(response.result);
+
+              // Separate IV (first 16 bytes) and ciphertext (remaining bytes)
+              const iv = CryptoJS.lib.WordArray.create(encryptedData.words.slice(0, 4));
+              const ciphertext = CryptoJS.lib.WordArray.create(encryptedData.words.slice(4));
+    
+              // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
+              const decryptedBytes = CryptoJS.AES.decrypt(
+                CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
+                CryptoJS.enc.Utf8.parse(this.encryption_key),
+                {
+                  iv: iv,
+                  mode: CryptoJS.mode.CBC,
+                  padding: CryptoJS.pad.Pkcs7
+                }
+              );
+    
+              // Convert decrypted bytes to a UTF-8 string
+              const decryptedResult = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    
+              // Parse the decrypted result as JSON
+              const res = JSON.parse(decryptedResult);
+
+              this.uploadedFileName = res.fileName;
+              this.fileName = res.fileName;
+              console.log(res);
+
+              // Process the result data as before
+              this.documentStatus = this.docStatus(res.score.Status);
+              this.nerCount = res.score.NER;
+              this.location = this.locationStatus(res.score.Location);
+              this.personalData = res.score.Personal;
+              this.financialData = res.score.Financial;
+              this.contactData = res.score.Contact;
+              this.medicalData = res.score.Medical;
+              this.ethnicData = res.score.Ethnic;
+              this.biometricData = res.score.Biometric;
+              this.genetic_data = res.score.Genetic;
+              this.consentAgreement = this.consentAgreementStatus(res.score["Consent Agreement"]);
+              this.ragScore = res.score.RAG_Statement;
+              this.response = res;
+
+              console.log(this.nerCount);
+              this.checkdata();
+              this.result = "Y";
+              this.isUploading = false;
+
+            } catch (error) {
+              console.error("Decryption failed:", error);
+              this.isUploading = false;
+            }
+          },
+          (error) => {
+            console.error("Upload failed:", error);
+            this.isUploading = false;  
+          }
+        );
+      }
     }
   }
 
@@ -132,4 +207,191 @@ export class UploadDocumentComponent implements OnInit{
     this.isDragActive = false;
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+  
+    if (file) {
+      this.fileName = file.name;
+      console.log("File Name: ", this.fileName);
+      this.uploadedFileName = file.name;
+      console.log("Uploaded File Name: ", this.uploadedFileName);
+      this.result = '';
+      this.isUploading = true;
+  
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileName", file.name);
+
+      this.http.post<any>("http://127.0.0.1:8000/file-upload-new", formData).subscribe(
+      (response) => {
+              try {
+                const encryptedData = CryptoJS.enc.Base64.parse(response.result);
+
+                // Separate IV (first 16 bytes) and ciphertext (remaining bytes)
+                const iv = CryptoJS.lib.WordArray.create(encryptedData.words.slice(0, 4));
+                const ciphertext = CryptoJS.lib.WordArray.create(encryptedData.words.slice(4));
+      
+                // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
+                const decryptedBytes = CryptoJS.AES.decrypt(
+                  CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
+                  CryptoJS.enc.Utf8.parse(this.encryption_key),
+                  {
+                    iv: iv,
+                    mode: CryptoJS.mode.CBC,
+                    padding: CryptoJS.pad.Pkcs7
+                  }
+                );
+      
+                // Convert decrypted bytes to a UTF-8 string
+                const decryptedResult = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      
+                // Parse the decrypted result as JSON
+                const res = JSON.parse(decryptedResult);
+
+                this.uploadedFileName = res.fileName;
+                this.fileName = res.fileName;
+                console.log(res);
+
+                // Process the result data as before
+                this.documentStatus = this.docStatus(res.score.Status);
+                this.nerCount = res.score.NER;
+                this.location = this.locationStatus(res.score.Location);
+                this.personalData = res.score.Personal;
+                this.financialData = res.score.Financial;
+                this.contactData = res.score.Contact;
+                this.medicalData = res.score.Medical;
+                this.ethnicData = res.score.Ethnic;
+                this.biometricData = res.score.Biometric;
+                this.genetic_data = res.score.Genetic;
+                this.consentAgreement = this.consentAgreementStatus(res.score["Consent Agreement"]);
+                this.ragScore = res.score.RAG_Statement;
+                this.response = res;
+
+                console.log(this.nerCount);
+                this.checkdata();
+                this.result = "Y";
+                this.isUploading = false;
+
+              } catch (error) {
+                console.error("Decryption failed:", error);
+                this.isUploading = false;
+              }
+            },
+            (error) => {
+              console.error("Upload failed:", error);
+              this.isUploading = false;
+            }
+          );
+        }
+      }
+  checkdata() {
+    if(this.nerCount > 0)
+      console.log("Yes")
+    else
+      console.log("No")
+  }
+
+  docStatus(status: number): string {
+    if(status <= 0.6){
+      return "Compliant"
+    }
+    return "Non-Compliant"
+  }
+
+  locationStatus(location: number): string {
+    if(location == 1 ) {
+      return "Not EU"
+    }
+
+    else if(location == 0) {
+      return "EU"
+    }
+
+    return "Not Available"
+  }
+
+  consentAgreementStatus(consent: boolean): string {
+    if(consent == true) {
+      return "This document does appear to contain data consent agreements";
+    }
+
+    return "This document does not seem to contain any data consent agreements";
+  }
+
+  onDownload() {
+    const reportUrl = 'http://127.0.0.1:8000/get-report';
+
+    this.http.get(reportUrl, { responseType: 'blob' }).subscribe(blob => {
+      const link = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      link.href = url;
+      link.download = 'GND_violation_report.pdf';
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+    }, error => {
+      console.error('Download failed', error);
+    });
+  }
+
+  onVisualize() {
+    this.visualizationService.setUploadState(this.response);
+    if (this.response) {
+      this.visualizationService.setData(this.response);
+      this.router.navigate(['/visualization']);
+    }
+    else {
+      if (this.uploadState) {
+        this.visualizationService.setData(this.uploadState);
+        this.router.navigate(['/visualization']);
+      }
+    }
+  }
+
+  calculateMetric() {
+
+    const w_per = 1;
+    const w_med = 0.4;
+    const w_gen = 0.2;
+    const w_eth = 0.4;
+    const w_bio = 0.8;
+
+    let e_personalData = (Math.exp(this.nerCount) + Math.exp(this.financialData) + Math.exp(this.contactData)) + Math.exp(this.personalData);
+    let e_med = Math.exp(this.medicalData);
+    // let e_gen = Math.exp(this.geneticData)*w_gen;
+    let e_gen = Math.exp(this.genetic_data);
+    let e_eth = Math.exp(this.ethnicData);
+    let e_bio = Math.exp(this.biometricData);
+
+
+    const expValues = [e_personalData, e_med, e_gen, e_eth, e_bio];
+
+    let maxExpValue = expValues[0];
+
+    for (let i = 1; i < expValues.length; i++) {
+      if (expValues[i] > maxExpValue) {
+        maxExpValue = expValues[i];
+      }
+    }
+
+    let N_e_personalData = (e_personalData / maxExpValue) * w_per;
+    let N_e_med = (e_med / maxExpValue) * w_med;
+    let N_e_gen = (e_gen / maxExpValue) * w_gen;
+    let N_e_eth = (e_eth / maxExpValue) * w_eth;
+    let N_e_bio = (e_bio / maxExpValue) * w_bio;
+
+    this.metric_score = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio;
+  }
+
+  onAnnotate() {
+    this.visualizationService.setPDFState(this.pdf_data);
+    console.log(this.pdf_data);
+    this.visualizationService.setUploadState(this.response);
+    if (this.response) {
+      this.visualizationService.setPDFState(this.pdf_data);
+      this.visualizationService.setUploadState(this.response);
+      this.router.navigate(['/annotate']);
+    }
+  }
 }

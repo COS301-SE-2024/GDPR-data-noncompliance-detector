@@ -1,0 +1,1 @@
+{"score":{"Biometric":0,"Consent Agreement":false,"Contact":2,"Ethnic":1,"Financial":0,"Genetic":0,"Location":0,"Medical":3,"NER":5,"Personal":2,"Status":0}}
