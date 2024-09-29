@@ -1,0 +1,156 @@
+<!-- <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
+    rel="stylesheet">
+<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet"> -->
+
+<link rel="stylesheet" href="outlook-inbox.component.css">
+
+
+
+<div class="main-content">
+    <div class="header-container">
+      <header class="header clickable-header" (click)="navigateToDownloads()">Downloads</header>
+      <header class="header active-header">Inbox</header>
+    </div>
+
+
+
+<div class="containers">
+    <div class="inbox-rectangle" id="InboxAttachments">
+        <h2 class="inbox-header">Inbox</h2>
+        <div class="divider"></div>
+        <ul>
+            <div class="card" *ngFor="let report of reports" (click)="getReportContent(report.name)">
+                <!-- <li>{{ getFileNameWithoutCountry(report.name) }} {{ formatDate(report.modified) }}</li> -->
+              <li class="file-info">
+                <span>{{ getFileNameWithoutCountry(report.name) }}</span>
+                <span>{{ formatDate(report.modified) }}</span>
+              </li>
+            </div>
+        </ul>
+    </div>
+
+    <div class="analysis-rectangle">
+        <h2 class="analysis-header">Analysis</h2>
+        <div class="divider"></div>
+    
+        <!-- <div class="analysis-data" *ngIf="result">
+            <h2 class="analysis-box-header">Analysis Result:</h2>
+            <div class="status" [ngClass]="{'status-success': status === 'Compliant', 'status-error': status === 'Non-compliant'}">
+                {{ status }}
+            </div>
+            <div class="result-content" [innerHTML]="result"></div>
+            <div class="ca_statement" [innerHTML]="ca_statement"></div>
+            <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis
+                results</p>
+        </div> -->
+
+        <div class="comp-status-container">
+            <div class="comp-status" *ngIf="result">
+              <span *ngIf="documentStatus == 'Compliant'" class="status-compliant">{{ documentStatus }}</span>
+              <span *ngIf="documentStatus == 'Non-Compliant'" class="status-non-compliant">{{ documentStatus }}</span>        
+            </div>
+        </div>
+    
+          <div class="upload-data" *ngIf="result">
+    
+            <!-- <div class="comp-status">
+              <span *ngIf="documentStatus == 'Compliant'" class="bg-green-100 text-green-800 text-4xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ documentStatus }}</span>
+              <span *ngIf="documentStatus == 'Non-Compliant'" class="bg-red-100 text-red-800 text-4xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ documentStatus }}</span>        
+            </div> -->
+            <div class="ner-data">
+              <!-- <strong>NER Count:</strong> {{ nerCount }} -->
+              <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{ nerCount }} different individuals</p>
+            </div>
+            
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Location:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ location }}</span>
+            </div>
+            
+            <div class="divider-text"></div>
+    
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Personal Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ personalData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
+    
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Financial Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ financialData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
+    
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Contact Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ contactData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
+    
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Medical Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ medicalData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
+    
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Ethnic Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ ethnicData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
+    
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Biometric Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ biometricData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
+
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Genetic Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ geneticData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
+    
+            <!-- <div class="CA-data">
+              <strong>Consent Agreement:</strong> {{ consentAgreement }}
+            </div> -->
+          </div>
+    
+          <div class="consent-status-container" *ngIf="result">
+            <div class="consent-status">
+              <span class="consent-agreement">{{ consentAgreement }}</span>        
+            </div>
+          </div>
+
+          <div class="rag-status-container" *ngIf="result">
+            <div class="rag-status">
+              <span class="rag-agreement">{{ ragScore }}</span>        
+            </div>
+          </div>
+    </div>
+
+    <!-- <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)"> -->
+        <!-- <button type="button" [routerLink]="['/violations', currentEmailType]"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
+        <button type="button" [routerLink]="['/report']"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button> -->
+        <!-- <button type="button"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
+            Report</button> -->
+        <!-- <button type="button" (click)="clearAnalysis()"
+            class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button> -->
+    <!-- </div> -->
+
+
+
+
+  </div>
+  <div class="buttons">
+    <button *ngIf="result" (click)="generatePDFReport()" type="button"
+      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
+      Report</button>
+    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/violations']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Violations</button> -->
+    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/report']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Report</button> -->
+    <!-- <button *ngIf="result" (click)="onVisualize()" id="vizButton" type="button"
+      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualise</button> -->
+  </div>
+</div>

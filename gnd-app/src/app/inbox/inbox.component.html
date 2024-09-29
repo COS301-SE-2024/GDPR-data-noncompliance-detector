@@ -1,29 +1,33 @@
-<link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
+<!-- <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
     rel="stylesheet">
-<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
+<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet"> -->
 
+<link rel="stylesheet" href="inbox.component.css">
 
 <div class="main-content">
     <div class="header-container">
-      <header class="header">
-        Inbox
-      </header>
+      <header class="header active-header">Downloads</header>
+      <header class="header clickable-header" (click)="navigateToInbox()">Inbox</header>
     </div>
 
 
 
-<div class="containers">
-    <div class="inbox-rectangle" id="InboxAttachments">
-        <h2 class="inbox-header">Inbox</h2>
-        <div class="divider"></div>
-        <ul>
-            <div class="card" *ngFor="let i of reports" (click)="getReportContent(i)">
-                <li>{{ i }}
+    <div class="containers">
+      <div class="inbox-rectangle" id="InboxAttachments">
+          <h2 class="inbox-header">Inbox</h2>
+          <div class="divider"></div>
+          <ul>
+              <div class="card" *ngFor="let report of reports" (click)="getReportContent(report.name)">
+                  <!-- <li>{{ getFileNameWithoutCountry(report.name) }} {{ formatDate(report.modified) }}</li> -->
+                <li class="file-info">
+                  <span>{{ getFileNameWithoutCountry(report.name) }}</span>
+                  <span>{{ formatDate(report.modified) }}</span>
                 </li>
-            </div>
-        </ul>
-    </div>
-
+              </div>
+          </ul>
+      </div>
+  
+  
     <div class="analysis-rectangle">
         <h2 class="analysis-header">Analysis</h2>
         <div class="divider"></div>
@@ -98,6 +102,12 @@
             </div>
     
             <div class="divider-text"></div>
+
+            <div class="result-data">
+              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Genetic Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ geneticData }}</span>
+            </div>
+    
+            <div class="divider-text"></div>
     
             <!-- <div class="CA-data">
               <strong>Consent Agreement:</strong> {{ consentAgreement }}
@@ -110,6 +120,11 @@
             </div>
           </div>
 
+          <div class="rag-status-container" *ngIf="result">
+            <div class="rag-status">
+              <span class="rag-agreement">{{ ragScore }}</span>        
+            </div>
+          </div>
     </div>
 
     <!-- <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)"> -->

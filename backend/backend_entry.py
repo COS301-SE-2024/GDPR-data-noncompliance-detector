@@ -64,7 +64,7 @@ class backend_entry:
         
         # Here we getting the document name dynamically
         document_name = filename
-        # print(result_new)
+        print(result_new)
 
         status_score = result_new['score']['Status']
         location = result_new['score']['Location']
@@ -77,9 +77,10 @@ class backend_entry:
         Medical_score = result_new['score']['Medical']
         Ethnic_score = result_new['score']['Ethnic']
         Biometric_score = result_new['score']['Biometric']
-        # RAG_statement_score = result_new['score']['RAG_Statement']
-        # lenarts_score = result_new['score']['Lenarts']
-        total_violations = personal_score + Medical_score + Biometric_score + Ethnic_score
+        RAG_statement_score = result_new['score']['RAG_Statement']
+        lenarts_score = result_new['score']['lenarts']
+        total_violations = NER_score + personal_score+ financial_score + Contact_score+Genetic_score + Medical_score + Biometric_score + Ethnic_score
+
 
         # Here I am just inserting the data into the supabase database
         data ={
@@ -96,9 +97,9 @@ class backend_entry:
             "consent_agreement_data_violations": Consent_agreement_score,
             "status_data": status_score,
             "contact_data_violations": Contact_score,
-            # "rag_statement_data_violations": RAG_statement_score,
-            # "lenarts_data_violations": lenarts_score,
-            
+            "rag_statements_stats": RAG_statement_score,
+            "lenarts_data_violations": lenarts_score,
+
         }
 
         # Here I am sending the data to supabase as soon as the report is generated
@@ -112,12 +113,22 @@ class backend_entry:
         return result_new
 
 if __name__ == "__main__":
-
-    try:
-        backend_entry = backend_entry() 
-        res = backend_entry.process("C:/Users/User/Documents/Academics/2024/S2/COS 301 SOFTWARE ENGINEERING/Demo 4/GDPR-data-noncompliance-detector/backend/mockdata/NCEX1.xlsx")
-        
-        # print(res)
-    except SystemExit as e:
-        print("An error occurred: ", e)
+    
+    if len(sys.argv) != 2:
+        print("Usage: python backend_entry.py <path_to_file>")
         sys.exit(1)
+
+    path = sys.argv[1]
+    backend_entry = backend_entry()
+    result = backend_entry.process(path)
+    print(result)
+    # try:
+    #     backend_entry = backend_entry() 
+    #     # res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/NCE1.pdf")
+    #     res = backend_entry.process("C:/Users/Mervyn Rangasamy/Documents/2024/COS 301/Capstone/Repo/GDPR-data-noncompliance-detector/backend/mockdata/docxWimages.docx")
+
+    #     print(res)
+    # except SystemExit as e:
+    #     print("An error occurred: ", e)
+    #     sys.exit(1)
+

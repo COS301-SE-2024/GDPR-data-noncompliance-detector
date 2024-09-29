@@ -1,9 +1,9 @@
 # import os
 import sys
-from .validator import validator
-from .text_extractor import text_extractor
-from .storage_and_submission import storage_and_submission
-from .text_preprocessor import text_preprocessor
+from Document_parser.validator import validator
+from Document_parser.text_extractor import text_extractor
+from Document_parser.storage_and_submission import storage_and_submission
+from Document_parser.text_preprocessor import text_preprocessor
 
 class document_parser:
     def __init__(self):

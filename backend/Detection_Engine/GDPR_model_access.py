@@ -1,6 +1,15 @@
-import os
+import os, sys
 from transformers import DebertaV2Tokenizer, DebertaV2ForSequenceClassification, pipeline
 
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 class GDPR:
 
@@ -24,8 +33,8 @@ class GDPR:
         return chunks
 
     def predict(self, input_text):
-        window_size = 128  # Adjust based on your model's max_length
-        overlap = 64       # Adjust based on desired overlap
+        window_size = 128
+        overlap = 64
 
         chunks = self.sliding_window(input_text, window_size, overlap)
         labels = []
