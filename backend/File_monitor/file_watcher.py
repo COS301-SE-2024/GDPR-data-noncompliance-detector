@@ -50,7 +50,6 @@ def verifyFromTeams(ext):
     if isinstance(ext, bytes):
         ext = ext.decode('utf-8')
 
-    # Expanded list of domains to include '1drv.com'
     domains = [
         'my.sharepoint.com',
         'teams.microsoft.com',
@@ -75,14 +74,14 @@ def verifyFromTeams(ext):
         if platform.system() == 'Windows':
             zone_identifier_path = ext + ':Zone.Identifier'
 
-            retries = 5  #Attempts to find Zone Identifier
-            delay = 1 
+            retries = 3  #Retries to find Zone Identifier
+            delay = 1
 
             for attempt in range(retries):
                 try:
                     with open(zone_identifier_path, 'r') as f:
                         content = f.read()
-                        print(f"[DEBUG] CONTENT: {content}")  # For debugging
+                        print(f"[DEBUG] CONTENT: {content}")  #For logging
 
                         urls = []
                         for line in content.splitlines():
@@ -121,9 +120,8 @@ def verifyFromTeams(ext):
 class Handle(FileSystemEventHandler):
     def __init__(self, file_extension):
         self.file_extension = file_extension
-
-    # Changed from 'on_any_event' to specific event handlers
-    def on_created(self, event):
+    
+    def on_modified(self, event):
         self.process(event)
 
     def on_modified(self, event):
@@ -248,7 +246,6 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     print("[INFO] Starting file watcher...")
     start_watcher_thread_downloads("pdf,xlsx,docx", 1)
-
 
 # define 2 functions. one which watches a folder. one wich watches downloads
 # import sys
