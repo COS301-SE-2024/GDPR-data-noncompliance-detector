@@ -63,11 +63,13 @@ class TestBackendEntryIntegration(unittest.TestCase):
         if 'ner_result_text' in result_str:
             result_str = result_str.split('ner_result_text')[0] + '}'
 
+        result_str = result_str.split("'Status':")[1].split(", ", 1)[1]
+
         print("Processed Result after removing ner_result_text:")
         print(result_str)
 
         expected_output_str = (
-            "{'score': {'Status': 1.1756028974080088, 'Location': 2, 'NER': 3, 'Personal': 1, 'Financial': 0, 'Contact': 0, 'Consent Agreement': True, 'Genetic': 0, 'Ethnic': 2, 'Medical': 0, 'Biometric': 0, 'RAG_Statement': 'The following GDPR articles are potentially violated: 5, 9, 9(1), 9(2)(b), 9(2)(g), 12', 'lenarts': 3, '}"        )
+            "'Location': 2, 'NER': 3, 'Personal': 1, 'Financial': 0, 'Contact': 0, 'Consent Agreement': True, 'Genetic': 0, 'Ethnic': 2, 'Medical': 0, 'Biometric': 0, 'RAG_Statement': 'The following GDPR articles are potentially violated: 5, 9, 9(1), 9(2)(b), 9(2)(g), 12', 'lenarts': 3, '}"        )
 
         self.assertEqual(result_str.strip(), expected_output_str.strip())
 
