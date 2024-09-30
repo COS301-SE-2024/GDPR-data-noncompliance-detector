@@ -193,7 +193,7 @@ Angular with Electron
 
 ### Backend
 Python
-FastAPI
+FlaskAPI
 
 ### Testing
 PyTest
