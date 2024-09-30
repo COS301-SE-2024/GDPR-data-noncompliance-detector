@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
-import win32com.client
+import platform
+if platform.system() == "Windows":
+    import win32com.client
 from email2country import email2country
 import time
 import pythoncom
@@ -91,7 +93,8 @@ def main():
     output_dir = get_user_documents_folder() / "GND/outlook-uploads"        #App Folder to store the docs
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    outlook = win32com.client.DispatchWithEvents("Outlook.Application", OutlookMonitor)
+    if platform.system() == "Windows":
+        outlook = win32com.client.DispatchWithEvents("Outlook.Application", OutlookMonitor)
     
     namespace = outlook.GetNamespace("MAPI")
     inbox = namespace.GetDefaultFolder(6)
