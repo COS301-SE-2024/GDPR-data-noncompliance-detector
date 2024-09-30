@@ -54,6 +54,7 @@
             VALIDATE_DOCKERFILE_HADOLINT: false
             VALIDATE_GROOVY: false
             VALIDATE_SHELL_SHFMT: false
+            VALIDATE_ENV: false
             
     # doing this to use the config
     run-flake8-lint:

@@ -47,7 +47,6 @@ class TestBackendEntryIntegration(unittest.TestCase):
         # filtered_actual_output_lines = [
         #     line for line in actual_output_lines if not line.startswith("Probability:")
         # ]
-        # filtered_actual_output = "\n".join(filtered_actual_output_lines).strip()  # Normalize newlines and strip whitespace
 
 
         result = backend_entry.process(self, path, "NCEWD1.docx")
@@ -62,7 +61,7 @@ class TestBackendEntryIntegration(unittest.TestCase):
         result_str = str(dres)
 
         if 'ner_result_text' in result_str:
-            result_str = result_str.split('ner_result_text')[0] + '}'  # Keep the part before ner_result_text and close the JSON object
+            result_str = result_str.split('ner_result_text')[0] + '}'
 
         print("Processed Result after removing ner_result_text:")
         print(result_str)
