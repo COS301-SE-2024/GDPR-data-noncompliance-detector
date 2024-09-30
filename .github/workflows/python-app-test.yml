@@ -69,6 +69,35 @@ jobs:
           pytest --cov=. --cov-report=xml
 
         # continue-on-error: true
+      - name: Test detection engine with pytest
+        run: |
+          cd backend/Detection_Engine
+          pytest --cov=. --cov-report=xml --cov-append
+        continue-on-error: true
+
+      - name: Test document parser with pytest
+        run: |
+          cd backend/Document_parser
+          pytest --cov=. --cov-report=xml --cov-append
+        continue-on-error: true
+      
+      - name: Test file monitor with pytest
+        run: |
+          cd backend/File_monitor
+          pytest --cov=. --cov-report=xml --cov-append
+        continue-on-error: true
+      
+      - name: Move Coverage Files to Root
+        run: |
+          mv backend/Detection_Engine/.coverage backend/.coverage.detection_engine
+          mv backend/Document_parser/.coverage backend/.coverage.document_parser
+          mv backend/File_monitor/.coverage backend/.coverage.file_monitor
+      
+      - name: Combine Coverage Reports
+        run: |
+          cd backend
+          coverage combine .coverage.*
+          coverage xml -o coverage.xml
       
       - name: Integration test
         env:
@@ -82,4 +111,5 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
+          files: ./backend/coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
