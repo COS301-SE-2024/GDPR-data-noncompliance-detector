@@ -5,7 +5,8 @@ if platform.system() == "Windows":
     import win32com.client
 from email2country import email2country
 import time
-import pythoncom
+if platform.system() == "Windows":
+    import pythoncom
 
 inbox = None
 namespace = None
@@ -88,7 +89,8 @@ def get_user_documents_folder():
 def main():
     global inbox, namespace, output_dir
 
-    pythoncom.CoInitialize()
+    if platform.system() == "Windows":
+        pythoncom.CoInitialize()
 
     output_dir = get_user_documents_folder() / "GND/outlook-uploads"        #App Folder to store the docs
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -103,10 +105,12 @@ def main():
     
     try:
         while True:
-            pythoncom.PumpWaitingMessages()
+            if platform.system() == "Windows":
+                pythoncom.PumpWaitingMessages()
             time.sleep(1)
     finally:
-        pythoncom.CoUninitialize()
+        if platform.system() == "Windows":
+            pythoncom.CoUninitialize()
 
 if __name__ == "__main__":
     main()
