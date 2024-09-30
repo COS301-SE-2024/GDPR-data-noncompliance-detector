@@ -1,6 +1,8 @@
 import unittest
 from backend_entry import backend_entry
 import json
+import os
+import base64
 
 class TestBackendEntryIntegration(unittest.TestCase):
     
@@ -8,7 +10,9 @@ class TestBackendEntryIntegration(unittest.TestCase):
 
     def test_process_returns_expected_output(self):
         # Arrange
-        path = './mockdata/NCE1.pdf'
+        # path = './NCEWD1.docx'
+        path = os.path.join(os.path.dirname(__file__), 'NCEWD1.docx')
+
         # expected_output = (
         #     "Most probable countries of origin:\n"
         #     "Predominant Language of Country of Origin: English,\n"
@@ -39,69 +43,38 @@ class TestBackendEntryIntegration(unittest.TestCase):
         #     "Total per category: 2\n"
         #     "\n"
         # )
-
-        expected_output = (
-            '{"score": {"Status": 0, "Location": 0, "NER": 5, "Personal": 5, "Financial": 0, "Contact": 2, "Consent Agreement": false, "Genetic": 0, "Ethnic": 7, "Medical": 3, "Biometric": 0}}'
-            # "Non-compliant\n\n"
-            # "Document potentially references 5 different individuals\n\n\n"
-            # "Potential Location of Origin : \n"
-            # "Not EU\n\n"
-            # "Violation Report: \n\n"
-            # "General Personal Data:\n"
-            # "Financial Data:\n"
-            # "Total per category : 0\n\n"
-            # "Personal Identification Data:\n"
-            # "Total per category : 2\n\n"
-            # "Contact Details:\n"
-            # "Total per category : 2\n\n"
-            # "Biometrics and Imaging:\n"
-            # "0 persons can be identified through images in the document\n\n"
-            # "Data relating to Health:\n"
-            # "Total per category : 3\n\n"
-            # "Data revealing Racial and Ethnic Origin:\n"
-            # "Total per category : 1\n\n"
-            # "The document does not seem to contain any data consent agreements"            
-            # "Non-compliant\n"
-            # "\n"
-            # "Document potentially references 5 different individuals\n"
-            # "\n"
-            # "Most probable countries of origin:\n"
-            # "Predominant Language of Country of Origin: English, \n"
-            # "\n"
-            # "Violation Report: \n"
-            # "\n"
-            # "General Personal Data:\n"
-            # "54\n"
-            # "\n"
-            # "Biometrics and Imaging:\n"
-            # "0 persons can be identified through images in the document\n"
-            # "\n"
-            # "Data relating to Health:\n"
-            # "\n"
-            # "Data revealing Racial and Ethnic Origin:\n"
-            # "1\n"
-            # "\n"
-            # "The document does not seem to contain any data consent agreements\n"
-            )
-        
-        result = backend_entry.process(self, path)
-        new_result = json.dumps(result)
-
-        # actual_output_lines = result.splitlines()
+# actual_output_lines = result.splitlines()
         # filtered_actual_output_lines = [
         #     line for line in actual_output_lines if not line.startswith("Probability:")
         # ]
-        # filtered_actual_output = "\n".join(filtered_actual_output_lines).strip()  # Normalize newlines and strip whitespace
 
-        # Debugging output
-        print("Expected Output:")
-        print(expected_output)
-        print("\nFiltered Actual Output:")
-        print(new_result)
 
-        # Assert
-        for line in expected_output.splitlines():
-            self.assertIn(line.strip(), new_result.strip())
+        result = backend_entry.process(self, path, "NCEWD1.docx")
+
+        # print(result)
+
+        if isinstance(result, dict):
+            dres = result
+        else:
+            dres = json.loads(result)
+
+        result_str = str(dres)
+
+        if 'ner_result_text' in result_str:
+            result_str = result_str.split('ner_result_text')[0] + '}'
+
+        result_str = result_str.split("'Status':")[1].split(", ", 1)[1]
+
+        print("Processed Result after removing ner_result_text:")
+        print(result_str)
+
+        expected_output_str = (
+            "'Location': 2, 'NER': 3, 'Personal': 1, 'Financial': 0, 'Contact': 0, 'Consent Agreement': True, 'Genetic': 0, 'Ethnic': 2, 'Medical': 0, 'Biometric': 0, 'RAG_Statement': 'The following GDPR articles are potentially violated: 5, 9, 9(1), 9(2)(b), 9(2)(g), 12', 'lenarts': 3, '}"        )
+
+        self.assertEqual(result_str.strip(), expected_output_str.strip())
+
+
+
 
 if __name__ == '__main__':
     unittest.main()

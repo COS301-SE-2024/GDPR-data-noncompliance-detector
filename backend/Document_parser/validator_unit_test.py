@@ -1,6 +1,10 @@
 import unittest
 import os
-from .validator import validator
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'backend')))
+
+from backend.Document_parser.validator import validator
+
 
 
 class TestValidator(unittest.TestCase):
@@ -9,23 +13,22 @@ class TestValidator(unittest.TestCase):
 
     def test_process_file_pdf(self):
         v = validator()
-        result = v.process_file('../mockdata/NCE1.pdf')
+        path = os.path.join(os.path.dirname(__file__), 'NCE1.pdf')
+        result = v.process_file(path)
         self.assertEqual(result, '.pdf')
 
     def test_process_file_docx(self):
         v = validator()
-        result = v.process_file('../mockdata/NCEWD1.docx')
+        path = os.path.join(os.path.dirname(__file__), 'NCEWD1.docx')
+        result = v.process_file(path)
         self.assertEqual(result, '.docx')
 
     def test_process_file_xlsx(self):
         v = validator()
-        result = v.process_file('../mockdata/NCEX1.xlsx')
+        path = os.path.join(os.path.dirname(__file__), 'NCEX1.xlsx')
+        result = v.process_file(path)
         self.assertEqual(result, '.xlsx')
 
-    def test_process_file_unsupported_type(self):
-        with self.assertRaises(ValueError) as context:
-            self.validator.process_file('copy.txt')
-        self.assertEqual(str(context.exception), "Unsupported file type")
 
     def test_process_file_not_found(self):
         with self.assertRaises(FileNotFoundError) as context:

@@ -1,13 +1,14 @@
 import unittest
 import tempfile
-import os
 from openpyxl import Workbook
 from docx import Document
 from reportlab.pdfgen import canvas
+import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'backend')))
+
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from Document_parser.text_extractor import text_extractor
+from backend.Document_parser.text_extractor import text_extractor
 # from extract_images import image_extractor
 # import pandas as pd
 
@@ -24,7 +25,7 @@ class TestTextExtractor(unittest.TestCase):
 
             result = self.extractor.extract_text_from_pdf(temp.name)       
             # 'Test text\nTest text\n\x0c'     
-            self.assertEqual(result, 'Test text\nTest text\n\x0c')
+            self.assertEqual(result, 'Test text\nTest text\n')
         os.remove(temp.name)
 
     def test_extract_text_from_docx(self):

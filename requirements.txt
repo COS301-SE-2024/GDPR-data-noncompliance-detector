@@ -73,6 +73,8 @@ google-pasta==0.2.0
 gotrue==2.8.1
 greenlet==3.1.1
 grpcio==1.65.2
+guess_language-spirit==0.5.3
+gunicorn==23.0.0
 h11==0.14.0
 h2==4.1.0
 h5py==3.11.0
@@ -84,6 +86,7 @@ httpx==0.27.0
 huggingface-hub==0.24.2
 hyperframe==6.0.1
 idna==3.7
+iniconfig==2.0.0
 intel-openmp==2021.4.0
 isodate==0.6.1
 itsdangerous==2.2.0
@@ -127,12 +130,14 @@ optree==0.12.1
 orjson==3.10.5
 packaging==24.1
 pandas==2.2.2
+pathlib==1.0.1
 pdf2image==1.17.0
 pdfminer.six==20231228
 pdfplumber==0.11.1
 pefile==2024.8.26
 pillow==10.3.0
 plotly==5.24.1
+pluggy==1.5.0
 postgrest==0.16.11
 preshed==3.0.9
 prompt_toolkit==3.0.47
@@ -159,13 +164,15 @@ PyPDF2==3.0.1
 pypdfium2==4.30.0
 PySocks==1.7.1
 pytesseract==0.3.10
+pytest==8.3.3
+pytest-mock==3.14.0
 python-dateutil==2.9.0.post0
 python-docx==1.1.2
 python-dotenv==1.0.1
 python-multipart==0.0.9
 pytz==2024.1
-pywin32==306, sys_platform == 'win32'
-pywin32-ctypes==0.2.3
+pywin32==306; sys_platform == 'win32'
+pywin32-ctypes==0.2.3; sys_platform == 'win32'
 pyxnat==1.6.2
 PyYAML==6.0.1
 rdflib==6.3.2
@@ -174,6 +181,7 @@ redis==5.0.7
 regex==2024.5.15
 reportlab==4.2.0
 requests==2.32.3
+requests-mock==1.12.1
 retina-face==0.0.17
 rich==13.7.1
 safetensors==0.4.3
@@ -181,6 +189,7 @@ scikit-learn==1.5.1
 scipy==1.13.1
 sentence-transformers==3.1.1
 sentencepiece==0.2.0
+setuptools==74.1.2
 shellingham==1.5.4
 simplejson==3.19.2
 six==1.16.0
@@ -200,11 +209,10 @@ supafunc==0.5.1
 sympy==1.13.1
 tbb==2021.13.0
 tenacity==9.0.0
-# tensorboard==2.17.1
-# tensorboard-data-server==0.7.2
-# tensorflow==2.17.0
+tensorboard==2.17.1
+tensorboard-data-server==0.7.2
+tensorflow==2.17.0
 # tensorflow-intel==2.17.0
-# tensorflow-io-gcs-filesystem==0.31.0
 termcolor==2.4.0
 tf_keras==2.17.0
 thinc==8.2.5
@@ -231,8 +239,9 @@ weasel==0.4.1
 webencodings==0.5.1
 websockets==12.0
 Werkzeug==3.0.3
+wheel==0.44.0
 whichcraft==0.6.1
-winotify==1.1.0
+winotify==1.1.0; sys_platform == 'win32'
 wrapt==1.16.0
 xxhash==3.4.1
 yarl==1.12.1
