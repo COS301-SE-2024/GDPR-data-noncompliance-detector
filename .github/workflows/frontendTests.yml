@@ -35,3 +35,12 @@ jobs:
     - run: |
         cd gnd-app
         npm test -- --watch=false --browsers=ChromeHeadless
+
+    - name: Generate frontend coverage report
+      run: |
+        cd gnd-app
+        npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+
+    - name: Move frontend coverage to backend
+      run: |
+        mv gnd-app/coverage/lcov.info backend/.coverage.frontend
