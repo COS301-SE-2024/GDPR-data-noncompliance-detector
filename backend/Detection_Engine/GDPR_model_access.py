@@ -1,6 +1,15 @@
-import os
+import os, sys
 from transformers import DebertaV2Tokenizer, DebertaV2ForSequenceClassification, pipeline
 
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 class GDPR:
 
@@ -12,22 +21,31 @@ class GDPR:
     def run_GDPR(self, text):
         return self.predict(text)
 
+
+    def sliding_window(self, text, window_size, overlap):
+        tokens = self.classifier.tokenizer.encode(text, truncation=False)
+        chunks = []
+        for i in range(0, len(tokens), window_size - overlap):
+            chunk = tokens[i:i + window_size]
+            if len(chunk) < window_size:
+                break
+            chunks.append(chunk)
+        return chunks
+
     def predict(self, input_text):
-        count  = 0
-        tokens = self.classifier.tokenizer.encode(input_text, truncation=True, max_length=self.max_length_)
-        truncated_text = self.classifier.tokenizer.decode(tokens, skip_special_tokens=True)
-        
-        result = self.classifier(truncated_text)
-        # return result[0]['label']
+        window_size = 128
+        overlap = 64
 
-        label = result[0]['label']
-        if label != 'LABEL_0':
-            count += 1
-        else:
-            count += 0
+        chunks = self.sliding_window(input_text, window_size, overlap)
+        labels = []
 
-        return count
+        for chunk in chunks:
+            truncated_text = self.classifier.tokenizer.decode(chunk, skip_special_tokens=True)
+            result = self.classifier(truncated_text)
+            label = result[0]['label']
+            labels.append(label)
 
+        return labels
 
 if __name__ == '__main__':
     gdpr = GDPR()

@@ -1,9 +1,10 @@
-from .NER_model_access import NER
-from .CA_model_access import CA
-from .GDPR_model_access import GDPR
-from .EM_model_access import EM
-from .MD_model_access import MD
-
+from Detection_Engine.NER_model_access import NER
+from Detection_Engine.CA_model_access import CA
+from Detection_Engine.GDPR_model_access import GDPR
+from Detection_Engine.EM_model_access import EM
+from Detection_Engine.MD_model_access import MD
+from Detection_Engine.GF_model_access import GF
+from Detection_Engine.RAG import RAG
 # from NER_model_access import NER
 # from CA_model_access import CA
 
@@ -15,11 +16,20 @@ class text_classification_layer:
         self.gdpr_base = GDPR()
         self.em_model = EM()
         self.md_model = MD()
+        self.gf_model = GF()
+        self.RAG = RAG()
 
     def run_NER_model(self, text):
         res = self.NER_model_.run_NER(text)
         return res
     
+    def run_NER_model_return_strings(self, text):
+        res = self.NER_model_.run_NER(text)
+        ext = [res[i][0] for i in range(len(res))]
+        ext = [e.replace("\n", " ") for e in ext]
+        ext = [e.replace("\t", " ") for e in ext]
+        return ext
+
     def run_CA_model(self, text):
         res = self.CA_model_.run_CA(text)
         return res
@@ -33,6 +43,12 @@ class text_classification_layer:
 
     def run_MD_model(self, text):
         return self.md_model.run_MD(text)
+    
+    def run_GF_model(self, text):
+        return self.gf_model.run_GF(text)
+
+    def run_RAG(self, query):
+        return self.RAG.process(query)
 
 if __name__ == "__main__":
     this_layer = text_classification_layer()

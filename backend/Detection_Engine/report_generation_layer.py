@@ -1,6 +1,6 @@
-from .text_classification_layer import text_classification_layer
-from .biometric_detection import biometric_detection
-from .lang_detection import location_finder
+from Detection_Engine.text_classification_layer import text_classification_layer
+from Detection_Engine.biometric_detection import biometric_detection
+from Detection_Engine.lang_detection import location_finder
 from langcodes import Language
 
 from reportlab.pdfgen import canvas
@@ -11,7 +11,26 @@ from reportlab.lib.units import mm
 from reportlab.lib import colors
 from reportlab.lib.colors import HexColor
 
-import os
+import json
+from flask import jsonify, send_file
+import pypandoc
+from backend.display.disp import highlight_pdf_violations
+import time
+
+
+
+import json
+from flask import jsonify, send_file
+import pypandoc
+from backend.display.disp import highlight_pdf_violations
+import time
+
+
+
+import os, sys
+
+from backend.display.display import highlight_pdf_violations
+import pypandoc
 
 # from text_classification_layer import text_classification_layer
 # from biometric_detection import biometric_detection
@@ -27,33 +46,30 @@ class report_generation_layer:
             'sk', 'sl', 'es', 'sv'
         ]
 
-    def location_report(self, text):
-        countries = location_finder.detect_country(self, text)
-        # countries = self.detect_country(result)
+    def get_resource_path(self, relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.abspath(".")
+        
+        return os.path.join(base_path, relative_path)
 
-        if countries:
-            for country in countries:
-                language_code = Language.find(country[0]).to_tag()
-                if language_code in self.eu_languages:
-                    return "EU"
-            return "Not EU"
+    def location_report(self, text):
+        res = location_finder.detect_country(self, text)
+        # countries = self.detect_country(result)
+        if res == "non-EU":  
+            return 0
+        elif res == "EU":
+            return 1
         else:
-            return "Undefined"
+            return 2
         
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------#           
            
     def location_report_generation(self, text):
         countries = location_finder.detect_country(self, text)
         # countries = self.detect_country(result)
-
-        if countries:
-            for country in countries:
-                language_code = Language.find(country[0]).to_tag()
-                if language_code in self.eu_languages:
-                    return 1
-            return 0
-        else:
-            return 2
+        return countries
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#           
            
         
@@ -70,6 +86,39 @@ class report_generation_layer:
     
         return f"Document potentially references {entities} different individuals\n\n"
 
+
+    def ner_report_text(self, text, path_):
+        res1 = self.classification_layer.run_NER_model_return_strings(text)
+        pdfbytes = self.process_pdf(res1, path_)
+        return pdfbytes
+    
+    def process_pdf(self, text, path_):
+        file_location = path_
+        nerstrings = text
+
+        dou = [nerstrings]
+
+        #xlsx and docx conversions to pdf
+        if '.docx' in file_location:
+            pdf_path = file_location.replace('.docx', '.pdf')
+            try:
+                # pypandoc.download_pandoc()
+                pypandoc.convert_file(file_location, 'pdf', outputfile=pdf_path)
+            except Exception as e:
+                print(f"Failed to convert docx to pdf: {e}")
+
+        elif '.xlsx' in file_location:
+            pdf_path = file_location.replace('.xlsx', '.pdf')
+
+
+        highlighted_pdf = highlight_pdf_violations(file_location, dou , ".")
+        
+
+        # this will return highlighted_pdf as a bytestream and then can be printed whenver in frontend
+        return highlighted_pdf
+
+    
+    
 #----------------------------------------------------------REPORT GEN------------------------------------------------------------------#           
 
     def ner_report_generation(self, text):
@@ -103,6 +152,50 @@ class report_generation_layer:
         else:
             return True
 
+#----------------------------------------------------------REPORT GEN------------------------------------------------------------------#
+
+    def count_unique_articles(self, label_to_articles):
+        if not isinstance(label_to_articles, list):
+            raise TypeError("label_to_articles must be a list")
+
+        unique_articles = set()
+
+        for article in label_to_articles:
+            # Extract the main article number before any sub-articles
+            main_article = article.split('(')[0]
+            unique_articles.add(main_article)
+
+        return len(unique_articles)
+
+    def RAG_report(self, ner_result , personal, financial, contact, medical, ca_statement, gi, em, biometric):
+        categories = []
+
+        if ner_result > 0 :
+            categories.append('transparency transgression')
+        
+        if ca_statement == False:
+            categories.append('no consent agreement')
+
+        if personal > 0 or financial > 0 or contact > 0:
+            categories.append('personal')
+        
+        if gi > 0 or medical > 0:
+            categories.append('genetic')
+
+        if em > 0:
+            categories.append('Data Revealing Racial and Ethnic Origin')
+
+        if biometric > 0:
+            categories.append('Biometric Data')
+
+        rag_res, rag_count = self.classification_layer.run_RAG(categories)
+        result = "The following GDPR articles are potentially violated: " + ", ".join(rag_res)
+        return result, rag_count
+
+
+
+        
+
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
         
     def Image_report(self, path):
@@ -126,7 +219,7 @@ class report_generation_layer:
 
     def Image_report_generation(self, path):
         arr_ = self.image_classification_layer.biometric_detect_all(path)
-        # # return arr_
+        return arr_
         # if arr_ is None:
         #     return 0
         
@@ -136,29 +229,40 @@ class report_generation_layer:
         #         if detection.get('label') == 'person':
         #             count += 1
         
-        return arr_
+        # return count
 
 #----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
 
         
     def gen_report(self, text):
         test = self.classification_layer.run_GDPR_model(text)
-        return test          
+        report = sum(1 for label in test if label != 'LABEL_0')
+        return report          
     
     def EM_report(self, text):
         test = self.classification_layer.run_EM_model(text)
-        return test 
+        report = sum(1 for label in test if label != 'LABEL_2')
+        return report 
     
     def MD_report(self, text):
         result = self.classification_layer.run_MD_model(text)
         return len(result)
     
+    def GF_report(self, text):
+        test = self.classification_layer.run_GF_model(text)
+        # report = 0
+        # if test == 'LABEL_1':
+        #     report += 1
+        
+        return test
 
     def generate_pdf(self, violation_data, output_file):
         c = canvas.Canvas(output_file, pagesize = A4)
         width, height = A4
 
+
         font_path = os.path.join(os.path.dirname(__file__), 'Mediator Narrow Web Extra Bold.ttf')
+        # font_path = self.get_resource_path('assets/report_generation/Mediator Narrow Web Extra Bold.ttf')
         pdfmetrics.registerFont(TTFont('MediatorNarrowExtraBold', font_path))
 
         c.setFillColor(colors.lightseagreen)
@@ -175,6 +279,7 @@ class report_generation_layer:
 
     
         logo_path = os.path.join(os.path.dirname(__file__), 'GND_LSG.jpg')
+        # logo_path = self.get_resource_path('assets/report_generation/GND_LSG.jpg')
         logo_width = 35 * mm
         logo_height = 30 * mm
         c.drawImage(logo_path, width - logo_width - 25 * mm, height - logo_height - 5 * mm, width = logo_width, height = logo_height)
@@ -196,6 +301,7 @@ class report_generation_layer:
         if (violation_data['score']['Status'] == 1):
             c.setFillColor(colors.green)
             c.setStrokeColor(colors.black)
+            rect_width = 130 * mm
             c.roundRect(rect_x, rect_y, rect_width, rect_height, radius, fill=1, stroke=1)
             
             text = "This document does not appear to contain GDPR violations"
@@ -247,6 +353,7 @@ class report_generation_layer:
         y_position = height - 100 * mm
 
         icon_path = os.path.join(os.path.dirname(__file__), 'circle-question-regular.jpg')
+        # icon_path = self.get_resource_path('assets/report_generation/circle-question-regular.jpg')
         icon_width = 3 * mm 
         icon_height = 3 * mm
 
@@ -412,6 +519,39 @@ class report_generation_layer:
             return "The document does not appear to originate from within the EU"
         
         return "The document appears to originate from within the EU"
+    
+#----------------------------------------------------------REPORT GEN END------------------------------------------------------------------#
+
+    def ner_report_text(self, text, path_):
+        res1 = self.classification_layer.run_NER_model_return_strings(text)
+        pdfbytes = self.process_pdf(res1, path_)
+        return pdfbytes
+    
+    def process_pdf(self, text, path_):
+        file_location = path_
+        nerstrings = text
+
+        dou = [nerstrings]
+
+        #xlsx and docx conversions to pdf
+        if '.docx' in file_location:
+            pdf_path = file_location.replace('.docx', '.pdf')
+            try:
+                # pypandoc.download_pandoc()
+                pypandoc.convert_file(file_location, 'pdf', outputfile=pdf_path)
+            except Exception as e:
+                print(f"Failed to convert docx to pdf: {e}")
+
+        elif '.xlsx' in file_location:
+            pdf_path = file_location.replace('.xlsx', '.pdf')
+
+
+        highlighted_pdf = highlight_pdf_violations(file_location, dou , ".")
+        
+
+        # this will return highlighted_pdf as a bytestream and then can be printed whenver in frontend
+        return highlighted_pdf
+
 
 
 if __name__ == "__main__":

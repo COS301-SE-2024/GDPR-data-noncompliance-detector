@@ -1,10 +1,24 @@
+@font-face {
+  font-family: 'Mediator Narrow Web Extra Bold';
+  src: url('../../assets/fonts/MediatorNarrowWebExtraBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('../../assets/fonts/Roboto Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 .header-container {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-bottom: 2.5em;
-    padding-top: 1.0em;
+    padding-bottom: 0.5em;
+    padding-top: 1em;
 }
 
 .header {
@@ -21,23 +35,97 @@
     height: 10px;
     background-color: #8EBA12;
     border-radius: 50%;
+    transform: translateX(-100%);
 }
 
-.grid-parent {    
+.grid-parent {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 20px; 
+    width: 100%;
 } 
 
-.grid-gnd { 
-    margin: 10px; 
-    border: 1px solid black;
-    width: 40%;
-    padding: 20px;    
+.grid-gnd {
+    margin: 10px;
+    width: 45%; 
+    padding: 20px;
+    box-sizing: border-box; 
 }
 
 .grid-gdpr {
-    margin: 10px; 
-    border: 1px solid black;
-    width: 40%;
+    margin: 10px;
+    width: 45%; 
     padding: 20px;
+    box-sizing: border-box; 
+}
+
+.dropbtn {
+  font-family: "Mediator Narrow Web Extra Bold";
+  background-color: transparent; 
+  color: black; 
+  padding: 2px;
+  margin: 5px;
+  font-size: 19px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none; 
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  color: #8EBA12; 
+  text-decoration: underline; 
+  background-color: transparent; 
+  
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 500px; 
+  max-width: 500px; 
+  overflow: hidden; 
+  box-shadow: 16px 20px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 20px; 
+  box-sizing: border-box; 
+}
+
+
+.dropdown-content p {
+  color: black;
+  text-decoration: none;
+  display: block;
+  word-wrap: break-word; 
+}
+
+
+.show {
+  display: block;
+}
+
+
+.dropbtn .arrow-up::before, 
+.dropbtn .arrow-down::before {
+  content: '▼';
+  margin-left: 8px;
+  display: inline-block;
+  transition: transform 0.3s ease; 
+}
+
+
+.dropbtn .arrow-down::before {
+  transform: rotate(180deg); 
+}
+
+
+.dropbtn .arrow-up::before {
+  transform: rotate(0deg); 
 }

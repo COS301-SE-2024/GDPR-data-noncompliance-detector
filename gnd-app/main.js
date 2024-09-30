@@ -5,6 +5,8 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
+const os = require('os');
+
 let apiProcess;
 
 function createWindow () {
@@ -26,7 +28,7 @@ app.whenReady().then(() => {
   // startAPI();
   startFlaskAPI();
   createWindow();
-  setTimeout(setupWatcher, 100);
+  // setTimeout(setupWatcher, 100);
 });
 
 function startFlaskAPI() {
@@ -142,4 +144,20 @@ app.on('before-quit', () => {
   if (apiProcess) {
     apiProcess.kill();
   }
+
+  const homeDir = os.homedir();
+
+  const documentsDir = path.join(homeDir, 'Documents', 'GND', 'uploads');
+
+  fs.readdir(documentsDir, (err, files) => {
+    if (err) throw err;
+
+    for (const file of files) {
+      const filePath = path.join(documentsDir, file);
+      fs.unlink(filePath, err => {
+        if (err) throw err;
+      });
+    }
+  });
+
 });

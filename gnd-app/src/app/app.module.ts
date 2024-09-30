@@ -11,6 +11,7 @@ import { ViolationsComponent } from './violations/violations.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { OutlookInboxComponent } from './outlook-inbox/outlook-inbox.component';
 
 
 
@@ -29,6 +30,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
       UploadDocumentComponent,
       FaqPageComponent,
       HttpClientModule,
+      OutlookInboxComponent
   ],
   providers: [
     provideAnimationsAsync()

@@ -1,58 +1,31 @@
-<link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold" rel="stylesheet">
-<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
-
-<div class="header-container">
-  <header class="header">
-    <!-- Visualized -->
-     Manual guide 
-  </header>
-</div>
-
-<div class="containers">
-  <div class="visualisation-rectangle">
-      
-    <h2 class="visualisation-header">
-      How to check for Violations
-    </h2>
-      
-    <div class="divider"></div>
-          <h1 class="text-5xl font-extrabold dark:text-white">GND User Manual</h1><br>
-          <h2  class="text-3xl font-bold dark:text-white">Submitting A file:</h2><br>
-
-       
-          <h3 class="text-3xl font-bold dark:text-white">1.Click on the "Upload a File" button</h3><br>
-          <img class="h-auto max-w-full" src="assets/images/Help/Upload page.png" alt="image description"><br>
-          
-          <h3 class="text-3xl font-bold dark:text-white">2. Click on the "Upload a File" pane</h3><br>
-          <img class="h-auto max-w-full" src="assets/images/Help/uploadaFilePage.png" alt="image description"><br>
-
-          <h3 class="text-3xl font-bold dark:text-white">3.Click "Press here to upload a file" icon</h3><br>
-          <img class="h-auto max-w-full" src="assets/images/Help/HowToUpload.png" alt="image description"><br>
-
-          <h3 class="text-3xl font-bold dark:text-white">4. Select the file you want to upload</h3><br>
-          <img class="h-auto max-w-full" src="assets/images/Help/UploadFileDialogue.png" alt="image description"><br>
-
-          <h3 class="text-3xl font-bold dark:text-white">5. Click on the "Open" button after selecting a file to Upload</h3><br>
-          <img class="h-auto max-w-full" src="assets/images/Help/ClickaFile.png" alt="image description"><br>
-
-          <h3 class="text-3xl font-bold dark:text-white">6. The uploaded File's Analysis</h3><br>
-          <!-- <img class="h-auto max-w-full" src="assets/images/Help/AfterUpload.png" alt="image description"><br> -->
-          <img class="h-auto max-w-full" src="assets/images/Help/AnalysisOfFile.png" alt="image description"><br>
-
-          <h3 class="text-3xl font-bold dark:text-white">7. After you click the inbox button</h3><br>
-          <img class="h-auto max-w-full" src="assets/images/Help/inboxPage.png" alt="image description"><br>
-
-          <h3 class="text-3xl font-bold dark:text-white">8. This is what you will see when you click on the FAQ </h3><br>
-          <img class="h-auto max-w-full" src="assets/images/Help/FAQ.png" alt="image description"><br>
+<div class="carousel-container">
+  <div class="carousel">
+    <div
+      class="carousel-slide"
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === currentSlide"
+    >
+      <h1 class="slide-title">{{ slide.title }}</h1>
+      <h2 class="slide-description">{{ slide.description }}</h2>
+      <img [src]="slide.image" alt="Slide Image" class="slide-image" />
+    </div>
   </div>
 
-  <!-- <div class="buttons-row">
-    
-    <div class="buttons">
-      <button type="button" [routerLink]="['/violations']" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
-      <button type="button"  class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Analysis</button>
-      <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" [routerLink]="['/inbox']">Download Report</button>
-    </div>
+  <div class="carousel-controls">
+    <button (click)="prevSlide()" class="carousel-control prev">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button (click)="nextSlide()" class="carousel-control next">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
 
-  </div> -->
+  <div class="carousel-indicators">
+    <span
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === currentSlide"
+      (click)="goToSlide(i)"
+      class="carousel-indicator"
+    ></span>
+  </div>
 </div>
