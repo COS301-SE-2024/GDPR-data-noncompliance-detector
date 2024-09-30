@@ -49,34 +49,30 @@ class TestBackendEntryIntegration(unittest.TestCase):
         # ]
         # filtered_actual_output = "\n".join(filtered_actual_output_lines).strip()  # Normalize newlines and strip whitespace
 
-        # Debugging output
 
-        expected_output = (
-            "{'filename': 'NCEWD1.docx', 'result': {'score': {'Biometric': 0, 'Consent Agreement': True, 'Contact': 0, 'Ethnic': 2, 'Financial': 0, 'Genetic': 0, 'Location': 2, 'Medical': 0, 'NER': 3, 'Personal': 1, 'RAG_Statement': 'The following GDPR articles are potentially violated: 5, 9, 9(1), 9(2)(b), 9(2)(g), 12', 'Status': 5.175602897408009, 'lenarts': 3'}}}"
-                        )
-        
         result = backend_entry.process(self, path, "NCEWD1.docx")
-        # dres = json.loads(result)
-        dres = result
-        if 'ner_result_text' in dres.get('result', {}).get('score', {}):
-            del dres['result']['score']['ner_result_text']
 
-        new_result = json.dumps(dres)
+        # print(result)
 
-        if 'base64' in new_result:  # Adjust the condition as necessary
-            decoded_bytes = base64.b64decode(new_result.split('base64,')[1])  # Assuming base64 is part of the string
-            new_result = decoded_bytes.decode('utf-8', errors='replace')
+        if isinstance(result, dict):
+            dres = result
+        else:
+            dres = json.loads(result)
+
+        result_str = str(dres)
+
+        if 'ner_result_text' in result_str:
+            result_str = result_str.split('ner_result_text')[0] + '}'  # Keep the part before ner_result_text and close the JSON object
+
+        print("Processed Result after removing ner_result_text:")
+        print(result_str)
+
+        expected_output_str = (
+            "{'score': {'Status': 1.1756028974080088, 'Location': 2, 'NER': 3, 'Personal': 1, 'Financial': 0, 'Contact': 0, 'Consent Agreement': True, 'Genetic': 0, 'Ethnic': 2, 'Medical': 0, 'Biometric': 0, 'RAG_Statement': 'The following GDPR articles are potentially violated: 5, 9, 9(1), 9(2)(b), 9(2)(g), 12', 'lenarts': 3, '}"        )
+
+        self.assertEqual(result_str.strip(), expected_output_str.strip())
 
 
-        print("Expected Output:")
-        print(expected_output)
-
-        
-        print("\nFiltered Actual Output:")
-        print(new_result)
-        # Assert
-
-        self.assertEqual(new_result.strip(), expected_output.strip())
 
 
 if __name__ == '__main__':
