@@ -137,11 +137,11 @@ export class UploadDocumentComponent implements OnInit{
           (response) => {
             try {
               const encryptedData = CryptoJS.enc.Base64.parse(response.result);
-
+              console.log(encryptedData);
               // Separate IV (first 16 bytes) and ciphertext (remaining bytes)
               const iv = CryptoJS.lib.WordArray.create(encryptedData.words.slice(0, 4));
               const ciphertext = CryptoJS.lib.WordArray.create(encryptedData.words.slice(4));
-    
+              console.log(ciphertext);
               // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
               const decryptedBytes = CryptoJS.AES.decrypt(
                 CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),

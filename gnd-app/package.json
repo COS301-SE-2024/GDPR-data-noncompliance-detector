@@ -2,7 +2,7 @@
   "name": "gnd-app",
   "productName": "GND",
   "description": "GDPR Non-compliance Detector Application",
-  "icon": "src/assets/logo.ico",
+  "icon": "src/assets/fav.ico",
   "author": "AprilFour",
   "version": "1.0.3",
   "main": "main.js",
@@ -61,7 +61,7 @@
     "@types/jasmine": "~4.3.0",
     "@types/node": "^20.14.8",
     "@types/three": "^0.168.0",
-    "electron": "^30.2.0",
+    "electron": "^30.5.1",
     "electron-builder": "^24.13.3",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
@@ -81,10 +81,10 @@
       "dist/**/*",
       "main.js",
       "package.json",
-      "src/assets/logo.ico"
+      "src/assets/fav.ico"
     ],
     "win": {
-      "icon": "src/assets/logo.ico",
+      "icon": "src/assets/fav.ico",
       "target": [
         "nsis"
       ]
@@ -92,8 +92,8 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "src/assets/logo.ico",
-      "uninstallerIcon": "src/assets/logo.ico",
+      "installerIcon": "src/assets/fav.ico",
+      "uninstallerIcon": "src/assets/fav.ico",
       "uninstallDisplayName": "GND",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
