@@ -51,7 +51,7 @@ GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
 
 os.makedirs(GND_DATA_FOLDER, exist_ok=True)
 
-API_URL = "http://localhost:8000/file-upload-new"
+API_URL = "http://localhost:8000/file-upload-new-monitor"
 
 def get_resource_path(relative_path):
     try:
