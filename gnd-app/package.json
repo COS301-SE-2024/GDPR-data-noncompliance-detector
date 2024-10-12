@@ -32,6 +32,7 @@
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
     "d3": "^7.9.0",
+    "dotenv": "^16.4.5",
     "echarts": "^5.5.1",
     "electron-reload": "^2.0.0-alpha.1",
     "flowbite": "^2.3.0",

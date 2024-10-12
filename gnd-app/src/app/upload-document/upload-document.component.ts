@@ -9,6 +9,7 @@ import { VisualizationComponent } from "../visualization/visualization.component
 import { VisualizationService } from '../services/visualization.service';
 import * as CryptoJS from 'crypto-js';
 import { mode } from 'crypto-js';
+import { EncryptionKeyService } from '../services/encryption-key.service';
 import 'crypto-js/mode-ctr';
 
 @Component({
@@ -37,12 +38,19 @@ export class UploadDocumentComponent implements OnInit{
   ragScore: string = "";
   metric_score: number = 0;
   isUploading: boolean = false;
-  encryption_key = 'IWIllreplacethislaterIWIllreplac';
+  encryption_key:string = "";
+  // encryption_key = 'IWIllreplacethislaterIWIllreplac';
   personal: number = 0;
 
-  constructor(private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
+  constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 
   ngOnInit() {
+    this.encryptionKeyService.getEncryptionKey().subscribe(response => {
+      this.encryption_key = response.encryptionKey;
+      console.log(`Encryption Key: ${this.encryption_key}`);
+    });
+    console.log(`Encryption Key: ${this.encryption_key}`);
+
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       this.startIntro();
@@ -78,6 +86,7 @@ export class UploadDocumentComponent implements OnInit{
           this.result = "Y";
           this.visualizationService.setUploadState(this.response.result);
     }
+    // this.encryption_key = process.env['GND_ENCRYPTION_KEY']
   }
   ngOnDestroy() {
     if(this.walkthroughSubscription)
@@ -145,7 +154,7 @@ export class UploadDocumentComponent implements OnInit{
               // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
               const decryptedBytes = CryptoJS.AES.decrypt(
                 CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
-                CryptoJS.enc.Utf8.parse(this.encryption_key),
+                CryptoJS.enc.Utf8.parse(this.encryption_key || ''),
                 {
                   iv: iv,
                   mode: CryptoJS.mode.CBC,
@@ -238,7 +247,7 @@ export class UploadDocumentComponent implements OnInit{
                 // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
                 const decryptedBytes = CryptoJS.AES.decrypt(
                   CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
-                  CryptoJS.enc.Utf8.parse(this.encryption_key),
+                  CryptoJS.enc.Utf8.parse(this.encryption_key || ''),
                   {
                     iv: iv,
                     mode: CryptoJS.mode.CBC,

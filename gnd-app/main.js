@@ -4,8 +4,9 @@ const notifier = require('node-notifier');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
-
+const express = require('express');
 const os = require('os');
+const cors = require('cors');
 
 let apiProcess;
 
@@ -29,7 +30,25 @@ app.whenReady().then(() => {
   startFlaskAPI();
   createWindow();
   // setTimeout(setupWatcher, 100);
+  keyHelper();
 });
+
+function keyHelper() {
+  const app = express();
+  const port = 3000;
+
+  // Use CORS middleware
+  app.use(cors());
+
+  app.get('/api/encryption-key', (req, res) => {
+    const encryptionKey = process.env.GND_ENCRYPTION_KEY;
+    res.json({ encryptionKey });
+  });
+
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
 
 function startFlaskAPI() {
   const apiPath = path.join(__dirname, '..', 'backend');
