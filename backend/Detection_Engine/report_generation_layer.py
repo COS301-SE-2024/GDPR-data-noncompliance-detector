@@ -1,7 +1,6 @@
 from Detection_Engine.text_classification_layer import text_classification_layer
 from Detection_Engine.biometric_detection import biometric_detection
 from Detection_Engine.lang_detection import location_finder
-from langcodes import Language
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
