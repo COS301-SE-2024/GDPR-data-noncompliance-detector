@@ -1,34 +1,40 @@
-body {
+/* Reset and basic layout styles */
+body, html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
-}
-
-html, body {
   height: 100%;
 }
 
+/* Main content area */
 .main-content {
   padding-top: 60px;
   min-height: calc(100vh - 60px);
   box-sizing: border-box;
 }
 
+/* Navbar styles */
 .topnav {
-  background-color: #333;
-  overflow: hidden;
-  font-family: "Mediator Narrow Web Extra Bold";
+  display: flex;
+  justify-content: space-between; /* Align left and right sections */
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  font-family: "Mediator Narrow Web Extra Bold";
   z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Subtle bottom border */
+  background-color: white; /* Solid light background */
+}
+
+/* Navbar logo on the left */
+.navbar-left {
   display: flex;
   align-items: center;
-  justify-content: start;
-  padding: 0 20px;
-  height: 60px;
 }
 
 .navbar-brand {
@@ -37,20 +43,27 @@ html, body {
   padding-right: 20px;
 }
 
-.navbar-brand img {
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
+.navbar-brand .logo {
+  width: 45px;
+  height: 40px;
 }
 
+.app-name {
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Roboto Bold", sans-serif;
+  color: #333;
+  margin-left: 12px;
+}
+
+/* Links on the right */
 .hover-links {
   display: flex;
   align-items: center;
-  margin-left: 10px;
 }
 
 .hover-links a {
-  color: #f2f2f2;
+  color: #333;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -60,7 +73,7 @@ html, body {
 }
 
 .hover-links a:hover {
-  color: #ffffff;
+  color: #000;
 }
 
 .hover-links a::after {
@@ -70,7 +83,7 @@ html, body {
   bottom: 0;
   transform: translateX(-50%);
   width: 0;
-  height: 5px;
+  height: 3px;
   background-color: #8EBA12;
   transition: width 0.3s ease;
 }
@@ -79,6 +92,7 @@ html, body {
   width: 100%;
 }
 
+/* Walkthrough icon */
 .walkthrough-toggle {
   cursor: pointer;
   display: flex;
@@ -88,5 +102,5 @@ html, body {
 
 .walkthrough-toggle i {
   font-size: 17px;
-  color: #f2f2f2;
+  color: #333;
 }

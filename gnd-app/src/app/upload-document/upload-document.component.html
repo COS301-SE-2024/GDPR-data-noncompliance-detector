@@ -1,62 +1,55 @@
-<!-- <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
-  rel="stylesheet">
-<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 
 <link rel="stylesheet" href="upload-document.component.css">
 
 <div class="main-content">
-  <div class="header-container">
+  <div class="header-container" *ngIf="!result">
     <header class="header">
-      Upload a File
+      Upload your file for GDPR detection
     </header>
   </div>
+  <p class="sub-header" *ngIf="!result">We'll scan your file for GDPR compliance and provide a detailed report. We will not store or share the file you upload. </p>
+
 
   <div class="containers">
-    <div class="inbox-rectangle">
-      <h2 class="inbox-header">
-        Upload a File
-      </h2>
-      <div class="divider"></div>
+    
+    <div class="inbox-rectangle" *ngIf="!result">
 
       <div class="upload-container">
-        <div class="flex items-center justify-center w-full" [class.dropzone-active]="isDragActive"
-          [class.dropzone-disabled]="isUploading" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
-          (drop)="onFileDropped($event)" id="uploadFile" [style.pointer-events]="isUploading ? 'none' : 'auto'">
-          <label for="dropzone-file"
-            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-              </svg>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload a
-                  file</span> or drag and drop</p>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Accepted File Types:<span class="font-semibold">
-                pdf, docx, xlsx</span></p>
-            </div>
-            <!-- <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)" /> -->
-            <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)"
-              [disabled]="isUploading" accept=".pdf,.docx,.xlsx" />
-          </label>
+        <div *ngIf="!isUploading">
+          <div class="flex items-center justify-center w-full" 
+               [class.dropzone-active]="isDragActive"
+               [class.dropzone-disabled]="isUploading" 
+               (dragover)="onDragOver($event)" 
+               (dragleave)="onDragLeave($event)"
+               (drop)="onFileDropped($event)" 
+               id="uploadFile" 
+               [style.pointer-events]="isUploading ? 'none' : 'auto'">
+            <label for="dropzone-file"
+                   class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                </svg>
+                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span>Click to upload a file</span> or drag and drop
+                </p>
+                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  Accepted File Types: pdf, docx, xlsx
+                </p>
+              </div>
+              <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)"
+                     [disabled]="isUploading" accept=".pdf,.docx,.xlsx" />
+            </label>
+          </div>
         </div>
-      </div>
 
-    </div>
-
-    <div class="analysis-rectangle">
-      <h2 class="analysis-header">
-        Analysis
-      </h2>
-      <div class="divider"></div>
-
-      <div class="upload-container">
-        <div *ngIf="!result && uploadedFileName"
-          class="flex items-center justify-center w-full h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+        <div *ngIf="isUploading" class="flex items-center justify-center w-full h-64">
           <div role="status">
             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-              viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                 fill="currentColor" />
@@ -68,7 +61,15 @@
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="analysis-rectangle" *ngIf="result">
+      <h2 class="analysis-header">
+        Analysis
+      </h2>
+      <div class="divider"></div>
+
+      <!-- Compliance Status -->
       <div class="comp-status-container">
         <div class="comp-status">
           <span *ngIf="documentStatus == 'Compliant'" class="status-compliant">{{ documentStatus }}</span>
@@ -76,111 +77,120 @@
         </div>
       </div>
 
+      <!-- Analysis Data -->
       <div class="upload-data" *ngIf="result || uploadState">
-
+        <!-- NER Count -->
         <div class="ner-data">
-          <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{
-            nerCount }} different individuals</p>
+          <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">
+            This document potentially references {{ nerCount }} different individuals
+          </p>
         </div>
 
+        <!-- Location Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Location:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ location }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Location:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ location }}</span>
         </div>
 
         <div class="divider-text"></div>
 
+        <!-- Personal Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Personal Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ personalData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Personal Data:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ personalData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
+        <!-- Financial Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Financial Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ financialData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Financial Data:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ financialData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
+        <!-- Contact Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Contact Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ contactData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Contact Data:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ contactData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
+        <!-- Medical Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Medical Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ medicalData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Medical Data:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ medicalData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
+        <!-- Ethnic Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Ethnic Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ ethnicData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Ethnic Data:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ ethnicData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
+        <!-- Biometric Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Biometric Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ biometricData }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Biometric Data:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ biometricData }}</span>
         </div>
 
         <div class="divider-text"></div>
 
+        <!-- Genetic Data -->
         <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Genetic Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ genetic_data }}</span>
+          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Genetic Data:</p>
+          <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ genetic_data }}</span>
         </div>
 
         <div class="divider-text"></div>
-
       </div>
 
+      <!-- Consent Status -->
       <div class="consent-status-container" *ngIf="result">
         <div class="consent-status">
           <span class="consent-agreement">{{ consentAgreement }}</span>
         </div>
       </div>
 
+      <!-- RAG Score -->
       <div class="rag-status-container" *ngIf="result">
         <div class="rag-status">
           <span class="rag-agreement">{{ ragScore }}</span>
         </div>
       </div>
 
-      <div class="upload-container">
-        <div class="analysis-data" *ngIf="!result && !uploadedFileName && !uploadState">
+      <!-- Instruction if No Analysis Yet -->
+      <div class="upload-container" *ngIf="!result && !uploadedFileName && !uploadState">
+        <div class="analysis-data">
           <p class="analysis-text" id="Report">Upload a file to view results</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="buttons">
-    <button *ngIf="result" (click)="onDownload()" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
-      Report</button>
-    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/violations']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Violations</button> -->
-    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/report']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Report</button> -->
-    <button *ngIf="result" (click)="onVisualize()" id="vizButton" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualise</button>
-    <button *ngIf="result" (click)="onAnnotate()" id="annoButton" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View
-      Violations</button>
-
+  <!-- Buttons Section -->
+  <div class="buttons" *ngIf="result">
+    <button (click)="onDownload()" type="button"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+      Download Report
+    </button>
+    <button (click)="onVisualize()" id="vizButton" type="button"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+      Visualise
+    </button>
+    <button (click)="onAnnotate()" id="annoButton" type="button"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+      View Violations
+    </button>
     <button *ngIf="result || uploadState" (click)="clearAnalysis()" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
       Clear
     </button>
-  </div>
-
-  <div class="center-footer">
-    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">
-    GND may make mistakes. Please verify that your files are compliant with GDPR laws.</span></p>
   </div>
 </div>

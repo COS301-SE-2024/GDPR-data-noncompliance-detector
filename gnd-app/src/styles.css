@@ -10,12 +10,12 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-image: url('https://cdn.prod.website-files.com/5a9ee6416e90d20001b20038/64f5c31d336e990b4a7f5476_Rectangle%20(11).svg');
+  /* background-image: url('https://cdn.prod.website-files.com/5a9ee6416e90d20001b20038/64f5c31d336e990b4a7f5476_Rectangle%20(11).svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center; }
-
+  background-position: center; } */
+}
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
