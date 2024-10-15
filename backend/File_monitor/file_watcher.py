@@ -191,16 +191,6 @@ class Handle(FileSystemEventHandler):
                 api_response = response.json()
                 print(f"[INFO] File {file_path} uploaded successfully. Server response: {api_response}")
 
-                if platform.system() == 'Windows':
-                    toast = Notification(app_id="GND",
-                                        title="New GND Report",
-                                        msg="A new GND report is available",
-                                        duration="short",
-                                        icon=get_resource_path('assets/toast_logo.png'))
-
-                    toast.set_audio(audio.Default, loop=False)
-                    toast.show()
-
                 self.save_response_as_txt(file_path, api_response)
             else:
                 print(f"[ERROR] Failed to upload file {file_path}. Server response: {response.text}")
@@ -218,6 +208,16 @@ class Handle(FileSystemEventHandler):
         try:
             with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
                 txt_file.write(str(api_response))
+                if platform.system() == 'Windows':
+                    toast = Notification(app_id="GND",
+                                        title="New GND Report",
+                                        msg="A new GND report is available",
+                                        duration="short",
+                                        icon=get_resource_path('assets/toast_logo.png'))
+
+                    toast.set_audio(audio.Default, loop=False)
+                    toast.show()
+
             print(f"[INFO] API response saved to {txt_file_path}")
         except Exception as e:
             print(f"[ERROR] Error saving API response to {txt_file_path}: {e}")
