@@ -3,8 +3,8 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding-bottom: 0.5em;
-  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-top: 3em;
 }
 
 .header {
@@ -25,6 +25,21 @@
   transform: translateX(-100%);
 }
 
+.description {
+  text-align: center; 
+  color: white; 
+  margin-top: 20px; 
+  font-size: 18px; 
+  font-family: "Mediator Narrow Web Extra Bold"; 
+}
+
+.contact-link {
+  color: #8EBA12; 
+  font-weight: bold; 
+  cursor: pointer; 
+}
+
+
 .faq-container {
   padding: 20px;
   display: flex; 
@@ -33,9 +48,21 @@
 }
 
 .faq-item {
-  margin-bottom: 10px; 
-  width: 100%; /* Make full width for mobile responsiveness */
+  margin-bottom: 10px; /* Space between FAQ items */
+  width: 100%;
+  border-bottom: 1px solid #8EBA12; /* Line divider with a color of your choice */
+  padding-bottom: 10px; /* Optional: Add padding to create space between the question and the line */
 }
+
+
+.faq-section h2 {
+  font-family: "Mediator Narrow Web Extra Bold"; /* Match the header font */
+  font-size: 35px; /* Match the header font size */
+  color: white; /* Match the header text color */
+  text-align: center; /* Center align the text */
+  margin: 1em 0; /* Add some margin for spacing */
+}
+
 
 .dropbtn {
   font-family: "Mediator Narrow Web Extra Bold";
@@ -55,7 +82,6 @@
 
 .dropbtn:hover, .dropbtn:focus {
   color: #8EBA12; 
-  text-decoration: underline; 
 }
 
 .dropdown {
@@ -66,16 +92,16 @@
 .dropdown-content {
   max-height: 0; /* Start with max-height 0 for transition */
   overflow: hidden; 
-  background-color: #f1f1f1;
   max-width: 500px; /* Increase the max-width to allow for larger dropdowns */
   min-width: 200px; /* Set a minimum width */
   width: auto; /* Allow the dropdown to expand based on content */
-  padding: 0 20px; /* Padding when closed */
+  padding: 0 10px; /* Padding when closed */
   transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out; /* Smooth transition */
+  border-radius: 1%;
 }
 
 .dropdown-content p {
-  color: black;
+  color: #8EBA12;
   margin: 0;
   word-wrap: break-word; 
 }

@@ -4,9 +4,17 @@
   </header>
 </div>
 
+<div class="description">
+  <p>
+    Below you will find answers to most frequently asked questions about GND and GDPR. <br> If you can't find the answer you are looking for, <span class="contact-link">Contact us!</span>
+  </p>
+</div>
+
+
+
 <div class="faq-container">
   <div class="faq-section left">
-    <h2>Left Section</h2>
+    <h2>Want to know more about <span class="contact-link">GND</span>?</h2>
     <div class="faq-item" *ngFor="let faq of leftFaqs">
       <div class="dropdown">
         <button class="dropbtn" (click)="toggleDropdown(faq.id)">
@@ -27,7 +35,7 @@
   </div>
 
   <div class="faq-section right">
-    <h2>Right Section</h2>
+    <h2>Want to know more about <span class="contact-link">GDPR</span>?</h2>
     <div class="faq-item" *ngFor="let faq of rightFaqs">
       <div class="dropdown">
         <button class="dropbtn" (click)="toggleDropdown(faq.id)">
