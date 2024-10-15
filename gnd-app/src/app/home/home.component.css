@@ -12,14 +12,12 @@
   font-style: normal;
 }
 
-.background{
-  /* Start */
+/* .background{
   background-image: url('../../assets/professional.jpg');
   background-size: cover;
   background-position: center;
   height: calc(100vh - 60px);
-  /* End */
-}
+} */
 
 .container {
   display: flex;

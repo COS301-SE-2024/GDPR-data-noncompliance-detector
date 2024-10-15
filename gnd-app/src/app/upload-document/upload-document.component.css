@@ -19,8 +19,8 @@ body {
 }
 
 .main-content {
-  padding-top: 20px;
-  min-height: calc(100vh - 60px);
+  padding-top: 80px;
+  min-height: calc(100vh - 100px);
   box-sizing: border-box;
   color: whitesmoke;
 }
