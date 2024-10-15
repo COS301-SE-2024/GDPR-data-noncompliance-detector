@@ -5,22 +5,44 @@
 </div>
 
 <div class="faq-container">
-  <div class="faq-item" *ngFor="let faq of faqs">
-    <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown(faq.id)">
-        {{ faq.question }}
-        <span
-          [ngClass]="activeDropdown === faq.id ? 'arrow-up' : 'arrow-down'"
-        ></span>
-      </button>
-      <div
-        class="dropdown-content"
-        [ngStyle]="{
-          'max-height': activeDropdown === faq.id ? '200px' : '0',
-          padding: activeDropdown === faq.id ? '20px' : '0'
-        }"
-      >
-        <p>{{ faq.answer }}</p>
+  <div class="faq-section left">
+    <h2>Left Section</h2>
+    <div class="faq-item" *ngFor="let faq of leftFaqs">
+      <div class="dropdown">
+        <button class="dropbtn" (click)="toggleDropdown(faq.id)">
+          {{ faq.question }}
+          <span [ngClass]="activeDropdown === faq.id ? 'arrow-up' : 'arrow-down'"></span>
+        </button>
+        <div
+          class="dropdown-content"
+          [ngStyle]="{
+            'max-height': activeDropdown === faq.id ? '200px' : '0',
+            padding: activeDropdown === faq.id ? '20px' : '0'
+          }"
+        >
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section right">
+    <h2>Right Section</h2>
+    <div class="faq-item" *ngFor="let faq of rightFaqs">
+      <div class="dropdown">
+        <button class="dropbtn" (click)="toggleDropdown(faq.id)">
+          {{ faq.question }}
+          <span [ngClass]="activeDropdown === faq.id ? 'arrow-up' : 'arrow-down'"></span>
+        </button>
+        <div
+          class="dropdown-content"
+          [ngStyle]="{
+            'max-height': activeDropdown === faq.id ? '200px' : '0',
+            padding: activeDropdown === faq.id ? '20px' : '0'
+          }"
+        >
+          <p>{{ faq.answer }}</p>
+        </div>
       </div>
     </div>
   </div>
