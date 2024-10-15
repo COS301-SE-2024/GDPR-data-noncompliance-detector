@@ -99,5 +99,6 @@ body, html {
 
 .walkthrough-toggle i {
   font-size: 17px;
-  color: #333;
+  /* color: #333; */
+  color: white;
 }
