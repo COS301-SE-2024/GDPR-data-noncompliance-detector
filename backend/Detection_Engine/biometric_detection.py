@@ -4,6 +4,8 @@ from PIL import Image
 import sys
 import os
 import glob
+from gradio_client import Client, handle_file
+import re
 
 
 # below added because of the relative import error
@@ -80,6 +82,28 @@ class biometric_detection:
             if item['label'] != 'person':
                 output.remove(item)
         return output
+    
+
+    def biometric_detect_finger(self, source):
+        client = Client("abdullahsajid/multimodal-antispoofing-detection")
+        result = client.predict(
+		image=handle_file(source),
+		api_name="/handle_button_click_finger"
+        )
+        real_pattern = re.compile(r'Real:</b>\s*(\d+\.\d+)%')
+        spoof_pattern = re.compile(r'Spoof:</b>\s*(\d+\.\d+)%')
+
+        real_match = real_pattern.search(result)
+        spoof_match = spoof_pattern.search(result)
+
+        real_percentage = float(real_match.group(1) ) if real_match else None
+        spoof_percentage = float(spoof_match.group(1))  if spoof_match else None
+
+        if real_percentage > 75 or spoof_percentage > 75:
+            return True
+        return False
+    
+
 
     def biometric_detect_all(self,pdf_path):
         # clean up folders
@@ -96,6 +120,8 @@ class biometric_detection:
             count = 0
             for image in images:
                 people = self.biometric_detect_people(image)
+                if(self.biometric_detect_finger(image)):
+                    count += 1
                 for person in people:
                     count += 1
 
@@ -180,5 +206,5 @@ if __name__ == "__main__":
     # print(biometric_detect_all("../mockdata/excelWimages.xlsx"))
     # Example for accessing mock data if it's bundled with PyInstaller
     bm = biometric_detection()
-    print(bm.biometric_detect_people("../mockdata/p7.png"))
+    print(bm.biometric_detect_finger("../mockdata/p3.png"))
     # extract_images_from_excel("../mockdata/excelWimages.xlsx")
