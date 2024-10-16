@@ -5,10 +5,10 @@
 
 <div class="main-content">
   <div class="header-container" *ngIf="!result">
-    <header class="header">
+    <header class="header" id="InboxAttachments">
       Inbox
     </header>
-    <header class="header clickable-header" (click)="navigateToDownloads()">Downloads</header>
+    <header class="header clickable-header" id="Downloads" (click)="navigateToDownloads()">Downloads</header>
   </div>
 
   
@@ -18,7 +18,7 @@
  
 
   <div class="containers">
-    <div class="inbox-rectangle" *ngIf="!result" id="InboxAttachments">
+    <div class="inbox-rectangle" *ngIf="!result">
       <ul>
         <div class="card" *ngFor="let report of reports" (click)="getReportContent(report.name)">
           <li class="file-info">

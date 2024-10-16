@@ -407,13 +407,13 @@ export class InboxComponent implements OnInit, OnDestroy {
     intro.setOptions({
       steps: [
         {
+          element: '#Downloads',
+          intro: 'This is where you will see all the new downloaded documents.'
+        },
+        {
           element: '#InboxAttachments',
           intro: 'This is where you will see all the new attachments in the received inbox directory.'
-        },
-        // {
-        //   element: '#ReportOfClickedDoc',
-        //   intro: 'Here you will see the generated report of the selected document from the attachments on the left.'
-        // }
+        }
       ],
     });
     intro.start();

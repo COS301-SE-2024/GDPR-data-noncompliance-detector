@@ -15,9 +15,13 @@
     <a routerLink="outlook-inbox" id="inbox">Inbox</a>
     <a routerLink="report" id="help">Help</a>
     <a routerLink="faq-page" id="FAQ">FAQ</a>
-    <a class="walkthrough-toggle" (click)="toggleWalkthrough()">
+    <!-- <a class="walkthrough-toggle" (click)="toggleWalkthrough()">
       <i class="fas fa-question-circle"></i>
-    </a>
+    </a> -->
+       <!-- Conditionally show Question mark icon -->
+    <a *ngIf="showQuestionIcon" class="walkthrough-toggle" (click)="toggleWalkthrough()">
+    <i class="fas fa-question-circle"></i>
+  </a>
   </div>
 </div>
 
