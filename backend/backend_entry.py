@@ -65,7 +65,7 @@ class backend_entry:
         
         # Here we getting the document name dynamically
         document_name = filename
-        print(result_new)
+        # print(result_new)
 
         status_score = result_new['score']['Status']
         location = result_new['score']['Location']
