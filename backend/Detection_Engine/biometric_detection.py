@@ -120,8 +120,8 @@ class biometric_detection:
             count = 0
             for image in images:
                 people = self.biometric_detect_people(image)
-                if(self.biometric_detect_finger(image)):
-                    count += 1
+                # if(self.biometric_detect_finger(image)):
+                    # count += 1
                 for person in people:
                     count += 1
 

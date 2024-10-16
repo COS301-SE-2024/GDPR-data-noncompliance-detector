@@ -239,7 +239,7 @@ class detection_engine:
 
         location_report = 0
         reg_result_personal_report = 0
-        ca_statement_report = 0
+        # ca_statement_report = 0
         em_result_report = 0
         image_result_report = 0
 
@@ -253,7 +253,7 @@ class detection_engine:
 
             location_report = future_location.result()
             reg_result_personal_report = future_reg_personal.result()
-            ca_statement_report = future_ca.result()
+            # ca_statement_report = future_ca.result()
             em_result_report = future_em.result()
             image_result_report = future_image.result()
 
@@ -262,13 +262,13 @@ class detection_engine:
         # reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
         reg_result_financial_report = self.regex_report_financial(text)
         reg_result_contact_report = self.regex_report_contact(text)
-        # ca_statement_report = self.report_generator.CA_report_generation(text)
+        ca_statement_report = self.report_generator.CA_report_generation(text)
         gi_result_report = self.report_generator.GF_report(text)
         # em_result_report = self.report_generator.EM_report(text)
         md_result_report = self.report_generator.MD_report(text)
         # image_result_report = self.report_generator.Image_report_generation(path_)
         rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
-
+        # ca_statement_report = self.report_generator.CA_report_generation(text)
         # ner_result_text = self.report_generator.ner_report_text(text)
         ner_pdf_bytes = self.report_generator.ner_report_text(text, path_)
         pdf_base64 = base64.b64encode(ner_pdf_bytes.read()).decode('utf-8')
