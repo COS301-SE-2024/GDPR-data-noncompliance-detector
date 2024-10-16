@@ -106,7 +106,7 @@ class backend_entry:
         # Here I am sending the data to supabase as soon as the report is generated
         try:
             response = supabase.table('violations_reports').insert(data).execute()
-            print("Report successfully saved to the database", response)
+            # print("Report successfully saved to the database", response)
             # return response
         except Exception as e:
             print("An error occured while saving the report to the database", e)

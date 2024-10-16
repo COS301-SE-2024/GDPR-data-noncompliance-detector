@@ -259,8 +259,9 @@ class report_generation_layer:
         c = canvas.Canvas(output_file, pagesize = A4)
         width, height = A4
 
-        # font_path = os.path.join(os.path.dirname(__file__), 'Mediator Narrow Web Extra Bold.ttf')
-        font_path = self.get_resource_path('assets/report_generation/Mediator Narrow Web Extra Bold.ttf')
+
+        font_path = os.path.join(os.path.dirname(__file__), 'Mediator Narrow Web Extra Bold.ttf')
+        # font_path = self.get_resource_path('assets/report_generation/Mediator Narrow Web Extra Bold.ttf')
         pdfmetrics.registerFont(TTFont('MediatorNarrowExtraBold', font_path))
 
         c.setFillColor(colors.lightseagreen)
@@ -276,8 +277,8 @@ class report_generation_layer:
         c.drawString(20 * mm, height - 32 * mm, "Email: aprilfour301@gmail.com")
 
     
-        # logo_path = os.path.join(os.path.dirname(__file__), 'GND_LSG.jpg')
-        logo_path = self.get_resource_path('assets/report_generation/GND_LSG.jpg')
+        logo_path = os.path.join(os.path.dirname(__file__), 'GND_LSG.jpg')
+        # logo_path = self.get_resource_path('assets/report_generation/GND_LSG.jpg')
         logo_width = 35 * mm
         logo_height = 30 * mm
         c.drawImage(logo_path, width - logo_width - 25 * mm, height - logo_height - 5 * mm, width = logo_width, height = logo_height)
@@ -350,8 +351,8 @@ class report_generation_layer:
 
         y_position = height - 100 * mm
 
-        # icon_path = os.path.join(os.path.dirname(__file__), 'circle-question-regular.jpg')
-        icon_path = self.get_resource_path('assets/report_generation/circle-question-regular.jpg')
+        icon_path = os.path.join(os.path.dirname(__file__), 'circle-question-regular.jpg')
+        # icon_path = self.get_resource_path('assets/report_generation/circle-question-regular.jpg')
         icon_width = 3 * mm 
         icon_height = 3 * mm
 

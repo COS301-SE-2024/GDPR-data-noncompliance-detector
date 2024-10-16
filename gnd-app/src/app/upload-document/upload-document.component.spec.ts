@@ -1,255 +1,150 @@
-// import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-// import { UploadDocumentComponent } from './upload-document.component';
-// import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-// import { DebugElement } from '@angular/core';
-// import { By } from '@angular/platform-browser';
-// import { NO_ERRORS_SCHEMA } from '@angular/core';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { ActivatedRoute } from '@angular/router';
-// import { of } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UploadDocumentComponent } from './upload-document.component';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { WalkthroughService } from '../services/walkthrough.service';
+import { VisualizationService } from '../services/visualization.service';
+import { of, Subject } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
 
-// describe('UploadDocumentComponent', () => {
-//   let component: UploadDocumentComponent;
-//   let fixture: ComponentFixture<UploadDocumentComponent>;
-//   let httpMock: HttpTestingController;
-//   let debugElement: DebugElement; 
+describe('UploadDocumentComponent', () => {
+  let component: UploadDocumentComponent;
+  let fixture: ComponentFixture<UploadDocumentComponent>;
+  let httpTestingController: HttpTestingController;
+  let visualizationServiceSpy: jasmine.SpyObj<VisualizationService>;
+  let walkthroughServiceSpy: jasmine.SpyObj<WalkthroughService>;
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       imports: [RouterTestingModule, HttpClientTestingModule, UploadDocumentComponent],
-//       providers: [
-//         {
-//           provide: ActivatedRoute,
-//           useValue: {
-//             paramMap: of({
-//               get: (key: string) => {
-//                 switch(key) {
-//                   case 'fileType': return 'someFileType';
-//                   default: return null;
-//                 }
-//               }
-//             })
-//           }
-//         }
-//       ],
-//       schemas: [NO_ERRORS_SCHEMA]
-//     })
-//     .compileComponents();
+  beforeEach(async () => {
+    const visualizationSpy = jasmine.createSpyObj('VisualizationService', ['getUploadState', 'setUploadState', 'setData', 'setPDFState']);
+    const walkthroughSpy = jasmine.createSpyObj('WalkthroughService', ['walkthroughRequested$']);
 
-//     fixture = TestBed.createComponent(UploadDocumentComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//     debugElement = fixture.debugElement;
-//     httpMock = TestBed.inject(HttpTestingController);
-//   });
+    walkthroughSpy.walkthroughRequested$ = new Subject<void>();
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
+    await TestBed.configureTestingModule({
+      imports: [UploadDocumentComponent, HttpClientTestingModule],
+      providers: [
+        { provide: WalkthroughService, useValue: walkthroughSpy },
+        { provide: VisualizationService, useValue: visualizationSpy },
+      ]
+    }).compileComponents();
 
-//   afterEach(() => {
-//     httpMock.verify();
-//   });
+    fixture = TestBed.createComponent(UploadDocumentComponent);
+    component = fixture.componentInstance;
+    httpTestingController = TestBed.inject(HttpTestingController);
+    visualizationServiceSpy = TestBed.inject(VisualizationService) as jasmine.SpyObj<VisualizationService>;
+    walkthroughServiceSpy = TestBed.inject(WalkthroughService) as jasmine.SpyObj<WalkthroughService>;
+    fixture.detectChanges();
+  });
 
-//   // it('should call onFileSelected and upload file', () => {
-//   //   const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
-//   //   const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
+  afterEach(() => {
+    httpTestingController.verify();
+  });
 
-//   //   spyOn(component, 'onFileSelected').and.callThrough();
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-//   //   const dataTransfer = new DataTransfer();
-//   //   dataTransfer.items.add(file);
-
-//   //   input.files = dataTransfer.files;
-//   //   input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-
-//   //   fixture.detectChanges();
-
-//   //   expect(component.onFileSelected).toHaveBeenCalled();
-//   //   expect(component.fileName).toBe('test.txt');
-
-//   //   const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
-//   //   expect(req.request.method).toBe('POST');
-//   //   req.flush({ fileName: 'test.txt', result: 'file processed' });
-
-//   //   fixture.detectChanges();
-
-//   //   expect(component.uploadedFileName).toBe('test.txt');
-//   //   expect(component.result).toBe('file processed'.replace(/\n/g, '<br>'));
-//   // });
-//   it('should call onFileSelected and upload file', fakeAsync(() => {
-//     const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
-//     const input = fixture.debugElement.query(By.css('input[type="file"]')).nativeElement;
+  it('should process a file dropped and call the API', () => {
+    const mockFile = new File(['sample text'], 'sample.txt', { type: 'text/plain' });
   
-//     spyOn(component, 'onFileSelected').and.callThrough();
+    const mockDragEvent = {
+      preventDefault: () => {},
+      stopPropagation: () => {},
+      dataTransfer: {
+        files: [mockFile]
+      }
+    } as unknown as DragEvent;
   
-//     input.dispatchEvent(new Event('change'));
-//     input.files = [file];
+    spyOn(component, 'onFileDropped').and.callThrough();
   
-//     fixture.detectChanges();
-//     tick(); 
+    component.onFileDropped(mockDragEvent);
+    expect(component.onFileDropped).toHaveBeenCalled();
   
-//     expect(component.onFileSelected).toHaveBeenCalled();
-//     expect(component.fileName).toBe('test.txt');
+    const req = httpTestingController.expectOne('http://127.0.0.1:8000/file-upload-new');
+    expect(req.request.method).toEqual('POST');
+  }); 
+
+  it('should activate drag state on dragover', () => {
+    const dragEvent = new DragEvent('dragover');
+    component.onDragOver(dragEvent);
+    expect(component.isDragActive).toBeTrue();
+  });
+
+  it('should deactivate drag state on dragleave', () => {
+    const dragEvent = new DragEvent('dragleave');
+    component.onDragLeave(dragEvent);
+    expect(component.isDragActive).toBeFalse();
+  });
+
+  it('should correctly calculate the metric score', () => {
+    component.personal = 10;
+    component.financialData = 5;
+    component.contactData = 3;
+    component.medicalData = 7;
+    component.genetic_data = 4;
+    component.ethnicData = 2;
+    component.biometricData = 8;
+
+    spyOn(Math, 'exp').and.callFake((x) => x);
+
+    component.calculateMetric();
+
+    expect(component.metric_score).toBeDefined();
+  });
+
+  it('should trigger walkthrough if user has not seen it', () => {
+    spyOn(localStorage, 'getItem').and.returnValue(null);
+    spyOn(localStorage, 'setItem');
+    spyOn(component, 'startIntro');
+
+    component.ngOnInit();
+    expect(component.startIntro).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalledWith('hasSeenIntro', 'true');
+  });
+
+  it('should subscribe to walkthroughService', () => {
+    const walkthroughServiceSubject = new Subject<void>();
+    walkthroughServiceSpy.walkthroughRequested$ = walkthroughServiceSubject.asObservable();
+
+    spyOn(component, 'startIntro');
+    component.ngOnInit();
+
+    walkthroughServiceSubject.next();
+    expect(component.startIntro).toHaveBeenCalled();
+  });
+
+  it('should clear analysis when clearAnalysis is called', () => {
+    component.response = { data: 'sample' };
+    component.documentStatus = 'Non-Compliant';
+    component.nerCount = 5;
+
+    component.clearAnalysis();
+
+    expect(component.response).toBeNull();
+    expect(component.documentStatus).toEqual('');
+    expect(component.nerCount).toEqual(0);
+  });
+
+  it('should handle API error gracefully on upload', () => {
+    const mockFile = new File(['sample text'], 'sample.txt', { type: 'text/plain' });
   
-//     const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
-//     expect(req.request.method).toBe('POST');
-//     req.flush({
-//       fileName: 'test.txt',
-//       result: 'file processed',
-//       documentStatus: 'Compliant',
-//       nerCount: 5,
-//       location: 'New York',
-//       personalData: 'Present',
-//       financialData: 'Present',
-//       contactData: 'Present',
-//       medicalData: 'Absent',
-//       ethnicData: 'Absent',
-//       biometricData: 'Absent',
-//       consentAgreement: 'Consent obtained'
-//     });
+    const mockDragEvent = {
+      preventDefault: () => {},
+      stopPropagation: () => {},
+      dataTransfer: {
+        files: [mockFile]
+      }
+    } as unknown as DragEvent;
   
-//     fixture.detectChanges();
-//     tick();
+    spyOn(window, 'alert').and.callFake(() => {});
   
-//     expect(component.result).toBe('file processed');
-//     expect(component.documentStatus).toBe('Compliant');
+    component.onFileDropped(mockDragEvent);
+  
+    const req = httpTestingController.expectOne('http://127.0.0.1:8000/file-upload-new');
+    req.flush({}, { status: 500, statusText: 'Server Error' });
+  
+    expect(window.alert).toHaveBeenCalledWith(
+      "Cannot process File. Please try again.\nEnsure the file type meets the required format."
+    );
+  });
+});
 
-//   }));
-
-// it('should display the analysis result in the analysis window', () => {
-//   const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
-//   const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
-
-//   const dataTransfer = new DataTransfer();
-//   dataTransfer.items.add(file);
-
-//   input.files = dataTransfer.files;
-//   input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-
-//   const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
-//   req.flush({ fileName: 'test.txt', result: 'line1\nline2' });
-
-//   fixture.detectChanges();
-
-//   const analysisHeader = debugElement.query(By.css('.analysis-box-header')).nativeElement;
-//   const resultContent = debugElement.query(By.css('.result-content')).nativeElement;
-
-//   expect(analysisHeader.textContent).toContain('Analysis Result:');
-//   expect(resultContent.innerHTML).toContain('<b>line1</b><br>line2');
-// });
-// });
-// import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-// import { UploadDocumentComponent } from './upload-document.component';
-// import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-// import { DebugElement } from '@angular/core';
-// import { By } from '@angular/platform-browser';
-// import { NO_ERRORS_SCHEMA } from '@angular/core';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { ActivatedRoute } from '@angular/router';
-// import { of } from 'rxjs';
-
-// describe('UploadDocumentComponent', () => {
-//   let component: UploadDocumentComponent;
-//   let fixture: ComponentFixture<UploadDocumentComponent>;
-//   let httpMock: HttpTestingController;
-//   let debugElement: DebugElement;
-
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       imports: [RouterTestingModule, HttpClientTestingModule, UploadDocumentComponent],
-//       providers: [
-//         {
-//           provide: ActivatedRoute,
-//           useValue: {
-//             paramMap: of({
-//               get: (key: string) => {
-//                 switch (key) {
-//                   case 'fileType': return 'someFileType';
-//                   default: return null;
-//                 }
-//               }
-//             })
-//           }
-//         }
-//       ],
-//       schemas: [NO_ERRORS_SCHEMA]
-//     })
-//     .compileComponents();
-
-//     fixture = TestBed.createComponent(UploadDocumentComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//     debugElement = fixture.debugElement;
-//     httpMock = TestBed.inject(HttpTestingController);
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-
-//   afterEach(() => {
-//     httpMock.verify();
-//   });
-
-//   it('should call onFileSelected and upload file', fakeAsync(() => {
-//     const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
-//     const input = fixture.debugElement.query(By.css('input[type="file"]')).nativeElement;
-
-//     spyOn(component, 'onFileSelected').and.callThrough();
-
-//     input.dispatchEvent(new Event('change'));
-//     input.files = [file];
-
-//     fixture.detectChanges();
-//     tick();
-
-//     expect(component.onFileSelected).toHaveBeenCalled();
-//     expect(component.fileName).toBe('test.txt');
-
-//     const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
-//     expect(req.request.method).toBe('POST');
-//     req.flush({
-//       fileName: 'test.txt',
-//       result: 'file processed',
-//       documentStatus: 'Compliant',
-//       nerCount: 5,
-//       location: 'New York',
-//       personalData: 'Present',
-//       financialData: 'Present',
-//       contactData: 'Present',
-//       medicalData: 'Absent',
-//       ethnicData: 'Absent',
-//       biometricData: 'Absent',
-//       consentAgreement: 'Consent obtained'
-//     });
-
-//     fixture.detectChanges();
-//     tick();
-
-//     expect(component.result).toBe('file processed');
-//     expect(component.documentStatus).toBe('Compliant');
-//   }));
-
-//   it('should display the analysis result in the analysis window', () => {
-//     const file = new File(['file content'], 'test.txt', { type: 'text/plain' });
-//     const input = debugElement.query(By.css('input[type="file"]')).nativeElement;
-
-//     const dataTransfer = new DataTransfer();
-//     dataTransfer.items.add(file);
-
-//     input.files = dataTransfer.files;
-//     input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-
-//     const req = httpMock.expectOne('http://127.0.0.1:8000/file-upload-new');
-//     req.flush({ fileName: 'test.txt', result: 'line1\nline2' });
-
-//     fixture.detectChanges();
-
-//     const analysisHeader = debugElement.query(By.css('.analysis-box-header')).nativeElement;
-//     const resultContent = debugElement.query(By.css('.result-content')).nativeElement;
-
-//     expect(analysisHeader.textContent).toContain('Analysis Result:');
-//     expect(resultContent.innerHTML).toContain('<b>line1</b><br>line2');
-//   });
-// });
