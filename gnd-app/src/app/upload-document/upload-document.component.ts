@@ -6,21 +6,22 @@ import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import {Subscription} from "rxjs";
 import { VisualizationComponent } from "../visualization/visualization.component";
-import { VisualizationService } from '../services/visualization.service';
+import { VisualizationService} from '../services/visualization.service';
 import * as CryptoJS from 'crypto-js';
 import { mode } from 'crypto-js';
 import { EncryptionKeyService } from '../services/encryption-key.service';
 import 'crypto-js/mode-ctr';
 import { initFlowbite } from 'flowbite';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-upload-document',
   standalone: true,
-  imports: [CommonModule, RouterModule, VisualizationComponent],
+  imports: [CommonModule, RouterModule, VisualizationComponent, NgApexchartsModule],
   templateUrl: './upload-document.component.html',
   styleUrls: ['./upload-document.component.css']
 })
-export class UploadDocumentComponent implements OnInit{
+export class UploadDocumentComponent implements OnInit, OnDestroy{
   private walkthroughSubscription?: Subscription;
   response: any;
   bar_plot: any;
@@ -44,7 +45,7 @@ export class UploadDocumentComponent implements OnInit{
   personal: number = 0;
   totalViolations: number = 0;
   violationPercentage: number = 0;
-  isFlipped = false;
+  isVisualizing: boolean = false;
 
   constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 
@@ -63,36 +64,11 @@ export class UploadDocumentComponent implements OnInit{
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
       this.startIntro();
     })
-    this.uploadState = this.visualizationService.getUploadState();
+    // this.uploadState = this.visualizationService.getUploadState();
     console.log("------------------------------------------------------------");
     console.log(this.uploadState);
-    if (this.uploadState) {
-      this.response = this.uploadState;
-      this.uploadedFileName = this.uploadState.fileName;
-          // this.result = this.processResult(response.result);
-          // console.log(response.result.score.Biometric)
-
-          this.documentStatus = this.docStatus(this.uploadState.score.Status);
-          this.nerCount = this.uploadState.score.NER;
-          this.location = this.locationStatus(this.uploadState.score.location);
-          this.personalData = this.uploadState.score.Personal;
-          this.financialData = this.uploadState.score.Financial;
-          this.contactData = this.uploadState.score.Contact;
-          this.medicalData = this.uploadState.score.Medical;
-          this.ethnicData = this.uploadState.score.Ethnic;
-          this.biometricData = this.uploadState.score.Biometric;
-          this.geneticData = this.uploadState.score.Genetic;
-          this.consentAgreement = this.consentAgreementStatus(this.uploadState.score["Consent Agreement"]);
-          this.response = this.uploadState.result;
-          console.log(this.nerCount);
-          this.checkdata();
-          this.personal = this.nerCount + this.personalData + this.financialData + this.contactData;
-          this.result = "Y";
-          this.visualizationService.setUploadState(this.response.result);
-          this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
-          this.calculateMetric();
-    }
   }
+
   ngOnDestroy() {
     if(this.walkthroughSubscription)
       this.walkthroughSubscription.unsubscribe();
@@ -143,6 +119,7 @@ export class UploadDocumentComponent implements OnInit{
         console.log("Uploaded File Name: ", this.uploadedFileName);
         this.result = '';
         this.isUploading = true;
+        this.visualizationService.clearScanData();
         const formData = new FormData();
         formData.append("file", file);
         formData.append("fileName", file.name);
@@ -152,11 +129,9 @@ export class UploadDocumentComponent implements OnInit{
             try {
               const encryptedData = CryptoJS.enc.Base64.parse(response.result);
               console.log(encryptedData);
-              // Separate IV (first 16 bytes) and ciphertext (remaining bytes)
               const iv = CryptoJS.lib.WordArray.create(encryptedData.words.slice(0, 4));
               const ciphertext = CryptoJS.lib.WordArray.create(encryptedData.words.slice(4));
               console.log(ciphertext);
-              // Decrypt using CryptoJS, ensuring padding and mode are the same as in Python
               const decryptedBytes = CryptoJS.AES.decrypt(
                 CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
                 CryptoJS.enc.Utf8.parse(this.encryption_key || ''),
@@ -196,6 +171,9 @@ export class UploadDocumentComponent implements OnInit{
               this.result = "Y";
               this.isUploading = false;
 
+              this.visualizationService.setScanData(res);
+              console.log('UploadDocumentComponent: Scan data set in service.')
+
             } catch (error) {
               console.error("Decryption failed:", error);
               this.isUploading = false;
@@ -234,6 +212,7 @@ export class UploadDocumentComponent implements OnInit{
       console.log("Uploaded File Name: ", this.uploadedFileName);
       this.result = '';
       this.isUploading = true;
+      this.visualizationService.clearScanData();
   
       const formData = new FormData();
       formData.append("file", file);
@@ -285,6 +264,8 @@ export class UploadDocumentComponent implements OnInit{
                 this.checkdata();
                 this.result = "Y";
                 this.isUploading = false;
+                this.visualizationService.setScanData(res);
+                console.log('UploadDocumentComponent: Scan data set in service.');
 
               } catch (error) {
                 console.error("Decryption failed:", error);
@@ -350,17 +331,7 @@ export class UploadDocumentComponent implements OnInit{
   }
 
   onVisualize() {
-    this.visualizationService.setUploadState(this.response);
-    if (this.response) {
-      this.visualizationService.setData(this.response);
-      this.router.navigate(['/visualization']);
-    }
-    else {
-      if (this.uploadState) {
-        this.visualizationService.setData(this.uploadState);
-        this.router.navigate(['/visualization']);
-      }
-    }
+    this.isVisualizing = !this.isVisualizing;
   }
 
   calculateMetric() {
@@ -404,14 +375,14 @@ export class UploadDocumentComponent implements OnInit{
   }
 
   onAnnotate() {
-    this.visualizationService.setPDFState(this.pdf_data);
-    console.log(this.pdf_data);
-    this.visualizationService.setUploadState(this.response);
-    if (this.response) {
-      this.visualizationService.setPDFState(this.pdf_data);
-      this.visualizationService.setUploadState(this.response);
-      this.router.navigate(['/annotate']);
-    }
+    // this.visualizationService.setPDFState(this.pdf_data);
+    // console.log(this.pdf_data);
+    // this.visualizationService.setUploadState(this.response);
+    // if (this.response) {
+    //   this.visualizationService.setPDFState(this.pdf_data);
+    //   this.visualizationService.setUploadState(this.response);
+    //   this.router.navigate(['/annotate']);
+    // }
   }
 
   clearAnalysis() {
@@ -443,9 +414,7 @@ export class UploadDocumentComponent implements OnInit{
       fileInput.value = '';
     }
 
-    this.visualizationService.setUploadState(null);
-    this.visualizationService.setData(null);
-    this.visualizationService.setPDFState(null);
+
   }
 
   testYM() {

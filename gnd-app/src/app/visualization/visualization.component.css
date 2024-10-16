@@ -12,137 +12,64 @@
   font-style: normal;
 }
 
-.mock {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin: 0 20px 10px; /* Consolidated margins */
-}
-
-.mock:hover {
-  background-color: darkred;
-}
-
-.header-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-bottom: 2.5em;
-  padding-top: 1em;
-}
-
-.header {
-  font-family: "Mediator Narrow Web Extra Bold";
-  position: relative;
-  display: inline-block;
-  font-size: 35px;
-}
-
-.header::after {
-  content: '';
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: #8EBA12;
-  border-radius: 50%;
-  transform: translateX(-100%);
-}
-
-/* Grid container */
-.grid-container {
-  display: grid;
-  grid-template-areas: 
-            "a b c" 
-            "d d c" 
-            "d d c";
-  grid-gap: 20px; 
-  margin: 0px 20px; 
-  padding-bottom: 20px; 
-}
-
-/* Grid items */
-#violations {
-  grid-area: a;
-}
-
-#risk-score {
-  grid-area: b;
-}
-
-/* Adjust the #articles grid item */
-#articles {
-  grid-area: c;
-  align-self: start; /* Make it align to the top of the grid */
-  max-height: 600px; /* Limit the height to prevent over-expansion */
-  overflow-y: auto; /* Add scroll if content exceeds the max height */
-}
-
-#location {
-  grid-area: d;
-}
-
-.canvas-wrapper {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* src/app/visualization/visualization.component.css */
+.visualization-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  min-height: 200px; /* Set a minimum height to prevent shrinking too much */
-  max-height: 100%;  /* Let it grow with content, but not exceed grid container */
-  width: 100%; /* Ensure it fits the grid space */
 }
 
-/* Styling for the header inside the canvas wrapper */
-.canvas-wrapper .header1 {
-  font-family: "Mediator Narrow Web Extra Bold";
-  font-size: 20px;
-  margin-bottom: 15px; /* Space between header and canvas */
-  text-align: center;
-  width: 100%; /* Ensure header spans full width of the container */
-}
-
-/* Canvas styling */
-canvas {
-  max-width: 100% !important;
-  height: auto; 
-}
-
-/* Specific styling for radar and circular graphs */
-#violations canvas, 
-#risk-score canvas { 
-  max-height: 400px; 
-  width: auto; 
-}
-
-/* Text box styling */
-.text-box {
-  margin-top: 10px;
-  width: 400px; 
-  height: auto; 
-  border: 2px solid #ccc;
+.explanatory-card {
+  background-color: #f3f4f6;
+  max-width: 600px; /* Adjusted for better readability */
+  padding: 20px;
   border-radius: 8px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  word-wrap: break-word; 
-  white-space: normal; 
-  overflow: auto; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 
-/* Location map styling */
-#map {
-  width: 100%; 
-  height: 100%; 
-  background-color: lightgrey; 
+#radial-chart, .apx-chart {
+  max-width: 600px; /* Increased width for better visibility */
+  width: 100%;
 }
+
+.legend-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: black;
+}
+
+.legend-container li {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.legend-container li:last-child {
+  margin-right: 0;
+}
+
+.legend-container span {
+  border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+  .visualization-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  #radial-chart, .explanatory-card, .legend-container {
+    margin: 0 20px;
+  }
+}
+
+.text-gray-500 {
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+
 
 

@@ -7,12 +7,15 @@ import axios from 'axios';
 import * as introJs from 'intro.js/intro.js';
 import { WalkthroughService } from '../services/walkthrough.service';
 import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
+import { VisualizationComponent } from "../visualization/visualization.component";
+import { VisualizationService} from '../services/visualization.service';
+import { NgApexchartsModule } from 'ng-apexcharts';
 // import { error } from 'console';
 
 @Component({
   selector: 'app-outlook-inbox',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, VisualizationComponent, NgApexchartsModule],
   templateUrl: './outlook-inbox.component.html',
   styleUrls: ['./outlook-inbox.component.css']
 })
@@ -46,12 +49,14 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   violationPercentage: number = 0;
   personal: number = 0;
   ragScoreArray: string[] = [];
+  isVisualizing: boolean = false;
 
   constructor(
     private http: HttpClient,
     private walkthroughService: WalkthroughService,
     private router: Router,
-    private reportGenerationService: ReportGenerationService
+    private reportGenerationService: ReportGenerationService,
+    private visualizationService: VisualizationService
   ) { }
 
   ngOnInit(): void {
@@ -177,6 +182,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   
     this.location = country;
 
+    this.visualizationService.clearScanData();
+
     const payload = { path: filePath };
     this.http.post(this.iUrl, payload).subscribe({
       next: (response: any) => {
@@ -217,6 +224,9 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         // this.checkdata();
 
         this.result = "Y";
+
+        this.visualizationService.setScanData(score);
+        console.log('UploadDocumentComponent: Scan data set in service.')
 
       },
       error: (error: any) => {
@@ -344,5 +354,9 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
 
     console.log( "vios:" + this.violationPercentage);
     
+  }
+
+  onVisualize() {
+    this.isVisualizing = !this.isVisualizing;
   }
 }

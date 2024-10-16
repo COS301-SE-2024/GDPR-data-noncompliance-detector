@@ -27,7 +27,7 @@
     "@types/d3": "^7.4.3",
     "apexcharts": "^3.53.0",
     "axios": "^1.7.2",
-    "chart.js": "^4.4.4",
+    "chart.js": "^4.4.5",
     "chartjs-chart-geo": "^4.3.1",
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
