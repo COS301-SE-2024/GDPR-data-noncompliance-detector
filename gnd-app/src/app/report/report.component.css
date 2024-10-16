@@ -49,12 +49,14 @@
   font-family: 'Mediator Narrow Web Extra Bold';
   font-size: 2em;
   margin-bottom: 0.5em;
+  color:white;
 }
 
 .slide-description {
   font-family: 'Roboto Bold';
   font-size: 1.2em;
   margin-top: 0.5em;
+  color: white;
 }
 
 .carousel-controls {
