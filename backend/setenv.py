@@ -1,9 +1,11 @@
-import subprocess
+import os
 
-var_name = 'GND_ENCRYPTION_KEY'
-var_value = 'IWIllreplacethislaterIWIllreplac'
+# Define the environment variable and its value
+env_var_name = 'SYS VAR x64'
+env_var_value = 'qpn0Dx9zaqjQq9Lgc4b5seXOQsus3ZGu'
 
-# Set system-wide environment variable (requires admin rights)
-subprocess.run(['setx', '/M', var_name, var_value], shell=True)
+# Use setx to set the environment variable permanently
+os.system(f'setx "{env_var_name}" "{env_var_value}"')
 
-print(f"System environment variable '{var_name}' set to '{var_value}'.")
+# Optionally, you can print it to verify
+print(f'{env_var_name} set to: {env_var_value}')
