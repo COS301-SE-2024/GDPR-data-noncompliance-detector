@@ -262,7 +262,7 @@ def read_downloads_results():
         with open(file_, 'r') as file:
             content = file.read()
         
-        print(content)
+        # print(content)
         return jsonify({"content": content})
     
     except Exception as e:

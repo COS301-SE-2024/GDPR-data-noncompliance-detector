@@ -105,9 +105,13 @@
           <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-0">Summary</h3>
           <div class="p-2 grid grid-cols-[20%_1fr] gap-x-6">
             <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-              <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Compliance Status</p>
-              <p *ngIf="documentStatus == 'Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2 status-compliant">{{ documentStatus }}</p>
-              <p *ngIf="documentStatus == 'Non-Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2 status-non-compliant">{{ documentStatus }}</p>
+              <p class="text-[#60758a] text-sm font-normal leading-normal pt-2.5">Compliance Status</p>
+              <p *ngIf="documentStatus == 'Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
+                <i class="fas fa-check-circle w-5 h-5 text-green-500 px-4"></i>
+              </p>
+              <p *ngIf="documentStatus == 'Non-Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-non-compliant">{{ documentStatus }}
+                <i class="fas fa-exclamation-triangle w-5 h-5 text-red-400 px-4"></i>
+              </p>
             </div>
             <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
               <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Total Issues Detected</p>

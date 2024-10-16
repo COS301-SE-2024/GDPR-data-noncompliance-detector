@@ -44,6 +44,7 @@ export class UploadDocumentComponent implements OnInit{
   personal: number = 0;
   totalViolations: number = 0;
   violationPercentage: number = 0;
+  isFlipped = false;
 
   constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 

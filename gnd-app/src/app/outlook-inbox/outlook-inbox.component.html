@@ -85,12 +85,27 @@
           <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-2">Summary</h3>
           <div class="p-2 grid grid-cols-[20%_1fr] gap-x-6">
             <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal pt-2.5">Compliance Status</p>
+              <p *ngIf="documentStatus == 'Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
+                <i class="fas fa-check-circle w-5 h-5 text-green-500 px-4"></i>
+              </p>
+              <p *ngIf="documentStatus == 'Non-Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-non-compliant">{{ documentStatus }}
+                <i class="fas fa-exclamation-triangle w-5 h-5 text-red-400 px-4"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Valid Consent Agreement</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ consentAgreement }}
+                <i *ngIf="consentAgreement === 'The document does not appear to contain any data consent agreements'" class="fas fa-exclamation-triangle w-3 h-3 text-gray-500 px-4"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
               <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Total Issues Detected</p>
-              <!-- <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ totalViolations }} issues</p> -->
+              <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ totalViolations }} issues</p>
             </div>
             <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
               <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Compliance Score</p>
-              <!-- <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ violationPercentage }}%</p> -->
+              <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ violationPercentage }}%</p>
             </div>
             <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
               <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Personal Data</p>
@@ -204,29 +219,25 @@
                 </span>
               </p>
             </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">GDPR Articles Violated:</p>
+              <ul class="text-[#111418] text-sm font-normal leading-normal pt-2">
+                <li *ngFor="let article of ragScoreArray" style="margin-bottom: 8px;">
+                  Article: {{ article }}
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="flex flex-col gap-3 p-4">
             <div class="flex gap-6 justify-between">
               <p class="text-[#111418] text-base font-medium leading-normal pt-2">Compliance Score</p>
-              <!-- <p class="text-[#111418] text-sm font-normal leading-normal">{{ violationPercentage }}%</p> -->
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ violationPercentage }}%</p>
             </div>
             <div class="rounded bg-[#dbe0e6]">
-              <!-- <div class="h-2 rounded bg-[#111418]" [style.width.%]="violationPercentage"></div> -->
+              <div class="h-2 rounded bg-[#111418]" [style.width.%]="violationPercentage"></div>
             </div>
-            <!-- <p class="text-[#60758a] text-sm font-normal leading-normal">{{ violationPercentage }}% of your data is GDPR compliant</p> -->
+            <p class="text-[#60758a] text-sm font-normal leading-normal">{{ violationPercentage }}% of your data is GDPR compliant</p>
           </div>
-        </div>
-      </div>
-
-      <div class="consent-status-container">
-        <div class="consent-status">
-          <span class="consent-agreement">{{ consentAgreement }}</span>        
-        </div>
-      </div>
-
-      <div class="rag-status-container">
-        <div class="rag-status">
-          <span class="rag-agreement">{{ ragScore }}</span>        
         </div>
       </div>
     </div>

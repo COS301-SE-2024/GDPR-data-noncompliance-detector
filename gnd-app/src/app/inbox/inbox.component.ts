@@ -105,6 +105,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   geneticData: number = 0;
   consentAgreement: string = "";
   ragScore: string = "";
+  totalViolations: number = 0;
 
   docStatus(status: number): string {
     if(status <= 0.6){
@@ -155,7 +156,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         
         const score = dat.result.score;
 
-        // this.documentStatus = this.docStatus(score.Status);
+        this.documentStatus = this.docStatus(score.Status);
 
         this.nerCount = score.NER;
         // this.location = this.locationStatus(score.Location);
@@ -169,6 +170,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.geneticData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
         this.ragScore = score.RAG_Statement;
+        this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
 
         // this.checkdata();
 
