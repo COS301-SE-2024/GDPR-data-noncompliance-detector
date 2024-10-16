@@ -1,62 +1,55 @@
-<!-- <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
-  rel="stylesheet">
-<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet"> -->
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 
 <link rel="stylesheet" href="upload-document.component.css">
 
 <div class="main-content">
-  <div class="header-container">
+  <div class="header-container" *ngIf="!result">
     <header class="header">
-      Upload a File
+      Upload your file for GDPR detection
     </header>
   </div>
+  <p class="sub-header" *ngIf="!result">
+    We'll scan your file for GDPR compliance and provide a detailed report. We will not store or share the file you upload.
+  </p>
 
   <div class="containers">
-    <div class="inbox-rectangle">
-      <h2 class="inbox-header">
-        Upload a File
-      </h2>
-      <div class="divider"></div>
-
+    <div class="inbox-rectangle" *ngIf="!result">
       <div class="upload-container">
-        <div class="flex items-center justify-center w-full" [class.dropzone-active]="isDragActive"
-          [class.dropzone-disabled]="isUploading" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
-          (drop)="onFileDropped($event)" id="uploadFile" [style.pointer-events]="isUploading ? 'none' : 'auto'">
-          <label for="dropzone-file"
-            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-              </svg>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload a
-                  file</span> or drag and drop</p>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Accepted File Types:<span class="font-semibold">
-                pdf, docx, xlsx</span></p>
-            </div>
-            <!-- <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)" /> -->
-            <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)"
-              [disabled]="isUploading" accept=".pdf,.docx,.xlsx" />
-          </label>
+        <div *ngIf="!isUploading">
+          <div class="flex items-center justify-center w-full"
+               [class.dropzone-active]="isDragActive"
+               [class.dropzone-disabled]="isUploading"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave($event)"
+               (drop)="onFileDropped($event)"
+               id="uploadFile"
+               [style.pointer-events]="isUploading ? 'none' : 'auto'">
+            <label for="dropzone-file"
+                   class="flex flex-col items-center justify-center w-96 h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600" style="background-color: #1F2937">
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16" style="color: whitesmoke;">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                </svg>
+                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400" style="color: whitesmoke;">
+                  <span>Click to upload a file</span> or drag and drop
+                </p>
+                <!-- <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  Accepted File Types: pdf, docx, xlsx
+                </p> -->
+              </div>
+              <input id="dropzone-file" type="file" class="hidden" (change)="onFileSelected($event)"
+                     [disabled]="isUploading" accept=".pdf,.docx,.xlsx" />
+            </label>
+          </div>
         </div>
-      </div>
 
-    </div>
-
-    <div class="analysis-rectangle">
-      <h2 class="analysis-header">
-        Analysis
-      </h2>
-      <div class="divider"></div>
-
-      <div class="upload-container">
-        <div *ngIf="!result && uploadedFileName"
-          class="flex items-center justify-center w-full h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+        <div *ngIf="isUploading" class="flex items-center justify-center w-full h-64">
           <div role="status">
             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-              viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                 fill="currentColor" />
@@ -68,119 +61,157 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="comp-status-container">
-        <div class="comp-status">
-          <span *ngIf="documentStatus == 'Compliant'" class="status-compliant">{{ documentStatus }}</span>
-          <span *ngIf="documentStatus == 'Non-Compliant'" class="status-non-compliant">{{ documentStatus }}</span>
-        </div>
+    <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0" aria-label="Sidebar" *ngIf="result" style="background-color: #111827 !important;">
+      <div class="h-full px-1 py-4 overflow-y-auto flex flex-col justify-center" style="background-color: #111827;">
+        <ul class="space-y-2 font-medium">
+          <li>
+            <a (click)="onDownload()" class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
+              <i class="fas fa-download w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+              <span class="ml-3">Download Report</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="onVisualize()" id="vizButton" class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
+              <i class="fas fa-chart-bar w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+              <span class="ml-3">Visualisations</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="onAnnotate()" id="annoButton" class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
+              <i class="fas fa-exclamation-triangle w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+              <span class="ml-3">View Violations</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="clearAnalysis()" class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
+              <i class="fas fa-upload w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+              <span class="ml-3">Upload New File</span>
+            </a>
+          </li>
+        </ul>
       </div>
+    </aside>
 
-      <div class="upload-data" *ngIf="result || uploadState">
-
-        <div class="ner-data">
-          <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{
-            nerCount }} different individuals</p>
-        </div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Location:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ location }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Personal Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ personalData }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Financial Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ financialData }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Contact Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ contactData }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Medical Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ medicalData }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Ethnic Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ ethnicData }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Biometric Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ biometricData }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-        <div class="result-data">
-          <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Genetic Data:</p> <span
-            class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ genetic_data }}</span>
-        </div>
-
-        <div class="divider-text"></div>
-
-      </div>
-
-      <div class="consent-status-container" *ngIf="result">
-        <div class="consent-status">
-          <span class="consent-agreement">{{ consentAgreement }}</span>
-        </div>
-      </div>
-
-      <div class="rag-status-container" *ngIf="result">
-        <div class="rag-status">
-          <span class="rag-agreement">{{ ragScore }}</span>
-        </div>
-      </div>
-
-      <div class="upload-container">
-        <div class="analysis-data" *ngIf="!result && !uploadedFileName && !uploadState">
-          <p class="analysis-text" id="Report">Upload a file to view results</p>
+    <div class="analysis-rectangle ml-64" *ngIf="result">
+      <div class="px-40 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <div class="flex flex-wrap justify-between gap-3 p-4">
+            <div class="flex min-w-72 flex-col gap-3">
+              <p class="text-[#111418] tracking-light text-[32px] font-bold leading-tight">GDPR Compliance Scan</p>
+            </div>
+          </div>
+          <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-2">Summary</h3>
+          <div class="p-2 grid grid-cols-[20%_1fr] gap-x-6">
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Total Issues Detected</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ totalViolations }} issues</p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Compliance Score</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ violationPercentage }}%</p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Personal Data</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ personalData }} issues
+                <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer" data-tooltip-target="tooltip-personal-data"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Financial Data</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ financialData }} issues
+                <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer" data-tooltip-target="tooltip-financial-data"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Contact Data</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ contactData }} issues
+                <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer" data-tooltip-target="tooltip-contact-data"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Medical Data</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ medicalData }} issues
+                <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer" data-tooltip-target="tooltip-medical-data"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Ethnic Data</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ ethnicData }} issues
+                <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer" data-tooltip-target="tooltip-ethnic-data"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Biometric Data</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ biometricData }} issues
+                <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer" data-tooltip-target="tooltip-biometric-data"></i>
+              </p>
+            </div>
+            <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <p class="text-[#60758a] text-sm font-normal leading-normal">Genetic Data</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ geneticData }} issues
+                <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer" data-tooltip-target="tooltip-genetic-data"></i>
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-3 p-4">
+            <div class="flex gap-6 justify-between">
+              <p class="text-[#111418] text-base font-medium leading-normal">Compliance Score</p>
+              <p class="text-[#111418] text-sm font-normal leading-normal">{{ violationPercentage }}%</p>
+            </div>
+            <div class="rounded bg-[#dbe0e6]">
+              <div class="h-2 rounded bg-[#111418]" [style.width.%]="violationPercentage"></div>
+            </div>
+            <p class="text-[#60758a] text-sm font-normal leading-normal">{{ violationPercentage }}% of your data is GDPR compliant</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="buttons">
-    <button *ngIf="result" (click)="onDownload()" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
-      Report</button>
-    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/violations']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Violations</button> -->
-    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/report']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Report</button> -->
-    <button *ngIf="result" (click)="onVisualize()" id="vizButton" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualise</button>
-    <button *ngIf="result" (click)="onAnnotate()" id="annoButton" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View
-      Violations</button>
+<div id="tooltip-detected-issues" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  Number of issues detected in the document.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
 
-    <button *ngIf="result || uploadState" (click)="clearAnalysis()" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-      Clear
-    </button>
-  </div>
+<div id="tooltip-compliance-score" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  Percentage indicating how compliant the document is with GDPR.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
 
-  <div class="center-footer">
-    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">
-    GND may make mistakes. Please verify that your files are compliant with GDPR laws.</span></p>
-  </div>
+<div id="tooltip-personal-data" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  This may include personal data such as names, identification number, dates of birth etc.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-financial-data" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  This may include personal financial data such as banking details, tax numbers, account details etc.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-contact-data" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  This may include personal contact details such as phone numbers, email addresses and social media.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-medical-data" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  This may include personal medical data such as chronic illnesses, past injuries, diseases etc.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-ethnic-data" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  This may include ethnic data such as racial or ethnic origin, nationality, language etc.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-biometric-data" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  This may include biometric data such as fingerprints, facial recognition, iris scans etc.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-genetic-data" role="tooltip" class="inline-block absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip">
+  This may include genetic data such as ethical history, gene variants, and hereditary traits etc.
+  <div class="tooltip-arrow" data-popper-arrow></div>
 </div>

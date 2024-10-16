@@ -1,4 +1,4 @@
-@font-face {
+font-face {
   font-family: 'Mediator Narrow Web Extra Bold';
   src: url('../../assets/fonts/MediatorNarrowWebExtraBold.ttf') format('truetype');
   font-weight: bold;
@@ -19,9 +19,10 @@ body {
 }
 
 .main-content {
-  padding-top: 20px;
-  min-height: calc(100vh - 60px);
+  padding-top: 80px;
+  min-height: calc(100vh - 100px);
   box-sizing: border-box;
+  color: whitesmoke;
 }
 
 .header-container {
@@ -29,7 +30,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding-bottom: 2.5em;
+  padding-bottom: 1em;
   padding-top: 1em;
 }
 
@@ -39,52 +40,49 @@ body {
   display: inline-block;
   font-size: 35px;
   margin: 0 20px;
-  cursor: pointer;
 }
 
-.header::after {
-  content: '';
+.sub-header {
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: #8EBA12;
-  border-radius: 50%;
-  transform: translateX(5%);
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 1.5em;
 }
 
-.active-header {
-  color: black;
-}
-
-.clickable-header {
-  color: gray;
-  opacity: 0.7;
-  transition: opacity 0.3s;
-}
-
-.clickable-header:hover {
-  opacity: 1;
-}
 
 .containers {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 0 1em;
   gap: 1em;
+  background-color: #111827;
 }
 
+
 .inbox-rectangle, .analysis-rectangle {
-  border: 2px solid #ccc;
-  border-radius: 8px;
   padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   flex-grow: 1;
-  width: 45%;
+  width: calc(100% - 16rem);
   height: 60vh;
-  overflow-y: auto;
+  /* background-color: #111827; */
+  border-radius: 8px;
   overflow-x: hidden;
+  box-sizing: border-box;
+  /* border-width: 5px; */
+  /* border-color: #8EBA12; */
 }
+
+.analysis-rectangle {
+  border: #8EBA12;
+  height: 85vh;
+  border-width: 5px;
+  border-color: #8EBA12;
+};
 
 .upload-container {
   display: flex;
@@ -94,14 +92,31 @@ body {
   margin-top: 50px;
 }
 
-
 @media (max-width: 1024px) {
   .containers {
     flex-direction: column;
+    align-items: stretch;
   }
 
   .inbox-rectangle, .analysis-rectangle {
     width: 100%;
+  }
+
+  .ml-64 {
+    margin-left: 0;
+  }
+
+  .analysis-rectangle {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  #default-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform: translateX(0);
+    background-color: #111827;
   }
 }
 
@@ -134,8 +149,7 @@ body {
   height: 10px;
   background-color: #8EBA12;
   border-radius: 50%;
-  transform: translateX(15%);
-  transform: translateY(10%);
+  transform: translateX(15%) translateY(10%);
 }
 
 .divider {
@@ -177,20 +191,6 @@ body {
   font-family: "Roboto Bold";
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5em;
-}
-
-.buttons button {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  margin: 0.5em;
-  font-family: "Roboto Bold";
-  cursor: pointer;
-}
-
 .dropzone-disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -211,21 +211,6 @@ body {
 
 .selected-email {
   background-color: lightblue;
-}
-
-.upload-icon {
-  font-size: 7em;
-  color: black;
-}
-
-.upload-text {
-  margin-top: 10px;
-  text-align: center;
-  font-family: "Roboto Bold";
-}
-
-.upload-link {
-  cursor: pointer;
 }
 
 .hidden {
@@ -364,10 +349,38 @@ body {
   font-family: "Roboto Bold";
 }
 
-.center-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 20px;
+.analysis-rectangle {
+  flex-grow: 1;
+  width: calc(100% - 16rem);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.ml-64 {
+  margin-left: 16rem;
+}
+
+@media (max-width: 1024px) {
+  .containers {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ml-64 {
+    margin-left: 0;
+  }
+
+  .analysis-rectangle {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  #default-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform: translateX(0);
+    background-color: #111827;
+  }
 }

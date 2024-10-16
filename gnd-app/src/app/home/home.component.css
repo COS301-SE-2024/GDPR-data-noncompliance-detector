@@ -12,6 +12,13 @@
   font-style: normal;
 }
 
+/* .background{
+  background-image: url('../../assets/professional.jpg');
+  background-size: cover;
+  background-position: center;
+  height: calc(100vh - 60px);
+} */
+
 .container {
   display: flex;
   flex-direction: column;

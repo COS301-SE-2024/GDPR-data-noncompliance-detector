@@ -80,7 +80,7 @@ describe('UploadDocumentComponent', () => {
     component.financialData = 5;
     component.contactData = 3;
     component.medicalData = 7;
-    component.genetic_data = 4;
+    component.geneticData = 4;
     component.ethnicData = 2;
     component.biometricData = 8;
 
