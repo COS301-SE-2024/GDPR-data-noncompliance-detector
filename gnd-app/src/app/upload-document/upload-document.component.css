@@ -79,7 +79,7 @@ body {
 
 .analysis-rectangle {
   border: #8EBA12;
-  height: 85vh;
+  height: 75vh;
   border-width: 5px;
   border-color: #8EBA12;
 };
@@ -239,11 +239,8 @@ body {
 }
 
 .status-non-compliant {
-  background-color: #f8d7da;
   color: #721c24;
-  font-size: 1.5em;
-  padding: 0.5em;
-  border-radius: 0.25em;
+  font-size: 0.5em;
 }
 
 .ner-data {
@@ -383,4 +380,39 @@ body {
     transform: translateX(0);
     background-color: #111827;
   }
+}
+
+/* Tooltip styling - position to the right */
+.tooltip {
+  position: absolute;
+  top: 50%; /* Center vertically relative to the icon */
+  left: 100%; /* Position to the right of the icon */
+  transform: translateY(-50%); /* Adjust to center vertically */
+  margin-left: 10px; /* Space between icon and tooltip */
+  padding: 8px;
+  background-color: #111827;
+  color: white;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid #111827;
+}
+
+[data-tooltip-target]:hover + .tooltip {
+  visibility: visible;
+  opacity: 1;
 }

@@ -30,7 +30,6 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   status: string = '';
   ca_statement: string = '';
 
-  // Define your data properties
   documentStatus: string = "";
   nerCount: number = 0;
   location: string = "";
@@ -182,7 +181,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         // const correctedData = response.data.content.replace(/'/g, '"');
         const correctedData = response.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
         
-        console.log('Corrected JSON Data:', correctedData);
+        // console.log('Corrected JSON Data:', correctedData);
     
         let dat = JSON.parse(correctedData);
         
@@ -247,10 +246,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     return Object.keys(obj).length === 0;
   }
 
-  clearAnalysis() {
-    this.currentAnalysis = {};
-    this.currentEmail = "";
-    this.currentEmailType = "";
+  backToInbox() {
+    this.result = '';
   }
 
   startIntro() {
@@ -291,5 +288,9 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     catch (error) {
       console.error('Error generating PDF:', error);
     }
+  }
+
+  logTooltip(message: string): void {
+    console.log(message);
   }
 }

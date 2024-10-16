@@ -155,7 +155,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         
         const score = dat.result.score;
 
-        this.documentStatus = this.docStatus(score.Status);
+        // this.documentStatus = this.docStatus(score.Status);
 
         this.nerCount = score.NER;
         // this.location = this.locationStatus(score.Location);
@@ -368,13 +368,13 @@ export class InboxComponent implements OnInit, OnDestroy {
   mock(){
     this.currentAnalysis.content = 'sandwich spread ';
     this.currentEmail = 'NA';
-    this.currentEmailType = 'txt'; // Set file type
+    this.currentEmailType = 'txt';
   }
 
   smock(filePath: string){
     this.currentAnalysis.content = filePath;
     this.currentEmail = 'NA';
-    this.currentEmailType = 'txt'; // Set file type
+    this.currentEmailType = 'txt';
   }
 
   mockData: any = {
@@ -389,7 +389,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   showAnalysis(data: string) {
     this.currentAnalysis = this.mockData[data];
     this.currentEmail = data;
-    this.currentEmailType = this.mockData[data].fileType; // Set file type
+    this.currentEmailType = this.mockData[data].fileType;
   }
 
   isObjectEmpty(obj: any) {
@@ -399,7 +399,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   clearAnalysis() {
     this.currentAnalysis = {};
     this.currentEmail = "";
-    this.currentEmailType = ""; // Clear file type
+    this.currentEmailType = "";
   }
 
   startIntro() {
@@ -443,5 +443,9 @@ export class InboxComponent implements OnInit, OnDestroy {
     catch (error) {
       console.error('Error generating PDF:', error);
     }
+  }
+
+  backToDownloads() {
+    this.result = '';
   }
 }

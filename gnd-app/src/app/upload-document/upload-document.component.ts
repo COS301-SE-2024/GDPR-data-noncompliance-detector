@@ -442,16 +442,7 @@ export class UploadDocumentComponent implements OnInit{
     this.visualizationService.setPDFState(null);
   }
 
-  descriptions: Record<string, string> = {
-    "Detected Issues": "Number of issues detected in the document.",
-    "Compliance Score": "Percentage indicating how compliant the document is with GDPR.",
-    "Personal Data": "This may include personal data such as names, identification number, dates of birth etc.",
-    "Financial Data": "This may include personal financial data such as banking details, tax numbers, account details etc.",
-    "Contact Data": "This may include personal contact details such as phone numbers, email addresses and social media.",
-    "Medical Data": "This may include personal medical data such as chronic illnesses, past injuries, diseases etc.",
-    "Ethnic Data": "This may include ethnic data such as racial or ethnic origin, nationality, language etc.",
-    "Biometric Data": "This may include biometric data such as fingerprints, facial recognition, iris scans etc.",
-    "Genetic Data": "This may include genetic data such as ethical history, gene variants, and hereditary traits etc."
-  };
-
+  testYM() {
+    this.result = "Y";
+  }
 }
