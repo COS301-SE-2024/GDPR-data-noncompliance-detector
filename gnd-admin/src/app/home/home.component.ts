@@ -221,42 +221,107 @@ export class HomeComponent implements OnInit {
   }
 
   createViolationTypeTrendCharts() {
-    const types = ['personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact' ];
-    types.forEach(type => {
-      const ctx = document.getElementById(`${type}DataTrendChart`) as HTMLCanvasElement;
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: this.violationTrends.map(item => item.date),
-          datasets: [{
-            label: `${type.charAt(0).toUpperCase() + type.slice(1)} Data Violations`,
-            data: this.recentReports.map(report => report[`${type}_data_violations`]),
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.4
-          }]
+  //   const types = ['personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact' ];
+  //   types.forEach(type => {
+  //     const ctx = document.getElementById(`${type}DataTrendChart`) as HTMLCanvasElement;
+  //     new Chart(ctx, {
+  //       type: 'line',
+  //       data: {
+  //         labels: this.violationTrends.map(item => item.date),
+  //         datasets: [{
+  //           label: `${type.charAt(0).toUpperCase() + type.slice(1)} Data Violations`,
+  //           data: this.recentReports.map(report => report[`${type}_data_violations`]),
+  //           borderColor: 'rgb(75, 192, 192)',
+  //           tension: 0.4
+  //         }]
+  //       },
+  //       options: {
+  //         responsive: true,
+  //         maintainAspectRatio: true, 
+  //         scales: {
+  //           x: {
+  //             title: {
+  //               display: true,
+  //               text: 'Time-Stamps'
+  //             }
+  //           },
+  //           y: {
+  //             title: {
+  //               display: true,
+  //               text: 'Number of Violations'
+  //             },
+  //             beginAtZero: true
+  //           }
+  //         }
+  //       }
+  //     });
+  //   });
+  // }
+  const types: Array<'personal' | 'medical' | 'biometric' | 'ethnic' | 'genetic' | 'financial' | 'contact'> = [
+    'personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact'
+  ];
+  
+  const colors = {
+    personal: 'rgb(255, 99, 132)', // Red for Personal Data
+    medical: 'rgb(54, 162, 235)',  // Blue for Medical Data
+    biometric: 'rgb(255, 205, 86)', // Yellow for Biometric Data
+    ethnic: 'rgb(75, 192, 192)',   // Green for Ethnic Data
+    genetic: 'rgb(153, 102, 255)', // Purple for Genetic Data
+    financial: 'rgb(255, 159, 64)',// Orange for Financial Data
+    contact: 'rgb(0,128,0)',       // Green for Contact Data
+  };
+
+  types.forEach(type => {
+    const ctx = document.getElementById(`${type}DataTrendChart`) as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: this.violationTrends.map(item => item.date),
+        datasets: [{
+          label: `${type.charAt(0).toUpperCase() + type.slice(1)} Data Violations`,
+          data: this.recentReports.map(report => report[`${type}_data_violations`]),
+          borderColor: colors[type], // Fixed TypeScript error by restricting 'type' values
+          backgroundColor: 'rgba(75, 192, 192, 0.1)',
+          tension: 0.4,
+          fill: true, // To make the area under the line filled
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        animation: {
+          duration: 1000, // Smooth animation when the chart loads
+          easing: 'easeOutBounce'
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true, 
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Time-Stamps'
-              }
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Time-Stamps'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Number of Violations'
             },
-            y: {
-              title: {
-                display: true,
-                text: 'Number of Violations'
-              },
-              beginAtZero: true
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: function(tooltipItem) {
+                return `Violations: ${tooltipItem.raw}`;
+              }
             }
           }
         }
-      });
+      }
     });
-  }
+  });
+}
 
   async updateDashboard() {
     await this.fetchData();
