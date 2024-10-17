@@ -123,11 +123,11 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       console.error('radarChartCanvas is not defined');
     }
 
-    // this.initializeMap
-    // console.log("supadata: " + this.fetchData());
     if (this.barChartCanvas && this.barChartCanvas.nativeElement) {
       this.createComparisonBarChart();
-    } else {
+    }
+    
+    else {
       console.error('barChartCanvas is not defined');
     }
 
@@ -152,16 +152,16 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
                     'rgba(153, 102, 255, 0.5)',   // Dark purple
                     'rgba(255, 159, 64, 0.5)',     // Dark orange
                     'rgba(255, 99, 132, 0.5)',     // Dark pink
-                    'rgba(0, 0, 139, 0.5)',        // Dark blue for Ethnic
-                    'rgba(139, 0, 0, 0.5)'         // Dark red for Biometric
+                    'rgba(0, 0, 139, 0.5)',        // Dark blue
+                    'rgba(139, 0, 0, 0.5)'         // Dark red
                 ],
                 borderColor: [
-                    'rgba(75, 192, 192, 1)',      // Dark teal
-                    'rgba(153, 102, 255, 1)',     // Dark purple
-                    'rgba(255, 159, 64, 1)',      // Dark orange
-                    'rgba(255, 99, 132, 1)',      // Dark pink
-                    'rgba(0, 0, 139, 1)',         // Dark blue for Ethnic
-                    'rgba(139, 0, 0, 1)'          // Dark red for Biometric
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)', 
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(0, 0, 139, 1)', 
+                    'rgba(139, 0, 0, 1)'          
                 ],
 
                 borderWidth: 1,
@@ -170,7 +170,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
         const options = {
             responsive: true,
-            maintainAspectRatio: false,  // Allow the chart to resize freely within its container
+            maintainAspectRatio: false,
             scales: {
                 r: {
                     beginAtZero: true
@@ -200,37 +200,32 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const centerY = canvas.height / 2;
     const radius = Math.min(centerX, centerY) - 10;
     const startAngle = -Math.PI / 2;
-    const endAngle = startAngle - (2 * Math.PI * (value / 99)); // Counter-clockwise
+    const endAngle = startAngle - (2 * Math.PI * (value / 99));
   
-    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-    // Draw the background circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = '#e6e6e6';
     ctx.fill();
   
-    // Draw the inner white circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
     ctx.fillStyle = '#ffffff';
     ctx.fill();
   
-  // Create gradient for the progress circle
-  const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-  gradient.addColorStop(0, '#f44336'); // Start color (red)
-  gradient.addColorStop(1, '#d32f2f'); // End color (darker red)
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    gradient.addColorStop(0, '#f44336'); // Start color (red)
+    gradient.addColorStop(1, '#d32f2f'); // End color (darker red)
 
   
-    // Draw the progress circle
+
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, startAngle, endAngle, true); // Counter-clockwise
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle, true);
     ctx.lineWidth = 10;
     ctx.strokeStyle = gradient;
     ctx.stroke();
   
-    // Draw the text
     ctx.font = '20px Arial';
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
@@ -294,7 +289,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Allow resizing
+            maintainAspectRatio: false,
             scales: {
                 r: {
                     beginAtZero: true,
@@ -306,11 +301,10 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   }
 
   populateWithMockData(): void {
-    // Populate data with mock structure
     this.data = {
       score: {
         NER: Math.floor(Math.random() * 10),
-        location_report: Math.floor(Math.random() * 3), // 0, 1, or 2
+        location_report: Math.floor(Math.random() * 3),
         Personal: Math.floor(Math.random() * 10),
         Financial: Math.floor(Math.random() * 10),
         Contact: Math.floor(Math.random() * 10),
@@ -323,7 +317,6 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       }
     };
 
-    // Assign values from data.score
     this.nerCount = this.data.NER;
     this.location = this.data.location_report;
     this.personalData = this.data.Personal;
@@ -335,8 +328,6 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     this.geneticData = this.data.Genetic;
     this.rag_count = this.data.lenarts;
     this.rag_stat = this.data.RAG_Statement;
-
-    // Create all graphs
     this.createAllGraphs();
   }
 
@@ -345,11 +336,9 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     this.createCircularBarChart();
     this.drawCircularProgressBar(this.rag_count);
     this.calculateMetric();
-    // this.initializeMap();
   }
 
   destroyOldGraphs(): void {
-    // Remove old SVG elements
     d3.select('#circularBarChart').selectAll('svg').remove();
     d3.select('#progressCanvas').selectAll('svg').remove();
     d3.select('#radarChartCanvas').selectAll('svg').remove();
@@ -365,7 +354,6 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       return;
     }
   
-    // Fetch average data from Supabase
     const { data: total_violations_summary, error } = await this.supabase
       .from('total_violations_summary')
       .select('*');
@@ -375,9 +363,8 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       return;
     }
   
-    const avgData = total_violations_summary[0]; // Assuming one row with averages
+    const avgData = total_violations_summary[0];
   
-    // Data from scanData and average values from total_violations_summary
     const categories = ['Personal', "Financial", "Contact", 'Medical', 'Genetic', 'Ethnic', 'Biometric'];
     const scannedData = [
       this.personalData,
@@ -388,6 +375,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       this.ethnicData,
       this.biometricData,
     ];
+
     const avgViolations = [
       avgData.avg_personal_data_violations,
       avgData.avg_medical_data_violations,
@@ -429,6 +417,5 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
         },
       },
     });
-  }
-  
+  } 
 }
