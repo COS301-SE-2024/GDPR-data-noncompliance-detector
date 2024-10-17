@@ -4,7 +4,9 @@ import requests
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import errno
-from winotify import Notification, audio
+import platform
+if platform.system() == "Windows":
+    from winotify import Notification, audio
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 import base64
@@ -116,15 +118,16 @@ class FileUploadHandler(FileSystemEventHandler):
             
             print(f"API response saved to {txt_file_path}")                     #For Logging
 
-            toast = Notification(app_id="GND",
-                     title="New GND Report",
-                     msg="A new GND report is available",
-                     duration="short",
-                     icon=get_resource_path('assets/toast_logo.png'))
+            if platform.system() == "Windows":
+                toast = Notification(app_id="GND",
+                        title="New GND Report",
+                        msg="A new GND report is available",
+                        duration="short",
+                        icon=get_resource_path('assets/toast_logo.png'))
 
-            toast.set_audio(audio.Default, loop=False)
+                toast.set_audio(audio.Default, loop=False)
 
-            toast.show()
+                toast.show()
         
         except Exception as e:
             print(f"Error saving API response to {txt_file_path}: {e}")

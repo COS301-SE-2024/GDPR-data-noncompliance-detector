@@ -1,4 +1,4 @@
-<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/GND.png" alt="GND Logo">
+![image](https://github.com/user-attachments/assets/98c03af9-5f20-4d6e-8140-b4a69f7ff72f)<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/GND.png" alt="GND Logo">
 
 [![codecov](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector/graph/badge.svg?token=nEPpXWGssM)](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector)
 ![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2024/GDPR-data-noncompliance-detector)
@@ -36,6 +36,17 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 <br></br>
 
 ### Demo 4
+[Demo 4 SRS Documentation](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_3___SRS.pdf)
+<br></br>
+[Demo 4 Testing Specification](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_4___Testing_Specification.pdf)
+<br></br>
+# Download
+
+[EXE Download](https://drive.google.com/drive/folders/1LANx27MNDwmfvDtj09NFvJ05s91Ya-7n?usp=sharing)
+
+#Demo 4 Input
+
+[Submit Personal Data](https://docs.google.com/spreadsheets/d/1_c1JbehTnfNju1iyqR2vt_2np4OUfFGkX9SmGOiEvco/edit?usp=sharing)
 
 # Documentation
 
@@ -54,7 +65,7 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 [Coding Standards](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Coding_Standards.pdf)
 
 ## User Manual
-[GND User Manual](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/GND%20Manual.pdf)
+[GND User Manual](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/GND%20Manual_V2.pdf)
 
 ## Project Management Tools
 GitHub Issues and GitHub Boards
@@ -189,7 +200,7 @@ Angular with Electron
 
 ### Backend
 Python
-FastAPI
+FlaskAPI
 
 ### Testing
 PyTest

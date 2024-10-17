@@ -142,12 +142,12 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.location = "N/A";
 
     const payload = { path: filePath };
-    axios.post(this.iUrl, payload)
-      .then(response => {
+    this.http.post(this.iUrl, payload).subscribe({
+      next: (response: any) => {
         // this.currentAnalysis.content = response.data.content;
         // this.result = this.processResult(this.currentAnalysis.content)
         // const correctedData = response.data.content.replace(/'/g, '"');
-        const correctedData = response.data.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
+        const correctedData = response.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
         
         // console.log('Corrected JSON Data:', correctedData);
     
@@ -166,7 +166,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.medicalData = score.Medical;
         this.ethnicData = score.Ethnic;
         this.biometricData = score.Biometric;
-        this.biometricData = score.Genetic;
+        this.geneticData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
         this.ragScore = score.RAG_Statement;
 
@@ -174,10 +174,11 @@ export class InboxComponent implements OnInit, OnDestroy {
 
         this.result = "Y";
 
-      })
-      .catch(error => {
+      },
+      error: (error:any) => {
         console.error('There was an error!', error);
-      });
+      }
+  });
     this.currentEmail = 'NA';
     this.currentEmailType = 'txt';
   }

@@ -4,6 +4,12 @@ import subprocess as sp
 class validator:
 
     def process_file(self, file_path):
+        print("CURRENT WORKING DIR -------", os.getcwd())
+        os.system('ls -a')
+        os.chdir('..')
+        print("CURRENT WORKING DIR -------", os.getcwd())
+        os.system('ls -a')
+
         try:
             if not os.path.exists(file_path):
                 raise FileNotFoundError(f"File not found: {file_path}")

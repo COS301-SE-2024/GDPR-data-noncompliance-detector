@@ -7,6 +7,7 @@ import axios from 'axios';
 import * as introJs from 'intro.js/intro.js';
 import { WalkthroughService } from '../services/walkthrough.service';
 import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
+// import { error } from 'console';
 
 @Component({
   selector: 'app-outlook-inbox',
@@ -174,12 +175,12 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     this.location = country;
 
     const payload = { path: filePath };
-    axios.post(this.iUrl, payload)
-      .then(response => {
+    this.http.post(this.iUrl, payload).subscribe({
+      next: (response: any) => {
         // this.currentAnalysis.content = response.data.content;
         // this.result = this.processResult(this.currentAnalysis.content)
         // const correctedData = response.data.content.replace(/'/g, '"');
-        const correctedData = response.data.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
+        const correctedData = response.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
         
         console.log('Corrected JSON Data:', correctedData);
     
@@ -206,10 +207,11 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
 
         this.result = "Y";
 
-      })
-      .catch(error => {
+      },
+      error: (error: any) => {
         console.error('There was an error!', error);
-      });
+      }
+    });
     this.currentEmail = 'NA';
     this.currentEmailType = 'txt';
   }

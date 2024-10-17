@@ -1,9 +1,12 @@
 from pathlib import Path
 import os
-import win32com.client
+import platform
+if platform.system() == "Windows":
+    import win32com.client
 from email2country import email2country
 import time
-import pythoncom
+if platform.system() == "Windows":
+    import pythoncom
 
 inbox = None
 namespace = None
@@ -72,7 +75,8 @@ def download_attachments(email, output_dir, country_info):
             stem, suffix = os.path.splitext(file_name)
             
             country_suffix = f" - {country_info}" if country_info else ""
-            attachment_filename = output_dir / f"{stem}{country_suffix}{suffix}"
+            # attachment_filename = output_dir / f"{stem}{country_suffix}{suffix}"
+            attachment_filename = os.path.join(output_dir, f"{stem}{country_suffix}{suffix}")
         
             attachment.SaveAsFile(str(attachment_filename))
             print(f"Attachment saved to {attachment_filename}")
@@ -85,12 +89,14 @@ def get_user_documents_folder():
 def main():
     global inbox, namespace, output_dir
 
-    pythoncom.CoInitialize()
+    if platform.system() == "Windows":
+        pythoncom.CoInitialize()
 
     output_dir = get_user_documents_folder() / "GND/outlook-uploads"        #App Folder to store the docs
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    outlook = win32com.client.DispatchWithEvents("Outlook.Application", OutlookMonitor)
+    if platform.system() == "Windows":
+        outlook = win32com.client.DispatchWithEvents("Outlook.Application", OutlookMonitor)
     
     namespace = outlook.GetNamespace("MAPI")
     inbox = namespace.GetDefaultFolder(6)
@@ -99,10 +105,12 @@ def main():
     
     try:
         while True:
-            pythoncom.PumpWaitingMessages()
+            if platform.system() == "Windows":
+                pythoncom.PumpWaitingMessages()
             time.sleep(1)
     finally:
-        pythoncom.CoUninitialize()
+        if platform.system() == "Windows":
+            pythoncom.CoUninitialize()
 
 if __name__ == "__main__":
     main()

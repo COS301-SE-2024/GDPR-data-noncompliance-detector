@@ -1,7 +1,11 @@
 import unittest
-import os
 from datetime import datetime
-from .storage_and_submission import storage_and_submission
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from backend.Document_parser.storage_and_submission import storage_and_submission
+
 
 
 class TestStorageAndSubmission(unittest.TestCase):
