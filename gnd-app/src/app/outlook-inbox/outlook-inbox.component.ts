@@ -10,6 +10,7 @@ import { ReportGenerationService, ViolationData } from '../services/report-gener
 import { VisualizationComponent } from "../visualization/visualization.component";
 import { VisualizationService} from '../services/visualization.service';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 // import { error } from 'console';
 
 @Component({
@@ -51,13 +52,18 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   ragScoreArray: string[] = [];
   isVisualizing: boolean = false;
   fileName: string = '';
+  encoded_value: string = '';
+  pdfUrl: SafeResourceUrl | undefined;
+  receivedData: any;
+  isAnnotating: boolean = false;
 
   constructor(
     private http: HttpClient,
     private walkthroughService: WalkthroughService,
     private router: Router,
     private reportGenerationService: ReportGenerationService,
-    private visualizationService: VisualizationService
+    private visualizationService: VisualizationService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -204,6 +210,10 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         const score = dat.result.score;
 
         this.documentStatus = this.docStatus(score.Status);
+
+        this.encoded_value = score.ner_result_text;
+  
+        this.processEncodedPdf();
 
         this.nerCount = score.NER;
         // this.location = this.locationStatus(score.Location);
@@ -366,7 +376,25 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     
   }
 
+  processEncodedPdf(): void {
+    const base64Pdf = this.encoded_value; 
+    const byteCharacters = atob(base64Pdf);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+  
+    const url = URL.createObjectURL(blob);
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+  
   onVisualize() {
     this.isVisualizing = !this.isVisualizing;
+  }
+
+  onAnnotate() {
+    this.isAnnotating = !this.isAnnotating;
   }
 }

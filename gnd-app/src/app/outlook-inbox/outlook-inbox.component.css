@@ -508,3 +508,34 @@ body {
   font-size: 35px;
   color: black;
 }
+
+.header-container-3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 2.5em;
+  padding-top: 1em;
+}
+
+.header-3 {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 35px;
+  color: black;
+}
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+} */
+
+#iframe-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

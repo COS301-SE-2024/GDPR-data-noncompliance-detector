@@ -167,7 +167,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         
         const score = dat.result.score;
 
-        this.documentStatus = this.docStatus(score.Status);
+        this.documentStatus = this.docStatus(this.calculateMetric());
 
         this.nerCount = score.NER;
         // this.location = this.locationStatus(score.Location);
@@ -342,9 +342,11 @@ export class InboxComponent implements OnInit, OnDestroy {
 
     const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
 
-    this.violationPercentage = Math.round((w_sum/N_e_sum));
+    this.violationPercentage = Math.round((N_e_sum/w_sum));
 
     console.log( "vios:" + this.violationPercentage);
+
+    return N_e_sum;
     
   }
 

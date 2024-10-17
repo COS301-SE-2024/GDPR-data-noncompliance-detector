@@ -13,6 +13,7 @@ import { EncryptionKeyService } from '../services/encryption-key.service';
 import 'crypto-js/mode-ctr';
 import { initFlowbite } from 'flowbite';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-upload-document',
@@ -47,9 +48,16 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
   violationPercentage: number = 0;
   isVisualizing: boolean = false;
   ragScoreArray: string[] = [];
+  encoded_value: string = '';
+  pdfUrl: SafeResourceUrl | undefined;
+  receivedData: any;
+  isAnnotating: boolean = false;
 
 
-  constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
+    constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,
+    private sanitizer: DomSanitizer
+
+    ) { }
 
   ngOnInit() {
     this.encryptionKeyService.getEncryptionKey().subscribe(response => {
@@ -151,6 +159,9 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               const res = JSON.parse(decryptedResult);
               const visResults = res.score;
 
+              this.encoded_value = res.score.ner_result_text;
+              this.processEncodedPdf();
+
               this.uploadedFileName = res.fileName;
               this.fileName = res.fileName;
               console.log(res);
@@ -251,6 +262,10 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
       
                 const res = JSON.parse(decryptedResult);
                 const visResults = res.score;
+
+                this.encoded_value = res.score.ner_result_text;
+  
+                this.processEncodedPdf();
 
                 this.uploadedFileName = res.fileName;
                 this.fileName = res.fileName;
@@ -392,17 +407,6 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     
   }
 
-  onAnnotate() {
-    // this.visualizationService.setPDFState(this.pdf_data);
-    // console.log(this.pdf_data);
-    // this.visualizationService.setUploadState(this.response);
-    // if (this.response) {
-    //   this.visualizationService.setPDFState(this.pdf_data);
-    //   this.visualizationService.setUploadState(this.response);
-    //   this.router.navigate(['/annotate']);
-    // }
-  }
-
   clearAnalysis() {
     this.response = null;
     this.bar_plot = null;
@@ -426,16 +430,30 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     this.fileContent = '';
     this.styledReportContent = '';
     this.result = '';
+    this.isVisualizing = false;
+    this.isAnnotating = false;
 
     const fileInput = document.getElementById('dropzone-file') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
     }
-
-
   }
 
-  testYM() {
-    this.result = "Y";
+  processEncodedPdf(): void {
+    const base64Pdf = this.encoded_value; 
+    const byteCharacters = atob(base64Pdf);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+  
+    const url = URL.createObjectURL(blob);
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  onAnnotate() {
+    this.isAnnotating = !this.isAnnotating;
   }
 }

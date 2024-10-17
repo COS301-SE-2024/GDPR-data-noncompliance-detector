@@ -209,7 +209,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const centerY = canvas.height / 2;
     const radius = Math.min(centerX, centerY) - 10;
     const startAngle = -Math.PI / 2;
-    const endAngle = startAngle - (2 * Math.PI * (value / 99));
+    const endAngle = startAngle - (2 * Math.PI * (value / 5));
   
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   
@@ -239,7 +239,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${value}/99`, centerX, centerY);
+    ctx.fillText(`${value}/5`, centerX, centerY);
   }
 
   calculateMetric() {
