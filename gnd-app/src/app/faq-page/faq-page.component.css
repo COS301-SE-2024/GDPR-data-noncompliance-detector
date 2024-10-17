@@ -15,22 +15,17 @@
   color: white;
 }
 
-.header::after {
-  content: '';
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: #8EBA12;
-  border-radius: 50%;
-  transform: translateX(-100%);
-}
-
 .description {
   text-align: center; 
   color: white; 
   margin-top: 20px; 
   font-size: 18px; 
   font-family: "Mediator Narrow Web Extra Bold"; 
+}
+
+.contact-link {
+  color: #8EBA12; 
+  font-weight: bold; 
 }
 
 
@@ -95,7 +90,6 @@
 }
 
 .dropdown-content p {
-  color: #8EBA12;
   margin: 0;
   word-wrap: break-word; 
 }
