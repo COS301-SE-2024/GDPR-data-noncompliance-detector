@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
       await this.fetchData();
       this.createCharts();
     }
+    
   }
 
 
