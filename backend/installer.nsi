@@ -1,56 +1,54 @@
-; Define the output path for the installer
-OutFile "GNDInstaller.exe"
+!define APP_NAME "GND_App"
+!define EXE1 "flask_api.exe"
+!define EXE2 "GND.exe"
+!define ENV_VAR_NAME "SYS_VAR_KEY"
+!define ENV_VAR_VALUE "qpn0Dx9zaqjQq9Lgc4b5seXOQsus3ZGu"
 
-; Define the default installation directory
-InstallDir "$PROGRAMFILES\GND"
+OutFile "${APP_NAME}_Installer.exe"
+InstallDir $PROGRAMFILES\${APP_NAME}
 
-; Define the directory to be listed
-!define SOURCE_DIR "dist/your-app-name"
+Section "Install"
+    SetOutPath $INSTDIR
+    File /r "*.*"    ; Includes all files in the current directory
+    CreateDirectory "$INSTDIR\locales"
+    File /r "locales\*.*"
+    CreateDirectory "$INSTDIR\resources"
+    File /r "resources\*.*"
+    CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${EXE2}"
 
-; Include the necessary NSIS headers
-!include "MUI2.nsh"
-
-; Define the installer sections
-Section "MainSection" SEC01
-  ; Set the output path to the installation directory
-  SetOutPath "$INSTDIR"
-
-  ; List files and folders in the SOURCE_DIR
-  File /r "${SOURCE_DIR}\*.*"
-
-  ; Create shortcuts
-  CreateShortCut "$DESKTOP\GND.lnk" "$INSTDIR\index.html"
-  CreateShortCut "$SMPROGRAMS\GND\GND.lnk" "$INSTDIR\index.html"
+    ; Set the environment variable permanently
+    WriteRegStr HKCU "Environment" "${ENV_VAR_NAME}" "${ENV_VAR_VALUE}"
+    WriteRegStr HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "${ENV_VAR_NAME}" "${ENV_VAR_VALUE}"
+    
+    ; Write the uninstaller
+    WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
-; Define the uninstaller section
+Section "Run"
+    ; Add the flask_api.exe to startup using registry
+    WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${APP_NAME}_API" "$INSTDIR\${EXE1}"
+
+    ; Start the API in the background
+    ExecShell "open" "$INSTDIR\${EXE1}" "" SW_HIDE
+
+    ; Run GND.exe
+    ExecShell "open" "$INSTDIR\${EXE2}"
+SectionEnd
+
 Section "Uninstall"
-  ; Remove the installed files
-  Delete "$INSTDIR\*.*"
-  RMDir /r "$INSTDIR"
+    Delete "$DESKTOP\${APP_NAME}.lnk"
+    ; Remove the environment variable
+    DeleteRegValue HKCU "Environment" "${ENV_VAR_NAME}"
+    DeleteRegValue HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "${ENV_VAR_NAME}"
 
-  ; Remove the shortcuts
-  Delete "$DESKTOP\GND.lnk"
-  Delete "$SMPROGRAMS\GND\GND.lnk"
-  RMDir "$SMPROGRAMS\GND"
+    ; Remove flask_api from startup
+    DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${APP_NAME}_API"
+    
+    RMDir /r "$INSTDIR"
 SectionEnd
 
-; Define the installer pages
-!insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_DIRECTORY
-!insertmacro MUI_PAGE_INSTFILES
-!insertmacro MUI_PAGE_FINISH
-
-; Define the uninstaller pages
-!insertmacro MUI_UNPAGE_INSTFILES
-
-; Define the language for the installer
-LangString DESC01 ${LANG_ENGLISH} "Install GND Application"
-LangString DESC02 ${LANG_ENGLISH} "Uninstall GND Application"
-
-; Define the installer attributes
-Name "GND Installer"
-OutFile "GNDInstaller.exe"
-InstallDir "$PROGRAMFILES\GND"
-ShowInstDetails show
-ShowUnInstDetails show
+Function .onInstSuccess
+    ; Run both the API and GND on installation success
+    ExecShell "open" "$INSTDIR\${EXE1}" "" SW_HIDE
+    ExecShell "open" "$INSTDIR\${EXE2}"
+FunctionEnd
