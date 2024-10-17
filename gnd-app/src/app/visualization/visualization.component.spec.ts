@@ -12,11 +12,11 @@ describe('VisualizationComponent', () => {
     const spy = jasmine.createSpyObj('VisualizationService', ['getData']);
 
     await TestBed.configureTestingModule({
-      imports: [VisualizationComponent],  // Use imports for standalone components
+      imports: [VisualizationComponent],
       providers: [
         { provide: VisualizationService, useValue: spy }
       ],
-      schemas: [NO_ERRORS_SCHEMA]  // Prevent errors for unrecognized elements
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   });

@@ -18,12 +18,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   overflow: auto;
   overflow: hidden;
 }
 
 h1 {
+  font-family: "Mediator Narrow Web Extra Bold";
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }

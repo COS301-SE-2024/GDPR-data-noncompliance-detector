@@ -19,8 +19,8 @@ export class AnnotationComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.visualizationService.getUploadState());
-    this.receivedData = this.visualizationService.getUploadState();
+    // console.log(this.visualizationService.getUploadState());
+    // this.receivedData = this.visualizationService.getUploadState();
     this.encoded_value = this.receivedData.score.ner_result_text;
     const base64Pdf = this.encoded_value; 
     const byteCharacters = atob(base64Pdf);

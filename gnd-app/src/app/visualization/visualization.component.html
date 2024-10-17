@@ -2,17 +2,11 @@
 
 <div class="header-container">
   <header class="header">
-    <!-- Visualized -->
-    Visualization
+    Visualisations
   </header>
 </div>
 
-<button (click)="onBack()" id="vizButton" type="button"
-  class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-  Back
-</button>
-
-<div class="grid-container">
+<!-- <div class="grid-container">
   <div id="violations" class="grid-item canvas-wrapper">
     <header class="header1">Violations per Category</header>
     <canvas id="circularBarChart"></canvas>
@@ -47,20 +41,76 @@
     </div>
   </div>
 
-  <div id="location" class="grid-item canvas-wrapper">
-    <header class="header1">Location</header>
-    <div id="map"></div>
+  <div id="comparison-chart" class="grid-item canvas-wrapper">
+    <header class="header1">Comparison of Violations</header>
+    <canvas #barChartCanvas width="400" height="300"></canvas>
+  </div>
+
+  <div id="gauge-chart" class="grid-item canvas-wrapper">
+    <header class="header1">Compliance Gauge</header>
+    <canvas #gaugeChartCanvas width="300" height="300"></canvas>
+  </div>
+  
+</div> -->
+
+<div class="visualization-grid">
+  <div class="visualization">
+    <header class="chart-header">Violations per Category</header>
+    <canvas id="circularBarChart"></canvas>
+  </div>
+  <div class="description">
+    <p><strong>What Circular Bar Chart Does:</strong> Displays the cumulative score of violations across different categories, showing where the risks are concentrated.</p>
+  </div>
+
+  <div class="description">
+    <p><strong>What Radar Chart Does:</strong> Visualizes the normalized risk score across various personal data categories (e.g., medical, biometric).</p>
+  </div>
+  <div class="visualization">
+    <header class="chart-header">Risk Score</header>
+    <canvas #radarChartCanvas width="300" height="300"></canvas>
+  </div>
+
+  <div class="visualization">
+    <header class="chart-header">Articles Violated</header>
+    <canvas #progressCanvas width="200" height="200"></canvas>
+  </div>
+  <div class="description-rag">
+    <header class="chart-header">GDPR Articles Related to Categories</header>
+    <p class="header-inside">General Personal Data</p>
+
+    <p><strong>Article 5:</strong> Principles relating to processing of personal data</p>
+    <p><strong>Article 6:</strong> Lawfulness of processing</p>
+    <p><strong>Article 7:</strong> Conditions for consent</p>
+    <p><strong>Article 9:</strong> Processing of special categories of personal data</p>
+    <p><strong>Article 12:</strong> Transparent information, communication and modalities for the exercise of the
+      rights of the data subject</p>
+
+    <p class="header-inside">Genetic Data, Political Opinions, Biometric Data, Data Revealing Racial and Ethnic Origin, Data
+        Relating to Health</p>
+    <p><strong>Article 9 (1):</strong> Processing of special categories of personal data including genetic data</p>
+    <p><strong>Article 9 (2) (b):</strong> Specific conditions under which genetic data can be processed</p>
+    <p><strong>Article 9 (2) (g):</strong> Processing of genetic data for the purpose of scientific or historical
+      research, or statistical purposes</p>
+  </div>
+
+  <div class="description">
+    <header class="chart-header">How you stack up</header>
+    <ul>
+      <li><strong>Visual Comparison:</strong> See how your document's GDPR violations compare with the average across all documents we've scanned.</li>
+      <li><strong>Category Breakdown:</strong> Your highest violations are within the </li>
+    </ul>
+    
+  </div>
+  <div class="visualization">
+    <header class="chart-header">Comparison of Violations</header>
+    <canvas #barChartCanvas width="400" height="300"></canvas>
+  </div>
+
+  <div class="visualization">
+    <header class="chart-header">Compliance Gauge</header>
+    <canvas #gaugeChartCanvas width="300" height="300"></canvas>
+  </div>
+  <div class="description">
+    <p><strong>What Gauge Chart Does:</strong> Displays a dynamic compliance gauge reflecting how compliant the system is with GDPR.</p>
   </div>
 </div>
-
-<!-- <div> -->
-<!-- <h2>Visualization</h2> -->
-<!-- <div *ngIf="data"> -->
-<!-- Display the data or plot here -->
-<!-- <pre>{{ data | json }}</pre> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- <div class="visualization-container">
-    <h2>Visualization</h2>
-    <canvas id="progressCanvas" width="400" height="400"></canvas>
-  </div> -->

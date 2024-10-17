@@ -15,3 +15,5 @@ env
 .env
 .vs/
 .pyc
+/gnd-app/src/environments/environment.ts
+/gnd-app/src/environments/environment.prod.ts

@@ -12,6 +12,11 @@ import * as topojson from 'topojson-client';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import {ApexAxisChartSeries,  ApexChart,  ApexXAxis,  ChartComponent,  NgApexchartsModule
 } from "ng-apexcharts";
+import { Subscription } from 'rxjs';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { environment } from '../../environments/environment';
+
+
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -29,10 +34,19 @@ import { ChoroplethController, GeoFeature , ProjectionScale, ColorScale } from '
 })
 export class VisualizationComponent implements OnInit, AfterViewInit {
 
+  private supabase: SupabaseClient;
+
   @Input() data: any;
   @ViewChild('progressCanvas') progressCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('radarChartCanvas') radarChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('mapCanvas') mapCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('barChartCanvas') barChartCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('gaugeChartCanvas') gaugeChartCanvas!: ElementRef<HTMLCanvasElement>;
+  
+  
+  violationPercentage: number = 0;
+  scanDataSubscription: Subscription;
+  scanData: any;
 
   nerCount: number = 5;
   location: number = 2;
@@ -48,80 +62,55 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
   receivedData: any;
 
-  constructor(private router: Router,private visualizationService: VisualizationService) {
-    // Register Chart.js components
+  constructor(private router: Router, private scanDataService: VisualizationService) {
     Chart.register(...registerables, ChoroplethController, GeoFeature, ProjectionScale, ColorScale);
+    this.scanDataSubscription = new Subscription();
+    this.scanData = null;
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
   ngOnInit() {
-    this.data = this.visualizationService.getData(); // Get data from the service
-    if (this.data) {
-      console.log('Data in child component:', this.data.score); // Log data only when available
-      this.nerCount = this.data.score.NER;
-      this.location = this.data.score.location_report;
-      this.personalData = this.data.score.Personal;
-      this.financialData =this.data.score.Financial;
-      this.contactData = this.data.score.Contact;
-      this.medicalData = this.data.score.Medical;
-      this.geneticData = this.data.score.Genetic;
-      this.ethnicData = this.data.score.Ethnic;
-      this.biometricData = this.data.score.Biometric;
-      this.rag_count = this.data.score.lenarts;
-      this.rag_stat = this.data.score.RAG_Statement;
+    this.scanDataSubscription = this.scanDataService.getScanData().subscribe(data => {
+      console.log('VisualizationComponent: Received scan data:', data);
+      if (data) {
+        this.scanData = data;
+      } else {
+        console.log('VisualizationComponent: No scan data received.');
+      }
+    });
+
+    if (this.scanData) {
+      console.log('Data in child component:', this.scanData); // Log data only when available
+      this.nerCount = this.scanData.NER;
+      console.log("Hello: " + this.scanData.nerCount);
+      this.location = this.scanData.location_report;
+      this.personalData = this.scanData.Personal;
+      this.financialData =this.scanData.Financial;
+      this.contactData = this.scanData.Contact;
+      this.medicalData = this.scanData.Medical;
+      this.geneticData = this.scanData.Genetic;
+      this.ethnicData = this.scanData.Ethnic;
+      this.biometricData = this.scanData.Biometric;
+      this.rag_count = this.scanData.lenarts;
+      this.rag_stat = this.scanData.RAG_Statement;
       this.createCircularBarChart();
       console.log(this.rag_count);
     }
+    console.log("supadata: " + this.fetchData());
 
-    // violation_data = {            
-    //   "score": {
-    //       "Status": status,
-    //       "Location": location_report,
-    //       "NER": ner_result_report,
-    //       "Personal": reg_result_personal_report,
-    //       "Financial": reg_result_financial_report,
-    //       "Contact": reg_result_contact_report,
-    //       "Consent Agreement": ca_statement_report,
-    //       "Genetic": gi_result_report,
-    //       "Ethnic": em_result_report,
-    //       "Medical": md_result_report,
-    //       "Biometric": image_result_report,
-    //       "RAG Statement":rag_stat,
-    //       "len(arts)":rag_count
-    //   }
-  
-    // const navigation = this.router.getCurrentNavigation();
-    // this.receivedData = navigation?.extras.state?.['data'];
-    // console.log(navigation?.extras.state?.['data']);
   }
 
-  // ngOnInit() {
-  //   const navigation = this.router.getCurrentNavigation();
-  //   if (navigation?.extras.state) {
-  //     const state = navigation.extras.state as {
-  //       nerCount: number,
-  //       location: string,
-  //       personalData: number,
-  //       financialData: number,
-  //       contactData: number,
-  //       medicalData: number,
-  //       ethnicData: number,
-  //       biometricData: number
-  //     };
+  async fetchData() {  
+    const { data: total_violations_summary, error } = await this.supabase
+    .from('total_violations_summary')
+    .select('*')
 
-  //     this.nerCount = state.nerCount;
-  //     this.location = state.location;
-  //     this.personalData = state.personalData;
-  //     this.financialData = state.financialData;
-  //     this.contactData = state.contactData;
-  //     this.medicalData = state.medicalData;
-  //     this.ethnicData = state.ethnicData;
-  //     this.biometricData = state.biometricData;
-
-  //     console.log('Received data:', state);  // Debugging log
-  //     this.createCircularBarChart();
-  //   }
-  //   console.log("Starting point")
-  // }
+    if (error) {
+      console.error('Error fetching total violations summary:', error);
+    } else {
+      console.log('Average Personal Data Violations:', total_violations_summary[0].avg_financial_data_violations);
+    }
+  }
 
   ngAfterViewInit() {
     if (this.progressCanvas && this.progressCanvas.nativeElement) {
@@ -136,93 +125,23 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       console.error('radarChartCanvas is not defined');
     }
 
-    this.initializeMap();
+    if (this.barChartCanvas && this.barChartCanvas.nativeElement) {
+      this.createComparisonBarChart();
+    }
+    else {
+      console.error('barChartCanvas is not defined');
+    }
+
+    // if (this.gaugeChartCanvas && this.gaugeChartCanvas.nativeElement) {
+    //   this.calculateMetric();
+    //   this.createGaugeChart(this.violationPercentage);
+    // }
+    // else {
+    //   console.error('gaugeChartCanvas is not defined');
+    // }
+
   }
 
-  onBack() {
-    this.router.navigate(['/upload']);
-  }
-  // createCircularBarChart(): void {
-  //   const width = 500;
-  //   const height = 500;
-  //   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-
-  //   const innerRadius = 90;  // Inner radius of the circular bar chart
-  //   const outerRadius = Math.min(width, height) / 2;  // Outer radius
-
-  //   // Create the SVG element
-  //   const svg = d3.select('#circularBarChart')
-  //     .append('svg')
-  //     .attr('width', width + margin.left + margin.right)
-  //     .attr('height', height + margin.top + margin.bottom)
-  //     .append('g')
-  //     .attr('transform', `translate(${(width + margin.left) / 2}, ${(height + margin.top) / 2})`);
-
-  //   // X scale: categories
-  //   const x = d3.scaleBand()
-  //     .domain(this.data.map(d => d.category))
-  //     .range([0, 2 * Math.PI]);  // Circle layout
-
-  //   // Y scale: values
-  //   const y = d3.scaleLinear()
-  //     .domain([0, d3.max(this.data, d => d.value)!])
-  //     .range([innerRadius, outerRadius]);
-
-  //   // Color scale
-  //   const color = d3.scaleOrdinal()
-  //     .domain(this.data.map(d => d.category))
-  //     .range(['#69b3a2', '#404080', '#f2a12e', '#ff6666', '#b3de69']);
-
-  //   // Create a tooltip element
-  //   const tooltip = d3.select('body').append('div')
-  //     .attr('class', 'tooltip')
-  //     .style('opacity', 0);
-
-  //   // Bars with interactivity
-  //   svg.append('g')
-  //     .selectAll('path')
-  //     .data(this.data)
-  //     .enter()
-  //     .append('path')
-  //     .attr('fill', d => color(d.category) as string)
-  //     .attr('d', d3.arc<any>()
-  //       .innerRadius(innerRadius)
-  //       .outerRadius(d => y(d.value))
-  //       .startAngle(d => x(d.category)!)
-  //       .endAngle(d => x(d.category)! + x.bandwidth())
-  //       .padAngle(0.01)
-  //       .padRadius(innerRadius))
-  //     .on('mouseover', (event, d) => {  // Mouseover event
-  //       tooltip.transition()
-  //         .duration(200)
-  //         .style('opacity', 1);
-  //       tooltip.html(`Category: ${d.category}<br>Value: ${d.value}`)
-  //         .style('left', `${event.pageX + 5}px`)
-  //         .style('top', `${event.pageY - 28}px`);
-  //     })
-  //     .on('mouseout', () => {  // Mouseout event
-  //       tooltip.transition()
-  //         .duration(500)
-  //         .style('opacity', 0);
-  //     })
-  //     .on('click', (event, d) => {  // Click event (optional)
-  //       console.log(`${d.category} clicked!`);
-  //     });
-
-  //   // Add labels
-  //   svg.append('g')
-  //     .selectAll('g')
-  //     .data(this.data)
-  //     .enter()
-  //     .append('g')
-  //     .attr('text-anchor', d => (x(d.category)! + x.bandwidth() / 2 > Math.PI ? 'end' : 'start'))
-  //     .attr('transform', d => `rotate(${((x(d.category)! + x.bandwidth() / 2) * 180 / Math.PI - 90)}) translate(${outerRadius + 10},0)`)
-  //     .append('text')
-  //     .text(d => d.category)
-  //     .attr('transform', d => (x(d.category)! + x.bandwidth() / 2 > Math.PI ? 'rotate(180)' : 'rotate(0)'))
-  //     .style('font-size', '12px')
-  //     .attr('alignment-baseline', 'middle');
-  // }
   createCircularBarChart() {
     const ctx = document.getElementById('circularBarChart') as HTMLCanvasElement;
     if (ctx) {
@@ -231,7 +150,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
             datasets: [{
                 label: 'Scores',
                 data: [
-                    this.nerCount+this.personalData+this.financialData+this.contactData,
+                    this.nerCount + this.personalData + this.financialData + this.contactData,
                     this.medicalData,
                     this.ethnicData,
                     this.biometricData,
@@ -242,25 +161,25 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
                     'rgba(153, 102, 255, 0.5)',   // Dark purple
                     'rgba(255, 159, 64, 0.5)',     // Dark orange
                     'rgba(255, 99, 132, 0.5)',     // Dark pink
-                    'rgba(0, 0, 139, 0.5)',        // Dark blue for Ethnic
-                    'rgba(139, 0, 0, 0.5)'         // Dark red for Biometric
+                    'rgba(0, 0, 139, 0.5)',        // Dark blue
+                    'rgba(139, 0, 0, 0.5)'         // Dark red
                 ],
                 borderColor: [
-                    'rgba(75, 192, 192, 1)',      // Dark teal
-                    'rgba(153, 102, 255, 1)',     // Dark purple
-                    'rgba(255, 159, 64, 1)',      // Dark orange
-                    'rgba(255, 99, 132, 1)',      // Dark pink
-                    'rgba(0, 0, 139, 1)',         // Dark blue for Ethnic
-                    'rgba(139, 0, 0, 1)'          // Dark red for Biometric
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)', 
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(0, 0, 139, 1)', 
+                    'rgba(139, 0, 0, 1)'          
                 ],
 
-                borderWidth: 1
+                borderWidth: 1,
             }]
         };
 
         const options = {
             responsive: true,
-            maintainAspectRatio: false,  // Allow the chart to resize freely within its container
+            maintainAspectRatio: false,
             scales: {
                 r: {
                     beginAtZero: true
@@ -290,37 +209,32 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const centerY = canvas.height / 2;
     const radius = Math.min(centerX, centerY) - 10;
     const startAngle = -Math.PI / 2;
-    const endAngle = startAngle - (2 * Math.PI * (value / 99)); // Counter-clockwise
+    const endAngle = startAngle - (2 * Math.PI * (value / 99));
   
-    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-    // Draw the background circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = '#e6e6e6';
     ctx.fill();
   
-    // Draw the inner white circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
     ctx.fillStyle = '#ffffff';
     ctx.fill();
   
-  // Create gradient for the progress circle
-  const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-  gradient.addColorStop(0, '#f44336'); // Start color (red)
-  gradient.addColorStop(1, '#d32f2f'); // End color (darker red)
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    gradient.addColorStop(0, '#f44336'); // Start color (red)
+    gradient.addColorStop(1, '#d32f2f'); // End color (darker red)
 
   
-    // Draw the progress circle
+
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, startAngle, endAngle, true); // Counter-clockwise
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle, true);
     ctx.lineWidth = 10;
     ctx.strokeStyle = gradient;
     ctx.stroke();
   
-    // Draw the text
     ctx.font = '20px Arial';
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
@@ -334,9 +248,11 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const w_med = 0.4;
     const w_gen = 0.2;
     const w_eth = 0.4;
-    const w_bio = 2;
+    const w_bio = 0.5;
 
-    let e_personalData  = Math.exp(this.data.score.Personal + this.financialData + this.contactData + this.personalData);
+    const w_sum = w_per + w_med + w_gen + w_eth + w_bio
+
+    let e_personalData  = Math.exp(this.scanData.Personal + this.financialData + this.contactData + this.personalData);
     let e_med = Math.exp(this.medicalData);
     let e_gen = Math.exp(this.geneticData);
     let e_eth = Math.exp(this.ethnicData);
@@ -360,7 +276,57 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     
     this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
 
+    const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+
+    this.violationPercentage = Math.round((w_sum/N_e_sum));
+    console.log("vivios: " + this.violationPercentage)
+    this.createGaugeChart(this.violationPercentage)
   }
+
+  createGaugeChart(percentage: number) {
+    const canvas = this.gaugeChartCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+  
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+  
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Compliance', 'Non-Compliance'],
+        datasets: [{
+          data: [percentage, 100 - percentage],
+          backgroundColor: ['#4CAF50', '#FF5252'],
+          borderWidth: 0,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '80%',
+        plugins: {
+          tooltip: { enabled: false },
+        },
+      },
+      plugins: [{
+        id: 'gaugeText',
+        afterDraw(chart) {
+          const { ctx, width, height } = chart;
+          const fontSize = Math.min(width, height) / 6;
+          ctx.save();
+          ctx.font = `${fontSize}px Arial`;
+          ctx.fillStyle = '#000';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`${percentage}%`, width / 2, height / 2);
+          ctx.restore();
+        },
+      }],
+    });
+  }
+  
  
   createRadarChart(data: number[]) {
     const canvas = this.radarChartCanvas.nativeElement;
@@ -384,7 +350,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Allow resizing
+            maintainAspectRatio: false,
             scales: {
                 r: {
                     beginAtZero: true,
@@ -395,125 +361,11 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     });
   }
 
-  initializeMap(): void {
-    const width = 960;
-    const height = 600;
-
-    const svg = d3.select('#map')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height);
-
-    const projection = d3.geoMercator()
-      .scale(150)
-      .translate([width / 2, height / 2]);
-
-    const path = d3.geoPath().projection(projection);
-
-    // Use a valid map data URL
-    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json').then((worldData: any) => {
-      const countries = (topojson.feature(worldData, worldData.objects.countries) as any).features;
-
-      svg.selectAll('path')
-        .data(countries)
-        .enter().append('path')
-        .attr('d', path as unknown as string)
-        .attr('fill', (d: any) => this.getCountryColor(d.id))
-        .attr('stroke', '#ffffff')
-        .attr('stroke-width', 0.5);
-
-    }).catch((error) => {
-      console.error('Error loading map data:', error);
-    });
-  }
-
-  getCountryColor(countryId: string): string {
-    const euCountries = ['008', '040', '056', '100', '191', '196', '203', '208', '233', '246', '250', '276', '300', '348', '352', '372', '380', '428', '440', '442', '470', '528', '616', '620', '703', '705', '724', '752', '826'];
-
-    const nonEuCountries = [
-      '004', '012', '020', '024', '028', '032', '036', '044', '048', '050', '051', '052', '060', 
-      '064', '068', '070', '072', '076', '084', '090', '096', '104', '108', '112', '116', '120', 
-      '132', '136', '140', '144', '148', '152', '156', '170', '174', '178', '180', '184', '188', 
-      '192', '204', '208', '212', '214', '218', '222', '226', '231', '232', '234', '238', '242', 
-      '254', '258', '262', '266', '270', '275', '288', '292', '296', '304', '308', '312', '316', 
-      '320', '324', '328', '332', '340', '344', '348', '352', '356', '360', '364', '368', '376', 
-      '384', '388', '392', '398', '400', '404', '408', '410', '414', '417', '418', '422', '426', 
-      '430', '434', '438', '446', '450', '454', '458', '462', '466', '474', '478', '480', '484', 
-      '492', '496', '498', '499', '500', '504', '508', '512', '516', '520', '524', '531', '533', 
-      '534', '535', '540', '548', '554', '558', '562', '566', '570', '574', '578', '580', '583', 
-      '584', '585', '586', '591', '598', '600', '604', '608', '612', '620', '624', '626', '630', 
-      '634', '638', '642', '643', '646', '652', '654', '659', '660', '662', '663', '666', '670', 
-      '674', '678', '682', '686', '688', '690', '694', '702', '704', '706', '710', '716', '728', 
-      '729', '732', '740', '748', '756', '760', '762', '764', '768', '772', '776', '780', '784', 
-      '788', '792', '795', '796', '798', '800', '804', '807', '818', '834', '840', '850', '854', 
-      '858', '860', '862', '876', '882', '887', '894'
-    ];
-
-    // Add specific IDs for US and UK
-    const specialCountries: { [key: string]: string } = {
-        '826': 'purple', // UK
-        '840': 'purple'  // US
-    };
-
-    // Existing switch logic for other locations
-    switch (this.location) {
-      case 0: // EU in red, others not highlighted
-        return euCountries.includes(countryId) ? 'red' : '#d3d3d3';
-      case 1: // Non-EU in green, others not highlighted
-        return nonEuCountries.includes(countryId) ? 'green' : '#d3d3d3';
-      case 2: // Optional: All in light grey
-      default:
-        // Check for US and UK before returning light grey
-        if (specialCountries[countryId]) {
-            return specialCountries[countryId];  // Return purple for US and UK
-        }
-        return '#d3d3d3';  // Light grey for all other countries
-     }
-    }
-
-  isEU(countryId: number): boolean {
-    const euCountryIds = [
-      56,   // Belgium
-      250,  // France
-      276,  // Germany
-      300,  // Greece
-      372,  // Ireland
-      380,  // Italy
-      528,  // Netherlands
-      620,  // Portugal
-      724,  // Spain
-      826,  // United Kingdom (historically in EU, but removed after Brexit)
-      208,  // Denmark
-      246,  // Finland
-      348,  // Hungary
-      352,  // Iceland
-      196,  // Cyprus
-      40,   // Austria
-      578,  // Norway
-      642,  // Romania
-      703,  // Slovakia
-      705,  // Slovenia
-      100,  // Bulgaria
-      191,  // Croatia
-      203,  // Czech Republic
-      348,  // Hungary
-      233,  // Estonia
-      428,  // Latvia
-      440,  // Lithuania
-      616,  // Poland
-      703,  // Slovakia
-      752,  // Sweden
-      792   // Turkey (negotiating EU membership, not officially in the EU)
-    ];
-    return euCountryIds.includes(countryId);
-  }
-
   populateWithMockData(): void {
-    // Populate data with mock structure
     this.data = {
       score: {
         NER: Math.floor(Math.random() * 10),
-        location_report: Math.floor(Math.random() * 3), // 0, 1, or 2
+        location_report: Math.floor(Math.random() * 3),
         Personal: Math.floor(Math.random() * 10),
         Financial: Math.floor(Math.random() * 10),
         Contact: Math.floor(Math.random() * 10),
@@ -526,20 +378,17 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       }
     };
 
-    // Assign values from data.score
-    this.nerCount = this.data.score.NER;
-    this.location = this.data.score.location_report;
-    this.personalData = this.data.score.Personal;
-    this.financialData = this.data.score.Financial;
-    this.contactData = this.data.score.Contact;
-    this.medicalData = this.data.score.Medical;
-    this.ethnicData = this.data.score.Ethnic;
-    this.biometricData = this.data.score.Biometric;
-    this.geneticData = this.data.score.Genetic;
-    this.rag_count = this.data.score.lenarts;
-    this.rag_stat = this.data.score.RAG_Statement;
-
-    // Create all graphs
+    this.nerCount = this.data.NER;
+    this.location = this.data.location_report;
+    this.personalData = this.data.Personal;
+    this.financialData = this.data.Financial;
+    this.contactData = this.data.Contact;
+    this.medicalData = this.data.Medical;
+    this.ethnicData = this.data.Ethnic;
+    this.biometricData = this.data.Biometric;
+    this.geneticData = this.data.Genetic;
+    this.rag_count = this.data.lenarts;
+    this.rag_stat = this.data.RAG_Statement;
     this.createAllGraphs();
   }
 
@@ -548,14 +397,86 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     this.createCircularBarChart();
     this.drawCircularProgressBar(this.rag_count);
     this.calculateMetric();
-    this.initializeMap();
   }
 
   destroyOldGraphs(): void {
-    // Remove old SVG elements
     d3.select('#circularBarChart').selectAll('svg').remove();
     d3.select('#progressCanvas').selectAll('svg').remove();
     d3.select('#radarChartCanvas').selectAll('svg').remove();
     d3.select('#map').selectAll('svg').remove();
   }
+
+  async createComparisonBarChart() {
+    const canvas = this.barChartCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+  
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+  
+    const { data: total_violations_summary, error } = await this.supabase
+      .from('total_violations_summary')
+      .select('*');
+  
+    if (error) {
+      console.error('Error fetching total violations summary:', error);
+      return;
+    }
+  
+    const avgData = total_violations_summary[0];
+  
+    const categories = ['Personal', "Financial", "Contact", 'Medical', 'Genetic', 'Ethnic', 'Biometric'];
+    const scannedData = [
+      this.personalData,
+      this.financialData,
+      this.contactData,
+      this.medicalData,
+      this.geneticData,
+      this.ethnicData,
+      this.biometricData,
+    ];
+
+    const avgViolations = [
+      avgData.avg_personal_data_violations,
+      avgData.avg_medical_data_violations,
+      avgData.avg_genetic_data_violations,
+      avgData.avg_ethnic_data_violations,
+      avgData.avg_biometric_data_violations,
+      avgData.avg_financial_data_violations,
+      avgData.avg_financial_data_violations,
+    ];
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: [
+          {
+            label: 'Document Violations',
+            data: scannedData,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+          },
+          {
+            label: 'Average Violations',
+            data: avgViolations,
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  } 
 }
