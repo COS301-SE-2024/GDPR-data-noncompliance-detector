@@ -82,14 +82,14 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     const intro = introJs();
     intro.setOptions({
       steps: [
-        {
-          element: '#uploadFile',
-          intro: 'Click here to upload a document'
-        },
-        {
-          element: '#Report',
-          intro: 'This where the report shows after the upload'
-        }
+        // {
+        //   element: '#uploadFile',
+        //   intro: 'Click here to upload a document'
+        // },
+        // {
+        //   element: '#Report',
+        //   intro: 'This where the report shows after the upload'
+        // }
       ],
     });
     intro.start();

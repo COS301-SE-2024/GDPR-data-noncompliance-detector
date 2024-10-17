@@ -285,6 +285,11 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
           element: '#InboxAttachments',
           intro: 'This is where you will see all the new attachments in the received inbox directory.'
         },
+        {
+          element: '#Downloads',
+          intro: 'This is where you will see all the new downloaded documents.'
+        }
+   
       ],
     });
     intro.start();

@@ -5,10 +5,10 @@
 
 <div class="main-content">
   <div class="header-container" *ngIf="!result">
-    <header class="header">
+    <header class="header" id="InboxAttachments">
       Inbox
     </header>
-    <header class="header clickable-header" (click)="navigateToDownloads()">Downloads</header>
+    <header class="header clickable-header" id="Downloads" (click)="navigateToDownloads()">Downloads</header>
   </div>
 
   
@@ -18,7 +18,6 @@
  
 
   <div class="containers">
-    
     <div class="block max-w-sm p-6 mr-10 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
     style="background-color: #111827 !important; height: 350px; overflow: hidden;" *ngIf="!result">
       <h5 class=" text-center text-2xl font-bold tracking-tight text-white-900 dark:text-white" style="font-family: 'Mediator Narrow Web Extra Bold';">How It Works</h5>

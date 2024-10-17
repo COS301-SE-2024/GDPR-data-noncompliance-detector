@@ -5,10 +5,10 @@
 
 <div class="main-content">
   <div class="header-container" *ngIf="!result">
-    <header class="header  clickable-header" (click)="navigateToInbox()">
+    <header class="header  clickable-header" id="InboxAttachments" (click)="navigateToInbox()">
       Inbox
     </header>
-    <header class="header">Downloads</header>
+    <header class="header" id="Downloads">Downloads</header>
   </div>
   
   <p class="sub-header text-lg" *ngIf="!result">
