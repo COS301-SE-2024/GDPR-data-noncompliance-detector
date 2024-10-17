@@ -71,12 +71,8 @@ export class LoginComponent implements OnInit {
           const isPasswordValid = await bcrypt.compare(formValues.password, data.password);
           if (isPasswordValid) {
             this.authService.login();
-            // Show success toast and hide it after 3 seconds
-            // this.showSuccessToast = true;
-            // setTimeout(() => this.showSuccessToast = false, 3000);
             
             this.router.navigate(['/home']);
-            
             
           } else {
             this.showError = true; 
