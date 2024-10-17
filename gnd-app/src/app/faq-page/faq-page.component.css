@@ -15,6 +15,16 @@
   color: white;
 }
 
+.header::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #8EBA12;
+  border-radius: 50%;
+  transform: translateX(-100%);
+}
+
 .description {
   text-align: center; 
   color: white; 
@@ -90,6 +100,7 @@
 }
 
 .dropdown-content p {
+  color: #8EBA12;
   margin: 0;
   word-wrap: break-word; 
 }

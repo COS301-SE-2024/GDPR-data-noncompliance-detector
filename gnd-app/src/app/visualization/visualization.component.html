@@ -59,11 +59,28 @@
     <canvas id="circularBarChart"></canvas>
   </div>
   <div class="description">
-    <p><strong>What Circular Bar Chart Does:</strong> Displays the cumulative score of violations across different categories, showing where the risks are concentrated.</p>
+    <div>
+      <strong>What Circular Bar Chart Does:</strong> 
+      <ul>
+      <li>  - Displays the cumulative score of violations across different categories, showing where the risks are concentrated.</li>
+      <li>  - Each category corresponds to a different coloured sector.</li>
+      <li>  - The number that the sector extends to is the number of violations for that category.</li>
+
+      </ul>
+    </div>
+
   </div>
 
   <div class="description">
-    <p><strong>What Radar Chart Does:</strong> Visualizes the normalized risk score across various personal data categories (e.g., medical, biometric).</p>
+    <div>
+      <strong>What Radar Chart Does:</strong> 
+      <ul>
+      <li>  - Visualizes the normalized risk score across various personal data categories (e.g., medical, biometric).</li>
+      <li>  - The decimal number that the radar points extend to indicate how much that categories violations contribute to the risk score.</li>
+
+      </ul>
+    </div>
+
   </div>
   <div class="visualization">
     <header class="chart-header">Risk Score</header>
@@ -97,7 +114,7 @@
     <header class="chart-header">How you stack up</header>
     <ul>
       <li><strong>Visual Comparison:</strong> See how your document's GDPR violations compare with the average across all documents we've scanned.</li>
-      <li><strong>Category Breakdown:</strong> Your highest violations are within the </li>
+      <li><strong>Category Identification:</strong> Your violations are highlighted in blue, with the average highlighted in pink.</li>
     </ul>
     
   </div>
@@ -111,6 +128,11 @@
     <canvas #gaugeChartCanvas width="300" height="300"></canvas>
   </div>
   <div class="description">
-    <p><strong>What Gauge Chart Does:</strong> Displays a dynamic compliance gauge reflecting how compliant the system is with GDPR.</p>
+    <ul>
+      <strong>What Gauge Chart Does:</strong> 
+      <li> - Displays a dynamic compliance gauge reflecting how compliant your document is with GDPR.</li>
+      <li> - The red portion of the gauge indicates how much of your document GND classifies as non-compliant.</li>
+      <li> - The green portion of the gauge indicates how much of your document GND classifies as compliant.</li>
+    </ul>
   </div>
 </div>
