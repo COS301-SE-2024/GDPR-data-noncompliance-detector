@@ -11,12 +11,13 @@ import { VisualizationComponent } from "../visualization/visualization.component
 import { VisualizationService} from '../services/visualization.service';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 // import { error } from 'console';
 
 @Component({
   selector: 'app-outlook-inbox',
   standalone: true,
-  imports: [CommonModule, RouterModule, VisualizationComponent, NgApexchartsModule],
+  imports: [CommonModule, RouterModule, VisualizationComponent, NgApexchartsModule, FormsModule],
   templateUrl: './outlook-inbox.component.html',
   styleUrls: ['./outlook-inbox.component.css']
 })
@@ -56,6 +57,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   pdfUrl: SafeResourceUrl | undefined;
   receivedData: any;
   isAnnotating: boolean = false;
+  searchTerm: string = '';
 
   constructor(
     private http: HttpClient,
@@ -396,5 +398,16 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
 
   onAnnotate() {
     this.isAnnotating = !this.isAnnotating;
+  }
+
+  
+  get filteredReportsList() {
+    if (!this.searchTerm) {
+      return this.reports;
+    }
+    const lowerSearch = this.searchTerm.toLowerCase();
+    return this.reports.filter(report =>
+      report.name.toLowerCase().includes(lowerSearch)
+    );
   }
 }

@@ -171,7 +171,7 @@ canvas {
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   padding: 20px;
-  grid-auto-rows: minmax(200px, 400px); /* Ensure enough height for rows */
+  grid-auto-rows: minmax(200px, 400px);
 }
 
 .visualization {
