@@ -40,7 +40,7 @@ os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
 
-encryption_key = os.getenv('GND_ENCRYPTION_KEY')
+encryption_key = os.getenv('SYS VAR x64')
 
 def start_monitors_in_background():
     monitor_thread = threading.Thread(target=start_monitors, daemon=True)

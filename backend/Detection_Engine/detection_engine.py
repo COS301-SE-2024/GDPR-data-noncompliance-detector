@@ -247,13 +247,13 @@ class detection_engine:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future_location = executor.submit(self.generate_location_report, text)
             future_reg_personal = executor.submit(self.generate_regex_report_personal, text)
-            future_ca = executor.submit(self.generate_ca_report, text)
+            # future_ca = executor.submit(self.generate_ca_report, text)
             future_em = executor.submit(self.generate_em_report, text)
             future_image = executor.submit(self.generate_image_report,path_)
 
             location_report = future_location.result()
             reg_result_personal_report = future_reg_personal.result()
-            ca_statement_report = future_ca.result()
+            # ca_statement_report = future_ca.result()
             em_result_report = future_em.result()
             image_result_report = future_image.result()
 
@@ -262,7 +262,7 @@ class detection_engine:
         # reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
         reg_result_financial_report = self.regex_report_financial(text)
         reg_result_contact_report = self.regex_report_contact(text)
-        # ca_statement_report = self.report_generator.CA_report_generation(text)
+        ca_statement_report = self.report_generator.CA_report_generation(text)
         gi_result_report = self.report_generator.GF_report(text)
         # em_result_report = self.report_generator.EM_report(text)
         md_result_report = self.report_generator.MD_report(text)
