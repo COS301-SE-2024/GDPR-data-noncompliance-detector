@@ -1,131 +1,122 @@
-@font-face {
-  font-family: 'Mediator Narrow Web Extra Bold';
-  src: url('../../assets/fonts/MediatorNarrowWebExtraBold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto Bold';
-  src: url('../../assets/fonts/Roboto Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
 .header-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-bottom: 0.5em;
-    padding-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 1em;
+  padding-top: 3em;
 }
 
 .header {
-    font-family: "Mediator Narrow Web Extra Bold";
-    position: relative;
-    display: inline-block;
-    font-size: 35px;
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 35px;
+  color: white;
 }
 
 .header::after {
-    content: '';
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: #8EBA12;
-    border-radius: 50%;
-    transform: translateX(-100%);
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #8EBA12;
+  border-radius: 50%;
+  transform: translateX(-100%);
 }
 
-.grid-parent {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 10px;
-    gap: 20px; 
-    width: 100%;
-} 
-
-.grid-gnd {
-    margin: 10px;
-    width: 45%; 
-    padding: 20px;
-    box-sizing: border-box; 
+.description {
+  text-align: center; 
+  color: white; 
+  margin-top: 20px; 
+  font-size: 18px; 
+  font-family: "Mediator Narrow Web Extra Bold"; 
 }
 
-.grid-gdpr {
-    margin: 10px;
-    width: 45%; 
-    padding: 20px;
-    box-sizing: border-box; 
+.contact-link {
+  color: #8EBA12; 
+  font-weight: bold; 
 }
+
+
+.faq-container {
+  padding: 20px;
+  display: flex; 
+  justify-content: space-between; 
+  flex-wrap: wrap; /* Allows items to wrap to the next line */
+}
+
+.faq-item {
+  margin-bottom: 10px; /* Space between FAQ items */
+  width: 100%;
+  border-bottom: 1px solid #8EBA12; /* Line divider with a color of your choice */
+  padding-bottom: 10px; /* Optional: Add padding to create space between the question and the line */
+}
+
+
+.faq-section h2 {
+  font-family: "Mediator Narrow Web Extra Bold"; /* Match the header font */
+  font-size: 35px; /* Match the header font size */
+  color: white; /* Match the header text color */
+  text-align: center; /* Center align the text */
+  margin: 1em 0; /* Add some margin for spacing */
+}
+
 
 .dropbtn {
   font-family: "Mediator Narrow Web Extra Bold";
   background-color: transparent; 
-  color: black; 
-  padding: 2px;
+  color: white; 
+  padding: 10px;
   margin: 5px;
   font-size: 19px;
   border: none;
   cursor: pointer;
   text-decoration: none; 
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center; 
+  width: 100%; 
 }
 
 .dropbtn:hover, .dropbtn:focus {
   color: #8EBA12; 
-  text-decoration: underline; 
-  background-color: transparent; 
-  
 }
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  width: 100%;
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 500px; 
-  max-width: 500px; 
+  max-height: 0; /* Start with max-height 0 for transition */
   overflow: hidden; 
-  box-shadow: 16px 20px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  padding: 20px; 
-  box-sizing: border-box; 
+  max-width: 500px; /* Increase the max-width to allow for larger dropdowns */
+  min-width: 200px; /* Set a minimum width */
+  width: auto; /* Allow the dropdown to expand based on content */
+  padding: 0 10px; /* Padding when closed */
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out; /* Smooth transition */
+  border-radius: 1%;
 }
 
-
 .dropdown-content p {
-  color: black;
-  text-decoration: none;
-  display: block;
+  color: #8EBA12;
+  margin: 0;
   word-wrap: break-word; 
 }
 
-
-.show {
-  display: block;
-}
-
-
-.dropbtn .arrow-up::before, 
-.dropbtn .arrow-down::before {
-  content: '▼';
-  margin-left: 8px;
+.arrow-up::before, 
+.arrow-down::before {
+  content: '▼'; 
+  margin-left: 8px; 
   display: inline-block;
   transition: transform 0.3s ease; 
 }
 
-
-.dropbtn .arrow-down::before {
-  transform: rotate(180deg); 
+.arrow-down::before {
+  transform: rotate(0deg); 
 }
 
-
-.dropbtn .arrow-up::before {
-  transform: rotate(0deg); 
+.arrow-up::before {
+  transform: rotate(180deg); 
 }
