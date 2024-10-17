@@ -18,19 +18,34 @@
  
 
   <div class="containers">
-    <div class="inbox-rectangle" *ngIf="!result" id="InboxAttachments">
+    
+    <div class="block max-w-sm p-6 mr-10 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    style="background-color: #111827 !important; height: 350px; overflow: hidden;" *ngIf="!result">
+      <h5 class=" text-center text-2xl font-bold tracking-tight text-white-900 dark:text-white" style="font-family: 'Mediator Narrow Web Extra Bold';">How It Works</h5>
+      <ul class="list-disc list-inside font-normal text-white-700 dark:text-gray-400 space-y-2">
+        <li>Your Outlook Mailbox is continually monitored for incoming emails</li>
+        <li>Only emails originating from with GDPR protected countries are scanned</li>
+        <li>Your attachments are automatically scanned and a report is generated to view at you convienience</li>
+        <li>You will recieve an alert to notify that an attachment has been scanned and a report is available</li>
+      </ul>
+
+      <p class="absolute bottom-4 left-6 text-sm text-gray-400">
+        * This feature requires an active Outlook Classic account.
+      </p>
+    </div>
+  
+    <div class="inbox-rectangle border border-gray-200 rounded-lg shadow" *ngIf="!result" id="InboxAttachments">
       <ul>
-        <div class="card" *ngFor="let report of reports" (click)="getReportContent(report.name)">
+        <div class="card border-bottom border-gray-200" *ngFor="let report of reports" (click)="getReportContent(report.name)">
           <li class="file-info">
             <div class="file-details">
-              <i class="fas fa-file p-2 border-2 border-gray-500 file-icon"></i>
+              <i class="fas fa-file p-2 border-2 border-gray-500 rounded-lg file-icon"></i>
               <div class="file-text">
                 <span class="file-name">{{ getFileNameWithoutCountry(report.name) }}</span>
-                <span class="file-date">{{ formatDate(report.modified) }}</span>
               </div>
             </div>
             <div class="violation-status">
-              <span>No violations</span>
+              <span class="file-date">{{ formatDate(report.modified) }}</span>
             </div>
           </li>
         </div>
