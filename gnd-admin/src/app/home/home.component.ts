@@ -61,7 +61,8 @@ export class HomeComponent implements OnInit {
       console.error('Error fetching current data:', currentError);
       return;
     }
-  
+
+      
     // Fetching previous violation reports for trend calculation
     const previousStartDate = new Date(startDate);
     previousStartDate.setDate(previousStartDate.getDate() - parseInt(this.timeRange));
@@ -164,24 +165,34 @@ export class HomeComponent implements OnInit {
           label: 'Violations',
           data: this.violationTrends.map(item => item.count),
           borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
+          tension: 0.4
         }]
       },
       options: {
         responsive: true,
         scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Time-Stamps'
+            }
+          },
           y: {
+            title: {
+              display: true,
+              text: 'Number of Violations'
+            },
             beginAtZero: true
           }
         }
       }
     });
-  }
+}
 
   createViolationTypesChart() {
     const ctx = document.getElementById('violationTypesChart') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: this.violationTypes.map(item => item.name),
         datasets: [{
@@ -199,7 +210,12 @@ export class HomeComponent implements OnInit {
         }]
       },
       options: {
-        responsive: true
+        responsive: true,
+        aspectRatio:1.5,
+        animation:{
+          animateScale : true,
+          animateRotate : true
+        }
       }
     });
   }
@@ -216,13 +232,24 @@ export class HomeComponent implements OnInit {
             label: `${type.charAt(0).toUpperCase() + type.slice(1)} Data Violations`,
             data: this.recentReports.map(report => report[`${type}_data_violations`]),
             borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
+            tension: 0.4
           }]
         },
         options: {
           responsive: true,
+          maintainAspectRatio: true, 
           scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Time-Stamps'
+              }
+            },
             y: {
+              title: {
+                display: true,
+                text: 'Number of Violations'
+              },
               beginAtZero: true
             }
           }
