@@ -40,7 +40,8 @@
 
 
 .faq-container {
-  padding: 20px;
+  padding: 60px;
+  padding-top: 5px;
   display: flex; 
   justify-content: space-between; 
   flex-wrap: wrap; /* Allows items to wrap to the next line */
@@ -100,7 +101,7 @@
 }
 
 .dropdown-content p {
-  color: #8EBA12;
+  color: white;
   margin: 0;
   word-wrap: break-word; 
 }
