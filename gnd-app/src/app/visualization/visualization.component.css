@@ -171,11 +171,10 @@ canvas {
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   padding: 20px;
-  grid-auto-rows: 400px;
+  grid-auto-rows: minmax(200px, 400px); /* Ensure enough height for rows */
 }
 
-.visualization, 
-.description {
+.visualization {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -185,7 +184,7 @@ canvas {
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow-y: auto;
   color: black;
 }
 
@@ -201,6 +200,13 @@ canvas {
   color: #333;
 }
 
+.header-inside {
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+}
+
 canvas {
   max-width: 100%;
   max-height: 300px;
@@ -208,10 +214,32 @@ canvas {
 }
 
 .description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
   background-color: #fff;
   overflow-y: auto;
-  text-align: center;
+  text-align: left;
   word-wrap: break-word;
+  color: black;
+}
+
+.description-rag {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  background-color: #fff;
+  overflow-y: auto;
+  text-align: left;
+  word-wrap: break-word;
+  color: black;
 }
 
 @media (max-width: 768px) {
@@ -220,4 +248,8 @@ canvas {
   }
 }
 
-
+.divider {
+  height: 4px;
+  background-color: black;
+  margin-bottom: 1em;
+}

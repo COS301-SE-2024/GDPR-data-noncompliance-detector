@@ -50,6 +50,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   personal: number = 0;
   ragScoreArray: string[] = [];
   isVisualizing: boolean = false;
+  fileName: string = '';
 
   constructor(
     private http: HttpClient,
@@ -183,7 +184,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     const country = this.extractCountryFromFileName(fileName);
   
     this.location = country;
-
+    this.fileName = this.getFileNameWithoutCountry(fileName)
     this.isVisualizing = false;
 
     this.visualizationService.clearScanData();

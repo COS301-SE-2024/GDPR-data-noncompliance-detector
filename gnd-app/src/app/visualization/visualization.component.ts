@@ -453,14 +453,14 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
         labels: categories,
         datasets: [
           {
-            label: 'Scanned Data',
+            label: 'Document Violations',
             data: scannedData,
             backgroundColor: 'rgba(54, 162, 235, 0.5)',
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1,
           },
           {
-            label: 'Average Data',
+            label: 'Average Violations',
             data: avgViolations,
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
             borderColor: 'rgba(255, 99, 132, 1)',

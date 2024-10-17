@@ -46,6 +46,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
   totalViolations: number = 0;
   violationPercentage: number = 0;
   isVisualizing: boolean = false;
+  ragScoreArray: string[] = [];
+
 
   constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,) { }
 
@@ -147,6 +149,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               const decryptedResult = decryptedBytes.toString(CryptoJS.enc.Utf8);
     
               const res = JSON.parse(decryptedResult);
+              const visResults = res.score;
 
               this.uploadedFileName = res.fileName;
               this.fileName = res.fileName;
@@ -164,6 +167,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               this.geneticData = res.score.Genetic;
               this.consentAgreement = this.consentAgreementStatus(res.score["Consent Agreement"]);
               this.ragScore = res.score.RAG_Statement;
+              if (Array.isArray(res.score.RAG_Statement)) {
+                this.ragScoreArray = res.score.RAG_Statement;
+              } 
+              else {
+                this.ragScoreArray = [];
+              }              
               this.response = res;
               this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
               this.calculateMetric();
@@ -173,7 +182,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               this.result = "Y";
               this.isUploading = false;
 
-              this.visualizationService.setScanData(res);
+              this.visualizationService.setScanData(visResults);
               console.log('UploadDocumentComponent: Scan data set in service.')
 
             } catch (error) {
@@ -241,6 +250,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
                 const decryptedResult = decryptedBytes.toString(CryptoJS.enc.Utf8);
       
                 const res = JSON.parse(decryptedResult);
+                const visResults = res.score;
 
                 this.uploadedFileName = res.fileName;
                 this.fileName = res.fileName;
@@ -258,6 +268,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
                 this.geneticData = res.score.Genetic;
                 this.consentAgreement = this.consentAgreementStatus(res.score["Consent Agreement"]);
                 this.ragScore = res.score.RAG_Statement;
+                if (Array.isArray(res.score.RAG_Statement)) {
+                  this.ragScoreArray = res.score.RAG_Statement;
+                } 
+                else {
+                  this.ragScoreArray = [];
+                } 
                 this.response = res;
                 this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
                 this.calculateMetric();
@@ -266,7 +282,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
                 this.checkdata();
                 this.result = "Y";
                 this.isUploading = false;
-                this.visualizationService.setScanData(res);
+                this.visualizationService.setScanData(visResults);
                 console.log('UploadDocumentComponent: Scan data set in service.');
 
               } catch (error) {

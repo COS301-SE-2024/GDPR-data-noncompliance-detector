@@ -98,15 +98,19 @@
 
     <div class="analysis-rectangle ml-64" *ngIf="result">
       <ng-container *ngIf="!isVisualizing; else visualizationView">
-        <div class="px-0 flex flex-1 justify-center py-0">
+        <div class="px-40 flex flex-1 justify-center py-2">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <div class="flex flex-wrap justify-between gap-3 p-4">
-              <div class="flex min-w-72 flex-col gap-3">
-                <p class="text-[#111418] tracking-light text-[32px] font-bold leading-tight">GDPR Compliance Scan</p>
+            <div class="flex flex-wrap justify-between gap-3 p-2">
+              <div class="header-container-2">
+                <p class="header-2">GDPR Compliance Scan</p>
               </div>
             </div>
-            <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-0">Summary</h3>
+            <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-2 pb-2 pt-2">Summary</h3>
             <div class="p-2 grid grid-cols-[20%_1fr] gap-x-6">
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">File Name</p>
+                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ fileName }}</p>
+              </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
                 <p class="text-[#60758a] text-sm font-normal leading-normal pt-2.5">Compliance Status</p>
                 <p *ngIf="documentStatus == 'Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
@@ -114,6 +118,12 @@
                 </p>
                 <p *ngIf="documentStatus == 'Non-Compliant'" class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-non-compliant">{{ documentStatus }}
                   <i class="fas fa-exclamation-triangle w-5 h-5 text-red-400 px-4"></i>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Valid Consent Agreement</p>
+                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ consentAgreement }}
+                  <i *ngIf="consentAgreement === 'The document does not appear to contain any data consent agreements'" class="fas fa-exclamation-triangle w-3 h-3 text-gray-500 px-4"></i>
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
@@ -243,6 +253,14 @@
                     </div>
                   </span>
                 </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">GDPR Articles Violated:</p>
+                <ul class="text-[#111418] text-sm font-normal leading-normal pt-2">
+                  <li *ngFor="let article of ragScoreArray" style="margin-bottom: 8px;">
+                    Article: {{ article }}
+                  </li>
+                </ul>
               </div>
             </div>
             <div class="flex flex-col gap-3 p-4">

@@ -112,6 +112,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   isVisualizing: boolean = false;
   violationPercentage: number = 0;
   personal: number = 0;
+  fileName: string = '';
 
   docStatus(status: number): string {
     if(status <= 0.6){
@@ -145,6 +146,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     
     const fileName = filePath.split('/').pop() || filePath;
     // const country = this.extractCountryFromFileName(fileName);
+    this.fileName = this.getFileNameWithoutCountry(fileName);
     this.visualizationService.clearScanData();
     this.isVisualizing = false;
 

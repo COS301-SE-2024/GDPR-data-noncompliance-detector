@@ -412,3 +412,20 @@ body {
   visibility: visible;
   opacity: 1;
 }
+
+.header-container-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* padding-bottom: 2.5em; */
+  padding-top: 1em;
+}
+
+.header-2 {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 35px;
+  color: black;
+}
