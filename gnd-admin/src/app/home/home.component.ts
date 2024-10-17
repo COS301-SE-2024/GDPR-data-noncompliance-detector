@@ -221,42 +221,6 @@ export class HomeComponent implements OnInit {
   }
 
   createViolationTypeTrendCharts() {
-  //   const types = ['personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact' ];
-  //   types.forEach(type => {
-  //     const ctx = document.getElementById(`${type}DataTrendChart`) as HTMLCanvasElement;
-  //     new Chart(ctx, {
-  //       type: 'line',
-  //       data: {
-  //         labels: this.violationTrends.map(item => item.date),
-  //         datasets: [{
-  //           label: `${type.charAt(0).toUpperCase() + type.slice(1)} Data Violations`,
-  //           data: this.recentReports.map(report => report[`${type}_data_violations`]),
-  //           borderColor: 'rgb(75, 192, 192)',
-  //           tension: 0.4
-  //         }]
-  //       },
-  //       options: {
-  //         responsive: true,
-  //         maintainAspectRatio: true, 
-  //         scales: {
-  //           x: {
-  //             title: {
-  //               display: true,
-  //               text: 'Time-Stamps'
-  //             }
-  //           },
-  //           y: {
-  //             title: {
-  //               display: true,
-  //               text: 'Number of Violations'
-  //             },
-  //             beginAtZero: true
-  //           }
-  //         }
-  //       }
-  //     });
-  //   });
-  // }
   const types: Array<'personal' | 'medical' | 'biometric' | 'ethnic' | 'genetic' | 'financial' | 'contact'> = [
     'personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact'
   ];
@@ -335,7 +299,6 @@ export class HomeComponent implements OnInit {
     Chart.getChart('geneticDataTrendChart')?.destroy();
     Chart.getChart('financialDataTrendChart')?.destroy();
     Chart.getChart('contactDataTrendChart')?.destroy();
-    // Chart.getChart('consentAgreementTrendChart')?.destroy();
 
     // Recreating charts with new data
     this.createCharts();

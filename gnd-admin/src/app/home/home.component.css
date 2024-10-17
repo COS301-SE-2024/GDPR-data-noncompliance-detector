@@ -53,6 +53,28 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+.chart-row {
+  display: flex;               
+  justify-content: space-between; 
+  margin-bottom: 20px;         
+}
+
+.trend-chart {
+  background-color: white;     
+  padding: 20px;              
+  border-radius: 10px;     
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  width: 48%;                  
+}
+
+.chart-row > .trend-chart {
+  margin-right: 2%;            
+}
+
+.chart-row > .trend-chart:last-child {
+  margin-right: 0;             
+}
+
 
 canvas {
   width: 100% !important;
@@ -79,7 +101,7 @@ h3, h4 {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease-in-out; /* For hover animation */
+  transition: transform 0.3s ease-in-out; 
 }
 
 /* Hover effect to make charts pop */
@@ -93,14 +115,14 @@ h3, h4 {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* background-color: white;
+  background-color: white;
   margin-bottom: 30px; 
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 600px; 
+  /* max-width: 600px;  */
   margin-left: auto;
-  margin-right: auto;  */
+  margin-right: auto; 
 }
 
 /* Modify canvas styling to make it stand out more */
