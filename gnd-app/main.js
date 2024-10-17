@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const { spawn } = require('child_process');
 const notifier = require('node-notifier');
 const axios = require('axios');
@@ -18,7 +18,7 @@ function createWindow () {
     minHeight: 600,
     icon: path.join(__dirname, 'src/assets/logo.ico'),
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
     }
   })
   win.setMenu(null);
@@ -32,6 +32,14 @@ app.whenReady().then(() => {
   createWindow();
   // setTimeout(setupWatcher, 100);
   keyHelper();
+  
+});
+
+ipcMain.handle('get-supabase-config', () => {
+  return {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY
+  };
 });
 
 function keyHelper() {

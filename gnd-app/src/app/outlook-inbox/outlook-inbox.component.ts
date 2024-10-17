@@ -74,6 +74,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
       this.startIntro();
     })
+    this.visualizationService.clearScanData();
+
   }
 
   ngOnDestroy() {

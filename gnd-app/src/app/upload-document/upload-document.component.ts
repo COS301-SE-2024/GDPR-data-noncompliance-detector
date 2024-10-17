@@ -67,6 +67,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     // this.uploadState = this.visualizationService.getUploadState();
     console.log("------------------------------------------------------------");
     console.log(this.uploadState);
+    this.visualizationService.clearScanData();
+
   }
 
   ngOnDestroy() {

@@ -10,11 +10,13 @@ import { Subscription } from 'rxjs';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
+import { VisualizationComponent } from "../visualization/visualization.component";
+import { VisualizationService} from '../services/visualization.service';
 
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, VisualizationComponent],
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
@@ -37,7 +39,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   // currentAnalysis: any = {};
 
   constructor(private http: HttpClient, private walkthroughService: WalkthroughService, private router: Router,
-    private reportGenerationService: ReportGenerationService
+    private reportGenerationService: ReportGenerationService, private visualizationService: VisualizationService,
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +59,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
       this.startIntro();
     })
+    this.visualizationService.clearScanData();
   }
 
   getDataFolder(): Observable<{ outlook_data_folder: string }> {
@@ -106,6 +109,9 @@ export class InboxComponent implements OnInit, OnDestroy {
   consentAgreement: string = "";
   ragScore: string = "";
   totalViolations: number = 0;
+  isVisualizing: boolean = false;
+  violationPercentage: number = 0;
+  personal: number = 0;
 
   docStatus(status: number): string {
     if(status <= 0.6){
@@ -139,6 +145,8 @@ export class InboxComponent implements OnInit, OnDestroy {
     
     const fileName = filePath.split('/').pop() || filePath;
     // const country = this.extractCountryFromFileName(fileName);
+    this.visualizationService.clearScanData();
+
   
     this.location = "N/A";
 
@@ -171,10 +179,13 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
         this.ragScore = score.RAG_Statement;
         this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
+        this.calculateMetric();
 
         // this.checkdata();
 
         this.result = "Y";
+        this.visualizationService.setScanData(score);
+
 
       },
       error: (error:any) => {
@@ -447,7 +458,51 @@ export class InboxComponent implements OnInit, OnDestroy {
     }
   }
 
+  calculateMetric() {
+
+    const w_per = 1;
+    const w_med = 0.4;
+    const w_gen = 0.2;
+    const w_eth = 0.4;
+    const w_bio = 0.5;
+
+    const w_sum = w_per + w_med + w_gen + w_eth + w_bio
+
+    let e_personalData  = Math.exp(this.personal + this.financialData + this.contactData + this.personalData);
+    let e_med = Math.exp(this.medicalData);
+    let e_gen = Math.exp(this.geneticData);
+    let e_eth = Math.exp(this.ethnicData);
+    let e_bio = Math.exp(this.biometricData);
+
+    const expValues = [e_personalData, e_med, e_gen, e_eth, e_bio];
+
+    let maxExpValue = expValues[0];
+
+    for (let i = 1; i < expValues.length; i++) {
+      if (expValues[i] > maxExpValue) {
+        maxExpValue = expValues[i];
+      }
+    }
+
+    let N_e_personalData = (e_personalData/maxExpValue)*w_per;
+    let N_e_med = (e_med/maxExpValue)*w_med;
+    let N_e_gen = (e_gen/maxExpValue)*w_gen;
+    let N_e_eth = (e_eth/maxExpValue)*w_eth;
+    let N_e_bio = (e_bio / maxExpValue)*w_bio;
+
+    const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+
+    this.violationPercentage = Math.round((w_sum/N_e_sum));
+
+    console.log( "vios:" + this.violationPercentage);
+    
+  }
+
   backToDownloads() {
     this.result = '';
+  }
+
+  onVisualize() {
+    this.isVisualizing = !this.isVisualizing;
   }
 }

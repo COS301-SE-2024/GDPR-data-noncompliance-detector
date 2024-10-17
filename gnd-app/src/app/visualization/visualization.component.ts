@@ -13,6 +13,10 @@ import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import {ApexAxisChartSeries,  ApexChart,  ApexXAxis,  ChartComponent,  NgApexchartsModule
 } from "ng-apexcharts";
 import { Subscription } from 'rxjs';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { environment } from '../../environments/environment';
+
+
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -30,10 +34,14 @@ import { ChoroplethController, GeoFeature , ProjectionScale, ColorScale } from '
 })
 export class VisualizationComponent implements OnInit, AfterViewInit {
 
+  private supabase: SupabaseClient;
+
   @Input() data: any;
   @ViewChild('progressCanvas') progressCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('radarChartCanvas') radarChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('mapCanvas') mapCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('barChartCanvas') barChartCanvas!: ElementRef<HTMLCanvasElement>;
+
 
   scanDataSubscription: Subscription;
   scanData: any;
@@ -56,6 +64,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     Chart.register(...registerables, ChoroplethController, GeoFeature, ProjectionScale, ColorScale);
     this.scanDataSubscription = new Subscription();
     this.scanData = null;
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
   ngOnInit() {
@@ -85,6 +94,20 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       this.createCircularBarChart();
       console.log(this.rag_count);
     }
+    console.log("supadata: " + this.fetchData());
+
+  }
+
+  async fetchData() {  
+    const { data: total_violations_summary, error } = await this.supabase
+    .from('total_violations_summary')
+    .select('*')
+
+    if (error) {
+      console.error('Error fetching total violations summary:', error);
+    } else {
+      console.log('Average Personal Data Violations:', total_violations_summary[0].avg_financial_data_violations);
+    }
   }
 
   ngAfterViewInit() {
@@ -101,6 +124,13 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     }
 
     // this.initializeMap
+    // console.log("supadata: " + this.fetchData());
+    if (this.barChartCanvas && this.barChartCanvas.nativeElement) {
+      this.createComparisonBarChart();
+    } else {
+      console.error('barChartCanvas is not defined');
+    }
+
   }
 
   createCircularBarChart() {
@@ -134,7 +164,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
                     'rgba(139, 0, 0, 1)'          // Dark red for Biometric
                 ],
 
-                borderWidth: 1
+                borderWidth: 1,
             }]
         };
 
@@ -325,4 +355,80 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     d3.select('#radarChartCanvas').selectAll('svg').remove();
     d3.select('#map').selectAll('svg').remove();
   }
+
+  async createComparisonBarChart() {
+    const canvas = this.barChartCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+  
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+  
+    // Fetch average data from Supabase
+    const { data: total_violations_summary, error } = await this.supabase
+      .from('total_violations_summary')
+      .select('*');
+  
+    if (error) {
+      console.error('Error fetching total violations summary:', error);
+      return;
+    }
+  
+    const avgData = total_violations_summary[0]; // Assuming one row with averages
+  
+    // Data from scanData and average values from total_violations_summary
+    const categories = ['Personal', "Financial", "Contact", 'Medical', 'Genetic', 'Ethnic', 'Biometric'];
+    const scannedData = [
+      this.personalData,
+      this.financialData,
+      this.contactData,
+      this.medicalData,
+      this.geneticData,
+      this.ethnicData,
+      this.biometricData,
+    ];
+    const avgViolations = [
+      avgData.avg_personal_data_violations,
+      avgData.avg_medical_data_violations,
+      avgData.avg_genetic_data_violations,
+      avgData.avg_ethnic_data_violations,
+      avgData.avg_biometric_data_violations,
+      avgData.avg_financial_data_violations,
+      avgData.avg_financial_data_violations,
+    ];
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: [
+          {
+            label: 'Scanned Data',
+            data: scannedData,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+          },
+          {
+            label: 'Average Data',
+            data: avgViolations,
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  }
+  
 }

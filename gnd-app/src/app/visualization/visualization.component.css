@@ -147,4 +147,9 @@ canvas {
   background-color: lightgrey; 
 }
 
+#comparison-chart canvas {
+  max-height: 400px;
+  width: auto;
+}
+
 

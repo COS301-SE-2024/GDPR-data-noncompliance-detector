@@ -53,9 +53,11 @@
             </a>
           </li>
           <li>
-            <a (click)="onVisualize()" id="vizButton" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
-              <i class="fas fa-chart-bar w-5 h-5 text-gray-400 group-hover:text-white"></i>
-              <span class="ml-3">Visualisations</span>
+            <a (click)="onVisualize()" id="vizButton" 
+               class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+              <i [ngClass]="isVisualizing ? 'fas fa-file-alt' : 'fas fa-chart-bar'" 
+                 class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
+              <span class="ml-3">{{ isVisualizing ? 'Summary' : 'Visualisations' }}</span>
             </a>
           </li>
           <!-- <li>
