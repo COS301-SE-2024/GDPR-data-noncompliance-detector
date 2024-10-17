@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: 'Mediator Narrow Web Extra Bold';
   src: url('../../assets/fonts/MediatorNarrowWebExtraBold.ttf') format('truetype');
   font-weight: bold;
@@ -54,7 +54,6 @@
   transform: translateX(-100%);
 }
 
-/* Grid container */
 .grid-container {
   display: grid;
   grid-template-areas: 
@@ -143,6 +142,82 @@ canvas {
 #comparison-chart canvas {
   max-height: 400px;
   width: auto;
+}
+
+#gauge-chart canvas {
+  max-height: 400px;
+  width: auto;
+} */
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 2.5em;
+  padding-top: 1em;
+}
+
+.header {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 35px;
+  color: black;
+}
+
+.visualization-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  padding: 20px;
+  grid-auto-rows: 400px;
+}
+
+.visualization, 
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  color: black;
+}
+
+.visualization {
+  background-color: #f9f9f9;
+}
+
+.chart-header {
+  font-family: "Mediator Narrow Web Extra Bold";
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #333;
+}
+
+canvas {
+  max-width: 100%;
+  max-height: 300px;
+  height: auto;
+}
+
+.description {
+  background-color: #fff;
+  overflow-y: auto;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .visualization-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 

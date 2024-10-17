@@ -184,6 +184,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   
     this.location = country;
 
+    this.isVisualizing = false;
+
     this.visualizationService.clearScanData();
 
     const payload = { path: filePath };

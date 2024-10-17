@@ -41,8 +41,10 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
   @ViewChild('radarChartCanvas') radarChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('mapCanvas') mapCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('barChartCanvas') barChartCanvas!: ElementRef<HTMLCanvasElement>;
-
-
+  @ViewChild('gaugeChartCanvas') gaugeChartCanvas!: ElementRef<HTMLCanvasElement>;
+  
+  
+  violationPercentage: number = 0;
   scanDataSubscription: Subscription;
   scanData: any;
 
@@ -126,10 +128,17 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     if (this.barChartCanvas && this.barChartCanvas.nativeElement) {
       this.createComparisonBarChart();
     }
-    
     else {
       console.error('barChartCanvas is not defined');
     }
+
+    // if (this.gaugeChartCanvas && this.gaugeChartCanvas.nativeElement) {
+    //   this.calculateMetric();
+    //   this.createGaugeChart(this.violationPercentage);
+    // }
+    // else {
+    //   console.error('gaugeChartCanvas is not defined');
+    // }
 
   }
 
@@ -239,7 +248,9 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const w_med = 0.4;
     const w_gen = 0.2;
     const w_eth = 0.4;
-    const w_bio = 2;
+    const w_bio = 0.5;
+
+    const w_sum = w_per + w_med + w_gen + w_eth + w_bio
 
     let e_personalData  = Math.exp(this.scanData.Personal + this.financialData + this.contactData + this.personalData);
     let e_med = Math.exp(this.medicalData);
@@ -265,7 +276,57 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     
     this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
 
+    const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+
+    this.violationPercentage = Math.round((w_sum/N_e_sum));
+    console.log("vivios: " + this.violationPercentage)
+    this.createGaugeChart(this.violationPercentage)
   }
+
+  createGaugeChart(percentage: number) {
+    const canvas = this.gaugeChartCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+  
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+  
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Compliance', 'Non-Compliance'],
+        datasets: [{
+          data: [percentage, 100 - percentage],
+          backgroundColor: ['#4CAF50', '#FF5252'],
+          borderWidth: 0,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '80%',
+        plugins: {
+          tooltip: { enabled: false },
+        },
+      },
+      plugins: [{
+        id: 'gaugeText',
+        afterDraw(chart) {
+          const { ctx, width, height } = chart;
+          const fontSize = Math.min(width, height) / 6;
+          ctx.save();
+          ctx.font = `${fontSize}px Arial`;
+          ctx.fillStyle = '#000';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`${percentage}%`, width / 2, height / 2);
+          ctx.restore();
+        },
+      }],
+    });
+  }
+  
  
   createRadarChart(data: number[]) {
     const canvas = this.radarChartCanvas.nativeElement;

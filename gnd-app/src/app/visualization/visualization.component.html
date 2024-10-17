@@ -6,7 +6,7 @@
   </header>
 </div>
 
-<div class="grid-container">
+<!-- <div class="grid-container">
   <div id="violations" class="grid-item canvas-wrapper">
     <header class="header1">Violations per Category</header>
     <canvas id="circularBarChart"></canvas>
@@ -44,5 +44,53 @@
   <div id="comparison-chart" class="grid-item canvas-wrapper">
     <header class="header1">Comparison of Violations</header>
     <canvas #barChartCanvas width="400" height="300"></canvas>
+  </div>
+
+  <div id="gauge-chart" class="grid-item canvas-wrapper">
+    <header class="header1">Compliance Gauge</header>
+    <canvas #gaugeChartCanvas width="300" height="300"></canvas>
+  </div>
+  
+</div> -->
+
+<div class="visualization-grid">
+  <div class="visualization">
+    <header class="chart-header">Violations per Category</header>
+    <canvas id="circularBarChart"></canvas>
+  </div>
+  <div class="description">
+    <p><strong>What Circular Bar Chart Does:</strong> Displays the cumulative score of violations across different categories, showing where the risks are concentrated.</p>
+  </div>
+
+  <div class="description">
+    <p><strong>What Radar Chart Does:</strong> Visualizes the normalized risk score across various personal data categories (e.g., medical, biometric).</p>
+  </div>
+  <div class="visualization">
+    <header class="chart-header">Risk Score</header>
+    <canvas #radarChartCanvas width="300" height="300"></canvas>
+  </div>
+
+  <div class="visualization">
+    <header class="chart-header">Articles Violated</header>
+    <canvas #progressCanvas width="200" height="200"></canvas>
+  </div>
+  <div class="description">
+    <p><strong>What Circular Progress Bar Does:</strong> Shows the percentage of compliance achieved by the system based on the scanned data.</p>
+  </div>
+
+  <div class="description">
+    <p><strong>What Bar Chart Does:</strong> Compares the scanned data violations with average data, helping to identify gaps or areas for improvement.</p>
+  </div>
+  <div class="visualization">
+    <header class="chart-header">Comparison of Violations</header>
+    <canvas #barChartCanvas width="400" height="300"></canvas>
+  </div>
+
+  <div class="visualization">
+    <header class="chart-header">Compliance Gauge</header>
+    <canvas #gaugeChartCanvas width="300" height="300"></canvas>
+  </div>
+  <div class="description">
+    <p><strong>What Gauge Chart Does:</strong> Displays a dynamic compliance gauge reflecting how compliant the system is with GDPR.</p>
   </div>
 </div>

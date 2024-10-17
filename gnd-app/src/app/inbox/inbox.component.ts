@@ -146,6 +146,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     const fileName = filePath.split('/').pop() || filePath;
     // const country = this.extractCountryFromFileName(fileName);
     this.visualizationService.clearScanData();
+    this.isVisualizing = false;
 
   
     this.location = "N/A";

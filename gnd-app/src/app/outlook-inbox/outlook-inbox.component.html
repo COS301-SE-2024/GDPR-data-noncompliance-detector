@@ -111,6 +111,22 @@
                 <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ violationPercentage }}%</p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Individuals Identified</p>
+                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ nerCount }} individuals
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This indicates the number of individuals that have been uniquely identified in the document
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
                 <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Personal Data</p>
                 <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ personalData }} issues
                   <span class="relative">
