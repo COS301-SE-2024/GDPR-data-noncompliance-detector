@@ -41,7 +41,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
   ragScore: string = "";
   metric_score: number = 0;
   isUploading: boolean = false;
-  encryption_key:string = "";
+  encryption_key: string = "";
+  metric_val = 0;
   // encryption_key = 'IWIllreplacethislaterIWIllreplac';
   personal: number = 0;
   totalViolations: number = 0;
@@ -166,7 +167,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               this.fileName = res.fileName;
               console.log(res);
 
-              this.documentStatus = this.docStatus(res.score.Status);
+              this.documentStatus = this.docStatus(this.metric_val);
               this.nerCount = res.score.NER;
               this.location = this.locationStatus(res.score.Location);
               this.personalData = res.score.Personal;
@@ -271,7 +272,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
                 this.fileName = res.fileName;
                 console.log(res);
 
-                this.documentStatus = this.docStatus(res.score.Status);
+                this.documentStatus = this.docStatus(this.metric_val);
                 this.nerCount = res.score.NER;
                 this.location = this.locationStatus(res.score.Location);
                 this.personalData = res.score.Personal;
@@ -400,6 +401,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     let N_e_bio = (e_bio / maxExpValue)*w_bio;
 
     const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+    this.metric_val = N_e_sum;
 
     this.violationPercentage = Math.round((w_sum/N_e_sum));
 

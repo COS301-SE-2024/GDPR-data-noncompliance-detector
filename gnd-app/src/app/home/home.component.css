@@ -24,6 +24,10 @@
   font-family: 'Oswald', 'Roboto', sans-serif;
 }
 
+.middle{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 h1 {
   font-family: 'Oswald', 'Roboto', sans-serif;
   font-size: 2.5rem;
@@ -48,7 +52,7 @@ button {
   cursor: pointer;
 }
 
-.col-4{
+.col-8{
   padding-left: 80px;
 }
 

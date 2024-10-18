@@ -13,7 +13,9 @@
     We'll scan your file for GDPR compliance and provide a detailed report.
   </p>
   <p class="sub-header" *ngIf="!result">
-    <strong>We will not store or share the file you upload</strong>.
+    <i class="fas fa-exclamation-triangle" style="color: orange; margin-right: 8px;"
+      title="Your file is safe with us."></i>
+    <strong style="color: rgb(255, 255, 255);"> We will not store or share the file you upload </strong>
   </p>
 
   <div class="containers">
@@ -252,7 +254,7 @@
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">GDPR Articles Violated:</p>
                 <ul class="text-[#111418] text-md font-normal leading-normal pt-2">
-                  <li *ngFor="let article of ragScoreArray" style="margin-bottom: 8px;">
+                  <li *ngFor="let article of ragScore" style="margin-bottom: 8px;">
                     Article: {{ article }}
                   </li>
                 </ul>
