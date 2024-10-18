@@ -12,14 +12,51 @@
   font-style: normal;
 }
 
-/* .background{
-  background-image: url('../../assets/professional.jpg');
-  background-size: cover;
-  background-position: center;
-  height: calc(100vh - 60px);
-} */
-
 .container {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  overflow: auto;
+  overflow: hidden;
+  font-family: 'Oswald', 'Roboto', sans-serif;
+}
+
+h1 {
+  font-family: 'Oswald', 'Roboto', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.middle{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  background-color: #367d32;
+  /* background-color: #008CBA; */
+  /* border: none; */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin: 0.5rem;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  /* text-decoration: none; */
+  display: inline-block;
+  font-family: "Roboto Bold";
+  font-size: 16px;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.col-4{
+  padding-left: 80px;
+}
+
+/* .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,4 +83,4 @@
   font-family: "Roboto Bold";
   cursor: pointer;
 }
-
+ */

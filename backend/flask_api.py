@@ -40,7 +40,7 @@ os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
 
-encryption_key = 'IWIllreplacethislaterIWIllreplac'
+encryption_key = os.getenv('GND_ENCRYPTION_KEY')
 
 def start_monitors_in_background():
     monitor_thread = threading.Thread(target=start_monitors, daemon=True)
@@ -262,7 +262,7 @@ def read_downloads_results():
         with open(file_, 'r') as file:
             content = file.read()
         
-        print(content)
+        # print(content)
         return jsonify({"content": content})
     
     except Exception as e:

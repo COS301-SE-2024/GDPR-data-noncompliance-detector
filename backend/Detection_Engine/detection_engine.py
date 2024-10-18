@@ -8,6 +8,7 @@ import datetime
 import os
 import math
 import base64
+import concurrent.futures
 
 class detection_engine:
 
@@ -58,20 +59,74 @@ class detection_engine:
         ner_val = self.extract_number(ner_result)
         total = ner_val + reg_result_contact + reg_result_financial + reg_result_personal + gi_result + em_result
 
+    def generate_location_report(self, text):
+        return self.report_generator.location_report_generation(text)
+
+    def generate_ner_report(self, text):
+        return self.report_generator.ner_report(text)
+
+    def generate_regex_report_personal(self, text):
+        return self.regex_report_personal(text)
+
+    def generate_regex_report_financial(self, text):
+        return self.regex_report_financial(text)
+
+    def generate_regex_report_contact(self, text):
+        return self.regex_report_contact(text)
+
+    def generate_ca_report(self, text):
+        return self.report_generator.CA_report(text)
+
+    def generate_gi_report(self, text):
+        return self.report_generator.gen_report(text)
+
+    def generate_em_report(self, text):
+        return self.report_generator.EM_report(text)
+
+    def generate_md_report(self, text):
+        return self.report_generator.MD_report(text)
+    
+    def generate_image_report(self, path_):
+        return self.report_generator.Image_report_generation(path_)
+
+
     def process(self, path, path_):
         
         text = path
         
-        location = self.report_generator.location_report_generation(text)
-        ner_result = self.report_generator.ner_report(text)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future_location = executor.submit(self.generate_location_report, text)
+            future_ner = executor.submit(self.generate_ner_report, text)
+            future_reg_personal = executor.submit(self.generate_regex_report_personal, text)
+            future_reg_financial = executor.submit(self.generate_regex_report_financial, text)
+            future_reg_contact = executor.submit(self.generate_regex_report_contact, text)
+            future_ca = executor.submit(self.generate_ca_report, text)
+            future_gi = executor.submit(self.generate_gi_report, text)
+            future_em = executor.submit(self.generate_em_report, text)
+            # future_md = executor.submit(self.generate_md_report, text)
+
+            location = future_location.result()
+            ner_result = future_ner.result()
+            reg_result_personal = future_reg_personal.result()
+            reg_result_financial = future_reg_financial.result()
+            reg_result_contact = future_reg_contact.result()
+            ca_statement = future_ca.result()
+            gi_result = future_gi.result()
+            em_result = 50000
+            # em_result = future_em.result()
+            md_result = 50000
+            # md_result = future_md.result()
+            
+        # location = self.report_generator.location_report_generation(text)
+        # ner_result = self.report_generator.ner_report(text)
         # location = self.determine_country_of_origin(path)
-        reg_result_personal = self.regex_report_personal(text)
-        reg_result_financial = self.regex_report_financial(text)
-        reg_result_contact = self.regex_report_contact(text)
-        ca_statement = self.report_generator.CA_report(text)
-        gi_result = self.report_generator.gen_report(text)
-        em_result = self.report_generator.EM_report(text)
-        md_result = self.report_generator.MD_report(text)
+        # reg_result_personal = self.regex_report_personal(text)
+        # reg_result_financial = self.regex_report_financial(text)
+        # reg_result_contact = self.regex_report_contact(text)
+        # ca_statement = self.report_generator.CA_report(text)
+        # gi_result = self.report_generator.gen_report(text)
+        # em_result = self.report_generator.EM_report(text)
+        # md_result = self.report_generator.MD_report(text)
         status = ""
         
         if self.flag(ner_result, reg_result_contact,reg_result_financial,reg_result_personal, gi_result, em_result) == 0:
@@ -182,20 +237,38 @@ class detection_engine:
     
     def report_generation(self, path, path_):
 
-        text = path
+        location_report = 0
+        reg_result_personal_report = 0
+        # ca_statement_report = 0
+        em_result_report = 0
+        image_result_report = 0
 
-        location_report = self.report_generator.location_report_generation(text)
+        text = path
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future_location = executor.submit(self.generate_location_report, text)
+            future_reg_personal = executor.submit(self.generate_regex_report_personal, text)
+            future_ca = executor.submit(self.generate_ca_report, text)
+            future_em = executor.submit(self.generate_em_report, text)
+            future_image = executor.submit(self.generate_image_report,path_)
+
+            location_report = future_location.result()
+            reg_result_personal_report = future_reg_personal.result()
+            # ca_statement_report = future_ca.result()
+            em_result_report = future_em.result()
+            image_result_report = future_image.result()
+
+        # location_report = self.report_generator.location_report_generation(text)
         ner_result_report = self.report_generator.ner_report_generation(text)
-        reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
+        # reg_result_personal_report = self.regex_report_personal(text) + self.report_generator.gen_report(text)
         reg_result_financial_report = self.regex_report_financial(text)
         reg_result_contact_report = self.regex_report_contact(text)
         ca_statement_report = self.report_generator.CA_report_generation(text)
         gi_result_report = self.report_generator.GF_report(text)
-        em_result_report = self.report_generator.EM_report(text)
+        # em_result_report = self.report_generator.EM_report(text)
         md_result_report = self.report_generator.MD_report(text)
-        image_result_report = self.report_generator.Image_report_generation(path_)
+        # image_result_report = self.report_generator.Image_report_generation(path_)
         rag_stat, rag_count = self.report_generator.RAG_report(ner_result_report , reg_result_personal_report, reg_result_financial_report, reg_result_contact_report, md_result_report,ca_statement_report, gi_result_report, em_result_report, image_result_report)
-
+        # ca_statement_report = self.report_generator.CA_report_generation(text)
         # ner_result_text = self.report_generator.ner_report_text(text)
         ner_pdf_bytes = self.report_generator.ner_report_text(text, path_)
         pdf_base64 = base64.b64encode(ner_pdf_bytes.read()).decode('utf-8')

@@ -53,7 +53,7 @@ GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
 
 os.makedirs(GND_DATA_FOLDER, exist_ok=True)
 
-API_URL = "http://localhost:8000/file-upload-new"
+API_URL = "http://localhost:8000/file-upload-new-monitor"
 
 def get_resource_path(relative_path):
     try:
@@ -108,7 +108,7 @@ def verifyFromTeams(ext):
                 try:
                     with open(zone_identifier_path, 'r') as f:
                         content = f.read()
-                        # print(f"[DEBUG] CONTENT: {content}")
+                        # print(f"[D.EBUG] CONTENT: {content}")  #For logging
 
                         urls = []
                         for line in content.splitlines():
@@ -191,16 +191,6 @@ class Handle(FileSystemEventHandler):
                 api_response = response.json()
                 # print(f"[INFO] File {file_path} uploaded successfully. Server response: {api_response}")
 
-                if platform.system() == 'Windows':
-                    toast = Notification(app_id="GND",
-                                        title="New GND Report",
-                                        msg="A new GND report is available",
-                                        duration="short",
-                                        icon=get_resource_path('assets/toast_logo.png'))
-
-                    toast.set_audio(audio.Default, loop=False)
-                    toast.show()
-
                 self.save_response_as_txt(file_path, api_response)
             else:
                 print(f"[ERROR] Failed to upload file {file_path}. Server response: {response.text}")
@@ -218,6 +208,16 @@ class Handle(FileSystemEventHandler):
         try:
             with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
                 txt_file.write(str(api_response))
+                if platform.system() == 'Windows':
+                    toast = Notification(app_id="GND",
+                                        title="New GND Report",
+                                        msg="A new GND report is available",
+                                        duration="short",
+                                        icon=get_resource_path('assets/toast_logo.png'))
+
+                    toast.set_audio(audio.Default, loop=False)
+                    toast.show()
+
             # print(f"[INFO] API response saved to {txt_file_path}")
         except Exception as e:
             print(f"[ERROR] Error saving API response to {txt_file_path}: {e}")
@@ -273,7 +273,7 @@ def stop_watcher_thread(thread):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    # print("[INFO] Starting file watcher...")
+    print("[INFO] Starting file watcher...")
     start_watcher_thread_downloads("pdf,xlsx,docx", 1)
 
 # define 2 functions. one which watches a folder. one wich watches downloads
