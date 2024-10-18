@@ -8,7 +8,8 @@
 }
 
 .header {
-    font-family: "Mediator Narrow Web Extra Bold";
+    /* font-family: "Mediator Narrow Web Extra Bold"; */
+    font-family: 'Oswald', 'Roboto', sans-serif;
     position: relative;
     display: inline-block;
     font-size: 35px;

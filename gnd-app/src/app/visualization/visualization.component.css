@@ -160,7 +160,8 @@ canvas {
 }
 
 .header {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   position: relative;
   display: inline-block;
   font-size: 35px;
@@ -206,7 +207,8 @@ canvas {
 }
 
 .chart-header {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   font-size: 24px;
   margin-bottom: 10px;
   text-align: center;

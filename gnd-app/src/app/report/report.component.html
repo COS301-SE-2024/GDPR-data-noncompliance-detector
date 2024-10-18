@@ -1,10 +1,8 @@
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Oswald:wght@700&display=swap">
+
 <div class="carousel-container">
   <div class="carousel">
-    <div
-      class="carousel-slide"
-      *ngFor="let slide of slides; let i = index"
-      [class.active]="i === currentSlide"
-    >
+    <div class="carousel-slide" *ngFor="let slide of slides; let i = index" [class.active]="i === currentSlide">
       <h1 class="slide-title">{{ slide.title }}</h1>
       <h2 class="slide-description">{{ slide.description }}</h2>
       <img [src]="slide.image" alt="Slide Image" class="slide-image" />
@@ -21,11 +19,7 @@
   </div>
 
   <div class="carousel-indicators">
-    <span
-      *ngFor="let slide of slides; let i = index"
-      [class.active]="i === currentSlide"
-      (click)="goToSlide(i)"
-      class="carousel-indicator"
-    ></span>
+    <span *ngFor="let slide of slides; let i = index" [class.active]="i === currentSlide" (click)="goToSlide(i)"
+      class="carousel-indicator"></span>
   </div>
 </div>

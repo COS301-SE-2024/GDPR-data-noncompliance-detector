@@ -8,7 +8,8 @@
 }
 
 .header {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   position: relative;
   display: inline-block;
   font-size: 35px;
@@ -51,7 +52,8 @@
 
 
 .faq-section h2 {
-  font-family: "Mediator Narrow Web Extra Bold"; /* Match the header font */
+  /* font-family: "Mediator Narrow Web Extra Bold"; Match the header font */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   font-size: 35px; /* Match the header font size */
   color: white; /* Match the header text color */
   text-align: center; /* Center align the text */
@@ -60,7 +62,8 @@
 
 
 .dropbtn {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   background-color: transparent; 
   color: white; 
   padding: 10px;

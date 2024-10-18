@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Oswald:wght@700&display=swap"
+  rel="stylesheet">
 <link rel="stylesheet" href="outlook-inbox.component.css">
 
 <div class="main-content">
@@ -10,16 +11,18 @@
     <header class="header clickable-header" id="Downloads" (click)="navigateToDownloads()">Downloads</header>
   </div>
 
-  
+
   <p class="sub-header" *ngIf="!result">
     View a detailed summary of your email attachment's compliance status and possible violations detected
   </p>
- 
+
 
   <div class="containers">
-    <div class="block max-w-sm p-6 mr-10 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-    style="background-color: #111827 !important; height: 350px; overflow: hidden;" *ngIf="!result">
-      <h5 class=" text-center text-2xl font-bold tracking-tight text-white-900 dark:text-white" style="font-family: 'Mediator Narrow Web Extra Bold';">How It Works</h5>
+    <div
+      class="block max-w-sm p-6 mr-10 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      style="background-color: #111827 !important; height: 350px; overflow: hidden;" *ngIf="!result">
+      <h5 class=" text-center text-2xl font-bold tracking-tight text-white-900 dark:text-white"
+        style="font-family: 'Oswald', 'Roboto', sans-serif;">How It Works</h5>
       <ul class="list-disc list-inside font-normal text-white-700 dark:text-gray-400 space-y-2">
         <li>Your Outlook Mailbox is continually monitored for incoming emails</li>
         <li>Only emails originating from with GDPR protected countries are scanned</li>
@@ -31,21 +34,18 @@
         * This feature requires an active Outlook Classic account.
       </p>
     </div>
-  
+
     <div class="inbox-rectangle border border-gray-200 rounded-lg shadow" *ngIf="!result" id="InboxAttachments">
       <ul>
         <div class="search-container mb-4">
-          <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          placeholder="Search reports..."
-          class="search-input p-2 border border-gray-300 rounded w-full bg-gray-700"
-          />
+          <input type="text" [(ngModel)]="searchTerm" placeholder="Search reports..."
+            class="search-input p-2 border border-gray-300 rounded w-full bg-gray-700" />
         </div>
         <div *ngIf="filteredReportsList.length === 0" class="text-center text-gray-500 p-4">
           No reports found.
         </div>
-        <div class="card border-bottom border-gray-200" *ngFor="let report of filteredReportsList" (click)="getReportContent(report.name)">
+        <div class="card border-bottom border-gray-200" *ngFor="let report of filteredReportsList"
+          (click)="getReportContent(report.name)">
           <li class="file-info">
             <div class="file-details">
               <i class="fas fa-file p-2 border-2 border-gray-500 rounded-lg file-icon"></i>
@@ -61,26 +61,22 @@
       </ul>
     </div>
 
-    <aside
-      id="default-sidebar"
-      class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0"
-      aria-label="Sidebar"
-      *ngIf="result"
-      style="background-color: #111827 !important;"
-    >
+    <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0"
+      aria-label="Sidebar" *ngIf="result" style="background-color: #111827 !important;">
       <div class="h-full px-1 py-4 overflow-y-auto flex flex-col justify-center" style="background-color: #111827;">
         <ul class="space-y-2 font-medium">
           <li>
-            <a (click)="generatePDFReport()" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+            <a (click)="generatePDFReport()"
+              class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
               <i class="fas fa-download w-5 h-5 text-gray-400 group-hover:text-white"></i>
               <span class="ml-3">Download Report</span>
             </a>
           </li>
           <li>
-            <a (click)="onVisualize()" id="vizButton" 
-               class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
-              <i [ngClass]="isVisualizing ? 'fas fa-file-alt' : 'fas fa-chart-bar'" 
-                 class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
+            <a (click)="onVisualize()" id="vizButton"
+              class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+              <i [ngClass]="isVisualizing ? 'fas fa-file-alt' : 'fas fa-chart-bar'"
+                class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
               <span class="ml-3">{{ isVisualizing ? 'Summary' : 'Visualisations' }}</span>
             </a>
           </li>
@@ -91,7 +87,8 @@
             </a>
           </li> -->
           <li>
-            <a (click)="backToInbox()" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+            <a (click)="backToInbox()"
+              class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
               <i class="fas fa-envelope w-5 h-5 text-gray-400 group-hover:text-white"></i>
               <span class="ml-3">Back To Inbox</span>
             </a>
@@ -117,17 +114,21 @@
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2.5">Compliance Status</p>
-                <p *ngIf="documentStatus == 'Compliant'" class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
+                <p *ngIf="documentStatus == 'Compliant'"
+                  class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
                   <i class="fas fa-check-circle w-5 h-5 text-green-500 px-4"></i>
                 </p>
-                <p *ngIf="documentStatus == 'Non-Compliant'" class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-non-compliant">{{ documentStatus }}
+                <p *ngIf="documentStatus == 'Non-Compliant'"
+                  class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-non-compliant">{{
+                  documentStatus }}
                   <i class="fas fa-exclamation-triangle w-5 h-5 text-red-400 px-4"></i>
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Valid Consent Agreement</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ consentAgreement }}
-                  <i *ngIf="consentAgreement === 'The document does not appear to contain any data consent agreements'" class="fas fa-exclamation-triangle w-3 h-3 text-gray-500 px-4"></i>
+                  <i *ngIf="consentAgreement === 'The document does not appear to contain any data consent agreements'"
+                    class="fas fa-exclamation-triangle w-3 h-3 text-gray-500 px-4"></i>
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
@@ -146,11 +147,9 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Individuals Identified</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ nerCount }} individuals
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
                       This indicates the number of individuals that have been uniquely identified in the document
                       <div class="tooltip-arrow" data-popper-arrow></div>
@@ -162,11 +161,9 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Personal Data</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ personalData }} issues
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
                       This may include personal data such as names, identification numbers, dates of birth.
                       <div class="tooltip-arrow" data-popper-arrow></div>
@@ -178,11 +175,9 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Financial Data</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ financialData }} issues
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
                       This may include personal financial data such as banking details, tax numbers, account details
                       <div class="tooltip-arrow" data-popper-arrow></div>
@@ -194,11 +189,9 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Contact Data</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ contactData }} issues
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
                       This may include personal contact details such as phone numbers, email addresses or addresses
                       <div class="tooltip-arrow" data-popper-arrow></div>
@@ -210,13 +203,12 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Medical Data</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ medicalData }} issues
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
-                      This may include personal medical data such as chronic illnesses, past injuries, diseases or viruses
+                      This may include personal medical data such as chronic illnesses, past injuries, diseases or
+                      viruses
                       <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                   </span>
@@ -226,11 +218,9 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Ethnic Data</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ ethnicData }} issues
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
                       This may include ethnic data such as racial or ethnic origin, nationality and language
                       <div class="tooltip-arrow" data-popper-arrow></div>
@@ -242,11 +232,9 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Biometric Data</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ biometricData }} issues
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
                       This may include biometric data such as fingerprints, facial recognition, iris scans
                       <div class="tooltip-arrow" data-popper-arrow></div>
@@ -258,11 +246,9 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Genetic Data</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ geneticData }} issues
                   <span class="relative">
-                    <i
-                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                    <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"
-                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
-                    ></i>
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"></i>
                     <div id="tooltip-personal-data" role="tooltip" class="tooltip">
                       This may include genetic data such as ethical history, gene variants, and hereditary traits
                       <div class="tooltip-arrow" data-popper-arrow></div>
@@ -287,7 +273,8 @@
               <div class="rounded bg-[#dbe0e6]">
                 <div class="h-2 rounded bg-[#111418]" [style.width.%]="violationPercentage"></div>
               </div>
-              <p class="text-[#60758a] text-md font-normal leading-normal">{{ violationPercentage }}% of your data is GDPR compliant</p>
+              <p class="text-[#60758a] text-md font-normal leading-normal">{{ violationPercentage }}% of your data is
+                GDPR compliant</p>
             </div>
           </div>
         </div>

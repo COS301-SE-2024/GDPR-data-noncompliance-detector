@@ -16,6 +16,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  font-family: 'Oswald', 'Roboto', sans-serif;
 }
 
 .main-content {
@@ -35,7 +36,8 @@ body {
 }
 
 .header {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   position: relative;
   display: inline-block;
   font-size: 35px;
@@ -149,7 +151,8 @@ body {
 }
 
 .analysis-header, .inbox-header {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   position: relative;
   display: inline-block;
   font-size: 25px;
@@ -504,7 +507,8 @@ body {
 }
 
 .header-2 {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   position: relative;
   display: inline-block;
   font-size: 35px;
@@ -521,7 +525,8 @@ body {
 }
 
 .header-3 {
-  font-family: "Mediator Narrow Web Extra Bold";
+  /* font-family: "Mediator Narrow Web Extra Bold"; */
+  font-family: 'Oswald', 'Roboto', sans-serif;
   position: relative;
   display: inline-block;
   font-size: 35px;
