@@ -4,7 +4,7 @@
   align-items: center;
   text-align: center;
   padding-bottom: 1em;
-  padding-top: 3em;
+  padding-top: 2em;
 }
 
 .header {
@@ -13,24 +13,19 @@
   display: inline-block;
   font-size: 35px;
   color: white;
-}
-
-.header::after {
-  content: '';
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: #8EBA12;
-  border-radius: 50%;
-  transform: translateX(-100%);
+  padding-bottom: 0.5rem;
 }
 
 .description {
-  text-align: center; 
-  color: white; 
-  margin-top: 20px; 
-  font-size: 18px; 
-  font-family: "Mediator Narrow Web Extra Bold"; 
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
 }
 
 .contact-link {
@@ -40,7 +35,8 @@
 
 
 .faq-container {
-  padding: 20px;
+  padding: 60px;
+  padding-top: 5px;
   display: flex; 
   justify-content: space-between; 
   flex-wrap: wrap; /* Allows items to wrap to the next line */
@@ -100,7 +96,7 @@
 }
 
 .dropdown-content p {
-  color: #8EBA12;
+  color: white;
   margin: 0;
   word-wrap: break-word; 
 }
