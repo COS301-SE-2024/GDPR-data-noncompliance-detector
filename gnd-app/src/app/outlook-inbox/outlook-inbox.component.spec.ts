@@ -87,7 +87,7 @@ describe('OutlookInboxComponent', () => {
 
   it('should determine consent agreement status', () => {
     expect(component.consentAgreementStatus(true)).toBe('The document does appear to contain data consent agreements');
-    expect(component.consentAgreementStatus(false)).toBe('The document does not seem to contain any data consent agreements');
+    expect(component.consentAgreementStatus(false)).toBe('The document does not appear to contain any data consent agreements');
   });
 
   // it('should clear analysis', () => {
