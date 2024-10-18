@@ -1,7 +1,6 @@
 from Detection_Engine.text_classification_layer import text_classification_layer
 from Detection_Engine.biometric_detection import biometric_detection
 from Detection_Engine.lang_detection import location_finder
-from langcodes import Language
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -189,8 +188,8 @@ class report_generation_layer:
             categories.append('Biometric Data')
 
         rag_res, rag_count = self.classification_layer.run_RAG(categories)
-        result = "The following GDPR articles are potentially violated: " + ", ".join(rag_res)
-        return result, rag_count
+        # result = "The following GDPR articles are potentially violated: " + ", ".join(rag_res)
+        return rag_res, rag_count
 
 
 

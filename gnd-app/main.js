@@ -1,11 +1,12 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const { spawn } = require('child_process');
 const notifier = require('node-notifier');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
-
+const express = require('express');
 const os = require('os');
+const cors = require('cors');
 
 let apiProcess;
 
@@ -17,11 +18,12 @@ function createWindow () {
     minHeight: 600,
     icon: path.join(__dirname, 'src/assets/logo.ico'),
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
     }
   })
   win.setMenu(null);
   win.loadFile(path.join(__dirname, 'dist', 'gnd-app', 'index.html'))
+  // win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
@@ -29,7 +31,33 @@ app.whenReady().then(() => {
   startFlaskAPI();
   createWindow();
   // setTimeout(setupWatcher, 100);
+  keyHelper();
+  
 });
+
+ipcMain.handle('get-supabase-config', () => {
+  return {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY
+  };
+});
+
+function keyHelper() {
+  const app = express();
+  const port = 3000;
+
+  // Use CORS middleware
+  app.use(cors());
+
+  app.get('/api/encryption-key', (req, res) => {
+    const encryptionKey = process.env['SYS VAR x64'];
+    res.json({ encryptionKey });
+  });
+
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
 
 function startFlaskAPI() {
   const apiPath = path.join(__dirname, '..', 'backend');

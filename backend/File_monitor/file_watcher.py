@@ -53,7 +53,7 @@ GND_DATA_FOLDER = os.path.expanduser("~/Documents/GND/downloads-uploads-data")
 
 os.makedirs(GND_DATA_FOLDER, exist_ok=True)
 
-API_URL = "http://localhost:8000/file-upload-new"
+API_URL = "http://localhost:8000/file-upload-new-monitor"
 
 def get_resource_path(relative_path):
     try:
@@ -108,7 +108,7 @@ def verifyFromTeams(ext):
                 try:
                     with open(zone_identifier_path, 'r') as f:
                         content = f.read()
-                        print(f"[DEBUG] CONTENT: {content}")  #For logging
+                        # print(f"[D.EBUG] CONTENT: {content}")  #For logging
 
                         urls = []
                         for line in content.splitlines():
@@ -120,20 +120,20 @@ def verifyFromTeams(ext):
                             if domain:
                                 for d in domains:
                                     if domain == d or domain.endswith('.' + d):
-                                        print(f"[INFO] File {ext} is from Teams-related domain: {domain}")
+                                        # print(f"[INFO] File {ext} is from Teams-related domain: {domain}")
                                         return True
-                        print(f"[INFO] File {ext} is not from a recognized Teams-related domain.")
+                        # print(f"[INFO] File {ext} is not from a recognized Teams-related domain.")
                         return False
                 except FileNotFoundError:
                     if attempt < retries - 1:
-                        print(f"[WARN] Zone.Identifier not found for {ext}. Retrying {attempt + 1}/{retries}...")
+                        # print(f"[WARN] Zone.Identifier not found for {ext}. Retrying {attempt + 1}/{retries}...")
                         time.sleep(delay)
                         continue
                     else:
-                        print(f"[ERROR] No Zone.Identifier found for {ext} after {retries} attempts.")
+                        # print(f"[ERROR] No Zone.Identifier found for {ext} after {retries} attempts.")
                         return False
                 except Exception as e:
-                    print(f"[ERROR] Error reading Zone.Identifier for {ext}: {e}")
+                    # print(f"[ERROR] Error reading Zone.Identifier for {ext}: {e}")
                     return False
         
         elif platform.system() == 'Darwin':
@@ -141,7 +141,7 @@ def verifyFromTeams(ext):
             return True
 
     except Exception as e:
-        print(f"[ERROR] Error in verifyFromTeams: {e}")
+        # print(f"[ERROR] Error in verifyFromTeams: {e}")
         return False
 
 class Handle(FileSystemEventHandler):
@@ -160,46 +160,36 @@ class Handle(FileSystemEventHandler):
             return None
 
         try:
-            print(f"[DEBUG] Detected event: {event.event_type} for file: {event.src_path}")
+            # print(f"[DEBUG] Detected event: {event.event_type} for file: {event.src_path}")
             if check_file_extension(event.src_path, self.file_extension):
-                print(f"[INFO] File {event.src_path} has a monitored extension. Waiting before processing...")
+                # print(f"[INFO] File {event.src_path} has a monitored extension. Waiting before processing...")
                 time.sleep(2)
 
                 normalized_path = event.src_path
-                print(f"[DEBUG] Normalized path: {normalized_path}")
+                # print(f"[DEBUG] Normalized path: {normalized_path}")
 
                 if verifyFromTeams(normalized_path):
-                    print(f"[INFO] Processing file: {normalized_path}")
+                    # print(f"[INFO] Processing file: {normalized_path}")
                     self.upload_file(normalized_path)
                     sys.stdout.flush()
-                else:
-                    print(f"[INFO] File {normalized_path} is not from Teams. Skipping upload.")
+                # else:
+                    # print(f"[INFO] File {normalized_path} is not from Teams. Skipping upload.")
         except Exception as e:
             print(f"[ERROR] Error in process: {e}")
 
     def upload_file(self, file_path):
         try:
-            print(f"[INFO] Waiting before uploading file: {file_path}")
+            # print(f"[INFO] Waiting before uploading file: {file_path}")
             time.sleep(1)
             with open(file_path, 'rb') as file:
                 files = {'file': file}
-                print(f"[INFO] Uploading file: {file_path} to API: {API_URL}")
+                # print(f"[INFO] Uploading file: {file_path} to API: {API_URL}")
                 response = requests.post(API_URL, files=files)
 
             if response.status_code == 200:
 
                 api_response = response.json()
-                print(f"[INFO] File {file_path} uploaded successfully. Server response: {api_response}")
-
-                if platform.system() == 'Windows':
-                    toast = Notification(app_id="GND",
-                                        title="New GND Report",
-                                        msg="A new GND report is available",
-                                        duration="short",
-                                        icon=get_resource_path('assets/toast_logo.png'))
-
-                    toast.set_audio(audio.Default, loop=False)
-                    toast.show()
+                # print(f"[INFO] File {file_path} uploaded successfully. Server response: {api_response}")
 
                 self.save_response_as_txt(file_path, api_response)
             else:
@@ -218,7 +208,17 @@ class Handle(FileSystemEventHandler):
         try:
             with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
                 txt_file.write(str(api_response))
-            print(f"[INFO] API response saved to {txt_file_path}")
+                if platform.system() == 'Windows':
+                    toast = Notification(app_id="GND",
+                                        title="New GND Report",
+                                        msg="A new GND report is available",
+                                        duration="short",
+                                        icon=get_resource_path('assets/toast_logo.png'))
+
+                    toast.set_audio(audio.Default, loop=False)
+                    toast.show()
+
+            # print(f"[INFO] API response saved to {txt_file_path}")
         except Exception as e:
             print(f"[ERROR] Error saving API response to {txt_file_path}: {e}")
 
@@ -238,7 +238,7 @@ def startWatcher(paths, ext):
         observer.schedule(event_handler, path, recursive=True)
         observers.append(observer)
         observer.start()
-        print(f"[INFO] Observer started for path: {path}")
+        # print(f"[INFO] Observer started for path: {path}")
 
     try:
         while not stop_watcher:
@@ -251,7 +251,7 @@ def startWatcher(paths, ext):
         for observer in observers:
             observer.stop()
             observer.join()
-            print(f"[INFO] Observer stopped for path: {path}")
+            # print(f"[INFO] Observer stopped for path: {path}")
 
 def start_watcher_thread_downloads(ext, wt=3):
     downloads_path = str(Path.home() / "Downloads")
@@ -262,14 +262,14 @@ def start_watcher_thread_downloads(ext, wt=3):
     stop_watcher = False
     thread = threading.Thread(target=startWatcher, args=(downloads_path, ext))
     thread.start()
-    print(f"[INFO] Watcher thread started for extensions: {ext}")
+    # print(f"[INFO] Watcher thread started for extensions: {ext}")
     return thread
 
 def stop_watcher_thread(thread):
     global stop_watcher
     stop_watcher = True
     thread.join()
-    print("[INFO] Watcher thread stopped.")
+    # print("[INFO] Watcher thread stopped.")
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')

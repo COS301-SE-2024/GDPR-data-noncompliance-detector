@@ -1,11 +1,8 @@
-body {
+body, html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
-}
-
-html, body {
   height: 100%;
 }
 
@@ -16,19 +13,24 @@ html, body {
 }
 
 .topnav {
-  background-color: #333;
-  overflow: hidden;
-  font-family: "Mediator Narrow Web Extra Bold";
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  font-family: "Mediator Narrow Web Extra Bold";
   z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #1F2937
+}
+
+.navbar-left {
   display: flex;
   align-items: center;
-  justify-content: start;
-  padding: 0 20px;
-  height: 60px;
 }
 
 .navbar-brand {
@@ -37,20 +39,27 @@ html, body {
   padding-right: 20px;
 }
 
-.navbar-brand img {
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
+.navbar-brand .logo {
+  width: 45px;
+  height: 40px;
+}
+
+.app-name {
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Roboto Bold", sans-serif;
+  color: whitesmoke;
+  margin-left: 12px;
 }
 
 .hover-links {
   display: flex;
   align-items: center;
-  margin-left: 10px;
+  color: whitesmoke;
 }
 
 .hover-links a {
-  color: #f2f2f2;
+  color: whitesmoke;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -60,7 +69,7 @@ html, body {
 }
 
 .hover-links a:hover {
-  color: #ffffff;
+  color: whitesmoke;
 }
 
 .hover-links a::after {
@@ -70,13 +79,15 @@ html, body {
   bottom: 0;
   transform: translateX(-50%);
   width: 0;
-  height: 5px;
+  height: 3px;
   background-color: #8EBA12;
   transition: width 0.3s ease;
+  color: whitesmoke;
 }
 
 .hover-links a:hover::after {
   width: 100%;
+  color: whitesmoke;
 }
 
 .walkthrough-toggle {
@@ -88,5 +99,6 @@ html, body {
 
 .walkthrough-toggle i {
   font-size: 17px;
-  color: #f2f2f2;
+  /* color: #333; */
+  color: white;
 }

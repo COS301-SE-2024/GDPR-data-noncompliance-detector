@@ -4,6 +4,7 @@ import { initFlowbite } from 'flowbite';
 import {WalkthroughService} from './services/walkthrough.service'
 import * as introJs from 'intro.js/intro.js';
 import { Subscription } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,14 +15,20 @@ export class AppComponent implements OnInit{
 private walkthroughSubscription?: Subscription;
 
   title = "gnd-app";
+  showQuestionIcon = true;
 
-  constructor(private walkthroughService: WalkthroughService) {
+  constructor(private walkthroughService: WalkthroughService, private router: Router) {
   }
 
   toggleWalkthrough(){
     this.walkthroughService.requestwalkthrough();
   }
   ngOnInit():void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.updateQuestionIconVisibility(event.urlAfterRedirects);
+      }
+    });
     initFlowbite();
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro){
@@ -37,6 +44,11 @@ private walkthroughSubscription?: Subscription;
   ngOnDestroy(){
     if(this.walkthroughSubscription)
       this.walkthroughSubscription.unsubscribe();
+  }
+
+  updateQuestionIconVisibility(currentUrl: string): void {
+    const hideOnPages = ['/upload', '/report', '/faq-page']; 
+    this.showQuestionIcon = !hideOnPages.includes(currentUrl);
   }
 
   startIntro() {

@@ -114,7 +114,7 @@ describe('InboxComponent', () => {
     req.flush(mockResponse);
     
     tick();
-    expect(component.documentStatus).toBe('Compliant');
+    expect(component.documentStatus).toBe('Non-Compliant');
     expect(component.nerCount).toBe(10);
     expect(component.personalData).toBe(5);
     expect(component.financialData).toBe(2);

@@ -1,15 +1,71 @@
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 1em;
+  padding-top: 2em;
+}
+
+.header {
+  font-family: "Mediator Narrow Web Extra Bold";
+  position: relative;
+  display: inline-block;
+  font-size: 35px;
+  color: white;
+  padding-bottom: 0.5rem;
+}
+
+.description {
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.contact-link {
+  color: #8EBA12; 
+  font-weight: bold; 
+}
+
+
 .faq-container {
-  padding: 20px;
+  padding: 60px;
+  padding-top: 5px;
+  display: flex; 
+  justify-content: space-between; 
+  flex-wrap: wrap; /* Allows items to wrap to the next line */
 }
 
 .faq-item {
   margin-bottom: 10px; /* Space between FAQ items */
+  width: 100%;
+  border-bottom: 1px solid #8EBA12; /* Line divider with a color of your choice */
+  padding-bottom: 10px; /* Optional: Add padding to create space between the question and the line */
 }
 
+
+.faq-section h2 {
+  font-family: 'Oswald', 'Roboto', sans-serif;  
+  font-size: 35px; /* Match the header font size */
+  color: white; /* Match the header text color */
+  text-align: center; /* Center align the text */
+  margin: 1em 0; /* Add some margin for spacing */
+
+}
+
+
 .dropbtn {
-  font-family: "Mediator Narrow Web Extra Bold";
+  font-family: 'Oswald', 'Roboto', sans-serif;
   background-color: transparent; 
-  color: black; 
+  color: white; 
+
   padding: 10px;
   margin: 5px;
   font-size: 19px;
@@ -17,14 +73,15 @@
   cursor: pointer;
   text-decoration: none; 
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
-  align-items: center; /* Center align vertically */
-  width: 100%; /* Use full width */
+  justify-content: flex-start; 
+  align-items: center; 
+  width: 100%; 
+
 }
 
 .dropbtn:hover, .dropbtn:focus {
   color: #8EBA12; 
-  text-decoration: underline; 
+
 }
 
 .dropdown {
@@ -34,23 +91,25 @@
 
 .dropdown-content {
   max-height: 0; /* Start with max-height 0 for transition */
-  overflow: hidden; /* Hide content when not active */
-  background-color: #f1f1f1;
-  min-width: 300px; 
-  padding: 0 20px; /* Padding when closed */
+  overflow: hidden; 
+  max-width: 500px; /* Increase the max-width to allow for larger dropdowns */
+  min-width: 200px; /* Set a minimum width */
+  width: auto; /* Allow the dropdown to expand based on content */
+  padding: 0 10px; /* Padding when closed */
   transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out; /* Smooth transition */
+  border-radius: 1%;
 }
 
 .dropdown-content p {
-  color: black;
+  color: white;
   margin: 0;
   word-wrap: break-word; 
 }
 
 .arrow-up::before, 
 .arrow-down::before {
-  content: '▼'; /* Arrow icon */
-  margin-left: 8px; /* Space between question and arrow */
+  content: '▼'; 
+  margin-left: 8px; 
   display: inline-block;
   transition: transform 0.3s ease; 
 }

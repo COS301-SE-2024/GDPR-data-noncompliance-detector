@@ -10,11 +10,13 @@ import { Subscription } from 'rxjs';
 import * as introJs from 'intro.js/intro.js';
 import {WalkthroughService} from '../services/walkthrough.service';
 import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
-
+import { VisualizationComponent } from "../visualization/visualization.component";
+import { VisualizationService} from '../services/visualization.service';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, VisualizationComponent, FormsModule],
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
@@ -37,7 +39,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   // currentAnalysis: any = {};
 
   constructor(private http: HttpClient, private walkthroughService: WalkthroughService, private router: Router,
-    private reportGenerationService: ReportGenerationService
+    private reportGenerationService: ReportGenerationService, private visualizationService: VisualizationService,
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +59,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
       this.startIntro();
     })
+    this.visualizationService.clearScanData();
   }
 
   getDataFolder(): Observable<{ outlook_data_folder: string }> {
@@ -105,6 +108,14 @@ export class InboxComponent implements OnInit, OnDestroy {
   geneticData: number = 0;
   consentAgreement: string = "";
   ragScore: string = "";
+  totalViolations: number = 0;
+  isVisualizing: boolean = false;
+  violationPercentage: number = 0;
+  personal: number = 0;
+  fileName: string = '';
+  searchTerm: string = '';
+  isSearchOpen: boolean = false;
+  ragScoreArray: string[] = [];
 
   docStatus(status: number): string {
     if(status <= 0.6){
@@ -138,6 +149,10 @@ export class InboxComponent implements OnInit, OnDestroy {
     
     const fileName = filePath.split('/').pop() || filePath;
     // const country = this.extractCountryFromFileName(fileName);
+    this.fileName = this.getFileNameWithoutCountry(fileName);
+    this.visualizationService.clearScanData();
+    this.isVisualizing = false;
+
   
     this.location = "N/A";
 
@@ -155,7 +170,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         
         const score = dat.result.score;
 
-        this.documentStatus = this.docStatus(score.Status);
+        this.documentStatus = this.docStatus(this.calculateMetric());
 
         this.nerCount = score.NER;
         // this.location = this.locationStatus(score.Location);
@@ -169,10 +184,20 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.geneticData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
         this.ragScore = score.RAG_Statement;
+        if (Array.isArray(score.RAG_Statement)) {
+          this.ragScoreArray = score.RAG_Statement;
+        } 
+        else {
+          this.ragScoreArray = [];
+        }
+        this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
+        this.calculateMetric();
 
         // this.checkdata();
 
         this.result = "Y";
+        this.visualizationService.setScanData(score);
+
 
       },
       error: (error:any) => {
@@ -212,169 +237,16 @@ export class InboxComponent implements OnInit, OnDestroy {
     }
   }
 
-  // processResu  lt(result: string): string {
-  //   result = result.replace(/\n/g, "<br>");
-  //   this.status = this.searchComplianceStatus(result);
-  //   this.result = this.cleanComplianceStatus(result);
-  //   this.ca_statement = this.searchContractStatus(result);
-  //   this.result = this.cleanContractSearch(this.result);
-  //   return result;
-  // }
-
-  processResult(result: string): string {
-    // Decode the string to handle escape characters
-    result = JSON.parse('"' + result.replace(/"/g, '\\"') + '"');
-    
-    const analysis = this.analyzeDocument(result);
-    this.status = analysis.status;
-    this.ca_statement = analysis.ca_statement;
-    return this.formatResult(analysis.cleanedResult);
-  }
-
-  formatResult(result: string): string {
-    const lines = result.split('\n').filter(line => line.trim() !== '');
-    let formattedResult = '<div class="analysis-content">';
-    let currentSection = '';
-  
-    lines.forEach((line, index) => {
-      line = line.trim();
-      if (line.endsWith(':')) {
-        // This is a section header
-        if (currentSection) {
-          formattedResult += '</ul>';
-        }
-        currentSection = line;
-        formattedResult += `<b>${currentSection}</b><ul>`;
-      } else if (line.includes(':')) {
-        // This is a key-value pair
-        const [key, value] = line.split(':').map(part => part.trim());
-        formattedResult += `<li><strong>${key}:</strong> ${value}</li>`;
-      } else {
-        // This is either a standalone value or part of the previous section
-        formattedResult += `<li>${line}</li>`;
-      }
-    });
-  
-    if (currentSection) {
-      formattedResult += '</ul>';
-    }
-  
-    formattedResult += '</div>';
-    return formattedResult;
-  }
-
-  searchComplianceStatus(result: string): string {
-    const compliantMatch = result.match(/compliant/i);
-    const nonCompliantMatch = result.match(/non-compliant/i);
-  
-    let status = '';
-  
-    if (compliantMatch) {
-      status = 'compliant';
-    } else if (nonCompliantMatch) {
-      status = 'non-compliant';
-    }
-  
-    return status;
-  }
-
-  analyzeDocument(result: string): { status: string, ca_statement: string, cleanedResult: string } {
-    let status: string = 'Non-compliant'; // Default status
-    let ca_statement: string = '';
-    let cleanedResult: string = result;
-  
-    // Extract status if present
-    const statusMatch = result.match(/\{status\}(.*?)\{\/status\}/);
-    if (statusMatch) {
-      status = statusMatch[1].trim();
-      cleanedResult = cleanedResult.replace(statusMatch[0], '');
-    }
-  
-    // Extract CA statement if present
-    const caMatch = result.match(/\{ca_statement\}(.*?)\{\/ca_statement\}/s);
-    if (caMatch) {
-      ca_statement = caMatch[1].trim();
-      cleanedResult = cleanedResult.replace(caMatch[0], '');
-    }
-  
-    // Clean up any remaining newlines at the start or end
-    cleanedResult = cleanedResult.trim();
-  
-    return { status, ca_statement, cleanedResult };
-  }
-
-
-  cleanComplianceStatus(result: string): string {
-    console.log("Original result:", result);
-
-    const compliantMatch = result.match(/compliant/i);
-    const nonCompliantMatch = result.match(/non-compliant/i);
-    const contractStatementMatch = result.match(/\{status\}(.*?)\{\/status\}/);
-
-    console.log("Compliant match:", compliantMatch);
-    console.log("Non-compliant match:", nonCompliantMatch);
-    console.log("Contract statement match:", contractStatementMatch);
-
-    let cleanedResult = result;
-
-    if (compliantMatch) {
-        cleanedResult = cleanedResult.replace(/compliant/i, '');
-        console.log("After removing compliant:", cleanedResult);
-    } else if (nonCompliantMatch) {
-        cleanedResult = cleanedResult.replace(/non-compliant/i, '');
-        console.log("After removing non-compliant:", cleanedResult);
-    }
-
-    if (contractStatementMatch) {
-        cleanedResult = cleanedResult.replace(contractStatementMatch[0], '');
-        console.log("After removing contract statement:", cleanedResult);
-    }
-
-    console.log("Final cleaned result:", cleanedResult);
-    return cleanedResult;
-}
-
-  searchContractStatus(result: string): string {
-    const contractStatementMatch = result.match(/The document does not seem to contain any data consent agreements\n\n|The document does appear to contain data consent agreements\n\n/);
-    let contractStatement = '';
-  
-    if (contractStatementMatch) {
-      contractStatement = contractStatementMatch[0];
-    }
-  
-    return contractStatement;
-  }
-
-  cleanContractSearch(result: string): string {
-    const contractStatementMatch = result.match(/\{ca_statement\}(.*?)\{\/ca_statement\}/s);
-    let cleaned_result = result;
-  
-    if (contractStatementMatch) {
-      cleaned_result = result.replace(contractStatementMatch[0], '');
-    }
-  
-    return cleaned_result;
-  }
-  getStatusClass(status: string): string {
-    if (status === 'success') {
-      return 'status-success';
-    } else if (status === 'error') {
-      return 'status-error';
-    } else {
-      return 'status-default';
-    }
-  }
-
   mock(){
     this.currentAnalysis.content = 'sandwich spread ';
     this.currentEmail = 'NA';
-    this.currentEmailType = 'txt'; // Set file type
+    this.currentEmailType = 'txt';
   }
 
   smock(filePath: string){
     this.currentAnalysis.content = filePath;
     this.currentEmail = 'NA';
-    this.currentEmailType = 'txt'; // Set file type
+    this.currentEmailType = 'txt';
   }
 
   mockData: any = {
@@ -389,7 +261,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   showAnalysis(data: string) {
     this.currentAnalysis = this.mockData[data];
     this.currentEmail = data;
-    this.currentEmailType = this.mockData[data].fileType; // Set file type
+    this.currentEmailType = this.mockData[data].fileType;
   }
 
   isObjectEmpty(obj: any) {
@@ -399,7 +271,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   clearAnalysis() {
     this.currentAnalysis = {};
     this.currentEmail = "";
-    this.currentEmailType = ""; // Clear file type
+    this.currentEmailType = "";
   }
 
   startIntro() {
@@ -407,13 +279,13 @@ export class InboxComponent implements OnInit, OnDestroy {
     intro.setOptions({
       steps: [
         {
+          element: '#Downloads',
+          intro: 'This is where you will see all the new downloaded documents.'
+        },
+        {
           element: '#InboxAttachments',
           intro: 'This is where you will see all the new attachments in the received inbox directory.'
-        },
-        // {
-        //   element: '#ReportOfClickedDoc',
-        //   intro: 'Here you will see the generated report of the selected document from the attachments on the left.'
-        // }
+        }
       ],
     });
     intro.start();
@@ -443,5 +315,73 @@ export class InboxComponent implements OnInit, OnDestroy {
     catch (error) {
       console.error('Error generating PDF:', error);
     }
+  }
+
+  calculateMetric() {
+
+    const w_per = 1;
+    const w_med = 0.4;
+    const w_gen = 0.2;
+    const w_eth = 0.4;
+    const w_bio = 0.5;
+
+    const w_sum = w_per + w_med + w_gen + w_eth + w_bio
+
+    let e_personalData  = Math.exp(this.personal + this.financialData + this.contactData + this.personalData);
+    let e_med = Math.exp(this.medicalData);
+    let e_gen = Math.exp(this.geneticData);
+    let e_eth = Math.exp(this.ethnicData);
+    let e_bio = Math.exp(this.biometricData);
+
+    const expValues = [e_personalData, e_med, e_gen, e_eth, e_bio];
+
+    let maxExpValue = expValues[0];
+
+    for (let i = 1; i < expValues.length; i++) {
+      if (expValues[i] > maxExpValue) {
+        maxExpValue = expValues[i];
+      }
+    }
+
+    let N_e_personalData = (e_personalData/maxExpValue)*w_per;
+    let N_e_med = (e_med/maxExpValue)*w_med;
+    let N_e_gen = (e_gen/maxExpValue)*w_gen;
+    let N_e_eth = (e_eth/maxExpValue)*w_eth;
+    let N_e_bio = (e_bio / maxExpValue)*w_bio;
+
+    const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+
+    this.violationPercentage = Math.round((N_e_sum/w_sum));
+
+    console.log( "vios:" + this.violationPercentage);
+
+    return N_e_sum;
+    
+  }
+
+  backToDownloads() {
+    this.result = '';
+  }
+
+  onVisualize() {
+    this.isVisualizing = !this.isVisualizing;
+  }
+
+  get filteredReportsList() {
+    if (!this.searchTerm) {
+      return this.reports;
+    }
+    const lowerSearch = this.searchTerm.toLowerCase();
+    return this.reports.filter(report =>
+      report.name.toLowerCase().includes(lowerSearch)
+    );
+  }
+
+  toggleSearch(): void {
+    this.isSearchOpen = !this.isSearchOpen;
+  }
+  
+  closeSearch(): void {
+    this.isSearchOpen = false;
   }
 }

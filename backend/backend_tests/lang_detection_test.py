@@ -11,22 +11,22 @@ class TestLocationFinder(unittest.TestCase):
         self.finder = location_finder()
 
     def test_detect_country_EU_language(self):
-        text = "Bonjour tout le monde"  # French (EU language)
+        text = "Bonjour tout le monde" 
         result = self.finder.detect_country(text)
         self.assertEqual(result, 0)
 
     def test_detect_country_english(self):
-        text = "Hello, how are you?"  # English (special case)
+        text = "Hello, how are you?" 
         result = self.finder.detect_country(text)
         self.assertEqual(result, 2)
 
     def test_detect_country_non_EU_language(self):
-        text = "Привет, как дела?"  # Russian (non-EU language)
+        text = "Привет, как дела?"
         result = self.finder.detect_country(text)
         self.assertEqual(result, 1)
 
     def test_detect_country_EU_language_another(self):
-        text = "Hola, ¿cómo estás?"  # Spanish (EU language)
+        text = "Hola, ¿cómo estás?"
         result = self.finder.detect_country(text)
         self.assertEqual(result, 1)
 

@@ -1,12 +1,59 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Oswald:wght@700&display=swap" rel="stylesheet">
+
+<div class="header-container">
+  <header class="header">
+    FAQ
+  </header>
+</div>
+
+<div class="description">
+  <p>
+    Below you will find answers to most frequently asked questions about GND and GDPR.
+  </p>
+</div>
+
+
+
 <div class="faq-container">
-  <div class="faq-item" *ngFor="let faq of faqs">
-    <div class="dropdown">
-      <button class="dropbtn" (click)="toggleDropdown(faq.id)">
-        {{ faq.question }}
-        <span [ngClass]="activeDropdown === faq.id ? 'arrow-up' : 'arrow-down'"></span>
-      </button>
-      <div class="dropdown-content" [ngStyle]="{'max-height': activeDropdown === faq.id ? '200px' : '0', 'padding': activeDropdown === faq.id ? '20px' : '0'}">
-        <p>{{ faq.answer }}</p>
+  <div class="faq-section left">
+    <h2>Want to know more about <span class="contact-link">GND</span>?</h2>
+    <div class="faq-item" *ngFor="let faq of leftFaqs">
+      <div class="dropdown">
+        <button class="dropbtn" (click)="toggleDropdown(faq.id)">
+          {{ faq.question }}
+          <span [ngClass]="activeDropdown === faq.id ? 'arrow-up' : 'arrow-down'"></span>
+        </button>
+        <div
+          class="dropdown-content"
+          [ngStyle]="{
+            'max-height': activeDropdown === faq.id ? '200px' : '0',
+            padding: activeDropdown === faq.id ? '20px' : '0'
+          }"
+        >
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section right">
+    <h2>Want to know more about <span class="contact-link">GDPR</span>?</h2>
+    <div class="faq-item" *ngFor="let faq of rightFaqs">
+      <div class="dropdown">
+        <button class="dropbtn" (click)="toggleDropdown(faq.id)">
+          {{ faq.question }}
+          <span [ngClass]="activeDropdown === faq.id ? 'arrow-up' : 'arrow-down'"></span>
+        </button>
+        <div
+          class="dropdown-content"
+          [ngStyle]="{
+            'max-height': activeDropdown === faq.id ? '200px' : '0',
+            padding: activeDropdown === faq.id ? '20px' : '0'
+          }"
+        >
+          <p>{{ faq.answer }}</p>
+        </div>
       </div>
     </div>
   </div>

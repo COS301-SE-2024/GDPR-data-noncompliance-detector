@@ -1,21 +1,24 @@
 <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold" rel="stylesheet">
 <link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet">
 
-<div class="topnav navbar-dark bg-black">
-  <a class="navbar-brand" routerLink="/home">
-    <img src="assets/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
-  </a>
-
-  <!-- New Div for Links with Hover Effect -->
-  <div class="hover-links">
-    <a class="active" routerLink="/" id="home">Home</a>
-    <a class="active" routerLink="upload" id="upload-document">Upload</a>
-    <a class="active" routerLink="outlook-inbox" id="inbox">Inbox</a>
-    <a class="active" routerLink="report" id="help">Help</a>
-    <a class="active" routerLink="faq-page" id="FAQ" >FAQ</a>
-    <a class="walkthrough-toggle" (click)="toggleWalkthrough()">
-      <i class="fas fa-question-circle"></i>
+<div class="topnav">
+  <div class="navbar-left">
+    <a class="navbar-brand" routerLink="/home">
+      <img src="assets/logo.png" alt="Logo" class="logo">
+      <span class="app-name">GND</span>
     </a>
+  </div>
+
+  <div class="hover-links">
+    <a routerLink="/" id="home">Home</a>
+    <a routerLink="upload" id="upload-document">Upload</a>
+    <a routerLink="outlook-inbox" id="inbox">Inbox</a>
+    <a routerLink="report" id="help">Help</a>
+    <a routerLink="faq-page" id="FAQ">FAQ</a>
+ 
+    <a *ngIf="showQuestionIcon" class="walkthrough-toggle" (click)="toggleWalkthrough()">
+    <i class="fas fa-question-circle"></i>
+  </a>
   </div>
 </div>
 

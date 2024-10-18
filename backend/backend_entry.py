@@ -7,11 +7,12 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 import os
 import json
-
 load_dotenv()
 # Create a Supabase client
-url: str = os.environ.get("SUPABASE_URL")
-key: str = os.environ.get("SUPABASE_KEY")
+# url: str = os.environ.get("SUPABASE_URL")
+# key: str = os.environ.get("SUPABASE_KEY")
+url= 'https://oadcyxznbhdrzsutusbh.supabase.co/'
+key= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hZGN5eHpuYmhkcnpzdXR1c2JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU4MTAyNDUsImV4cCI6MjA0MTM4NjI0NX0.DLDq7NyjhmEv9V1bRERp2e5XT0-qFdBjWN3BNed6EfY'
 supabase: Client = create_client(url, key)
 
 
@@ -64,7 +65,7 @@ class backend_entry:
         
         # Here we getting the document name dynamically
         document_name = filename
-        print(result_new)
+        # print(result_new)
 
         status_score = result_new['score']['Status']
         location = result_new['score']['Location']

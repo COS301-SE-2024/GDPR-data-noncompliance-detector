@@ -7,12 +7,17 @@ import axios from 'axios';
 import * as introJs from 'intro.js/intro.js';
 import { WalkthroughService } from '../services/walkthrough.service';
 import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
+import { VisualizationComponent } from "../visualization/visualization.component";
+import { VisualizationService} from '../services/visualization.service';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 // import { error } from 'console';
 
 @Component({
   selector: 'app-outlook-inbox',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, VisualizationComponent, NgApexchartsModule, FormsModule],
   templateUrl: './outlook-inbox.component.html',
   styleUrls: ['./outlook-inbox.component.css']
 })
@@ -30,7 +35,6 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   status: string = '';
   ca_statement: string = '';
 
-  // Define your data properties
   documentStatus: string = "";
   nerCount: number = 0;
   location: string = "";
@@ -43,12 +47,25 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   geneticData: number = 0;
   consentAgreement: string = "";
   ragScore: string = "";
+  totalViolations: number = 0;
+  violationPercentage: number = 0;
+  personal: number = 0;
+  ragScoreArray: string[] = [];
+  isVisualizing: boolean = false;
+  fileName: string = '';
+  encoded_value: string = '';
+  pdfUrl: SafeResourceUrl | undefined;
+  receivedData: any;
+  isAnnotating: boolean = false;
+  searchTerm: string = '';
 
   constructor(
     private http: HttpClient,
     private walkthroughService: WalkthroughService,
     private router: Router,
-    private reportGenerationService: ReportGenerationService
+    private reportGenerationService: ReportGenerationService,
+    private visualizationService: VisualizationService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +83,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     this.walkthroughSubscription = this.walkthroughService.walkthroughRequested$.subscribe(()=>{
       this.startIntro();
     })
+    this.visualizationService.clearScanData();
+
   }
 
   ngOnDestroy() {
@@ -147,7 +166,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
       return "The document does appear to contain data consent agreements";
     }
   
-    return "The document does not seem to contain any data consent agreements";
+    return "The document does not appear to contain any data consent agreements";
   }
 
   extractCountryFromFileName(fileName: string): string {
@@ -173,6 +192,10 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     const country = this.extractCountryFromFileName(fileName);
   
     this.location = country;
+    this.fileName = this.getFileNameWithoutCountry(fileName)
+    this.isVisualizing = false;
+
+    this.visualizationService.clearScanData();
 
     const payload = { path: filePath };
     this.http.post(this.iUrl, payload).subscribe({
@@ -182,13 +205,19 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         // const correctedData = response.data.content.replace(/'/g, '"');
         const correctedData = response.content.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
         
-        console.log('Corrected JSON Data:', correctedData);
+        // console.log('Corrected JSON Data:', correctedData);
     
         let dat = JSON.parse(correctedData);
         
         const score = dat.result.score;
 
-        this.documentStatus = this.docStatus(score.Status);
+        // this.documentStatus = this.docStatus(score.Status);
+        this.documentStatus = this.docStatus(this.calculateMetric());
+
+
+        this.encoded_value = score.ner_result_text;
+  
+        this.processEncodedPdf();
 
         this.nerCount = score.NER;
         // this.location = this.locationStatus(score.Location);
@@ -202,10 +231,21 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         this.geneticData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
         this.ragScore = score.RAG_Statement;
+        if (Array.isArray(score.RAG_Statement)) {
+          this.ragScoreArray = score.RAG_Statement;
+        } 
+        else {
+          this.ragScoreArray = [];
+        }
+        this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
+        this.calculateMetric();
 
         // this.checkdata();
 
         this.result = "Y";
+
+        this.visualizationService.setScanData(score);
+        console.log('UploadDocumentComponent: Scan data set in service.')
 
       },
       error: (error: any) => {
@@ -247,10 +287,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     return Object.keys(obj).length === 0;
   }
 
-  clearAnalysis() {
-    this.currentAnalysis = {};
-    this.currentEmail = "";
-    this.currentEmailType = "";
+  backToInbox() {
+    this.result = '';
   }
 
   startIntro() {
@@ -261,6 +299,11 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
           element: '#InboxAttachments',
           intro: 'This is where you will see all the new attachments in the received inbox directory.'
         },
+        {
+          element: '#Downloads',
+          intro: 'This is where you will see all the new downloaded documents.'
+        }
+   
       ],
     });
     intro.start();
@@ -291,5 +334,84 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     catch (error) {
       console.error('Error generating PDF:', error);
     }
+  }
+
+  logTooltip(message: string): void {
+    console.log(message);
+  }
+
+  calculateMetric() {
+
+    const w_per = 1;
+    const w_med = 0.4;
+    const w_gen = 0.2;
+    const w_eth = 0.4;
+    const w_bio = 0.5;
+
+    const w_sum = w_per + w_med + w_gen + w_eth + w_bio
+
+    let e_personalData  = Math.exp(this.personal + this.financialData + this.contactData + this.personalData);
+    let e_med = Math.exp(this.medicalData);
+    let e_gen = Math.exp(this.geneticData);
+    let e_eth = Math.exp(this.ethnicData);
+    let e_bio = Math.exp(this.biometricData);
+
+    const expValues = [e_personalData, e_med, e_gen, e_eth, e_bio];
+
+    let maxExpValue = expValues[0];
+
+    for (let i = 1; i < expValues.length; i++) {
+      if (expValues[i] > maxExpValue) {
+        maxExpValue = expValues[i];
+      }
+    }
+
+    let N_e_personalData = (e_personalData/maxExpValue)*w_per;
+    let N_e_med = (e_med/maxExpValue)*w_med;
+    let N_e_gen = (e_gen/maxExpValue)*w_gen;
+    let N_e_eth = (e_eth/maxExpValue)*w_eth;
+    let N_e_bio = (e_bio / maxExpValue)*w_bio;
+
+    const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+
+    this.violationPercentage = Math.round((w_sum/N_e_sum));
+
+    console.log( "vios:" + this.violationPercentage);
+    
+    return N_e_sum;
+    
+  }
+
+  processEncodedPdf(): void {
+    const base64Pdf = this.encoded_value; 
+    const byteCharacters = atob(base64Pdf);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+  
+    const url = URL.createObjectURL(blob);
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+  
+  onVisualize() {
+    this.isVisualizing = !this.isVisualizing;
+  }
+
+  onAnnotate() {
+    this.isAnnotating = !this.isAnnotating;
+  }
+
+  
+  get filteredReportsList() {
+    if (!this.searchTerm) {
+      return this.reports;
+    }
+    const lowerSearch = this.searchTerm.toLowerCase();
+    return this.reports.filter(report =>
+      report.name.toLowerCase().includes(lowerSearch)
+    );
   }
 }

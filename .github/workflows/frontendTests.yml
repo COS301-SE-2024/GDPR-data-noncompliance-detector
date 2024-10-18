@@ -24,10 +24,11 @@ jobs:
         cache: 'npm'
         cache-dependency-path: gnd-app/package-lock.json
 
-    - name: Install Chrome
+    - name: Install Chrome and install pandoc
       run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
+          sudo apt-get install pandoc
 
     - run: |
         cd gnd-app

@@ -1,160 +1,301 @@
-<!-- <link href="https://db.onlinewebfonts.com/c/a5bb475fe3f43d376ac10ac700504814?family=Mediator+Narrow+Web+Extra+Bold"
-    rel="stylesheet">
-<link href="https://db.onlinewebfonts.com/c/002209bee8df7c3666a712ebd9253f60?family=Roboto+Bold" rel="stylesheet"> -->
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Oswald:wght@700&display=swap"
+  rel="stylesheet">
 <link rel="stylesheet" href="outlook-inbox.component.css">
 
-
-
 <div class="main-content">
-    <div class="header-container">
-      <header class="header clickable-header" (click)="navigateToDownloads()">Downloads</header>
-      <header class="header active-header">Inbox</header>
+  <div class="header-container" *ngIf="!result">
+    <header class="header" id="InboxAttachments">
+      Inbox
+    </header>
+    <header class="header clickable-header" id="Downloads" (click)="navigateToDownloads()">Downloads</header>
+  </div>
+
+  
+  <p class="sub-header" *ngIf="!result">
+    View a detailed summary of your email attachment's compliance status and possible violations detected
+  </p>
+ 
+
+  <div class="containers">
+    <div class="block max-w-sm p-6 mr-10 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    style="background-color: #111827 !important; height: 350px; overflow: hidden;" *ngIf="!result">
+      <h5 class=" text-center text-2xl font-bold tracking-tight text-white-900 dark:text-white" style="font-family: 'Oswald', 'Roboto', sans-serif;">How It Works</h5>
+      <ul class="list-disc list-inside font-normal text-white-700 dark:text-gray-400 space-y-2">
+        <li>Your Outlook Mailbox is continually monitored for incoming emails</li>
+        <li>Only emails originating from with GDPR protected countries are scanned</li>
+        <li>Your attachments are automatically scanned and a report is generated to view at you convienience</li>
+        <li>You will recieve an alert to notify that an attachment has been scanned and a report is available</li>
+      </ul>
+
+      <p class="fixed bottom-4 left-6 text-sm text-gray-400">
+        * This feature requires an active Outlook Classic account.
+      </p>
     </div>
-
-
-
-<div class="containers">
-    <div class="inbox-rectangle" id="InboxAttachments">
-        <h2 class="inbox-header">Inbox</h2>
-        <div class="divider"></div>
-        <ul>
-            <div class="card" *ngFor="let report of reports" (click)="getReportContent(report.name)">
-                <!-- <li>{{ getFileNameWithoutCountry(report.name) }} {{ formatDate(report.modified) }}</li> -->
-              <li class="file-info">
-                <span>{{ getFileNameWithoutCountry(report.name) }}</span>
-                <span>{{ formatDate(report.modified) }}</span>
-              </li>
-            </div>
-        </ul>
-    </div>
-
-    <div class="analysis-rectangle">
-        <h2 class="analysis-header">Analysis</h2>
-        <div class="divider"></div>
-    
-        <!-- <div class="analysis-data" *ngIf="result">
-            <h2 class="analysis-box-header">Analysis Result:</h2>
-            <div class="status" [ngClass]="{'status-success': status === 'Compliant', 'status-error': status === 'Non-compliant'}">
-                {{ status }}
-            </div>
-            <div class="result-content" [innerHTML]="result"></div>
-            <div class="ca_statement" [innerHTML]="ca_statement"></div>
-            <p class="analysis-text" *ngIf="isObjectEmpty(currentAnalysis)">Please select a file to view analysis
-                results</p>
-        </div> -->
-
-        <div class="comp-status-container">
-            <div class="comp-status" *ngIf="result">
-              <span *ngIf="documentStatus == 'Compliant'" class="status-compliant">{{ documentStatus }}</span>
-              <span *ngIf="documentStatus == 'Non-Compliant'" class="status-non-compliant">{{ documentStatus }}</span>        
-            </div>
+  
+    <div class="inbox-rectangle border border-gray-200 rounded-lg shadow" *ngIf="!result" id="InboxAttachments">
+      <ul>
+        <div class="search-container mb-4">
+          <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Search reports..."
+          class="search-input p-2 border border-gray-300 rounded w-full bg-gray-700"
+          />
         </div>
-    
-          <div class="upload-data" *ngIf="result">
-    
-            <!-- <div class="comp-status">
-              <span *ngIf="documentStatus == 'Compliant'" class="bg-green-100 text-green-800 text-4xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ documentStatus }}</span>
-              <span *ngIf="documentStatus == 'Non-Compliant'" class="bg-red-100 text-red-800 text-4xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ documentStatus }}</span>        
-            </div> -->
-            <div class="ner-data">
-              <!-- <strong>NER Count:</strong> {{ nerCount }} -->
-              <p class="text-lg font-roboto-bold text-gray-900 dark:text-black">This document potentially references {{ nerCount }} different individuals</p>
+        <div *ngIf="filteredReportsList.length === 0" class="text-center text-gray-500 p-4">
+          No reports found.
+        </div>
+        <div class="card border-bottom border-gray-200" *ngFor="let report of filteredReportsList" (click)="getReportContent(report.name)">
+          <li class="file-info">
+            <div class="file-details">
+              <i class="fas fa-file p-2 border-2 border-gray-500 rounded-lg file-icon"></i>
+              <div class="file-text">
+                <span class="file-name">{{ getFileNameWithoutCountry(report.name) }}</span>
+              </div>
             </div>
-            
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Location:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ location }}</span>
+            <div class="violation-status">
+              <span class="file-date">{{ formatDate(report.modified) }}</span>
             </div>
-            
-            <div class="divider-text"></div>
-    
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Personal Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ personalData }}</span>
-            </div>
-    
-            <div class="divider-text"></div>
-    
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Financial Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ financialData }}</span>
-            </div>
-    
-            <div class="divider-text"></div>
-    
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Contact Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ contactData }}</span>
-            </div>
-    
-            <div class="divider-text"></div>
-    
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Medical Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ medicalData }}</span>
-            </div>
-    
-            <div class="divider-text"></div>
-    
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Ethnic Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ ethnicData }}</span>
-            </div>
-    
-            <div class="divider-text"></div>
-    
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Biometric Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ biometricData }}</span>
-            </div>
-    
-            <div class="divider-text"></div>
-
-            <div class="result-data">
-              <p class="text-2xl font-roboto-bold text-gray-900 dark:text-black">Genetic Data:</p> <span class="text-2xl font-roboto-bold text-gray-900 dark:text-black">{{ geneticData }}</span>
-            </div>
-    
-            <div class="divider-text"></div>
-    
-            <!-- <div class="CA-data">
-              <strong>Consent Agreement:</strong> {{ consentAgreement }}
-            </div> -->
-          </div>
-    
-          <div class="consent-status-container" *ngIf="result">
-            <div class="consent-status">
-              <span class="consent-agreement">{{ consentAgreement }}</span>        
-            </div>
-          </div>
-
-          <div class="rag-status-container" *ngIf="result">
-            <div class="rag-status">
-              <span class="rag-agreement">{{ ragScore }}</span>        
-            </div>
-          </div>
+          </li>
+        </div>
+      </ul>
     </div>
 
-    <!-- <div class="buttons" *ngIf="!isObjectEmpty(currentAnalysis)"> -->
-        <!-- <button type="button" [routerLink]="['/violations', currentEmailType]"
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Violations</button>
-        <button type="button" [routerLink]="['/report']"
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualisations</button> -->
-        <!-- <button type="button"
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
-            Report</button> -->
-        <!-- <button type="button" (click)="clearAnalysis()"
-            class=" text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Clear</button> -->
-    <!-- </div> -->
+    <aside
+      id="default-sidebar"
+      class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0"
+      aria-label="Sidebar"
+      *ngIf="result"
+      style="background-color: #111827 !important;"
+    >
+      <div class="h-full px-1 py-4 overflow-y-auto flex flex-col justify-center" style="background-color: #111827;">
+        <ul class="space-y-2 font-medium">
+          <li>
+            <a (click)="generatePDFReport()" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+              <i class="fas fa-download w-5 h-5 text-gray-400 group-hover:text-white"></i>
+              <span class="ml-3">Download Report</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="onVisualize()" id="vizButton" 
+               class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+              <i [ngClass]="isVisualizing ? 'fas fa-file-alt' : 'fas fa-chart-bar'" 
+                 class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
+              <span class="ml-3">{{ isVisualizing ? 'Summary' : 'Visualisations' }}</span>
+            </a>
+          </li>
+          <!-- <li>
+            <a (click)="onAnnotate()" id="annoButton" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+              <i class="fas fa-exclamation-triangle w-5 h-5 text-gray-400 group-hover:text-white"></i>
+              <span class="ml-3">View Violations</span>
+            </a>
+          </li> -->
+          <li>
+            <a (click)="backToInbox()" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group cursor-pointer">
+              <i class="fas fa-envelope w-5 h-5 text-gray-400 group-hover:text-white"></i>
+              <span class="ml-3">Back To Inbox</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
 
-
-
-
-  </div>
-  <div class="buttons">
-    <button *ngIf="result" (click)="generatePDFReport()" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Download
-      Report</button>
-    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/violations']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Violations</button> -->
-    <!-- <button *ngIf="uploadedFileName" [routerLink]="['/report']" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">View Report</button> -->
-    <!-- <button *ngIf="result" (click)="onVisualize()" id="vizButton" type="button"
-      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Visualise</button> -->
-  </div>
-  <div class="center-footer">
-    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">
-    GND may make mistakes. Please verify that your files are compliant with GDPR laws.</span></p>
+    <div class="analysis-rectangle ml-64" *ngIf="result">
+      <ng-container *ngIf="!isVisualizing; else visualizationView">
+        <div class="px-40 flex flex-1 justify-center py-2">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-2">
+              <div class="header-container-2">
+                <p class="header-2">GDPR Compliance Scan</p>
+              </div>
+            </div>
+            <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-2 pb-2 pt-2">Summary</h3>
+            <div class="p-2 grid grid-cols-[20%_1fr] gap-x-6">
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">File Name</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ fileName }}</p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2.5">Compliance Status</p>
+                <p *ngIf="documentStatus == 'Compliant'" class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
+                  <i class="fas fa-check-circle w-5 h-5 text-green-500 px-4"></i>
+                </p>
+                <p *ngIf="documentStatus == 'Non-Compliant'" class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-non-compliant">{{ documentStatus }}
+                  <i class="fas fa-exclamation-triangle w-5 h-5 text-red-400 px-4"></i>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Valid Consent Agreement</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ consentAgreement }}
+                  <i *ngIf="consentAgreement === 'The document does not appear to contain any data consent agreements'" class="fas fa-exclamation-triangle w-3 h-3 text-gray-500 px-4"></i>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Total Issues Detected</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ totalViolations }} issues</p>
+              </div>
+              <!-- <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Compliance Score</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ violationPercentage }}%</p>
+              </div> -->
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Country of Origin</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ location }}</p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Individuals Identified</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ nerCount }} individuals
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This indicates the number of individuals that have been uniquely identified in the document
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Personal Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ personalData }} issues
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This may include personal data such as names, identification numbers, dates of birth.
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Financial Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ financialData }} issues
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This may include personal financial data such as banking details, tax numbers, account details
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Contact Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ contactData }} issues
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This may include personal contact details such as phone numbers, email addresses or addresses
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Medical Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ medicalData }} issues
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This may include personal medical data such as chronic illnesses, past injuries, diseases or viruses
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Ethnic Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ ethnicData }} issues
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This may include ethnic data such as racial or ethnic origin, nationality and language
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Biometric Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ biometricData }} issues
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This may include biometric data such as fingerprints, facial recognition, iris scans
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Genetic Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ geneticData }} issues
+                  <span class="relative">
+                    <i
+                      class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
+                      data-tooltip-target="tooltip-personal-data"
+                      (mouseenter)="logTooltip('Personal Data tooltip hovered')"
+                    ></i>
+                    <div id="tooltip-personal-data" role="tooltip" class="tooltip">
+                      This may include genetic data such as ethical history, gene variants, and hereditary traits
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                  </span>
+                </p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">GDPR Articles Violated:</p>
+                <ul class="text-[#111418] text-md font-normal leading-normal pt-2">
+                  <li *ngFor="let article of ragScoreArray" style="margin-bottom: 8px;">
+                    Article: {{ article }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- <div class="flex flex-col gap-3 p-4">
+              <div class="flex gap-6 justify-between">
+                <p class="text-[#111418] text-base font-medium leading-normal pt-2">Compliance Score</p>
+                <p class="text-[#111418] text-md font-normal leading-normal">{{ violationPercentage }}%</p>
+              </div>
+              <div class="rounded bg-[#dbe0e6]">
+                <div class="h-2 rounded bg-[#111418]" [style.width.%]="violationPercentage"></div>
+              </div>
+              <p class="text-[#60758a] text-md font-normal leading-normal">{{ violationPercentage }}% of your data is GDPR compliant</p>
+            </div> -->
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #visualizationView>
+        <app-visualization></app-visualization>
+      </ng-template>
+    </div>
   </div>
 </div>
