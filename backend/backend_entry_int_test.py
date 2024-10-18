@@ -69,7 +69,7 @@ class TestBackendEntryIntegration(unittest.TestCase):
         print(result_str)
 
         expected_output_str = (
-            "'Location': 2, 'NER': 3, 'Personal': 1, 'Financial': 0, 'Contact': 0, 'Consent Agreement': True, 'Genetic': 0, 'Ethnic': 2, 'Medical': 0, 'Biometric': 0, 'RAG_Statement': 'The following GDPR articles are potentially violated: 5, 9, 9(1), 9(2)(b), 9(2)(g), 12', 'lenarts': 3, '}"        )
+            "'Location': 2, 'NER': 3, 'Personal': 0, 'Financial': 0, 'Contact': 0, 'Consent Agreement': False, 'Genetic': 0, 'Ethnic': 2, 'Medical': 0, 'Biometric': 0, 'RAG_Statement': ['9', '9(1)', '9(2)(b)', '9(2)(g)', '6', '7(1)', '7(2)', '7(3)', '12'], 'lenarts': 4, '}"        )
 
         self.assertEqual(result_str.strip(), expected_output_str.strip())
 
