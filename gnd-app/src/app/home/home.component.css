@@ -35,7 +35,7 @@ button {
   /* border: none; */
   border: 2px solid #ccc;
   border-radius: 8px;
-  margin: 0.5em;
+  margin: 0.5rem;
   color: white;
   padding: 15px 32px;
   text-align: center;
@@ -45,6 +45,10 @@ button {
   font-size: 16px;
   margin-top: 1rem;
   cursor: pointer;
+}
+
+.col-4{
+  padding-left: 80px;
 }
 
 /* .container {

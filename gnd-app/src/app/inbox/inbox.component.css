@@ -82,6 +82,8 @@ body {
 
 .inbox-rectangle, .analysis-rectangle {
   padding: 20px;
+  margin-bottom: 30px;
+  margin-right: 20px;
   /* flex-grow: 1; */
   width: calc(100% - 35rem);
   height: 60vh;
