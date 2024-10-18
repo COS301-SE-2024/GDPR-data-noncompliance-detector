@@ -50,7 +50,7 @@ function keyHelper() {
   app.use(cors());
 
   app.get('/api/encryption-key', (req, res) => {
-    const encryptionKey = process.env.GND_ENCRYPTION_KEY;
+    const encryptionKey = process.env['SYS VAR x64'];
     res.json({ encryptionKey });
   });
 
