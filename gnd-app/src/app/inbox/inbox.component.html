@@ -109,39 +109,35 @@
             <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-2 pb-2 pt-2">Summary</h3>
             <div class="p-2 grid grid-cols-[20%_1fr] gap-x-6">
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">File Name</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ fileName }}</p>
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">File Name</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ fileName }}</p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2.5">Compliance Status</p>
-                <p *ngIf="documentStatus == 'Compliant'"
-                  class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2.5">Compliance Status</p>
+                <p *ngIf="documentStatus == 'Compliant'" class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-compliant">{{ documentStatus }}
                   <i class="fas fa-check-circle w-5 h-5 text-green-500 px-4"></i>
                 </p>
-                <p *ngIf="documentStatus == 'Non-Compliant'"
-                  class="text-[#111418] text-sm font-normal leading-normal pt-2.5 status-non-compliant">{{
-                  documentStatus }}
+                <p *ngIf="documentStatus == 'Non-Compliant'" class="text-[#111418] text-md font-normal leading-normal pt-2.5 status-non-compliant">{{ documentStatus }}
                   <i class="fas fa-exclamation-triangle w-5 h-5 text-red-400 px-4"></i>
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Valid Consent Agreement</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ consentAgreement }}
-                  <i *ngIf="consentAgreement === 'The document does not appear to contain any data consent agreements'"
-                    class="fas fa-exclamation-triangle w-3 h-3 text-gray-500 px-4"></i>
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Valid Consent Agreement</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ consentAgreement }}
+                  <i *ngIf="consentAgreement === 'The document does not appear to contain any data consent agreements'" class="fas fa-exclamation-triangle w-3 h-3 text-gray-500 px-4"></i>
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Total Issues Detected</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ totalViolations }} issues</p>
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Total Issues Detected</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ totalViolations }} issues</p>
               </div>
+              <!-- <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Compliance Score</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ violationPercentage }}%</p>
+              </div> -->
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Compliance Score</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ violationPercentage }}%</p>
-              </div>
-              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Individuals Identified</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ nerCount }} individuals
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Individuals Identified</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ nerCount }} individuals
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -153,8 +149,8 @@
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Personal Data</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ personalData }} issues
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Personal Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ personalData }} issues
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -166,8 +162,8 @@
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Financial Data</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ financialData }} issues
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Financial Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ financialData }} issues
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -179,8 +175,8 @@
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Contact Data</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ contactData }} issues
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Contact Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ contactData }} issues
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -192,8 +188,8 @@
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Medical Data</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ medicalData }} issues
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Medical Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ medicalData }} issues
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -206,8 +202,8 @@
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Ethnic Data</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ ethnicData }} issues
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Ethnic Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ ethnicData }} issues
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -219,8 +215,8 @@
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Biometric Data</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ biometricData }} issues
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Biometric Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ biometricData }} issues
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -232,8 +228,8 @@
                 </p>
               </div>
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
-                <p class="text-[#60758a] text-sm font-normal leading-normal pt-2">Genetic Data</p>
-                <p class="text-[#111418] text-sm font-normal leading-normal pt-2">{{ geneticData }} issues
+                <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Genetic Data</p>
+                <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ geneticData }} issues
                   <span class="relative">
                     <i class="fas fa-info-circle ml-3 text-gray-500 cursor-pointer"
                       data-tooltip-target="tooltip-personal-data"></i>
@@ -245,7 +241,7 @@
                 </p>
               </div>
             </div>
-            <div class="flex flex-col gap-3 p-4">
+            <!-- <div class="flex flex-col gap-3 p-4">
               <div class="flex gap-6 justify-between">
                 <p class="text-[#111418] text-base font-medium leading-normal pt-2">Compliance Score</p>
                 <p class="text-[#111418] text-sm font-normal leading-normal">{{ violationPercentage }}%</p>
@@ -253,9 +249,8 @@
               <div class="rounded bg-[#dbe0e6]">
                 <div class="h-2 rounded bg-[#111418]" [style.width.%]="violationPercentage"></div>
               </div>
-              <p class="text-[#60758a] text-sm font-normal leading-normal">{{ violationPercentage }}% of your data is
-                GDPR compliant</p>
-            </div>
+              <p class="text-[#60758a] text-sm font-normal leading-normal">{{ violationPercentage }}% of your data is GDPR compliant</p>
+            </div> -->
           </div>
         </div>
       </ng-container>

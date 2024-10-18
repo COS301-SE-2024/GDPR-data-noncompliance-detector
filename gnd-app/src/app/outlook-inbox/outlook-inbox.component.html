@@ -135,10 +135,10 @@
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Total Issues Detected</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ totalViolations }} issues</p>
               </div>
-              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
+              <!-- <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Compliance Score</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ violationPercentage }}%</p>
-              </div>
+              </div> -->
               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#dbe0e6] py-2.5">
                 <p class="text-[#60758a] text-md font-normal leading-normal pt-2">Country of Origin</p>
                 <p class="text-[#111418] text-md font-normal leading-normal pt-2">{{ location }}</p>
@@ -265,7 +265,7 @@
                 </ul>
               </div>
             </div>
-            <div class="flex flex-col gap-3 p-4">
+            <!-- <div class="flex flex-col gap-3 p-4">
               <div class="flex gap-6 justify-between">
                 <p class="text-[#111418] text-base font-medium leading-normal pt-2">Compliance Score</p>
                 <p class="text-[#111418] text-md font-normal leading-normal">{{ violationPercentage }}%</p>
@@ -273,9 +273,8 @@
               <div class="rounded bg-[#dbe0e6]">
                 <div class="h-2 rounded bg-[#111418]" [style.width.%]="violationPercentage"></div>
               </div>
-              <p class="text-[#60758a] text-md font-normal leading-normal">{{ violationPercentage }}% of your data is
-                GDPR compliant</p>
-            </div>
+              <p class="text-[#60758a] text-md font-normal leading-normal">{{ violationPercentage }}% of your data is GDPR compliant</p>
+            </div> -->
           </div>
         </div>
       </ng-container>
