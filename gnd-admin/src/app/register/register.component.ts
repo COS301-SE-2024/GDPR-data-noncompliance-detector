@@ -63,27 +63,27 @@ export class RegisterComponent implements OnInit {
   
 
   private initForm(): void {
-    this.registerForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
-      lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=(?:.{20,}|(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}))[\w@$!%*?&]{8,}$/)
-      ]],
-      confirmPassword: ['', Validators.required],
-      agreeTerms: [false, Validators.requiredTrue]
-    }, {
-      validator: this.mustMatch('password', 'confirmPassword')
-    });
-
-    this.registerForm.get('password')?.valueChanges.subscribe(
-      (password) =>{
-        this.checkPasswordStrength(password);
-        this.updatePasswordConditions(password);
-      }
-    );
+      this.registerForm = this.formBuilder.group({
+        firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÖØ-öø-ÿ' -]+$/)]],
+        lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÖØ-öø-ÿ' -]+$/)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=(?:.{20,}|(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}))[\w@$!%*?&]{8,}$/)
+        ]],
+        confirmPassword: ['', Validators.required],
+        agreeTerms: [false, Validators.requiredTrue]
+      }, {
+        validator: this.mustMatch('password', 'confirmPassword')
+      });
+  
+      this.registerForm.get('password')?.valueChanges.subscribe(
+        (password) => {
+          this.checkPasswordStrength(password);
+          this.updatePasswordConditions(password);
+        }
+      );
   }
   updatePasswordConditions(password: string) {
     this.passwordConditions.length = password.length >= 8;

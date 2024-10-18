@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
       await this.fetchData();
       this.createCharts();
     }
+    
   }
 
 
@@ -61,7 +62,8 @@ export class HomeComponent implements OnInit {
       console.error('Error fetching current data:', currentError);
       return;
     }
-  
+
+      
     // Fetching previous violation reports for trend calculation
     const previousStartDate = new Date(startDate);
     previousStartDate.setDate(previousStartDate.getDate() - parseInt(this.timeRange));
@@ -164,24 +166,34 @@ export class HomeComponent implements OnInit {
           label: 'Violations',
           data: this.violationTrends.map(item => item.count),
           borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
+          tension: 0.4
         }]
       },
       options: {
         responsive: true,
         scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Time-Stamps'
+            }
+          },
           y: {
+            title: {
+              display: true,
+              text: 'Number of Violations'
+            },
             beginAtZero: true
           }
         }
       }
     });
-  }
+}
 
   createViolationTypesChart() {
     const ctx = document.getElementById('violationTypesChart') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: this.violationTypes.map(item => item.name),
         datasets: [{
@@ -199,37 +211,82 @@ export class HomeComponent implements OnInit {
         }]
       },
       options: {
-        responsive: true
+        responsive: true,
+        aspectRatio:1.5,
+        animation:{
+          animateScale : true,
+          animateRotate : true
+        }
       }
     });
   }
 
   createViolationTypeTrendCharts() {
-    const types = ['personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact' ];
-    types.forEach(type => {
-      const ctx = document.getElementById(`${type}DataTrendChart`) as HTMLCanvasElement;
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: this.violationTrends.map(item => item.date),
-          datasets: [{
-            label: `${type.charAt(0).toUpperCase() + type.slice(1)} Data Violations`,
-            data: this.recentReports.map(report => report[`${type}_data_violations`]),
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-          }]
+  const types: Array<'personal' | 'medical' | 'biometric' | 'ethnic' | 'genetic' | 'financial' | 'contact'> = [
+    'personal', 'medical', 'biometric', 'ethnic', 'genetic', 'financial', 'contact'
+  ];
+  
+  const colors = {
+    personal: 'rgb(255, 99, 132)', // Red for Personal Data
+    medical: 'rgb(54, 162, 235)',  // Blue for Medical Data
+    biometric: 'rgb(255, 205, 86)', // Yellow for Biometric Data
+    ethnic: 'rgb(75, 192, 192)',   // Green for Ethnic Data
+    genetic: 'rgb(153, 102, 255)', // Purple for Genetic Data
+    financial: 'rgb(255, 159, 64)',// Orange for Financial Data
+    contact: 'rgb(0,128,0)',       // Green for Contact Data
+  };
+
+  types.forEach(type => {
+    const ctx = document.getElementById(`${type}DataTrendChart`) as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: this.violationTrends.map(item => item.date),
+        datasets: [{
+          label: `${type.charAt(0).toUpperCase() + type.slice(1)} Data Violations`,
+          data: this.recentReports.map(report => report[`${type}_data_violations`]),
+          borderColor: colors[type], // Fixed TypeScript error by restricting 'type' values
+          backgroundColor: 'rgba(75, 192, 192, 0.1)',
+          tension: 0.4,
+          fill: true, // To make the area under the line filled
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        animation: {
+          duration: 1000, // Smooth animation when the chart loads
+          easing: 'easeOutBounce'
         },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Time-Stamps'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Number of Violations'
+            },
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: function(tooltipItem) {
+                return `Violations: ${tooltipItem.raw}`;
+              }
             }
           }
         }
-      });
+      }
     });
-  }
+  });
+}
 
   async updateDashboard() {
     await this.fetchData();
@@ -243,7 +300,6 @@ export class HomeComponent implements OnInit {
     Chart.getChart('geneticDataTrendChart')?.destroy();
     Chart.getChart('financialDataTrendChart')?.destroy();
     Chart.getChart('contactDataTrendChart')?.destroy();
-    // Chart.getChart('consentAgreementTrendChart')?.destroy();
 
     // Recreating charts with new data
     this.createCharts();
