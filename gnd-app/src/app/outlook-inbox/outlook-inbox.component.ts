@@ -211,7 +211,9 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         
         const score = dat.result.score;
 
-        this.documentStatus = this.docStatus(score.Status);
+        // this.documentStatus = this.docStatus(score.Status);
+        this.documentStatus = this.docStatus(this.calculateMetric());
+
 
         this.encoded_value = score.ner_result_text;
   
@@ -375,6 +377,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
     this.violationPercentage = Math.round((w_sum/N_e_sum));
 
     console.log( "vios:" + this.violationPercentage);
+    
+    return N_e_sum;
     
   }
 

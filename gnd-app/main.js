@@ -23,7 +23,7 @@ function createWindow () {
   })
   win.setMenu(null);
   win.loadFile(path.join(__dirname, 'dist', 'gnd-app', 'index.html'))
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {

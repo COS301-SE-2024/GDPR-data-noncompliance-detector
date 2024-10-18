@@ -115,6 +115,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   fileName: string = '';
   searchTerm: string = '';
   isSearchOpen: boolean = false;
+  ragScoreArray: string[] = [];
 
   docStatus(status: number): string {
     if(status <= 0.6){
@@ -183,6 +184,12 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.geneticData = score.Genetic;
         this.consentAgreement = this.consentAgreementStatus(score["Consent Agreement"]);
         this.ragScore = score.RAG_Statement;
+        if (Array.isArray(score.RAG_Statement)) {
+          this.ragScoreArray = score.RAG_Statement;
+        } 
+        else {
+          this.ragScoreArray = [];
+        }
         this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
         this.calculateMetric();
 

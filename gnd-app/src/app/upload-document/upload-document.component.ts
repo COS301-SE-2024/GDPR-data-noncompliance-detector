@@ -166,7 +166,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               this.fileName = res.fileName;
               console.log(res);
 
-              this.documentStatus = this.docStatus(res.score.Status);
+              // this.documentStatus = this.docStatus(res.score.Status);
+              this.documentStatus = this.docStatus(this.calculateMetric());
               this.nerCount = res.score.NER;
               this.location = this.locationStatus(res.score.Location);
               this.personalData = res.score.Personal;
@@ -271,7 +272,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
                 this.fileName = res.fileName;
                 console.log(res);
 
-                this.documentStatus = this.docStatus(res.score.Status);
+                // this.documentStatus = this.docStatus(res.score.Status);
+                this.documentStatus = this.docStatus(this.calculateMetric());
                 this.nerCount = res.score.NER;
                 this.location = this.locationStatus(res.score.Location);
                 this.personalData = res.score.Personal;
@@ -404,6 +406,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     this.violationPercentage = Math.round((w_sum/N_e_sum));
 
     console.log( "vios:" + this.violationPercentage);
+
+    return N_e_sum;
     
   }
 
