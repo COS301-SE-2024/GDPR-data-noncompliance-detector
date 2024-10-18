@@ -12,11 +12,11 @@ import {WalkthroughService} from '../services/walkthrough.service';
 import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
 import { VisualizationComponent } from "../visualization/visualization.component";
 import { VisualizationService} from '../services/visualization.service';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, RouterModule, VisualizationComponent],
+  imports: [CommonModule, RouterModule, VisualizationComponent, FormsModule],
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
@@ -113,6 +113,8 @@ export class InboxComponent implements OnInit, OnDestroy {
   violationPercentage: number = 0;
   personal: number = 0;
   fileName: string = '';
+  searchTerm: string = '';
+  isSearchOpen: boolean = false;
 
   docStatus(status: number): string {
     if(status <= 0.6){
@@ -356,5 +358,23 @@ export class InboxComponent implements OnInit, OnDestroy {
 
   onVisualize() {
     this.isVisualizing = !this.isVisualizing;
+  }
+
+  get filteredReportsList() {
+    if (!this.searchTerm) {
+      return this.reports;
+    }
+    const lowerSearch = this.searchTerm.toLowerCase();
+    return this.reports.filter(report =>
+      report.name.toLowerCase().includes(lowerSearch)
+    );
+  }
+
+  toggleSearch(): void {
+    this.isSearchOpen = !this.isSearchOpen;
+  }
+  
+  closeSearch(): void {
+    this.isSearchOpen = false;
   }
 }

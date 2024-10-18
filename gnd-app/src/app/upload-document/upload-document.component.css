@@ -51,7 +51,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding-bottom: 1.5em;
+  /* padding-bottom: 0.5em; */
 }
 
 
@@ -460,4 +460,20 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;  /* Stack elements vertically */
+  align-items: center;      /* Center elements horizontally */
+  justify-content: center;  /* Center elements vertically */
+  width: 100%;
+  height: 100%;             /* Ensure the loader section takes full height */
+  text-align: center;
+}
+
+.loader-text {
+  margin-top: 15px;  /* Add space between spinner and text */
+  font-family: "Roboto Bold";
+  color: #d1d5db;  /* Light gray for visibility */
 }

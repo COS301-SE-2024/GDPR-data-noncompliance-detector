@@ -34,7 +34,18 @@
     
     <div class="inbox-rectangle border border-gray-200 rounded-lg shadow" *ngIf="!result" id="InboxAttachments">
       <ul>
-        <div class="card border-bottom border-gray-200" *ngFor="let report of reports" (click)="getReportContent(report.name)">
+        <div class="search-container mb-4">
+          <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Search reports..."
+          class="search-input p-2 border border-gray-300 rounded w-full bg-gray-700"
+          />
+        </div>
+        <div *ngIf="filteredReportsList.length === 0" class="text-center text-gray-500 p-4">
+          No reports found.
+        </div>
+        <div class="card border-bottom border-gray-200" *ngFor="let report of filteredReportsList" (click)="getReportContent(report.name)">
           <li class="file-info">
             <div class="file-details">
               <i class="fas fa-file p-2 border-2 border-gray-500 rounded-lg file-icon"></i>
