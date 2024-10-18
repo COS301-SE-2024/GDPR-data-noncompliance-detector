@@ -1,3 +1,4 @@
+
 .header-container {
   display: flex;
   justify-content: center;
@@ -56,6 +57,7 @@
   color: white; /* Match the header text color */
   text-align: center; /* Center align the text */
   margin: 1em 0; /* Add some margin for spacing */
+
 }
 
 
@@ -63,6 +65,7 @@
   font-family: 'Oswald', 'Roboto', sans-serif;
   background-color: transparent; 
   color: white; 
+
   padding: 10px;
   margin: 5px;
   font-size: 19px;
@@ -73,10 +76,12 @@
   justify-content: flex-start; 
   align-items: center; 
   width: 100%; 
+
 }
 
 .dropbtn:hover, .dropbtn:focus {
   color: #8EBA12; 
+
 }
 
 .dropdown {

@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 export class FaqPageComponent {
   activeDropdown: string = '';
 
+
   leftFaqs = [
     { id: 'faq1', question: 'What is GND?', answer: 'GND is a GDPR violation detection application designed to help users identify potential GDPR compliance issues in their documents. By uploading files, GND scans and detects any violations, providing detailed results to help you ensure data protection compliance.' },
     { id: 'faq2', question: 'How do I report a violation?', answer: 'You can report a violation by contacting your manager.' },
@@ -38,6 +39,7 @@ export class FaqPageComponent {
     { id: 'faq22', question: 'What are my rights under GDPR?', answer: 'GDPR grants individuals rights including the right to access their data, the right to rectification, the right to erasure (right to be forgotten), the right to restrict processing, the right to data portability, and the right to object to data processing.' },    
     { id: 'faq23', question: 'How can my organization ensure GDPR compliance?', answer: 'To ensure GDPR compliance, organizations should conduct regular audits, implement robust data protection measures, provide GDPR training for employees, and appoint a Data Protection Officer if necessary.' },
     { id: 'faq24', question: 'What are some best practices for GDPR compliance?', answer: 'Best practices include obtaining clear and explicit consent, maintaining detailed records of data processing activities, conducting Data Protection Impact Assessments (DPIAs), and ensuring data is securely stored and transmitted.' },
+
   ];
 
   toggleDropdown(dropdownId: string) {
