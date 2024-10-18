@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/98c03af9-5f20-4d6e-8140-b4a69f7ff72f)<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/GND.png" alt="GND Logo">
+![image]()<img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/GND.png" alt="GND Logo">
 
 [![codecov](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector/graph/badge.svg?token=nEPpXWGssM)](https://codecov.io/github/COS301-SE-2024/GDPR-data-noncompliance-detector)
 ![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2024/GDPR-data-noncompliance-detector)
