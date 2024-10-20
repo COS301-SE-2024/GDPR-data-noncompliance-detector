@@ -73,14 +73,14 @@ export class ReportGenerationService {
     try {
       if (!this.logoDataUrl) {
         this.logoDataUrl = await this.getImageDataUrl('assets/GND_LSG.jpg');
-        console.log('Logo image loaded successfully.');
+        // console.log('Logo image loaded successfully.');
       }
       if (!this.iconDataUrl) {
         this.iconDataUrl = await this.getImageDataUrl('assets/circle-question-regular.jpg');
-        console.log('Icon image loaded successfully.');
+        // console.log('Icon image loaded successfully.');
       }
     } catch (error) {
-      console.error('Error loading images:', error);
+      // console.error('Error loading images:', error);
       throw new Error('Failed to load images.');
     }
   }
@@ -99,7 +99,7 @@ export class ReportGenerationService {
       doc.addFileToVFS('MediatorNarrowWebExtraBold.ttf', fontBase64);
       doc.addFont('MediatorNarrowWebExtraBold.ttf', 'MediatorNarrowExtraBold', 'normal');
 
-      console.log('Custom font loaded and registered successfully.');
+      // console.log('Custom font loaded and registered successfully.');
     } catch (error) {
       console.error('Error loading custom font:', error);
       throw new Error('Failed to load custom font.');

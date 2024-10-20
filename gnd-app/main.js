@@ -27,7 +27,7 @@ function createWindow () {
 
 app.whenReady().then(() => {
   // startAPI();
-  // startFlaskAPI();
+  startFlaskAPI();
   createWindow();
   // setTimeout(setupWatcher, 100);
   keyHelper();
@@ -54,7 +54,7 @@ function keyHelper() {
   });
 
   app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    // console.log(`Server running on port ${port}`);
   });
 }
 
@@ -63,7 +63,7 @@ function startFlaskAPI() {
   apiProcess = spawn('python', ['flask_api.py'], { cwd: apiPath });
 
   apiProcess.stdout.on('data', (data) => {
-    console.log(`Flask API stdout: ${data}`);
+    // console.log(`Flask API stdout: ${data}`);
   });
 
   apiProcess.stderr.on('data', (data) => {
@@ -75,7 +75,7 @@ function startFlaskAPI() {
   });
 
   apiProcess.on('close', (code) => {
-    console.log(`Flask API process exited with code ${code}`);
+    // console.log(`Flask API process exited with code ${code}`);
   });
 }
 
@@ -85,7 +85,7 @@ function startAPI() {
   const api = spawn('uvicorn', ['api:app', '--reload'], {cwd: apiPath});
 
   api.stdout.on('data', (data) => {
-    console.log(`API stdout: ${data}`);
+    // console.log(`API stdout: ${data}`);
   });
 
   api.stderr.on('data', (data) => {
@@ -97,7 +97,7 @@ function startAPI() {
   });
 
   api.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
+    // console.log(`child process exited with code ${code}`);
   });
 }
 
@@ -128,11 +128,11 @@ function setupWatcher() {
 
   watcher.stdout.on('data', (data) => {
     let output = data.toString().trim();
-    console.log(`Watcher stdout: ${output}`);
+    // console.log(`Watcher stdout: ${output}`);
     const postData = { path: output };
 
     const fileName = path.basename(output);
-    console.log(`Extracted file name: ${fileName}`);
+    // console.log(`Extracted file name: ${fileName}`);
 
     const parts = fileName.split('.');
     const name = parts[0] + '_report.txt';
@@ -147,9 +147,9 @@ function setupWatcher() {
       },
     })
       .then((res) => {
-        console.log("Alive--------------------------");
+        // console.log("Alive--------------------------");
       output = JSON.stringify(res.data);
-      console.log("Report successfully created")
+      // console.log("Report successfully created")
       const outputDir = path.join('../backend/Reports', newFileName);
         fs.writeFileSync(outputDir, output, 'utf8');
         notifier.notify({

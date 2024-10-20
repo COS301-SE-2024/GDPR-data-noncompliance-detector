@@ -52,17 +52,17 @@ export class VisualizationService {
 
 // src/app/services/visualization.service.ts
 setScanData(data: any) {
-  console.log('VisualizationService: Setting scan data:', data);
+  // console.log('VisualizationService: Setting scan data:', data);
   this.scanDataSubject.next(data);
 }
 
 getScanData(): Observable<any> {
-  console.log('VisualizationService: getScanData called');
+  // console.log('VisualizationService: getScanData called');
   return this.scanDataSubject.asObservable();
 }
 
 clearScanData() {
-  console.log('VisualizationService: Clearing scan data');
+  // console.log('VisualizationService: Clearing scan data');
   this.scanDataSubject.next(null);
 }
 

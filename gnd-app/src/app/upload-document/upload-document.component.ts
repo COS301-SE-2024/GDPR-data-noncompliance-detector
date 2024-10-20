@@ -63,9 +63,9 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.encryptionKeyService.getEncryptionKey().subscribe(response => {
       this.encryption_key = response.encryptionKey;
-      console.log(`Encryption Key: ${this.encryption_key}`);
+      // console.log(`Encryption Key: ${this.encryption_key}`);
     });
-    console.log(`Encryption Key: ${this.encryption_key}`);
+    // console.log(`Encryption Key: ${this.encryption_key}`);
 
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
@@ -76,8 +76,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
       this.startIntro();
     })
     // this.uploadState = this.visualizationService.getUploadState();
-    console.log("------------------------------------------------------------");
-    console.log(this.uploadState);
+    // console.log("------------------------------------------------------------");
+    // console.log(this.uploadState);
     this.visualizationService.clearScanData();
 
   }
@@ -122,14 +122,14 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     event.preventDefault();
     if (event.dataTransfer) {
       const file = event.dataTransfer.files[0];
-      console.log("File Dropped:", file);
+      // console.log("File Dropped:", file);
 
       
       if (file) {                                            
         this.fileName = file.name;
-        console.log("File Name: ", this.fileName);
+        // console.log("File Name: ", this.fileName);
         this.uploadedFileName = file.name;
-        console.log("Uploaded File Name: ", this.uploadedFileName);
+        // console.log("Uploaded File Name: ", this.uploadedFileName);
         this.result = '';
         this.isUploading = true;
         this.visualizationService.clearScanData();
@@ -141,10 +141,10 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
           (response) => {
             try {
               const encryptedData = CryptoJS.enc.Base64.parse(response.result);
-              console.log(encryptedData);
+              // console.log(encryptedData);
               const iv = CryptoJS.lib.WordArray.create(encryptedData.words.slice(0, 4));
               const ciphertext = CryptoJS.lib.WordArray.create(encryptedData.words.slice(4));
-              console.log(ciphertext);
+              // console.log(ciphertext);
               const decryptedBytes = CryptoJS.AES.decrypt(
                 CryptoJS.lib.CipherParams.create({ ciphertext: ciphertext }),
                 CryptoJS.enc.Utf8.parse(this.encryption_key || ''),
@@ -165,7 +165,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
 
               this.uploadedFileName = res.fileName;
               this.fileName = res.fileName;
-              console.log(res);
+              // console.log(res);
 
               this.documentStatus = this.docStatus(this.metric_val);
               this.nerCount = res.score.NER;
@@ -181,21 +181,23 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               this.ragScore = res.score.RAG_Statement;
               if (Array.isArray(res.score.RAG_Statement)) {
                 this.ragScoreArray = res.score.RAG_Statement;
-              } 
-              else {
+              } else if (typeof res.score.RAG_Statement === 'string') {
+                // Convert the string to an array
+                this.ragScoreArray = res.score.RAG_Statement.split(',').map((item: string) => item.trim());
+              } else {
                 this.ragScoreArray = [];
-              }              
+              }            
               this.response = res;
               this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
               this.calculateMetric();
 
-              console.log(this.nerCount);
+              // console.log(this.nerCount);
               this.checkdata();
               this.result = "Y";
               this.isUploading = false;
 
               this.visualizationService.setScanData(visResults);
-              console.log('UploadDocumentComponent: Scan data set in service.')
+              // console.log('UploadDocumentComponent: Scan data set in service.')
 
             } catch (error) {
               console.error("Decryption failed:", error);
@@ -230,9 +232,9 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
   
     if (file) {
       this.fileName = file.name;
-      console.log("File Name: ", this.fileName);
+      // console.log("File Name: ", this.fileName);
       this.uploadedFileName = file.name;
-      console.log("Uploaded File Name: ", this.uploadedFileName);
+      // console.log("Uploaded File Name: ", this.uploadedFileName);
       this.result = '';
       this.isUploading = true;
       this.visualizationService.clearScanData();
@@ -270,7 +272,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
 
                 this.uploadedFileName = res.fileName;
                 this.fileName = res.fileName;
-                console.log(res);
+                // console.log(res);
 
                 this.documentStatus = this.docStatus(this.metric_val);
                 this.nerCount = res.score.NER;
@@ -286,20 +288,22 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
                 this.ragScore = res.score.RAG_Statement;
                 if (Array.isArray(res.score.RAG_Statement)) {
                   this.ragScoreArray = res.score.RAG_Statement;
-                } 
-                else {
+                } else if (typeof res.score.RAG_Statement === 'string') {
+                  // Convert the string to an array
+                  this.ragScoreArray = res.score.RAG_Statement.split(',').map((item: string) => item.trim());
+                } else {
                   this.ragScoreArray = [];
-                } 
+                }     
                 this.response = res;
                 this.totalViolations = this.personalData + this.financialData + this.contactData + this.medicalData + this.ethnicData + this.biometricData + this.geneticData;
                 this.calculateMetric();
 
-                console.log(this.nerCount);
+                // console.log(this.nerCount);
                 this.checkdata();
                 this.result = "Y";
                 this.isUploading = false;
                 this.visualizationService.setScanData(visResults);
-                console.log('UploadDocumentComponent: Scan data set in service.');
+                // console.log('UploadDocumentComponent: Scan data set in service.');
 
               } catch (error) {
                 console.error("Decryption failed:", error);
@@ -405,7 +409,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
 
     this.violationPercentage = Math.round((w_sum/N_e_sum));
 
-    console.log( "vios:" + this.violationPercentage);
+    // console.log( "vios:" + this.violationPercentage);
     
   }
 

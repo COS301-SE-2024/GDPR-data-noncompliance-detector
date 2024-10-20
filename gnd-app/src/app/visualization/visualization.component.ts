@@ -71,18 +71,18 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.scanDataSubscription = this.scanDataService.getScanData().subscribe(data => {
-      console.log('VisualizationComponent: Received scan data:', data);
+      // console.log('VisualizationComponent: Received scan data:', data);
       if (data) {
         this.scanData = data;
       } else {
-        console.log('VisualizationComponent: No scan data received.');
+        // console.log('VisualizationComponent: No scan data received.');
       }
     });
 
     if (this.scanData) {
-      console.log('Data in child component:', this.scanData); // Log data only when available
+      // console.log('Data in child component:', this.scanData); // Log data only when available
       this.nerCount = this.scanData.NER;
-      console.log("Hello: " + this.scanData.nerCount);
+      // console.log("Hello: " + this.scanData.nerCount);
       this.location = this.scanData.location_report;
       this.personalData = this.scanData.Personal;
       this.financialData =this.scanData.Financial;
@@ -94,9 +94,9 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
       this.rag_count = this.scanData.lenarts;
       this.rag_stat = this.scanData.RAG_Statement;
       this.createCircularBarChart();
-      console.log(this.rag_count);
+      // console.log(this.rag_count);
     }
-    console.log("supadata: " + this.fetchData());
+    // console.log("supadata: " + this.fetchData());
 
   }
 
@@ -108,7 +108,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     if (error) {
       console.error('Error fetching total violations summary:', error);
     } else {
-      console.log('Average Personal Data Violations:', total_violations_summary[0].avg_financial_data_violations);
+      // console.log('Average Personal Data Violations:', total_violations_summary[0].avg_financial_data_violations);
     }
   }
 
@@ -279,7 +279,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
 
     this.violationPercentage = Math.round((w_sum/N_e_sum));
-    console.log("vivios: " + this.violationPercentage)
+    // console.log("vivios: " + this.violationPercentage)
     this.createGaugeChart(this.violationPercentage)
   }
 

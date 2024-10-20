@@ -110,8 +110,8 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
       });
     });
   
-    console.log('---------------------------------');
-    console.log(this.reports);
+    // console.log('---------------------------------');
+    // console.log(this.reports);
   }
   
   formatDate(date: Date): string {
@@ -186,7 +186,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   }
 
   getReportContent(filePath: string) {
-    console.log(filePath);
+    // console.log(filePath);
     
     const fileName = filePath.split('/').pop() || filePath;
     const country = this.extractCountryFromFileName(fileName);
@@ -243,7 +243,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
         this.result = "Y";
 
         this.visualizationService.setScanData(score);
-        console.log('UploadDocumentComponent: Scan data set in service.')
+        // console.log('UploadDocumentComponent: Scan data set in service.')
 
       },
       error: (error: any) => {
@@ -335,7 +335,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
   }
 
   logTooltip(message: string): void {
-    console.log(message);
+    // console.log(message);
   }
 
   calculateMetric() {
@@ -374,7 +374,7 @@ export class OutlookInboxComponent implements OnInit, OnDestroy {
 
     this.violationPercentage = Math.round((w_sum/N_e_sum));
 
-    console.log( "vios:" + this.violationPercentage);
+    // console.log( "vios:" + this.violationPercentage);
     
   }
 

@@ -86,8 +86,8 @@ export class InboxComponent implements OnInit, OnDestroy {
       });
     });
   
-    console.log('---------------------------------');
-    console.log(this.reports);
+    // console.log('---------------------------------');
+    // console.log(this.reports);
   }
 
   fetchFiles(directory: string): Observable<{ name: string, modified: number }[]> {
@@ -144,7 +144,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
 
   getReportContent(filePath: string) {
-    console.log(filePath);
+    // console.log(filePath);
     
     const fileName = filePath.split('/').pop() || filePath;
     // const country = this.extractCountryFromFileName(fileName);
@@ -346,7 +346,7 @@ export class InboxComponent implements OnInit, OnDestroy {
 
     this.violationPercentage = Math.round((N_e_sum/w_sum));
 
-    console.log( "vios:" + this.violationPercentage);
+    // console.log( "vios:" + this.violationPercentage);
 
     return N_e_sum;
     
