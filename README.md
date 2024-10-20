@@ -18,6 +18,14 @@ This project is a GDPR Data Noncompliance Detector, developed as part of the COS
 
 The GDPR Data Noncompliance Detector is a software tool designed to identify instances of noncompliance with the General Data Protection Regulation (GDPR). It analyzes data sets and identifies potential violations of GDPR principles, such as unauthorized data processing, inadequate security measures, or lack of consent.
 
+## Table of Contents
+- [Demo Links](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/README.md#demos)
+- [Download](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/README.md#download)
+- [Documentation](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/README.md#documentation)
+- [Project Management Tools](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/README.md#project-management-tools)
+- [The Team](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/README.md#the-team)
+
+
 ## Demos
 
 ### Demo 1
