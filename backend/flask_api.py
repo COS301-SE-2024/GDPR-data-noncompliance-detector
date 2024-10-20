@@ -1,5 +1,23 @@
 import os
 import sys
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
+def suppress_output():
+    """Redirects stdout and stderr to os.devnull to suppress all console output."""
+    import sys
+    import os
+
+    devnull = open(os.devnull, 'w')
+
+    sys.stdout = devnull
+    sys.stderr = devnull
+
+    os.dup2(devnull.fileno(), sys.stdout.fileno())
+    os.dup2(devnull.fileno(), sys.stderr.fileno())
+
+suppress_output()
+
 import logging
 import sys
 import logging
@@ -40,7 +58,7 @@ os.makedirs(GENERATED_REPORTS_FOLDER, exist_ok=True)
 
 endpoint = backend_entry()
 
-encryption_key = os.getenv('GND_ENCRYPTION_KEY')
+encryption_key = os.getenv('SYS VAR x64')
 
 def start_monitors_in_background():
     monitor_thread = threading.Thread(target=start_monitors, daemon=True)

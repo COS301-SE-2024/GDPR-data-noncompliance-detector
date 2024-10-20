@@ -151,9 +151,6 @@ class Handle(FileSystemEventHandler):
     def on_modified(self, event):
         self.process(event)
 
-    def on_modified(self, event):
-        self.process(event)
-
     # New method to process events
     def process(self, event):
         if event.is_directory:
