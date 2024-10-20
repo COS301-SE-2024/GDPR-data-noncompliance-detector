@@ -87,7 +87,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="400px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Team Leader/Backend Engineer</p>
@@ -113,7 +113,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Nevin.jpg" width="400px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Nevin.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Designer/Frontend Engineer</p>
@@ -139,7 +139,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width="400px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Backend Engineer/DevOps</p>
@@ -165,7 +165,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="400px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Backend Developer/DevOps</p>
@@ -191,7 +191,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="400px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Full Stack Developer</p>
