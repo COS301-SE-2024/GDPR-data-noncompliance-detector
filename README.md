@@ -66,7 +66,7 @@ Step 4: After your computer has restarted, you will receive a notification, indi
 
 ## Project Summary
 
-[Project Summary](https://www.canva.com/design/DAGNRf_Qr0o/S-Wecce6u0QMzUuC1zTRCg/edit?utm_content=DAGNRf_Qr0o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+[Project Summary](https://www.canva.com/design/DAGUJc0wt2k/LNiWKUgbstDVH-GZvOIMhw/edit?utm_content=DAGUJc0wt2k&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 # Documentation
  
