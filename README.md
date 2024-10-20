@@ -44,10 +44,11 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 <br></br>
 [Demo 4 Testing Specification](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_4___Testing_Specification.pdf)
 <br></br>
+
 # Download
 
-
-[https://drive.google.com/drive/folders/1LANx27MNDwmfvDtj09NFvJ05s91Ya-7n?usp=sharing](https://drive.google.com/file/d/1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW/view?usp=sharing
+https://drive.google.com/drive/folders/1LANx27MNDwmfvDtj09NFvJ05s91Ya-7n?usp=sharing 
+https://drive.google.com/file/d/1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW/view?usp=sharing
 
 
 # Demo 4 Input Data
@@ -86,7 +87,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="250px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/u21598012">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" width="100px">
@@ -109,7 +110,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Nevin.jpg" width="250px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Nevin.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/Nevin-Thomas">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" width="100px">
@@ -132,7 +133,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width="250px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/Yeshlen">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" width="100px">
@@ -155,7 +156,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="250px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/Yudi-G">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" width="100px">
@@ -178,7 +179,7 @@ GitHub Issues and GitHub Boards
 <table style="width: 100%;">
   <tr>
     <td style="width: 250px; vertical-align: top;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="250px" style="display: block; margin-bottom: 10px;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="400px" style="display: block; margin-bottom: 10px;">
       <p>
         <a href="https://github.com/paul-nhlapo">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" width="100px">
