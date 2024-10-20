@@ -86,7 +86,7 @@ GitHub Issues and GitHub Boards
 ### Dhinaz Rangasamy
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top;">
+    <td style="width: 250px; vertical-align: top; text-align: center;">
       <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
@@ -112,7 +112,7 @@ GitHub Issues and GitHub Boards
 ### Nevin Thomas
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top;">
+    <td style="width: 250px; vertical-align: top; text-align: center;">
       <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Nevin.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
@@ -138,7 +138,7 @@ GitHub Issues and GitHub Boards
 ### Yeshlen Moodley
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top;">
+    <td style="width: 250px; vertical-align: top; text-align: center;">
       <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
@@ -164,7 +164,7 @@ GitHub Issues and GitHub Boards
 ### Yudi Govender
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top;">
+    <td style="width: 250px; vertical-align: top; text-align: center;">
       <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
@@ -190,7 +190,7 @@ GitHub Issues and GitHub Boards
 ### Paul Nhlapo
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top;">
+    <td style="width: 250px; vertical-align: top; text-align: center;">
       <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="200px" style="display: block; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
@@ -208,7 +208,33 @@ GitHub Issues and GitHub Boards
   </tr>
   <tr>
     <td colspan="2" style="vertical-align: top;">
-      <p>I am a final year BSc Information and Knowledge Systems (Software Development) student. I have worked with Java and C# for desktop applications and have experience with Python and JavaScript for back-end web development. I have a keen interest in AI, Data Science, and Machine Learning, with a passion for developing systems to benefit others. I have experience in developing both front-end and back-end web applications. I am looking forward to expanding my knowledge and expertise in these fields in the future.</p>
+      <p>I am a final year BSc Information and Knowledge Systems (Software Development) student. I have worked on various web applications throughout my time at university, using various languages and frameworks, including PHP, JavaScript, and Java. I aim to become a Full Stack Developer, and I look forward to applying the skills I have learned in the professional world.</p>
+    </td>
+  </tr>
+</table>
+
+### Tshiamo Mothibe
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <td style="width: 250px; vertical-align: top; text-align: center;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Tshiamo.jpg" width="200px" style="display: block; margin-bottom: 10px;">
+    </td>
+    <td style="vertical-align: top;">
+      <p><strong>Role:</strong> Data Scientist/Backend Developer</p>
+      <p>
+        <a href="https://github.com/TshiamoMothibe">
+          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" width="100px">
+        </a>
+        <br>
+        <a href="https://www.linkedin.com/in/tshiamo-mothibe-70b83a217">
+          <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Linkedin" width="100px">
+        </a>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="vertical-align: top;">
+      <p>I am a final year BSc Information and Knowledge Systems student, currently completing my degree at the University of Pretoria. My main interests include machine learning, data science, and artificial intelligence. I have experience in various programming languages, including Python, R, Java, and JavaScript. I have worked on several projects, both independently and as part of a team, and I strive to create software that is efficient, user-friendly, and impactful. I am excited to continue my journey in the tech industry and contribute to innovative solutions that improve lives.</p>
     </td>
   </tr>
 </table>
