@@ -20,7 +20,7 @@ The GDPR Data Noncompliance Detector is a software tool designed to identify ins
 
 # Download the GND Application
 
-[Download GND](https://drive.google.com/file/d/1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW/view?usp=sharing)
+Download GND -> [📥](https://drive.google.com/file/d/1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW/view?usp=sharing)
 
 ### Download Instructions
 
