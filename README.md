@@ -80,7 +80,7 @@ Step 4: After your computer has restarted, you will receive a notification, indi
 [Coding Standards](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Coding_Standards.pdf)
 
 ## User Manual
-[GND User Manual](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/GND%20Manual_V2.pdf)
+[GND User Manual](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/GND%20Manual_V3.pdf)
 
 ## Machine Learning Training Specification
 [AIML_Spec.pdf](https://github.com/user-attachments/files/17433721/AIML_Spec.pdf)
