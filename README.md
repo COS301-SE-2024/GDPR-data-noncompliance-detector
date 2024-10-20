@@ -166,6 +166,8 @@ GitHub Issues and GitHub Boards
   <tr>
     <td style="width: 200px; vertical-align: top; text-align: center;">
       <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="150px" style="display: block; margin: auto; margin-bottom: 10px;">
+    </td>
+    <td style="vertical-align: top;">
       <p><strong>Role:</strong> Backend Developer/DevOps</p>
       <p>
         <a href="https://github.com/Yudi-G">
