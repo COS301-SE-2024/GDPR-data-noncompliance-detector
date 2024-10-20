@@ -218,6 +218,12 @@ GitHub Issues and GitHub Boards
 </table>
 
 
+## Research (Additional Information)
+
+Our project aimed to contribute to GDPR compliance by designing a system that detects potential data violations in documents. We conducted extensive research on GDPR requirements using trusted resources like [www.GDPR.eu](GDPR.eu) , [www.gdpr-info.eu](gdpr-info.eu) and [www.popiact-compliance.co.za](www.popiact-compliance.co.za). The system leverages natural language processing (NLP) and machine learning to scan documents for multiple categories of GDPR-protected data. It alerts users to potential violations, promoting compliance with European data protection regulations.
+
+The project's research contribution lies in applying machine learning models to the specific context of GDPR. We explored AI frameworks to improve the accuracy of identifying sensitive information and developed a scalable, modular system architecture. 
+Our research allowed us to narrow down the broadness of GDPR non-compliant data into categories that suited our project best. The categories we chose to identify are ones we believe to be the most common in text based documents. 
 
 
 ## Team Contact
