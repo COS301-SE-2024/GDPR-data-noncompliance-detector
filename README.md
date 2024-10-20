@@ -84,10 +84,10 @@ GitHub Issues and GitHub Boards
 ## The Team
 
 ### Dhinaz Rangasamy
-<table style="width: 100%; border-collapse: collapse;">
+<table style="width: 80%; max-width: 600px; margin: auto; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top; text-align: center;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="200px" style="display: block; margin-bottom: 10px;">
+    <td style="width: 200px; vertical-align: top; text-align: center;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Dhinaz.jpg" width="150px" style="display: block; margin: auto; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Team Leader/Backend Engineer</p>
@@ -110,10 +110,10 @@ GitHub Issues and GitHub Boards
 </table>
 
 ### Nevin Thomas
-<table style="width: 100%; border-collapse: collapse;">
+<table style="width: 80%; max-width: 600px; margin: auto; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top; text-align: center;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Nevin.jpg" width="200px" style="display: block; margin-bottom: 10px;">
+    <td style="width: 200px; vertical-align: top; text-align: center;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Nevin.jpg" width="150px" style="display: block; margin: auto; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Designer/Frontend Engineer</p>
@@ -136,10 +136,10 @@ GitHub Issues and GitHub Boards
 </table>
 
 ### Yeshlen Moodley
-<table style="width: 100%; border-collapse: collapse;">
+<table style="width: 80%; max-width: 600px; margin: auto; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top; text-align: center;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width="200px" style="display: block; margin-bottom: 10px;">
+    <td style="width: 200px; vertical-align: top; text-align: center;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yeshlen.jpg" width="150px" style="display: block; margin: auto; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Backend Engineer/DevOps</p>
@@ -162,10 +162,10 @@ GitHub Issues and GitHub Boards
 </table>
 
 ### Yudi Govender
-<table style="width: 100%; border-collapse: collapse;">
+<table style="width: 80%; max-width: 600px; margin: auto; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top; text-align: center;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="200px" style="display: block; margin-bottom: 10px;">
+    <td style="width: 200px; vertical-align: top; text-align: center;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Yudi.jpg" width="150px" style="display: block; margin: auto; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Backend Developer/DevOps</p>
@@ -188,10 +188,10 @@ GitHub Issues and GitHub Boards
 </table>
 
 ### Paul Nhlapo
-<table style="width: 100%; border-collapse: collapse;">
+<table style="width: 80%; max-width: 600px; margin: auto; border-collapse: collapse;">
   <tr>
-    <td style="width: 250px; vertical-align: top; text-align: center;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="200px" style="display: block; margin-bottom: 10px;">
+    <td style="width: 200px; vertical-align: top; text-align: center;">
+      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Paul.jpg" width="150px" style="display: block; margin: auto; margin-bottom: 10px;">
     </td>
     <td style="vertical-align: top;">
       <p><strong>Role:</strong> Full Stack Developer</p>
@@ -208,36 +208,11 @@ GitHub Issues and GitHub Boards
   </tr>
   <tr>
     <td colspan="2" style="vertical-align: top;">
-      <p>I am a final year BSc Information and Knowledge Systems (Software Development) student. I have worked on various web applications throughout my time at university, using various languages and frameworks, including PHP, JavaScript, and Java. I aim to become a Full Stack Developer, and I look forward to applying the skills I have learned in the professional world.</p>
+      <p>As a student with a passion for computer science, I have worked on various web applications throughout my time at university, using various languages and frameworks, including PHP, JavaScript, and Java. I aim to become a Full Stack Developer, and I look forward to applying the skills I have learned in the professional world.</p>
     </td>
   </tr>
 </table>
 
-### Tshiamo Mothibe
-<table style="width: 100%; border-collapse: collapse;">
-  <tr>
-    <td style="width: 250px; vertical-align: top; text-align: center;">
-      <img src="https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/headshots/Tshiamo.jpg" width="200px" style="display: block; margin-bottom: 10px;">
-    </td>
-    <td style="vertical-align: top;">
-      <p><strong>Role:</strong> Data Scientist/Backend Developer</p>
-      <p>
-        <a href="https://github.com/TshiamoMothibe">
-          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" width="100px">
-        </a>
-        <br>
-        <a href="https://www.linkedin.com/in/tshiamo-mothibe-70b83a217">
-          <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Linkedin" width="100px">
-        </a>
-      </p>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="vertical-align: top;">
-      <p>I am a final year BSc Information and Knowledge Systems student, currently completing my degree at the University of Pretoria. My main interests include machine learning, data science, and artificial intelligence. I have experience in various programming languages, including Python, R, Java, and JavaScript. I have worked on several projects, both independently and as part of a team, and I strive to create software that is efficient, user-friendly, and impactful. I am excited to continue my journey in the tech industry and contribute to innovative solutions that improve lives.</p>
-    </td>
-  </tr>
-</table>
 
 
 
