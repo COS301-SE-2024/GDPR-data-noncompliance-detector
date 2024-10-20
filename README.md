@@ -208,7 +208,7 @@ GitHub Issues and GitHub Boards
   </tr>
   <tr>
     <td colspan="2" style="vertical-align: top;">
-      <p>As a student with a passion for computer science, I have worked on various web applications throughout my time at university, using various languages and frameworks, including PHP, JavaScript, and Java. I aim to become a Full Stack Developer, and I look forward to applying the skills I have learned in the professional world.</p>
+      <p>I am a final year BSc Information and Knowledge Systems (Software development) student. I major in Computer Science in my degree, and I have explored all sides of software engineering processes from first year till now. I have learnt a lot from this degree, and it has exposed me to systems analysis and in-depth web development, problem solving using data structures in (Java and C++) and systems development. I have experience with .NET technologies and have worked with C#. Currently I work with ionic and Angular for my final year modules.</p>
     </td>
   </tr>
 </table>
