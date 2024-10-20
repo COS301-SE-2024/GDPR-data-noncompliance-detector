@@ -18,6 +18,10 @@ This project is a GDPR Data Noncompliance Detector, developed as part of the COS
 
 The GDPR Data Noncompliance Detector is a software tool designed to identify instances of noncompliance with the General Data Protection Regulation (GDPR). It analyzes data sets and identifies potential violations of GDPR principles, such as unauthorized data processing, inadequate security measures, or lack of consent.
 
+## Final Project Video
+
+[Final Video](https://drive.google.com/file/d/1r_lsk7uXM3fbUaJqfcGsSLvVjqhFFfv3/view?usp=drive_link)
+
 # Download the GND Application
 
 Download GND -> [📥](https://drive.google.com/file/d/1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW/view?usp=sharing)
