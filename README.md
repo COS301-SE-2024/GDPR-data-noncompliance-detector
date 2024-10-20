@@ -64,8 +64,12 @@ Step 4: After your computer has restarted, you will receive a notification, indi
 [Demo 4 Testing Specification](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_4___Testing_Specification.pdf)
 <br></br>
 
-# Documentation
+## Project Summary
 
+[Project Summary](https://www.canva.com/design/DAGNRf_Qr0o/S-Wecce6u0QMzUuC1zTRCg/edit?utm_content=DAGNRf_Qr0o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+# Documentation
+ 
 ## Software Requirements Specification
 [SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_3___SRS.pdf)
 
