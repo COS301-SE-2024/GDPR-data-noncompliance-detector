@@ -401,7 +401,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     let N_e_eth = (e_eth/maxExpValue)*w_eth;
     let N_e_bio = (e_bio / maxExpValue)*w_bio;
 
-    const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+    let N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
 
     this.violationPercentage = Math.round((w_sum/N_e_sum));
 
