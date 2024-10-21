@@ -44,7 +44,7 @@
     </div>
   </div>
   
-  <div class="violation-type-trends">
+  <!-- <div class="violation-type-trends">
     <h1>Violation Type Trends</h1>
     <div class="chart-row">
       <div class="trend-chart">
@@ -86,9 +86,33 @@
     </div>
     
             
+  </div> -->
+  <div class="violation-type-trends">
+    <h1>Violation Type Trends</h1>
+  
+    <!-- Dropdown for selecting the graph -->
+    <select id="chartSelector" (change)="onChartChange($event)">
+      <option value="personalDataTrendChart">Personal Data Violations</option>
+      <option value="medicalDataTrendChart">Medical Data Violations</option>
+      <option value="biometricDataTrendChart">Biometric Data Violations</option>
+      <option value="ethnicDataTrendChart">Ethnic Data Violations</option>
+      <option value="geneticDataTrendChart">Genetic Data Violations</option>
+      <option value="financialDataTrendChart">Financial Data Violations</option>
+      <option value="contactDataTrendChart">Contact Data Violations</option>
+    </select>
+  
+    <!-- Charts -->
+    <div class="chart-container">
+      <canvas id="personalDataTrendChart" class="chart"></canvas>
+      <canvas id="medicalDataTrendChart" class="chart" style="display:none;"></canvas>
+      <canvas id="biometricDataTrendChart" class="chart" style="display:none;"></canvas>
+      <canvas id="ethnicDataTrendChart" class="chart" style="display:none;"></canvas>
+      <canvas id="geneticDataTrendChart" class="chart" style="display:none;"></canvas>
+      <canvas id="financialDataTrendChart" class="chart" style="display:none;"></canvas>
+      <canvas id="contactDataTrendChart" class="chart" style="display:none;"></canvas>
+    </div>
   </div>
   
-
   <div class="recent-reports">
     <h3>Recent Violation Reports</h3>
     <table>
@@ -104,7 +128,6 @@
         <th>Genetic</th>
         <th>Financial</th>
         <th>Contact</th>
-        <!-- <th>Consent Agreement</th> -->
       </tr>
       </thead>
       <tbody>
@@ -119,7 +142,6 @@
         <td>{{ report.genetic_data_violations }}</td>
         <td>{{ report.financial_data_violations }}</td>
         <td>{{ report.contact_data_violations }}</td>
-        <!-- <td>{{ report.consent_agreement }}</td> -->
       </tr>
       </tbody>
     </table>
