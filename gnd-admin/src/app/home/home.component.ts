@@ -143,8 +143,24 @@ export class HomeComponent implements OnInit {
     // Preparing chart data
     this.prepareChartData(currentReports);
   }
+  formatTrend(trendValue: number): string {
+    if (trendValue === 0) {
+      return "No change";
+    }
   
-
+    const direction = trendValue >= 0 ? "Up" : "Down";
+    const absValue = Math.abs(trendValue);
+  
+    if (absValue >= 1000) {
+      const thousands = Math.floor(absValue / 1000);
+      const remainder = absValue % 1000;
+      const formattedRemainder = remainder > 0 ? remainder.toFixed(1).replace(/\.0$/, '') : '';
+      return `${direction} ${thousands},${formattedRemainder}%`;
+    }
+  
+    return `${direction} ${absValue.toFixed(1).replace(/\.0$/, '')}%`;
+  }
+  
   prepareChartData(reports: any[]) {
     // Preparing violations trends data
     this.violationTrends = reports.map(report => ({

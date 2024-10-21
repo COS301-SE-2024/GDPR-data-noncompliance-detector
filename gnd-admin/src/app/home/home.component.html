@@ -10,21 +10,43 @@
     </select>
   </div>
 
-  <div class="overview-cards">
+  <!-- <div class="overview-cards">
     <div class="card">
       <h3>Total Violations</h3>
       <p class="large-number">{{ totalViolations }}</p>
-      <p class="trend">{{ totalViolationsTrend | number:'1.0-2' }}% from last period</p>
+      <p class="trend">{{ totalViolationsTrend | number:'1.0-1' }}% from last period</p>
     </div>
     <div class="card">
       <h3>Documents Scanned</h3>
       <p class="large-number">{{ documentsScanned }}</p>
-      <p class="trend">{{ documentsScannedTrend | number:'1.0-2' }}% from last period</p>
+      <p class="trend">{{ documentsScannedTrend | number:'1.0-1' }}% from last period</p>
     </div>
     <div class="card">
       <h3>Highest Violation Category</h3>
       <p class="large-number">{{ highestViolationCategory }}</p>
-      <p class="trend">{{ highestViolationCategoryDiff | number:'1.0-2' }}% from last period</p>
+      <p class="trend">{{ highestViolationCategoryDiff | number:'1.0-1' }}% from last period</p>
+    </div>
+    <div class="card">
+      <h3>Last Scan</h3>
+      <p class="large-number last-scan">{{ lastScan | date:'medium' }}</p>
+      <p class="small-text">Updated every 3 hours</p>
+    </div>
+  </div> -->
+  <div class="overview-cards">
+    <div class="card">
+      <h3>Total Violations</h3>
+      <p class="large-number">{{ totalViolations }}</p>
+      <p class="trend">{{ formatTrend(totalViolationsTrend) }} from last period</p>
+    </div>
+    <div class="card">
+      <h3>Documents Scanned</h3>
+      <p class="large-number">{{ documentsScanned }}</p>
+      <p class="trend">{{ formatTrend(documentsScannedTrend) }} from last period</p>
+    </div>
+    <div class="card">
+      <h3>Highest Violation Category</h3>
+      <p class="large-number">{{ highestViolationCategory }}</p>
+      <p class="trend">{{ formatTrend(highestViolationCategoryDiff) }} from last period</p>
     </div>
     <div class="card">
       <h3>Last Scan</h3>
@@ -44,49 +66,6 @@
     </div>
   </div>
   
-  <!-- <div class="violation-type-trends">
-    <h1>Violation Type Trends</h1>
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Personal Data Violations</h4>
-        <canvas id="personalDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Medical Data Violations</h4>
-        <canvas id="medicalDataTrendChart"></canvas>
-      </div>
-    </div>
-    
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Biometric Data Violations</h4>
-        <canvas id="biometricDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Ethnic Data Violations</h4>
-        <canvas id="ethnicDataTrendChart"></canvas>
-      </div>
-    </div>
-   
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Genetic Data Violations</h4>
-        <canvas id="geneticDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Financial Data Violations</h4>
-        <canvas id="financialDataTrendChart"></canvas>
-      </div>
-    </div>
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Contact Data Violations</h4>
-        <canvas id="contactDataTrendChart"></canvas>
-      </div>
-    </div>
-    
-            
-  </div> -->
   <div class="violation-type-trends">
     <h1>Violation Type Trends</h1>
     
