@@ -53,27 +53,6 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.chart-row {
-  display: flex;               
-  justify-content: space-between; 
-  margin-bottom: 20px;         
-}
-
-.trend-chart {
-  background-color: white;     
-  padding: 20px;              
-  border-radius: 10px;     
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  width: 48%;                  
-}
-
-.chart-row > .trend-chart {
-  margin-right: 2%;            
-}
-
-.chart-row > .trend-chart:last-child {
-  margin-right: 0;             
-}
 
 
 canvas {
@@ -91,24 +70,87 @@ h3, h4 {
   margin-bottom: 20px;
 }
 
+/* This is the category graphs styling */
+/* General Dashboard Styling */
 .violation-type-trends {
   padding: 20px;
+  background-color: #f5f5f5;
 }
 
+.violation-type-trends h1 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-.trend-chart {
-  background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+/* Dropdown Styling */
+select#chartSelector {
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  max-width: 400px;
+}
+
+/* Chart Container */
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto; /* Center the chart on the page */
+  padding: 10px;
+}
+
+/* Individual Chart Styling */
+canvas.chart {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease-in-out; 
+  width: 100% !important; /* Ensure full responsiveness */
+  max-height: 400px; /* Set a reasonable max height */
+  height: auto !important;
+  transition: all 0.3s ease;
 }
 
-/* Hover effect to make charts pop */
-.trend-chart:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+/* Chart Hover Effect */
+canvas.chart:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 }
+
+/* Media Queries for Small Screens */
+@media (max-width: 768px) {
+  select#chartSelector {
+    max-width: 100%;
+    font-size: 14px;
+  }
+  
+  .chart-container {
+    max-width: 100%;
+  }
+  
+  canvas.chart {
+    max-height: 300px; /* Ensure the chart height is reduced on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  canvas.chart {
+    max-height: 250px; /* Further reduce chart size on very small screens */
+  }
+}
+
+/* This is where it ends */
 
 /* Enhance chart container */
 .trend-charts {
