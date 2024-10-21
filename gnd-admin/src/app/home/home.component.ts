@@ -47,21 +47,20 @@ export class HomeComponent implements OnInit {
 
   onChartChange(event: any) {
     const chartId = event.target.value;
-
-    // Hiding all charts first
-    const charts = document.querySelectorAll('.chart');
-    charts.forEach((chart) => {
+  
+    // Hiding only the dynamic charts
+    const dynamicCharts = document.querySelectorAll('.dynamic-chart');
+    dynamicCharts.forEach((chart) => {
       (chart as HTMLElement).style.display = 'none';
     });
-
+  
     // Showing the selected chart
     const selectedChart = document.getElementById(chartId);
     if (selectedChart) {
       selectedChart.style.display = 'block';
     }
   }
-
-
+  
   async fetchData() {
     const endDate = new Date();
     const startDate = new Date(endDate);

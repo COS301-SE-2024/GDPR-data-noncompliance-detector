@@ -89,7 +89,7 @@
   </div> -->
   <div class="violation-type-trends">
     <h1>Violation Type Trends</h1>
-  
+    
     <!-- Dropdown for selecting the graph -->
     <select id="chartSelector" (change)="onChartChange($event)">
       <option value="personalDataTrendChart">Personal Data Violations</option>
@@ -100,16 +100,16 @@
       <option value="financialDataTrendChart">Financial Data Violations</option>
       <option value="contactDataTrendChart">Contact Data Violations</option>
     </select>
-  
-    <!-- Charts -->
+    
+    <!-- Dynamic Charts -->
     <div class="chart-container">
-      <canvas id="personalDataTrendChart" class="chart"></canvas>
-      <canvas id="medicalDataTrendChart" class="chart" style="display:none;"></canvas>
-      <canvas id="biometricDataTrendChart" class="chart" style="display:none;"></canvas>
-      <canvas id="ethnicDataTrendChart" class="chart" style="display:none;"></canvas>
-      <canvas id="geneticDataTrendChart" class="chart" style="display:none;"></canvas>
-      <canvas id="financialDataTrendChart" class="chart" style="display:none;"></canvas>
-      <canvas id="contactDataTrendChart" class="chart" style="display:none;"></canvas>
+      <canvas id="personalDataTrendChart" class="dynamic-chart"></canvas>
+      <canvas id="medicalDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="biometricDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="ethnicDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="geneticDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="financialDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="contactDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
     </div>
   </div>
   
