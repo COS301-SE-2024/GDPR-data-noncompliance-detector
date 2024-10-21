@@ -18,6 +18,11 @@ This project is a GDPR Data Noncompliance Detector, developed as part of the COS
 
 The GDPR Data Noncompliance Detector is a software tool designed to identify instances of noncompliance with the General Data Protection Regulation (GDPR). It analyzes data sets and identifies potential violations of GDPR principles, such as unauthorized data processing, inadequate security measures, or lack of consent.
 
+[![Advertisement](https://drive.google.com/file/d/1c_rVgfYXRTvpAgpk6Uao2UxYfKezQkJw/view?usp=drive_link)](https://drive.google.com/file/d/1WLY2da-i_zvCJKTgvOB4UZp2GZ2vnCbw/view?usp=drive_link)
+## Final Project Video
+
+[Final Video](https://drive.google.com/file/d/1r_lsk7uXM3fbUaJqfcGsSLvVjqhFFfv3/view?usp=drive_link)
+
 # Download the GND Application
 
 Download GND -> [📥](https://drive.google.com/file/d/1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW/view?usp=sharing)
@@ -59,8 +64,12 @@ Step 4: After your computer has restarted, you will receive a notification, indi
 [Demo 4 Testing Specification](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_4___Testing_Specification.pdf)
 <br></br>
 
-# Documentation
+## Project Summary
 
+[Project Summary](https://www.canva.com/design/DAGUJc0wt2k/LNiWKUgbstDVH-GZvOIMhw/edit?utm_content=DAGUJc0wt2k&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+# Documentation
+ 
 ## Software Requirements Specification
 [SRS Document](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Demo_3___SRS.pdf)
 
@@ -76,7 +85,7 @@ Step 4: After your computer has restarted, you will receive a notification, indi
 [Coding Standards](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/Coding_Standards.pdf)
 
 ## User Manual
-[GND User Manual](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/GND%20Manual_V2.pdf)
+[GND User Manual](https://github.com/COS301-SE-2024/GDPR-data-noncompliance-detector/blob/develop/documentation/GND_Manual_V3.pdf)
 
 ## Machine Learning Training Specification
 [AIML_Spec.pdf](https://github.com/user-attachments/files/17433721/AIML_Spec.pdf)
@@ -212,7 +221,7 @@ GitHub Issues and GitHub Boards
   </tr>
   <tr>
     <td colspan="2" style="vertical-align: top;">
-      <p>I am a final year BSc Information and Knowledge Systems (Software development) student. I major in Computer Science in my degree, and I have explored all sides of software engineering processes from first year till now. I have learnt a lot from this degree, and it has exposed me to systems analysis and in-depth web development, problem solving using data structures in (Java and C++) and systems development. I have experience with .NET technologies and have worked with C#. Currently I work with ionic and Angular for my final year modules.</p>
+      <p>I am a final year BSc Information and Knowledge Systems (Software development) student. I major in Computer Science in my degree, and I have explored all sides of software engineering processes from first year till now. I have learnt a lot from this degree, and it has exposed me to systems analysis and in-depth web development, problem solving using data structures in (Java and C++) and systems development. I have experience with .NET technologies and have worked with C#. Currently I work with ionic,Python and Angular for my final year modules.</p>
     </td>
   </tr>
 </table>
