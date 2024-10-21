@@ -47,39 +47,39 @@
 
 /* Here I want to style the download-sections */
 .download-section {
-  text-align: center; /* Centers the text horizontally */
-  padding: 40px; /* Adds some space around the content */
-  background-color: #f4f4f4; /* Light background color */
-  border-radius: 10px; /* Slightly rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  text-align: center;
+  padding: 40px; 
+  background-color: #f4f4f4; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .download-section h2 {
-  font-weight: bold; /* Makes the <h2> bold */
-  font-size: 24px; /* Adjust the size of the <h2> */
-  margin-bottom: 20px; /* Space below the heading */
-  color: #333; /* Dark text color */
+  font-weight: bold; 
+  font-size: 24px; 
+  margin-bottom: 20px;
+  color: #333; 
 }
 
 .download-section p {
-  font-size: 16px; /* Slightly smaller text for the description */
-  color: #666; /* Light gray text color */
-  margin-bottom: 30px; /* Space between the paragraph and the button */
+  font-size: 16px; 
+  color: #666; 
+  margin-bottom: 30px; 
 }
 
 .cta-button {
-  display: inline-block; /* Allows padding and centering of the button */
-  padding: 12px 24px; /* Adds space inside the button */
-  background-color: #4CAF50; /* Button color */
-  color: white; /* Text color */
-  text-decoration: none; /* Removes underline */
-  font-size: 18px; /* Adjusts text size */
-  border-radius: 5px; /* Rounds the corners */
-  transition: background-color 0.3s ease; /* Adds a smooth hover transition */
+  display: inline-block; 
+  padding: 12px 24px;
+  background-color: #4CAF50; 
+  color: white; 
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; 
 }
 
 .cta-button:hover {
-  background-color: #45a049; /* Slightly darker green on hover */
+  background-color: #45a049; 
 }
 
 /* This is where it all ends */
