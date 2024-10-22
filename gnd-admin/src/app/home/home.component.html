@@ -14,17 +14,17 @@
     <div class="card">
       <h3>Total Violations</h3>
       <p class="large-number">{{ totalViolations }}</p>
-      <p class="trend">{{ totalViolationsTrend | number:'1.0-2' }}% from last period</p>
+      <p class="trend">{{ formatTrend(totalViolationsTrend) }} from last period</p>
     </div>
     <div class="card">
       <h3>Documents Scanned</h3>
       <p class="large-number">{{ documentsScanned }}</p>
-      <p class="trend">{{ documentsScannedTrend | number:'1.0-2' }}% from last period</p>
+      <p class="trend">{{ formatTrend(documentsScannedTrend) }} from last period</p>
     </div>
     <div class="card">
       <h3>Highest Violation Category</h3>
       <p class="large-number">{{ highestViolationCategory }}</p>
-      <p class="trend">{{ highestViolationCategoryDiff | number:'1.0-2' }}% from last period</p>
+      <p class="trend">{{ formatTrend(highestViolationCategoryDiff) }} from last period</p>
     </div>
     <div class="card">
       <h3>Last Scan</h3>
@@ -46,79 +46,30 @@
   
   <div class="violation-type-trends">
     <h1>Violation Type Trends</h1>
-    <!-- <div class="trend-charts">
-      <div class="trend-chart">
-        <h4>Personal Data Violations</h4>
-        <canvas id="personalDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Medical Data Violations</h4>
-        <canvas id="medicalDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Biometric Data Violations</h4>
-        <canvas id="biometricDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Ethnic Data Violations</h4>
-        <canvas id="ethnicDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Genetic Data Violations</h4>
-        <canvas id="geneticDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Financial Data Violations</h4>
-        <canvas id="financialDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Contact Data Violations</h4>
-        <canvas id="contactDataTrendChart"></canvas>
-      </div>
-    </div> -->
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Personal Data Violations</h4>
-        <canvas id="personalDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Medical Data Violations</h4>
-        <canvas id="medicalDataTrendChart"></canvas>
-      </div>
-    </div>
     
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Biometric Data Violations</h4>
-        <canvas id="biometricDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Ethnic Data Violations</h4>
-        <canvas id="ethnicDataTrendChart"></canvas>
-      </div>
-    </div>
-   
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Genetic Data Violations</h4>
-        <canvas id="geneticDataTrendChart"></canvas>
-      </div>
-      <div class="trend-chart">
-        <h4>Financial Data Violations</h4>
-        <canvas id="financialDataTrendChart"></canvas>
-      </div>
-    </div>
-    <div class="chart-row">
-      <div class="trend-chart">
-        <h4>Contact Data Violations</h4>
-        <canvas id="contactDataTrendChart"></canvas>
-      </div>
-    </div>
+    <!-- Dropdown for selecting the graph -->
+    <select id="chartSelector" (change)="onChartChange($event)">
+      <option value="personalDataTrendChart">Personal Data Violations</option>
+      <option value="medicalDataTrendChart">Medical Data Violations</option>
+      <option value="biometricDataTrendChart">Biometric Data Violations</option>
+      <option value="ethnicDataTrendChart">Ethnic Data Violations</option>
+      <option value="geneticDataTrendChart">Genetic Data Violations</option>
+      <option value="financialDataTrendChart">Financial Data Violations</option>
+      <option value="contactDataTrendChart">Contact Data Violations</option>
+    </select>
     
-            
+    <!-- Dynamic Charts -->
+    <div class="chart-container">
+      <canvas id="personalDataTrendChart" class="dynamic-chart"></canvas>
+      <canvas id="medicalDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="biometricDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="ethnicDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="geneticDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="financialDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+      <canvas id="contactDataTrendChart" class="dynamic-chart" style="display:none;"></canvas>
+    </div>
   </div>
   
-
   <div class="recent-reports">
     <h3>Recent Violation Reports</h3>
     <table>
@@ -134,7 +85,6 @@
         <th>Genetic</th>
         <th>Financial</th>
         <th>Contact</th>
-        <!-- <th>Consent Agreement</th> -->
       </tr>
       </thead>
       <tbody>
@@ -149,7 +99,6 @@
         <td>{{ report.genetic_data_violations }}</td>
         <td>{{ report.financial_data_violations }}</td>
         <td>{{ report.contact_data_violations }}</td>
-        <!-- <td>{{ report.consent_agreement }}</td> -->
       </tr>
       </tbody>
     </table>

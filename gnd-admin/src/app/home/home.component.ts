@@ -45,7 +45,22 @@ export class HomeComponent implements OnInit {
     
   }
 
-
+  onChartChange(event: any) {
+    const chartId = event.target.value;
+  
+    // Hiding only the dynamic charts
+    const dynamicCharts = document.querySelectorAll('.dynamic-chart');
+    dynamicCharts.forEach((chart) => {
+      (chart as HTMLElement).style.display = 'none';
+    });
+  
+    // Showing the selected chart
+    const selectedChart = document.getElementById(chartId);
+    if (selectedChart) {
+      selectedChart.style.display = 'block';
+    }
+  }
+  
   async fetchData() {
     const endDate = new Date();
     const startDate = new Date(endDate);
@@ -128,8 +143,24 @@ export class HomeComponent implements OnInit {
     // Preparing chart data
     this.prepareChartData(currentReports);
   }
+  formatTrend(trendValue: number): string {
+    if (trendValue === 0) {
+      return "No change";
+    }
   
-
+    const direction = trendValue >= 0 ? "Up" : "Down";
+    const absValue = Math.abs(trendValue);
+  
+    if (absValue >= 1000) {
+      const thousands = Math.floor(absValue / 1000);
+      const remainder = absValue % 1000;
+      const formattedRemainder = remainder > 0 ? remainder.toFixed(1).replace(/\.0$/, '') : '';
+      return `${direction} ${thousands},${formattedRemainder}%`;
+    }
+  
+    return `${direction} ${absValue.toFixed(1).replace(/\.0$/, '')}%`;
+  }
+  
   prepareChartData(reports: any[]) {
     // Preparing violations trends data
     this.violationTrends = reports.map(report => ({
@@ -220,6 +251,7 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+  
 
   createViolationTypeTrendCharts() {
   const types: Array<'personal' | 'medical' | 'biometric' | 'ethnic' | 'genetic' | 'financial' | 'contact'> = [
@@ -304,5 +336,8 @@ export class HomeComponent implements OnInit {
     // Recreating charts with new data
     this.createCharts();
   }
+
+  
 }
+
 
