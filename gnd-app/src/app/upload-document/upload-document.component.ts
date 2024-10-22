@@ -14,6 +14,7 @@ import 'crypto-js/mode-ctr';
 import { initFlowbite } from 'flowbite';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { number } from 'echarts';
 
 @Component({
   selector: 'app-upload-document',
@@ -166,8 +167,6 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               this.uploadedFileName = res.fileName;
               this.fileName = res.fileName;
               // console.log(res);
-
-              this.documentStatus = this.docStatus(this.metric_val);
               this.nerCount = res.score.NER;
               this.location = this.locationStatus(res.score.Location);
               this.personalData = res.score.Personal;
@@ -195,10 +194,11 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
               this.checkdata();
               this.result = "Y";
               this.isUploading = false;
-
+              
               this.visualizationService.setScanData(visResults);
               // console.log('UploadDocumentComponent: Scan data set in service.')
-
+              this.calculateMetric();
+              // this.documentStatus = this.docStatus(this.metric_val);
             } catch (error) {
               console.error("Decryption failed:", error);
               this.isUploading = false;
@@ -274,7 +274,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
                 this.fileName = res.fileName;
                 // console.log(res);
 
-                this.documentStatus = this.docStatus(this.metric_val);
+                // this.documentStatus = this.docStatus(this.metric_val);
                 this.nerCount = res.score.NER;
                 this.location = this.locationStatus(res.score.Location);
                 this.personalData = res.score.Personal;
@@ -382,11 +382,23 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
 
     const w_sum = w_per + w_med + w_gen + w_eth + w_bio
 
-    let e_personalData  = Math.exp(this.personal + this.financialData + this.contactData + this.personalData);
-    let e_med = Math.exp(this.medicalData);
-    let e_gen = Math.exp(this.geneticData);
-    let e_eth = Math.exp(this.ethnicData);
-    let e_bio = Math.exp(this.biometricData);
+    if (this.nerCount === 0 && this.financialData === 0 && this.contactData === 0 && this.personalData === 0 &&
+      this.medicalData === 0 && this.geneticData === 0 && this.ethnicData === 0 && this.biometricData === 0) {
+      // If all are 0, set all results to 0
+      let e_personalData = 0;
+      let e_med = 0;
+      let e_gen = 0;
+      let e_eth = 0;
+      let e_bio = 0;
+      this.documentStatus = "Compliant"; 
+      return;  
+    } 
+    // Otherwise, perform the calculations
+    let e_personalData = (this.nerCount + this.financialData + this.contactData + this.personalData) === 0 ? 0 : Math.exp(this.nerCount + this.financialData + this.contactData + this.personalData);
+    let e_med = this.medicalData === 0 ? 0 : Math.exp(this.medicalData);
+    let e_gen = this.geneticData === 0 ? 0 : Math.exp(this.geneticData);
+    let e_eth = this.ethnicData === 0 ? 0 : Math.exp(this.ethnicData);
+    let e_bio = this.biometricData === 0 ? 0 : Math.exp(this.biometricData);
 
     const expValues = [e_personalData, e_med, e_gen, e_eth, e_bio];
 
@@ -398,7 +410,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
       }
     }
 
-    let N_e_personalData = (e_personalData/maxExpValue)*w_per;
+    let N_e_personalData = (e_personalData / maxExpValue) * w_per;
+    console.log(N_e_personalData);
     let N_e_med = (e_med/maxExpValue)*w_med;
     let N_e_gen = (e_gen/maxExpValue)*w_gen;
     let N_e_eth = (e_eth/maxExpValue)*w_eth;
@@ -406,7 +419,16 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
 
     let N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
     this.metric_val = N_e_sum;
+    console.log("Metric Valuuuuuuuuuuuuuuuuuueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:")
+    console.log(this.metric_val);
+    if (N_e_sum <= 0.6) {
+      this.documentStatus = "Compliant"; 
+    }
+    else {
+      this.documentStatus = "Non-Compliant"
+    }
 
+    console.log(this.status);
     this.violationPercentage = Math.round((w_sum/N_e_sum));
 
     // console.log( "vios:" + this.violationPercentage);
