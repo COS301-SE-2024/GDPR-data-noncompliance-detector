@@ -21,7 +21,7 @@
     "@angular/router": "^18.0.0",
     "@supabase/supabase-js": "^2.45.3",
     "@types/bcryptjs": "^2.4.6",
-    "apexcharts": "^3.53.0",
+    "apexcharts": "^3.54.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.4",
     "flowbite": "^2.5.1",
