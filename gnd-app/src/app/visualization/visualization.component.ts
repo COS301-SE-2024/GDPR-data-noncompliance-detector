@@ -276,7 +276,7 @@ export class VisualizationComponent implements OnInit, AfterViewInit {
     
     this.createRadarChart([N_e_personalData, N_e_med, N_e_gen, N_e_eth, N_e_bio]);
 
-    const N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
+    let N_e_sum = N_e_personalData + N_e_med + N_e_gen + N_e_eth + N_e_bio
 
     this.violationPercentage = Math.round((w_sum/N_e_sum));
     // console.log("vivios: " + this.violationPercentage)
