@@ -213,6 +213,16 @@ class detection_engine:
         w_eth = 0.4
         w_bio = 0.8
 
+        if (ner_count == 0 and financial_data == 0 and contact_data == 0 and personal_data == 0 and
+        medical_data == 0 and genetic_data == 0 and ethnic_data == 0 and biometric_data == 0):
+            # If all are 0, set all results to 0
+            e_personal_data = 0
+            e_med = 0
+            e_gen = 0
+            e_eth = 0
+            e_bio = 0
+            return 0
+
         e_personal_data = math.exp((ner_count) + financial_data + contact_data + personal_data)
         e_med = math.exp(medical_data)
         e_gen = math.exp(genetic_data)
