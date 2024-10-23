@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/a5979f3e-41be-493e-b4c0-0d5f4b0442e1
 # Download the GND Application
 
 <!-- Download GND -> [📥](https://drive.google.com/file/d/1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW/view?usp=sharing) -->
-Download GND -> [📥](https://drive.google.com/uc?export=download&id=1WV0WCWq1VSLAgREVHJ523JzclZXMwBnW)
+Download GND -> [📥](https://drive.google.com/uc?export=download&id=1xXCRdPNjMYdPA13H4yfGDV_WpjBi5hV0)
 
 ### Download Instructions
 
