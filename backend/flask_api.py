@@ -35,7 +35,7 @@ import fitz
 import time
 import json
 import pypandoc
-# from plyer import notification
+from plyer import notification
 # import comtypes.client
 import json
 import base64
