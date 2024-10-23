@@ -21,12 +21,29 @@ class CA:
         return self.predict(text)
 
     def predict(self, input_text):
-        tokens = self.classifier.tokenizer.encode(input_text, truncation=True, max_length=self.max_length_)
-        truncated_text = self.classifier.tokenizer.decode(tokens, skip_special_tokens=True)
-        
-        result = self.classifier(truncated_text)
-        # print(result)
-        return result[0]['label']
+        # Use sliding window to handle long texts
+        window_size = self.max_length_ - 2  # Account for special tokens
+        overlap = 50  # Define the overlap between windows
+
+        chunks = self.sliding_window(input_text, window_size, overlap)
+        labels = []
+
+        for chunk in chunks:
+            tokens = self.classifier.tokenizer.encode(chunk, truncation=True, max_length=self.max_length_)
+            truncated_text = self.classifier.tokenizer.decode(tokens, skip_special_tokens=True)
+            result = self.classifier(truncated_text)
+            labels.append(result[0]['label'])
+
+        return labels
+
+    def sliding_window(self, text, window_size, overlap):
+        # Split the text into chunks using a sliding window approach
+        words = text.split()
+        chunks = []
+        for i in range(0, len(words), window_size - overlap):
+            chunk = " ".join(words[i:i + window_size])
+            chunks.append(chunk)
+        return chunks
 
 if __name__ == '__main__':
     ca = CA()

@@ -18,7 +18,7 @@ def ensure_nltk_resources():
 class text_preprocessor:
 
     def __init__(self):
-        ensure_nltk_resources()
+        # ensure_nltk_resources()
         self.lemmatizer = WordNetLemmatizer()
         self.stop_words = set(stopwords.words('english'))
     

@@ -27,7 +27,22 @@ from Crypto.Util.Padding import pad, unpad
 app = Flask(__name__)
 CORS(app)
 
-logging.basicConfig(level=logging.INFO)
+def suppress_output():
+    """Redirects stdout and stderr to os.devnull to suppress all console output."""
+    import sys
+    import os
+
+    devnull = open(os.devnull, 'w')
+
+    sys.stdout = devnull
+    sys.stderr = devnull
+
+    os.dup2(devnull.fileno(), sys.stdout.fileno())
+    os.dup2(devnull.fileno(), sys.stderr.fileno())
+
+suppress_output()
+
+# logging.basicConfig(level=logging.INFO)
 
 UPLOAD_FOLDER = os.path.expanduser("~/Documents/GND/uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -262,7 +277,7 @@ def read_downloads_results():
         with open(file_, 'r') as file:
             content = file.read()
         
-        print(content)
+        # print(content)
         return jsonify({"content": content})
     
     except Exception as e:
