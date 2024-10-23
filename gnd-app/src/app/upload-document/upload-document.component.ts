@@ -15,6 +15,7 @@ import { initFlowbite } from 'flowbite';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { number } from 'echarts';
+import { ReportGenerationService, ViolationData } from '../services/report-generation.service';
 
 @Component({
   selector: 'app-upload-document',
@@ -56,7 +57,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
   isAnnotating: boolean = false;
 
 
-    constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService,
+    constructor(private encryptionKeyService: EncryptionKeyService, private walkthroughService: WalkthroughService, private http: HttpClient, private router: Router, private visualizationService: VisualizationService, private reportGenerationService: ReportGenerationService,
     private sanitizer: DomSanitizer
 
     ) { }
@@ -351,21 +352,44 @@ export class UploadDocumentComponent implements OnInit, OnDestroy{
     return "This document does not seem to contain any data consent agreements";
   }
 
-  onDownload() {
-    const reportUrl = 'http://127.0.0.1:8000/get-report';
+  // onDownload() {
+  //   const reportUrl = 'http://127.0.0.1:8000/get-report';
 
-    this.http.get(reportUrl, { responseType: 'blob' }).subscribe(blob => {
-      const link = document.createElement('a');
-      const url = window.URL.createObjectURL(blob);
-      link.href = url;
-      link.download = 'GND_violation_report.pdf';
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(link);
-    }, error => {
-      console.error('Download failed', error);
-    });
+  //   this.http.get(reportUrl, { responseType: 'blob' }).subscribe(blob => {
+  //     const link = document.createElement('a');
+  //     const url = window.URL.createObjectURL(blob);
+  //     link.href = url;
+  //     link.download = 'GND_violation_report.pdf';
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     window.URL.revokeObjectURL(url);
+  //     document.body.removeChild(link);
+  //   }, error => {
+  //     console.error('Download failed', error);
+  //   });
+  // }
+
+  async onDownload() {
+    const data: ViolationData = {
+      documentStatus: this.documentStatus,
+      nerCount: this.nerCount,
+      location: this.location,
+      personalData: this.personalData,
+      financialData: this.financialData,
+      contactData: this.contactData,
+      medicalData: this.medicalData,
+      ethnicData: this.ethnicData,
+      biometricData: this.biometricData,
+      geneticData: this.geneticData,
+      consentAgreement: this.consentAgreement,
+      ragScore: this.ragScore
+    };
+    try {
+      await this.reportGenerationService.generatePDF(data);
+    }
+    catch (error) {
+      console.error('Error generating PDF:', error);
+    }
   }
 
   onVisualize() {
