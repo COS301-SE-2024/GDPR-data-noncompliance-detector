@@ -296,7 +296,7 @@ class report_generation_layer:
         
 
 
-        if (violation_data['score']['Status'] == 1):
+        if (violation_data['score']['Status'] <= 0.6):
             c.setFillColor(colors.green)
             c.setStrokeColor(colors.black)
             rect_width = 130 * mm
