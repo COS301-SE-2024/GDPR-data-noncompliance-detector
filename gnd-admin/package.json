@@ -17,7 +17,7 @@
     "@angular/core": "^18.0.0",
     "@angular/forms": "^18.0.0",
     "@angular/platform-browser": "^18.0.0",
-    "@angular/platform-browser-dynamic": "^18.0.0",
+    "@angular/platform-browser-dynamic": "^18.2.8",
     "@angular/router": "^18.0.0",
     "@supabase/supabase-js": "^2.45.3",
     "@types/bcryptjs": "^2.4.6",
