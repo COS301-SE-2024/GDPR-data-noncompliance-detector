@@ -23,7 +23,7 @@
     "@types/bcryptjs": "^2.4.6",
     "apexcharts": "^3.53.0",
     "bcryptjs": "^2.4.3",
-    "chart.js": "^4.4.4",
+    "chart.js": "^4.4.5",
     "flowbite": "^2.5.1",
     "gnd-admin": "file:",
     "ng2-charts": "^6.0.1",
